@@ -1,0 +1,252 @@
+{
+ "_id": "621ffdd236468d709f181e77",
+ "id": "stanfordnlp/imdb",
+ "author": "stanfordnlp",
+ "sha": "e6281661ce1c48d982bc483cf8a173c1bbeb5d31",
+ "lastModified": "2024-01-04T12:09:45.000Z",
+ "private": false,
+ "gated": false,
+ "disabled": false,
+ "tags": [
+  "task_categories:text-classification",
+  "task_ids:sentiment-classification",
+  "annotations_creators:expert-generated",
+  "language_creators:expert-generated",
+  "multilinguality:monolingual",
+  "source_datasets:original",
+  "language:en",
+  "license:other",
+  "size_categories:100K<n<1M",
+  "format:parquet",
+  "modality:text",
+  "library:datasets",
+  "library:pandas",
+  "library:polars",
+  "library:mlcroissant",
+  "region:us"
+ ],
+ "description": "\n\t\n\t\t\n\t\n\t\n\t\tDataset Card for \"imdb\"\n\t\n\n\n\t\n\t\t\n\t\n\t\n\t\tDataset Summary\n\t\n\nLarge Movie Review Dataset.\nThis is a dataset for binary sentiment classification containing substantially more data than previous benchmark datasets. We provide a set of 25,000 highly polar movie reviews for training, and 25,000 for testing. There is additional unlabeled data for use as well.\n\n\t\n\t\t\n\t\n\t\n\t\tSupported Tasks and Leaderboards\n\t\n\nMore Information Needed\n\n\t\n\t\t\n\t\n\t\n\t\tLanguages\n\t\n\nMore Information Needed\u2026 See the full description on the dataset page: https://huggingface.co/datasets/stanfordnlp/imdb.",
+ "paperswithcode_id": "imdb-movie-reviews",
+ "downloads": 159000,
+ "likes": 962,
+ "cardData": {
+  "annotations_creators": [
+   "expert-generated"
+  ],
+  "language_creators": [
+   "expert-generated"
+  ],
+  "language": [
+   "en"
+  ],
+  "license": [
+   "other"
+  ],
+  "multilinguality": [
+   "monolingual"
+  ],
+  "size_categories": [
+   "10K<n<100K"
+  ],
+  "source_datasets": [
+   "original"
+  ],
+  "task_categories": [
+   "text-classification"
+  ],
+  "task_ids": [
+   "sentiment-classification"
+  ],
+  "paperswithcode_id": "imdb-movie-reviews",
+  "pretty_name": "IMDB",
+  "dataset_info": {
+   "config_name": "plain_text",
+   "features": [
+    {
+     "name": "text",
+     "dtype": "string"
+    },
+    {
+     "name": "label",
+     "dtype": {
+      "class_label": {
+       "names": {
+        "0": "neg",
+        "1": "pos"
+       }
+      }
+     }
+    }
+   ],
+   "splits": [
+    {
+     "name": "train",
+     "num_bytes": 33432823,
+     "num_examples": 25000
+    },
+    {
+     "name": "test",
+     "num_bytes": 32650685,
+     "num_examples": 25000
+    },
+    {
+     "name": "unsupervised",
+     "num_bytes": 67106794,
+     "num_examples": 50000
+    }
+   ],
+   "download_size": 83446840,
+   "dataset_size": 133190302
+  },
+  "configs": [
+   {
+    "config_name": "plain_text",
+    "data_files": [
+     {
+      "split": "train",
+      "path": "plain_text/train-*"
+     },
+     {
+      "split": "test",
+      "path": "plain_text/test-*"
+     },
+     {
+      "split": "unsupervised",
+      "path": "plain_text/unsupervised-*"
+     }
+    ],
+    "default": true
+   }
+  ],
+  "train-eval-index": [
+   {
+    "config": "plain_text",
+    "task": "text-classification",
+    "task_id": "binary_classification",
+    "splits": {
+     "train_split": "train",
+     "eval_split": "test"
+    },
+    "col_mapping": {
+     "text": "text",
+     "label": "target"
+    },
+    "metrics": [
+     {
+      "type": "accuracy"
+     },
+     {
+      "name": "Accuracy"
+     },
+     {
+      "type": "f1",
+      "name": "F1 macro",
+      "args": {
+       "average": "macro"
+      }
+     },
+     {
+      "type": "f1",
+      "name": "F1 micro",
+      "args": {
+       "average": "micro"
+      }
+     },
+     {
+      "type": "f1",
+      "name": "F1 weighted",
+      "args": {
+       "average": "weighted"
+      }
+     },
+     {
+      "type": "precision",
+      "name": "Precision macro",
+      "args": {
+       "average": "macro"
+      }
+     },
+     {
+      "type": "precision",
+      "name": "Precision micro",
+      "args": {
+       "average": "micro"
+      }
+     },
+     {
+      "type": "precision",
+      "name": "Precision weighted",
+      "args": {
+       "average": "weighted"
+      }
+     },
+     {
+      "type": "recall",
+      "name": "Recall macro",
+      "args": {
+       "average": "macro"
+      }
+     },
+     {
+      "type": "recall",
+      "name": "Recall micro",
+      "args": {
+       "average": "micro"
+      }
+     },
+     {
+      "type": "recall",
+      "name": "Recall weighted",
+      "args": {
+       "average": "weighted"
+      }
+     }
+    ]
+   }
+  ]
+ },
+ "siblings": [
+  {
+   "rfilename": ".gitattributes",
+   "blobId": "957b2579c6ef20995a09efd9a17f8fd90606f5ed",
+   "size": 1174
+  },
+  {
+   "rfilename": "README.md",
+   "blobId": "9efdff48906733be2fa05e4538f017d2fbec7afc",
+   "size": 7809
+  },
+  {
+   "rfilename": "plain_text/test-00000-of-00001.parquet",
+   "blobId": "f79b44767fc4671bbe0f47437eb9ad5f30c7f18a",
+   "size": 20470363,
+   "lfs": {
+    "sha256": "b52e26e2f872d282ffac460bf9770b25ac6f102cda0e6ca7158df98c94e8b3da",
+    "size": 20470363,
+    "pointerSize": 133
+   }
+  },
+  {
+   "rfilename": "plain_text/train-00000-of-00001.parquet",
+   "blobId": "04b6b4192a027d01d8f6ae9d949fadc4eac3c2d2",
+   "size": 20979968,
+   "lfs": {
+    "sha256": "db47d16b5c297cc0dd625e519c81319c24c9149e70e8496de5475f6fa928342c",
+    "size": 20979968,
+    "pointerSize": 133
+   }
+  },
+  {
+   "rfilename": "plain_text/unsupervised-00000-of-00001.parquet",
+   "blobId": "86163ca6aeb0d4d927fe4b3f3799dfa4f68f367e",
+   "size": 41996509,
+   "lfs": {
+    "sha256": "74d14fbfcbb39fb7d299c38ca9f0ae6d231bf97108da85d620027ba437b6d52e",
+    "size": 41996509,
+    "pointerSize": 133
+   }
+  }
+ ],
+ "createdAt": "2022-03-02T23:29:22.000Z",
+ "usedStorage": 83451539
+}

@@ -3,7 +3,7 @@
 > **Before you train on it, check it.**
 > A CLI that checks a dataset and writes a report card of verifiable facts: what the card says, what the licence files and the source say, whether the links work, and what is in the data (duplicates, cross-split leakage, empty rows, label balance, PII-pattern matches). It never says a dataset is "safe to use", and it is not legal advice.
 
-Status: **Phase 1 (planning) complete, 2026-11-19.** Nothing below is implemented yet. Every "measured" figure in this file was measured on 2026-11-19 from this laptop (Windows 11, Python 3.12.10) and is listed with how it was measured in [Feasibility evidence](#9-feasibility-evidence-measured-2026-11-19).
+Status: **Phase 2 (core checks without licences) complete, 2026-11-19.** Implemented: card check (no SPDX validity yet), links, data health, the Hugging Face adapter, JSON and terminal reports. Not implemented: everything in Phases 3–5. Where Phase 2 changed or clarified this plan, the section says so ("Phase 2:"). Every "measured" figure in this file was measured on 2026-11-19 from this laptop (Windows 11, Python 3.12.10) and is listed with how it was measured in [Feasibility evidence](#9-feasibility-evidence-measured-2026-11-19).
 
 Contents: [1 Name](#1-name) · [2 Competitors](#2-competitors) · [3 Architecture](#3-architecture) · [4 Licence scanner](#4-licence-scanner-choice) · [5 Checks](#5-checks-exact-rules-and-statuses) · [6 Hub adapters](#6-hub-adapter-interface) · [7 Reports and badge](#7-report-formats-and-badge) · [8 Accuracy evaluation](#8-accuracy-evaluation) · [9 Feasibility evidence](#9-feasibility-evidence-measured-2026-11-19) · [10 Launch scan](#10-launch-scan-top-500-hf-datasets) · [11 Task list](#11-phased-task-list) · [12 Risks and open questions](#12-risks-and-open-questions)
 
@@ -144,6 +144,13 @@ Tokens: an HF token or a GitHub token is read only from the user's own environme
 
 **Recommendation: ScanCode toolkit**, installed as an optional extra (`pip install datasetvet[scan]`).
 
+**The default install has no licence-text scanner** (decision recorded 2026-11-19, before Phase 2). With plain `pip install datasetvet`:
+- licence evidence comes only from structured fields: the card's YAML `license` (C1, via the `hf_ids` table) and, only when `GITHUB_TOKEN` is set, GitHub's own detected licence for GitHub sources (labelled "GitHub's detection (licensee)", not ours);
+- every text-based claim (C2 README prose, C3 licence files, C4 web pages and raw GitHub LICENSE files) is `unknown (scanner not installed)`;
+- so the default install can show a card licence and its properties, but it can only reach `consistent`/`inconsistent` against GitHub's detected licence. Everything else needs the `[scan]` extra.
+
+The accuracy evaluation reports the two configurations separately (§8), so the cost of skipping the 652 MB extra is measured, not assumed.
+
 - It is the only option that handles our hardest input, licence *statements inside dataset READMEs and web pages*, not just LICENSE files.
 - It is deterministic and gives a score and the matched lines, which become the report's evidence.
 - Its licence keys and SPDX mappings come from the same project as `license-expression`, so normalisation and comparison use one consistent licence database.
@@ -173,6 +180,12 @@ Every check emits **facts** (each with evidence: URL, commit sha, file path, lin
 | required metadata | YAML | `pretty_name` or a top-level heading; `language` (if text modality); `task_categories`; `size_categories`; `configs` or `dataset_info` | `present` / `missing` per field |
 | citation | README body | a `Citation` heading with a non-empty code block, or a BibTeX entry (`@\w+{`) anywhere, or a DOI / arXiv id in a citation section | `present` / `missing` |
 | stated source | YAML `source_datasets`; README "Dataset Description" bullets (Homepage, Repository, Paper, Point of Contact); repo-level links | at least one URL or parent id stated | `present` / `missing`; each URL becomes a link-check target |
+
+Phase 2 clarifications, from the live test cards:
+- **Stated source** also counts labelled Markdown links anywhere in the body, e.g. `[Website](…) | [Paper](…) | [GitHub](…)`, when the link text starts with Homepage, Repository, Paper, Point of Contact, Source, Website, Code, Download, Data, Project page or GitHub. Unlabelled links (`[Center for AI Safety](…)`) are not stated sources and are not link-checked.
+- **Citation:** a heading containing "citation" (emoji and other prefixes allowed) with no code block, DOI, arXiv id or BibTeX is still `missing`, but the fact says the heading exists and may point elsewhere.
+- **Language** is required when the Hub tags say `modality:text` or give no modality; it is skipped when the tags list only non-text modalities.
+- **Gated cards:** if the README cannot be read, citation and README-bullet sources are listed under "not checked" instead of being reported `missing`.
 
 HF family ids (`bsd`, `cc`, `gpl`, `lgpl`, `gfdl`, `openrail`) are reported as "a family, not a specific licence": the card check is `present`, but every consistency comparison involving them is `unknown`.
 
@@ -222,7 +235,7 @@ The report line always shows both sides verbatim, e.g.
 | `dead` | 404 or 410, or DNS NXDOMAIN; missing repo file |
 | `restricted` | 401, 403, 451, or an HF gated repo |
 | `unreachable` | timeout / connection error after retries, or 5xx after retries |
-| `unknown` | 429 that did not clear, or 3xx loops |
+| `unknown` | 429 that did not clear, or 3xx loops; also (Phase 2) robots.txt disallows the URL, or any other status code (e.g. 400, 418) |
 
 The report shows the final URL and status code. A dead link is a fact about today; the report says when it was checked.
 
@@ -235,6 +248,15 @@ The report shows the final URL and status code. A dead link is a fact about toda
 - Above the limit: **deterministic sample**: whole Parquet row groups chosen with a fixed seed (recorded in the report), stratified so every split and file contributes in proportion to its rows, up to `--sample-rows 1,000,000`. The report header says `Sampled: N of M rows (seed S)`.
 - Files are downloaded one at a time to a temp dir and deleted after reading (one resolver request per file, not many range reads), so disk use is bounded by the largest file.
 - 5 GB: a full scan on a laptop is mostly download time (about 7 minutes at 100 Mbit/s; measured throughput is a Phase 2 task). Above it, a default run could take hours, so the user opts in with `--full`.
+
+Phase 2, as built (`checks/health/scan.py`, `hubs/huggingface.py`):
+- **Sampling detail.** Each split's quota is proportional to its rows. Within a split, files are visited in a seeded order and whole Parquet row groups are taken in a seeded order until the quota is met (the last group is cut at the quota). Not every file contributes: per-file range reads would multiply requests. Each chosen file is downloaded whole, so a split stored in one file costs its full download even when sampled. CSV/JSON Lines files have no row groups, so their first rows are read.
+- **Row groups are clusters.** On a file sorted by label (IMDB train), a 5,000-row sample showed 70/30 labels against the true 50/50. The label table says so whenever the scan is sampled.
+- **Conversion pinned.** Parquet files are read from the `refs/convert/parquet` commit sha (from `/api/datasets/{id}/refs`), not the moving ref. The Hub does not say which main revision a conversion was built from.
+- **Original-files fallback** reads Parquet, CSV, TSV, JSON Lines and JSON (optionally `.gz`), mapped to splits by the card's `configs` or HF's file-name convention, and never reads hidden paths (`.metadata/…`). If the owner disabled the Dataset Viewer and the card has no `configs`, data health is `not checked`: nothing states which files are data.
+- **Gated datasets:** data health is `not checked`; the tool never accepts terms.
+- **Leakage** compares splits within one config only. A ClassLabel value of `-1` means "no label": a split with only `-1` is not compared on labels, and `-1` is left out of the label ratio and the "absent from train" list.
+- **DuckDB memory:** queries use only spillable operators (aggregates, joins, windows). Tested at a 64 MB cap with 1.1 M rows; DuckDB cannot run these joins at 32 MB.
 
 **Row identity:** canonical encoding of each row: columns in sorted name order, each value type-tagged (null, bool, int, float as IEEE-754 bits, string as UTF-8, bytes, nested lists/structs recursively; images/audio as their raw bytes). Hash: xxh3_128. Two hashes per row:
 - `row` (all columns), and
@@ -274,6 +296,11 @@ class SourceResolver(Protocol):                  # things that are sources, not 
     def link_status(self, url: str) -> LinkResult
 ```
 
+- Phase 2 changes to the adapter, as built in `hubs/base.py`:
+  - `splits(ds, card=None)` returns a `DataPlan`: splits, plus a `not_checked` reason and notes;
+  - `open_split` is replaced by `fetch(file, dest_dir) -> Path`, and reading/sampling lives in `checks/health/scan.py`, so every hub shares one reader;
+  - `blob_url(ds, path, line)` builds evidence links;
+  - `SourceResolver.link_status` is dropped, because the link checker handles every URL itself.
 - The registry tries adapters, then resolvers, in order; `ParentRef` carries a URL or `hub:id`, so an HF card can name a Zenodo record or GitHub repo as its parent and the provenance check follows it with the right adapter.
 - v1 ships `huggingface` (adapter) plus `github` and `web` (resolvers).
 - v2 notes, not verified in Phase 1: Zenodo has an open REST API with `metadata.license`; Kaggle's API needs a free API key (the user's own); a GitHub-hosted dataset adapter reuses the `github` resolver plus a file reader. Each needs its own feasibility check before work starts.
@@ -299,6 +326,12 @@ class SourceResolver(Protocol):                  # things that are sources, not 
 2. Keep one key row per HF repo only when every DPI entry for that repo has the same expert licence set. Report how many repos this drops.
 3. Expected status: card at audit time (`HF Yaml License`) vs expert set: equal -> `consistent`; both present and different -> `inconsistent`; YAML empty -> `missing`; expert `non-SPDX`/`none` -> excluded from Q3, counted separately.
 4. Split by HF repo id hash: 30% dev (build tables, set the ScanCode threshold), 70% test. Freeze the config with a git tag before the test run.
+
+**Two scanner configurations, reported separately.** Every question below is run twice on the same key, the same dev/test split and the same frozen config, changing only the scanner:
+- `default`: the core install, no licence-text scanner (§4);
+- `scancode`: the `[scan]` extra, with the threshold tuned on the dev split.
+
+Each configuration gets its own confusion matrix, agreement with Wilson interval, kappa, abstention rate and `inconsistent` precision/recall. They are never pooled or averaged. Both runs record the tool version, ScanCode and licence-DB version (or "not installed"), and whether an HF or GitHub token was present. Any headline number in the README names its configuration.
 
 **Measured questions:**
 - **Q1 card parsing:** our C1 on the card *at the audit-time revision* (resolved via `/api/datasets/{id}/commits/main`, latest commit before the DPI summary's last-change date) vs `HF Yaml License`. Exact-match rate.
@@ -411,8 +444,8 @@ Each task is small, has a check you can run, and names its files. Tests never to
 | 4.2 | Resumable runner with SQLite state, batching, limiter, Ctrl-C safety | `launch/run.py`, `launch/state.py`, tests | killing the process mid-batch and resuming finishes with no duplicate or missing rows (test) |
 | 4.3 | DPI key builder (pinned sha), licence-name map, dev/test split | `eval/build_key.py`, `data/dpi_licence_map.csv` | key stats match §8 counts; dropped-repo count reported |
 | 4.4 | Audit-time card revision lookup | `eval/revisions.py` | for 20 dev repos the chosen commit predates the DPI file date (test) |
-| 4.5 | Dev run, tune ScanCode threshold only, then freeze config (git tag `eval-config-v1`) | `eval/run.py`, `eval/config.yml` | tag exists before any test-split result is computed |
-| 4.6 | Test run + metrics: confusion matrix, Wilson CI, kappa, abstention, inconsistent P/R | `eval/metrics.py`, `eval/results/` | `RESULTS.md` written in tierview style; owner labels 30 disagreements |
+| 4.5 | Dev run of both configurations (`default`, `scancode`); tune the ScanCode threshold only, then freeze config (git tag `eval-config-v1`) | `eval/run.py`, `eval/config.yml` | tag exists before any test-split result is computed |
+| 4.6 | Test run of both configurations + metrics: confusion matrix, Wilson CI, kappa, abstention, inconsistent P/R, **one set per configuration** | `eval/metrics.py`, `eval/results/` | `RESULTS.md` has separate `default` and `scancode` sections, never pooled; owner labels 30 disagreements per configuration that has them |
 | 4.7 | Launch scan Tier A then Tier B | `launch/results/` | RESULTS.md with per-status counts, not-checked list and run dates |
 
 ### Phase 5: polish, Action, README, launch (Sonnet 5.5, medium)
@@ -437,3 +470,5 @@ Each task is small, has a check you can run, and names its files. Tests never to
 - **Launch-scan bandwidth**: unknown until 4.1 sums the sizes; Tier B's limit is set from that, not guessed.
 - **PII regexes** will have false positives and misses; the output says "pattern matches", and 2.11's fixtures measure precision on known non-PII strings. No recall claim is made.
 - **Licence properties**: SPDX data carries no NC/SA properties for non-CC licences, so those show none. This is narrower than the brief's wording; owner to confirm.
+- **Footer vs banned words** (Phase 2 finding): the §7 footer says "No check decides whether you may use this data", which contains "you may", a phrase task 5.3 bans. Reword the footer or scope the test before Phase 5.
+- **Default install has no text scanner** (§4). Without the extra, most licence consistency results will be `unknown`. Owner to decide before Phase 3 whether the core install should get a small built-in matcher (e.g. exact SPDX-id notices and full-text similarity against SPDX licence texts). Either way, §8 measures the default and ScanCode configurations separately.

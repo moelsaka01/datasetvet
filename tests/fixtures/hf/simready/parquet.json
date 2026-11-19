@@ -1,0 +1,6 @@
+{
+ "status": 501,
+ "body": {
+  "error": "Not supported: dataset viewer is disabled in nvidia/simready-assets configuration."
+ }
+}

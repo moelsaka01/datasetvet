@@ -1,0 +1,62 @@
+{
+ "status": 200,
+ "body": {
+  "size": {
+   "dataset": {
+    "dataset": "stanfordnlp/imdb",
+    "num_bytes_original_files": 83446840,
+    "num_bytes_parquet_files": 83446840,
+    "num_bytes_memory": 132577254,
+    "num_rows": 100000,
+    "estimated_num_rows": null
+   },
+   "configs": [
+    {
+     "dataset": "stanfordnlp/imdb",
+     "config": "plain_text",
+     "num_bytes_original_files": 83446840,
+     "num_bytes_parquet_files": 83446840,
+     "num_bytes_memory": 132577254,
+     "num_rows": 100000,
+     "num_columns": 2,
+     "estimated_num_rows": null
+    }
+   ],
+   "splits": [
+    {
+     "dataset": "stanfordnlp/imdb",
+     "config": "plain_text",
+     "split": "train",
+     "num_bytes_parquet_files": 20979968,
+     "num_bytes_memory": 33290791,
+     "num_rows": 25000,
+     "num_columns": 2,
+     "estimated_num_rows": null
+    },
+    {
+     "dataset": "stanfordnlp/imdb",
+     "config": "plain_text",
+     "split": "test",
+     "num_bytes_parquet_files": 20470363,
+     "num_bytes_memory": 32468164,
+     "num_rows": 25000,
+     "num_columns": 2,
+     "estimated_num_rows": null
+    },
+    {
+     "dataset": "stanfordnlp/imdb",
+     "config": "plain_text",
+     "split": "unsupervised",
+     "num_bytes_parquet_files": 41996509,
+     "num_bytes_memory": 66818299,
+     "num_rows": 50000,
+     "num_columns": 2,
+     "estimated_num_rows": null
+    }
+   ]
+  },
+  "pending": [],
+  "failed": [],
+  "partial": false
+ }
+}

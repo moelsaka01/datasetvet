@@ -1,0 +1,566 @@
+{
+ "_id": "6a429172c50c64cfb0a54dfb",
+ "id": "nvidia/simready-assets",
+ "author": "nvidia",
+ "sha": "21b045a878e13d4ca922f0f8ebc2ff1e84bb06d4",
+ "lastModified": "2026-11-16T18:04:13.000Z",
+ "private": false,
+ "gated": false,
+ "disabled": false,
+ "tags": [
+  "license:cc-by-4.0",
+  "region:us",
+  "simready"
+ ],
+ "description": "\n\t\n\t\t\n\t\n\t\n\t\tWelcome to NVIDIA SimReady Assets\n\t\n\nWelcome to NVIDIA's open-source SimReady Assets dataset!\nSimReady Central brings together OEM-curated datasets like this one, helping you discover simulation-ready assets for your projects.\nInterested in contributing? Visit nvidia/simready-central-library and request contributor access through the Community tab.\n",
+ "downloads": 1695432,
+ "likes": 1651,
+ "cardData": {
+  "license": "cc-by-4.0",
+  "viewer": false
+ },
+ "siblings": [
+  {
+   "rfilename": ".gitattributes",
+   "blobId": "36681d853ca80c054a6f226b402076163f530bfd",
+   "size": 3117
+  },
+  {
+   "rfilename": "CT_injection_system_a01/.metadata/LICENSE.txt",
+   "blobId": "da6ab6cc8f333d7e89a99812866df8f24374d47c",
+   "size": 18657
+  },
+  {
+   "rfilename": "CT_injection_system_a01/.metadata/com.nvidia.simready.conformance.Package-Candidate@1.0.0.json",
+   "blobId": "f0fb305b256661b871fddcf3244d027038030df3",
+   "size": 891
+  },
+  {
+   "rfilename": "CT_injection_system_a01/.metadata/com.nvidia.simready.conformance.Package@1.0.0.json",
+   "blobId": "3ff16f5c57bd8babee967ad56e5c05f58ec3e0df",
+   "size": 763
+  },
+  {
+   "rfilename": "CT_injection_system_a01/.metadata/com.nvidia.simready.packaging.bom.json",
+   "blobId": "0e03325c579c9a52d0ae1fa52a78941a65fcf766",
+   "size": 17351
+  },
+  {
+   "rfilename": "CT_injection_system_a01/.metadata/com.nvidia.simready.root_usds.json",
+   "blobId": "e3f523a8aea4999e5de042128a87d8951d66f2bb",
+   "size": 103
+  },
+  {
+   "rfilename": "CT_injection_system_a01/com.nvidia.simready.packaging.json",
+   "blobId": "f99e21739a10e4809e012000b0c036e97613863a",
+   "size": 568
+  },
+  {
+   "rfilename": "CT_injection_system_a01/simready_usd/.thumbs/256x256/sm_CT_injection_system_a01_01.usd.png",
+   "blobId": "36e5e4fad0d07bebb9e55402135ee43d698969a0",
+   "size": 671208,
+   "lfs": {
+    "sha256": "7e4a2bfefa9b95b564eaa3d71b1a06e33f7951774f94e6a1a8c44fa5839dee38",
+    "size": 671208,
+    "pointerSize": 131
+   }
+  },
+  {
+   "rfilename": "CT_injection_system_a01/simready_usd/.thumbs/256x256/sm_CT_injection_system_a01_01.usd_light.png",
+   "blobId": "073a9f199b40071aa00615aeb5c59e46fe9e7d19",
+   "size": 356493,
+   "lfs": {
+    "sha256": "becccd87d55f27ed253adaedf50587ada69928a465fcad618593a3d02c01835f",
+    "size": 356493,
+    "pointerSize": 131
+   }
+  },
+  {
+   "rfilename": "CT_injection_system_a01/simready_usd/.thumbs/256x256/sm_CT_injection_system_a01_01.usd_transparent.png",
+   "blobId": "13549f5e8cd0f228170656b16b14cf5f4061f54a",
+   "size": 316718,
+   "lfs": {
+    "sha256": "00feca04334926d5ecccd029646b40c4c9e4714a3faa824506c6f667bf9d2acd",
+    "size": 316718,
+    "pointerSize": 131
+   }
+  },
+  {
+   "rfilename": "CT_injection_system_a01/simready_usd/.thumbs/sm_CT_injection_system_a01_01_thumbnail.png",
+   "blobId": "3e603c900829b786396acb35d19bc51b2595e839",
+   "size": 497470,
+   "lfs": {
+    "sha256": "c5ae4cecbf151926f167d42003b19ec9dd7cef3a7e2f628f4aa28b96b9ad5073",
+    "size": 497470,
+    "pointerSize": 131
+   }
+  },
+  {
+   "rfilename": "CT_injection_system_a01/simready_usd/Textures/t_metal_steelStainless_clean_a01_tile_alb.png",
+   "blobId": "c39a13c6bd415bbed59e07c891ed55519a085675",
+   "size": 38407354,
+   "lfs": {
+    "sha256": "52a7df4cd76a31c6f00b4bde562ec880ed4d4446793d9e2d91aecd6df94b2e92",
+    "size": 38407354,
+    "pointerSize": 133
+   }
+  },
+  {
+   "rfilename": "CT_injection_system_a01/simready_usd/Textures/t_metal_steelStainless_clean_a01_tile_nor.png",
+   "blobId": "291fff8f10244d9664dbb3eee935868bca366ede",
+   "size": 9069490,
+   "lfs": {
+    "sha256": "c878d92cda05e0ee1043ba253431fa2439ecc41315ec99d2f73d49ee68469f63",
+    "size": 9069490,
+    "pointerSize": 132
+   }
+  },
+  {
+   "rfilename": "CT_injection_system_a01/simready_usd/Textures/t_metal_steelStainless_clean_a01_tile_orm.png",
+   "blobId": "50ac1c9ce6f6d481f3ad873cc92bb3edee561a0e",
+   "size": 8181183,
+   "lfs": {
+    "sha256": "394f71f414aef43409560ce9e7dc827a82efa83c125a15ddc7c0256db874e4fc",
+    "size": 8181183,
+    "pointerSize": 132
+   }
+  },
+  {
+   "rfilename": "CT_injection_system_a01/simready_usd/Textures/t_plastic_black_a01_tile_alb.png",
+   "blobId": "5b4f8a85730853050b84f9f5c2d2ab4cd846d060",
+   "size": 15321300,
+   "lfs": {
+    "sha256": "b6bccbf9f0086817688c53c8203e3563034d5704e750f81e6ed866382613c6d3",
+    "size": 15321300,
+    "pointerSize": 133
+   }
+  },
+  {
+   "rfilename": "CT_injection_system_a01/simready_usd/Textures/t_plastic_black_a01_tile_nor.png",
+   "blobId": "fa491919158d6a9e87713a4fc13b442b1b78d368",
+   "size": 21091456,
+   "lfs": {
+    "sha256": "50c9be331ece773c992fddd42d2440bcbc01b3bfcf1992f96b6ecf22bf9db6d2",
+    "size": 21091456,
+    "pointerSize": 133
+   }
+  },
+  {
+   "rfilename": "CT_injection_system_a01/simready_usd/Textures/t_plastic_black_a01_tile_orm.png",
+   "blobId": "fe2f044ceb7a4076a081dc3cfdef3157387d96b6",
+   "size": 15783445,
+   "lfs": {
+    "sha256": "c840f18380e08ec52d43ebe660d0f1290122fec5ae7c43cf8a987b0163661da9",
+    "size": 15783445,
+    "pointerSize": 133
+   }
+  },
+  {
+   "rfilename": "CT_injection_system_a01/simready_usd/Textures/t_plastic_blue_a01_tile_nor.png",
+   "blobId": "fcdd318f4fba2b725795189deb08107a31023600",
+   "size": 23536016,
+   "lfs": {
+    "sha256": "adcd107e7e5dcfe8e8d689283875b77a46aadb09e25739b68bfad1fadd344788",
+    "size": 23536016,
+    "pointerSize": 133
+   }
+  },
+  {
+   "rfilename": "CT_injection_system_a01/simready_usd/Textures/t_plastic_blue_a01_tile_orm.png",
+   "blobId": "bf779770b5faf7cdd889596d7a6c88f8ea7c15e1",
+   "size": 13064706,
+   "lfs": {
+    "sha256": "4c52d4a130502a78fe1125b93b1aa9aa2aedc4481d73e93de076194e220f60b8",
+    "size": 13064706,
+    "pointerSize": 133
+   }
+  },
+  {
+   "rfilename": "CT_injection_system_a01/simready_usd/Textures/t_plastic_glossy_black_a01_tile_alb.png",
+   "blobId": "810ce9ff9ecaf220819e99e1684b92f3196f3589",
+   "size": 58789,
+   "lfs": {
+    "sha256": "a256461383279637552d0ce7c21d0b54d4db8b5238ae6637e4b4b8ad88042c44",
+    "size": 58789,
+    "pointerSize": 130
+   }
+  },
+  {
+   "rfilename": "CT_injection_system_a01/simready_usd/Textures/t_plastic_glossy_black_a01_tile_nor.png",
+   "blobId": "04a366e9eb2d34cf8b3cb51aa15220986cac1bf1",
+   "size": 9513502,
+   "lfs": {
+    "sha256": "a03864998e9916c83af666d3a4fee5bc6c70705d66ecbf4b344cbb14a7324f99",
+    "size": 9513502,
+    "pointerSize": 132
+   }
+  },
+  {
+   "rfilename": "CT_injection_system_a01/simready_usd/Textures/t_plastic_glossy_black_a01_tile_orm.png",
+   "blobId": "6e6553686051feb53725b87aabe9d7f3212650a8",
+   "size": 9378835,
+   "lfs": {
+    "sha256": "b481b6965cd5b4166332c8e3bd6bc1c51da44ac884bd6df5b785dec33c25469c",
+    "size": 9378835,
+    "pointerSize": 132
+   }
+  },
+  {
+   "rfilename": "CT_injection_system_a01/simready_usd/Textures/t_plastic_glossy_white_a01_tile_alb.png",
+   "blobId": "2c9bb2baa9b86d5fa703e2ff5b4b94da500275e6",
+   "size": 1993467,
+   "lfs": {
+    "sha256": "fb0b238d43a1ca1e7adf83782629cd6f8fb5e2f7eb98bf42839e63aa0bdad223",
+    "size": 1993467,
+    "pointerSize": 132
+   }
+  },
+  {
+   "rfilename": "CT_injection_system_a01/simready_usd/Textures/t_plastic_glossy_white_a01_tile_nor.png",
+   "blobId": "f75e4685e512c841a0b1113f686c71c4de4fb33c",
+   "size": 10962433,
+   "lfs": {
+    "sha256": "8e1b70073339a4110b7c5103273f2c1ce2b5dbf74352ae2e3eb91d7573f10cc5",
+    "size": 10962433,
+    "pointerSize": 133
+   }
+  },
+  {
+   "rfilename": "CT_injection_system_a01/simready_usd/Textures/t_plastic_glossy_white_a01_tile_orm.png",
+   "blobId": "a7c73356daef6ee7ea6d85d45ee722f01d0cbcef",
+   "size": 12876795,
+   "lfs": {
+    "sha256": "9a4389739da9ee7325972569e730a32a98ddeb6903d46a8d26fc0a136078f5ad",
+    "size": 12876795,
+    "pointerSize": 133
+   }
+  },
+  {
+   "rfilename": "CT_injection_system_a01/simready_usd/Textures/t_plastic_gray_a01_tile_nor.png",
+   "blobId": "991b2a9550e93bac39d3c1ae4efd93f7b4c78d6c",
+   "size": 21099024,
+   "lfs": {
+    "sha256": "51c9e8aa2c9293233131d203792b5c4432375d9930657c09d723311fd38d5f62",
+    "size": 21099024,
+    "pointerSize": 133
+   }
+  },
+  {
+   "rfilename": "CT_injection_system_a01/simready_usd/Textures/t_plastic_gray_a01_tile_orm.png",
+   "blobId": "d30b21a2e914bc42df15a6493917f49603faec32",
+   "size": 13452682,
+   "lfs": {
+    "sha256": "8f2fecd0faff1f28426d6402944290f96b0302969582ff6fc4fc312b6de20b11",
+    "size": 13452682,
+    "pointerSize": 133
+   }
+  },
+  {
+   "rfilename": "CT_injection_system_a01/simready_usd/Textures/t_rubber_new_a01_tile_alb.png",
+   "blobId": "1f8e0ec7ab654f1a2553806e05f915919e7cb8a7",
+   "size": 58789,
+   "lfs": {
+    "sha256": "3ec67f9e1bf23eb38226c4722daaf691d0e4fef9313551cb27b1f2a1b6df5880",
+    "size": 58789,
+    "pointerSize": 130
+   }
+  },
+  {
+   "rfilename": "CT_injection_system_a01/simready_usd/Textures/t_rubber_new_a01_tile_nor.png",
+   "blobId": "f95c0f07cf51c2ea1c2380d023c7648e5d5e67d5",
+   "size": 18709157,
+   "lfs": {
+    "sha256": "e71a6ef5facd308179c3c8bcca2b371223698b43b3e326fd3761a67a9fbd8e31",
+    "size": 18709157,
+    "pointerSize": 133
+   }
+  },
+  {
+   "rfilename": "CT_injection_system_a01/simready_usd/Textures/t_rubber_new_a01_tile_orm.png",
+   "blobId": "d9990baf963700fecaf4dffac10ae1a89fe58f3c",
+   "size": 9447072,
+   "lfs": {
+    "sha256": "60af1f5ed7df5be29668922a5be6f30e3d0ee1d52f3b3b865ca201def43f166e",
+    "size": 9447072,
+    "pointerSize": 132
+   }
+  },
+  {
+   "rfilename": "CT_injection_system_a01/simready_usd/payloads/MuJoCo/disabled.usda",
+   "blobId": "92c2302ae0a3c295e59564fe5362c25b462fe3ab",
+   "size": 4230,
+   "lfs": {
+    "sha256": "a4e37f0f81f259066a520378061793d9c2c326afe09c005e052d4803bade7823",
+    "size": 4230,
+    "pointerSize": 129
+   }
+  },
+  {
+   "rfilename": "CT_injection_system_a01/simready_usd/payloads/MuJoCo/enabled.usda",
+   "blobId": "7d6a3e05bac205b6a35a1b16f735f2f2b56218cf",
+   "size": 12720,
+   "lfs": {
+    "sha256": "c70f87e8a829961d1f225af5ca09fa125afff8f1e02798d2e010e133700a73f9",
+    "size": 12720,
+    "pointerSize": 130
+   }
+  },
+  {
+   "rfilename": "CT_injection_system_a01/simready_usd/payloads/Newton/disabled.usda",
+   "blobId": "92c2302ae0a3c295e59564fe5362c25b462fe3ab",
+   "size": 4230,
+   "lfs": {
+    "sha256": "a4e37f0f81f259066a520378061793d9c2c326afe09c005e052d4803bade7823",
+    "size": 4230,
+    "pointerSize": 129
+   }
+  },
+  {
+   "rfilename": "CT_injection_system_a01/simready_usd/payloads/Newton/enabled.usda",
+   "blobId": "ec1adc6115555a70223a9332cd3df12cf8e43a26",
+   "size": 10229,
+   "lfs": {
+    "sha256": "7e22e6438eadffc438095067d6bb582f585393c11426d54c5d5a363857703694",
+    "size": 10229,
+    "pointerSize": 130
+   }
+  },
+  {
+   "rfilename": "CT_injection_system_a01/simready_usd/payloads/PhysX/disabled.usda",
+   "blobId": "92c2302ae0a3c295e59564fe5362c25b462fe3ab",
+   "size": 4230,
+   "lfs": {
+    "sha256": "a4e37f0f81f259066a520378061793d9c2c326afe09c005e052d4803bade7823",
+    "size": 4230,
+    "pointerSize": 129
+   }
+  },
+  {
+   "rfilename": "CT_injection_system_a01/simready_usd/payloads/PhysX/enabled.usda",
+   "blobId": "86ee757bafb73e5f501b5edadc45247d9c3d6e00",
+   "size": 8210,
+   "lfs": {
+    "sha256": "1fade4d601c555b374e2306e64e193bbed1488ba6fbb41ed6d4e15f551134a5c",
+    "size": 8210,
+    "pointerSize": 129
+   }
+  },
+  {
+   "rfilename": "CT_injection_system_a01/simready_usd/payloads/Physics/physics.usda",
+   "blobId": "891198ca4c3e083323cf8482f94555c619ddec74",
+   "size": 26386,
+   "lfs": {
+    "sha256": "c1ff309c3e1500fe8b9fb499af7a42f655fc465ed02e4846bfe59d452cc5e0fd",
+    "size": 26386,
+    "pointerSize": 130
+   }
+  },
+  {
+   "rfilename": "CT_injection_system_a01/simready_usd/payloads/base.usda",
+   "blobId": "6be59c28db8c075fd0a291eca7c3d9810b52a742",
+   "size": 55018,
+   "lfs": {
+    "sha256": "7bf7979e47256672b8d6fa24abda21e23e8edd521bdd16a3d65f37095cbbf958",
+    "size": 55018,
+    "pointerSize": 130
+   }
+  },
+  {
+   "rfilename": "CT_injection_system_a01/simready_usd/payloads/geometries.usd",
+   "blobId": "cd9a8fd8cd8734b516f07835070df3db17087248",
+   "size": 14395892,
+   "lfs": {
+    "sha256": "80c0a34e60e170b47cda6cc1546b987ed4ebffcd062f8b81e631c62cdda0f012",
+    "size": 14395892,
+    "pointerSize": 133
+   }
+  },
+  {
+   "rfilename": "CT_injection_system_a01/simready_usd/payloads/instances.usda",
+   "blobId": "210a35023cbf1bc7fd65fb1de7e236440bdfb235",
+   "size": 40790,
+   "lfs": {
+    "sha256": "ab84e4fd6d4cf3dc894c38071ba5d3e68839cfa40342772acb70514d9d4977d6",
+    "size": 40790,
+    "pointerSize": 130
+   }
+  },
+  {
+   "rfilename": "CT_injection_system_a01/simready_usd/payloads/instances_mujoco.usda",
+   "blobId": "bba39834165b8fb0d8a5fa66bc68667b15712932",
+   "size": 46230,
+   "lfs": {
+    "sha256": "2ce6fa6998262168c366f7b38c688e3b3d8f1882b351f5c893c12e1c3031448d",
+    "size": 46230,
+    "pointerSize": 130
+   }
+  },
+  {
+   "rfilename": "CT_injection_system_a01/simready_usd/payloads/instances_newton.usda",
+   "blobId": "0acb9267f83aeb8c0dea0ddce9d06381c85434f2",
+   "size": 43250,
+   "lfs": {
+    "sha256": "d6823b06efc9d8ba64b0bfaad36fa2fcf5e4ad2af9a4362ab666af59b2d9a41f",
+    "size": 43250,
+    "pointerSize": 130
+   }
+  },
+  {
+   "rfilename": "CT_injection_system_a01/simready_usd/payloads/instances_physx.usda",
+   "blobId": "950e5a0eaeb538d27619867515bcb39d73b52397",
+   "size": 44022,
+   "lfs": {
+    "sha256": "82fe9f71273e3662799b4ec7c84209682a2d3f51607de706d62fb45ee87b3a37",
+    "size": 44022,
+    "pointerSize": 130
+   }
+  },
+  {
+   "rfilename": "CT_injection_system_a01/simready_usd/payloads/materials.usda",
+   "blobId": "ad368ebf3aadc03d09afe358fe2c3a8781122409",
+   "size": 51181,
+   "lfs": {
+    "sha256": "1b8c890ced2e67162065f02b0f09b451b68145736d5dfc928106b8e5a5840708",
+    "size": 51181,
+    "pointerSize": 130
+   }
+  },
+  {
+   "rfilename": "CT_injection_system_a01/simready_usd/sm_CT_injection_system_a01_01.usd",
+   "blobId": "b3682b2e9cecc758b950f3b390b00ab56d6f6ba3",
+   "size": 26549,
+   "lfs": {
+    "sha256": "638d38b1d770cc6ac4cafe3030ce9b7f5dbf223c66dbdd170441b75ed4dca3a3",
+    "size": 26549,
+    "pointerSize": 130
+   }
+  },
+  {
+   "rfilename": "CT_injection_system_a01/simready_usd/source_assets/OmniGlass.mdl",
+   "blobId": "39849aaa57e1d4bf1aec8f108f8fc7f7a25232c7",
+   "size": 10205
+  },
+  {
+   "rfilename": "CT_injection_system_a01/simready_usd/source_assets/OmniGlass_Opacity.mdl",
+   "blobId": "233328a4737ff2f4ba141cb6c0a109ff1772566f",
+   "size": 17706
+  },
+  {
+   "rfilename": "CT_injection_system_a01/simready_usd/source_assets/OmniPBR.mdl",
+   "blobId": "7509579a8fd4ec7d069e6d242b37dad39290ec55",
+   "size": 16010
+  },
+  {
+   "rfilename": "CT_injection_system_a01/simready_usd/source_assets/OmniPBRBase.mdl",
+   "blobId": "ea5272914d203f50e4f33c5d420d2b94daddbc0f",
+   "size": 19369
+  },
+  {
+   "rfilename": "CT_injection_system_a01/simready_usd/source_assets/OmniPBR_ClearCoat.mdl",
+   "blobId": "b83431718cbb6ab7c57d8da75468698bab757644",
+   "size": 29789
+  },
+  {
+   "rfilename": "CT_injection_system_a01/simready_usd/source_assets/t_metal_steelStainless_clean_a01_tile_alb.png",
+   "blobId": "c39a13c6bd415bbed59e07c891ed55519a085675",
+   "size": 38407354,
+   "lfs": {
+    "sha256": "52a7df4cd76a31c6f00b4bde562ec880ed4d4446793d9e2d91aecd6df94b2e92",
+    "size": 38407354,
+    "pointerSize": 133
+   }
+  },
+  {
+   "rfilename": "CT_injection_system_a01/simready_usd/source_assets/t_metal_steelStainless_clean_a01_tile_nor.png",
+   "blobId": "291fff8f10244d9664dbb3eee935868bca366ede",
+   "size": 9069490,
+   "lfs": {
+    "sha256": "c878d92cda05e0ee1043ba253431fa2439ecc41315ec99d2f73d49ee68469f63",
+    "size": 9069490,
+    "pointerSize": 132
+   }
+  },
+  {
+   "rfilename": "CT_injection_system_a01/simready_usd/source_assets/t_metal_steelStainless_clean_a01_tile_orm.png",
+   "blobId": "50ac1c9ce6f6d481f3ad873cc92bb3edee561a0e",
+   "size": 8181183,
+   "lfs": {
+    "sha256": "394f71f414aef43409560ce9e7dc827a82efa83c125a15ddc7c0256db874e4fc",
+    "size": 8181183,
+    "pointerSize": 132
+   }
+  },
+  {
+   "rfilename": "CT_injection_system_a01/simready_usd/source_assets/t_plastic_black_a01_tile_alb.png",
+   "blobId": "5b4f8a85730853050b84f9f5c2d2ab4cd846d060",
+   "size": 15321300,
+   "lfs": {
+    "sha256": "b6bccbf9f0086817688c53c8203e3563034d5704e750f81e6ed866382613c6d3",
+    "size": 15321300,
+    "pointerSize": 133
+   }
+  },
+  {
+   "rfilename": "CT_injection_system_a01/simready_usd/source_assets/t_plastic_black_a01_tile_nor.png",
+   "blobId": "fa491919158d6a9e87713a4fc13b442b1b78d368",
+   "size": 21091456,
+   "lfs": {
+    "sha256": "50c9be331ece773c992fddd42d2440bcbc01b3bfcf1992f96b6ecf22bf9db6d2",
+    "size": 21091456,
+    "pointerSize": 133
+   }
+  },
+  {
+   "rfilename": "CT_injection_system_a01/simready_usd/source_assets/t_plastic_black_a01_tile_orm.png",
+   "blobId": "fe2f044ceb7a4076a081dc3cfdef3157387d96b6",
+   "size": 15783445,
+   "lfs": {
+    "sha256": "c840f18380e08ec52d43ebe660d0f1290122fec5ae7c43cf8a987b0163661da9",
+    "size": 15783445,
+    "pointerSize": 133
+   }
+  },
+  {
+   "rfilename": "CT_injection_system_a01/simready_usd/source_assets/t_plastic_blue_a01_tile_nor.png",
+   "blobId": "fcdd318f4fba2b725795189deb08107a31023600",
+   "size": 23536016,
+   "lfs": {
+    "sha256": "adcd107e7e5dcfe8e8d689283875b77a46aadb09e25739b68bfad1fadd344788",
+    "size": 23536016,
+    "pointerSize": 133
+   }
+  },
+  {
+   "rfilename": "CT_injection_system_a01/simready_usd/source_assets/t_plastic_blue_a01_tile_orm.png",
+   "blobId": "bf779770b5faf7cdd889596d7a6c88f8ea7c15e1",
+   "size": 13064706,
+   "lfs": {
+    "sha256": "4c52d4a130502a78fe1125b93b1aa9aa2aedc4481d73e93de076194e220f60b8",
+    "size": 13064706,
+    "pointerSize": 133
+   }
+  },
+  {
+   "rfilename": "CT_injection_system_a01/simready_usd/source_assets/t_plastic_glossy_black_a01_tile_alb.png",
+   "blobId": "810ce9ff9ecaf220819e99e1684b92f3196f3589",
+   "size": 58789,
+   "lfs": {
+    "sha256": "a256461383279637552d0ce7c21d0b54d4db8b5238ae6637e4b4b8ad88042c44",
+    "size": 58789,
+    "pointerSize": 130
+   }
+  },
+  {
+   "rfilename": "CT_injection_system_a01/simready_usd/source_assets/t_plastic_glossy_black_a01_tile_nor.png",
+   "blobId": "04a366e9eb2d34cf8b3cb51aa15220986cac1bf1",
+   "size": 9513502,
+   "lfs": {
+    "sha256": "a03864998e9916c83af666d3a4fee5bc6c70705d66ecbf4b344cbb14a7324f99",
+    "size": 9513502,
+    "pointerSize": 132
+   }
+  }
+ ],
+ "createdAt": "2026-06-29T15:38:26.000Z",
+ "usedStorage": 89571424003
+}

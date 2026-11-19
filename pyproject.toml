@@ -13,18 +13,26 @@ requires-python = ">=3.11"
 authors = [{ name = "Mohamed Elsaka" }]
 keywords = ["dataset", "license", "provenance", "data-quality", "huggingface"]
 classifiers = [
-  "Development Status :: 1 - Planning",
+  "Development Status :: 2 - Pre-Alpha",
   "Programming Language :: Python :: 3",
   "Operating System :: OS Independent",
 ]
-# Phase 2 adds the core dependencies listed in PLAN.md section 3.
-dependencies = []
+dependencies = [
+  "huggingface_hub>=1.2",
+  "httpx2>=2.16",
+  "pyarrow>=21",
+  "duckdb>=1.1",
+  "xxhash>=3.4",
+  "pyyaml>=6",
+  "phonenumbers>=8.13",
+  "rich>=13",
+]
 
 [project.optional-dependencies]
 # Phase 3 (task 3.4): ScanCode licence detection. Measured on Windows: needs pluggy<1.6
 # and typecode-libmagic, and a short venv path (PLAN.md section 9).
 scan = []
-dev = ["pytest>=8", "ruff>=0.6"]
+dev = ["pytest>=8", "ruff>=0.6", "mypy>=1.11", "types-PyYAML"]
 
 [project.scripts]
 datasetvet = "datasetvet.cli:main"
@@ -40,3 +48,7 @@ addopts = "-m 'not network'"
 [tool.ruff]
 line-length = 100
 target-version = "py311"
+
+[tool.mypy]
+python_version = "3.11"
+ignore_missing_imports = true

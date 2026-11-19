@@ -1,3 +1,3 @@
 # docs
 
-CHECKS.md (rules), REPORT_SCHEMA.md and INSTALL.md arrive with Phases 2, 3 and 5. Until then, PLAN.md is the reference.
+CHECKS.md (rules), REPORT_SCHEMA.md and INSTALL.md are not written yet. Until they are, PLAN.md sections 5–7 (with their Phase 2 notes) are the reference for the rules and the report. The JSON report's `schema_version` is 0.1.

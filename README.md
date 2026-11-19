@@ -2,7 +2,14 @@
 
 **Before you train on it, check it.**
 
-> **Status: planning (Phase 1 of 5). Nothing works yet.** The design is in [PLAN.md](PLAN.md) and the build history is in [BUILD_LOG.md](BUILD_LOG.md).
+> **Status: Phase 2 of 5.** Card, link and data-health checks work for Hugging Face datasets. Licence consistency and provenance are not built yet (Phase 3). The design is in [PLAN.md](PLAN.md) and the build history is in [BUILD_LOG.md](BUILD_LOG.md).
+
+```powershell
+pip install -e .
+datasetvet check hf:stanfordnlp/imdb --json report.json
+```
+
+It uses free endpoints only. If you are logged in with `hf auth login` (or set `HF_TOKEN`), your token raises the Hub's rate limits. It is sent only to Hugging Face hosts and is never printed or stored.
 
 datasetvet will be a free, local CLI that checks a dataset (Hugging Face first) and writes a report card of **verifiable facts**:
 
