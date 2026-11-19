@@ -3,7 +3,7 @@ requires = ["hatchling>=1.25"]
 build-backend = "hatchling.build"
 
 [project]
-name = "datasetdoctor"  # working name; see PLAN.md section 1
+name = "datasetvet"
 version = "0.0.0"
 description = "Before you train on it, check it: a report card of verifiable facts about a dataset."
 readme = "README.md"
@@ -27,10 +27,10 @@ scan = []
 dev = ["pytest>=8", "ruff>=0.6"]
 
 [project.scripts]
-datasetdoctor = "datasetdoctor.cli:main"
+datasetvet = "datasetvet.cli:main"
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/datasetdoctor"]
+packages = ["src/datasetvet"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

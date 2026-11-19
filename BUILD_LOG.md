@@ -30,7 +30,7 @@ Run in one Claude Code session (desktop app) on the owner's Windows 11 laptop, P
 | Answer key | DPI `data_summaries` (GitHub, Apache-2.0), not their HF datasets | the HF datasets are filtered training data without licence tags; the GitHub JSON has expert licences + what the card said at audit time |
 | Badge | local SVG, factual text, no green | green reads as "safe" |
 | Project licence | MIT | matches the owner's other projects (tierview, honest-ml, honest-tests are MIT) |
-| Name | `datasetdoctor` kept as the working name | free on PyPI/npm but crowded on GitHub; rename is the owner's call (PLAN.md §1) |
+| Name | **`datasetvet`** (renamed from the working name `datasetdoctor` by the owner after Phase 1) | `datasetdoctor` was free on PyPI/npm but crowded on GitHub (8 repos, `dataset-doctor` taken on PyPI); `datasetvet` is free on PyPI, npm and GitHub (re-checked 2026-11-19) |
 
 ### Measured
 

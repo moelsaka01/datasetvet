@@ -1,10 +1,10 @@
-# datasetdoctor
+# datasetvet
 
 **Before you train on it, check it.**
 
-> **Status: planning (Phase 1 of 5). Nothing works yet.** The design is in [PLAN.md](PLAN.md) and the build history is in [BUILD_LOG.md](BUILD_LOG.md). The name is a working name.
+> **Status: planning (Phase 1 of 5). Nothing works yet.** The design is in [PLAN.md](PLAN.md) and the build history is in [BUILD_LOG.md](BUILD_LOG.md).
 
-datasetdoctor will be a free, local CLI that checks a dataset (Hugging Face first) and writes a report card of **verifiable facts**:
+datasetvet will be a free, local CLI that checks a dataset (Hugging Face first) and writes a report card of **verifiable facts**:
 
 - **Card:** licence field present and a valid SPDX id, required metadata, citation, stated source.
 - **Licence consistency:** the card's licence compared with the README text, the repo's licence files, and the licence of the source it points to.

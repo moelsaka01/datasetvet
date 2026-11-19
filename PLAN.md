@@ -1,4 +1,4 @@
-# datasetdoctor: plan
+# datasetvet: plan
 
 > **Before you train on it, check it.**
 > A CLI that checks a dataset and writes a report card of verifiable facts: what the card says, what the licence files and the source say, whether the links work, and what is in the data (duplicates, cross-split leakage, empty rows, label balance, PII-pattern matches). It never says a dataset is "safe to use", and it is not legal advice.
@@ -28,7 +28,7 @@ Contents: [1 Name](#1-name) · [2 Competitors](#2-competitors) · [3 Architectur
 2. **`datapreflight`**: the "check before you take off" metaphor fits "before you train on it".
 3. **`cardvet`**: short, but undersells the data-health half.
 
-The scaffold uses `datasetdoctor`. The package name appears in `pyproject.toml`, `src/datasetdoctor/` and the docs only, so a rename now is cheap. **Decision for the owner.**
+**Decision (owner, 2026-11-19): `datasetvet`.** Re-checked the same day: free on PyPI and npm, no GitHub user or org, 0 GitHub repos. Package `src/datasetvet/`, CLI `datasetvet`. The tagline stays "Before you train on it, check it."
 
 ## 2. Competitors
 
@@ -86,8 +86,8 @@ Every check is a pure function of fetched inputs plus fixed tables; every networ
 ### Module layout
 
 ```text
-src/datasetdoctor/
-  cli.py                 argparse entry point: `datasetdoctor check <ref>`, `datasetdoctor badge`
+src/datasetvet/
+  cli.py                 argparse entry point: `datasetvet check <ref>`, `datasetvet badge`
   config.py              limits (scan bytes, sample size, timeouts), loaded from flags/env/file
   model.py               dataclasses: DatasetRef, Evidence, Fact, CheckResult, Report; status enums
   http.py                one session: RateLimit-header limiter, retries, on-disk cache, user agent
@@ -142,7 +142,7 @@ Tokens: an HF token or a GitHub token is read only from the user's own environme
 | licensee (Ruby; what GitHub's API uses) | LICENSE files and a README "License" section; small licence set (choosealicense.com) | needs a Ruby toolchain | Ruby + gems | MIT | active (pushed 2026-11-16) |
 | SPDX licence-list template matching | Exact-ish full-text matching against SPDX templates; strict and slow, no notice detection | any | small | SPDX data (licence: repo reports NOASSERTION; to verify) | active |
 
-**Recommendation: ScanCode toolkit**, installed as an optional extra (`pip install datasetdoctor[scan]`).
+**Recommendation: ScanCode toolkit**, installed as an optional extra (`pip install datasetvet[scan]`).
 
 - It is the only option that handles our hardest input, licence *statements inside dataset READMEs and web pages*, not just LICENSE files.
 - It is deterministic and gives a score and the matched lines, which become the report's evidence.
@@ -284,7 +284,7 @@ class SourceResolver(Protocol):                  # things that are sources, not 
 - **Terminal:** one block per section: status word, the facts as one-line sentences, evidence links. The first line is the scan type and anything not checked.
 - **Markdown** (`--md`), for PRs and issues, and **HTML** (`--html`): one static file, no JavaScript, no external requests, links to evidence. The HTML is the unit of the later static report website.
 - **Footer, every format:** "Facts only, not legal advice. Statuses: consistent / inconsistent / missing / unknown. No check decides whether you may use this data."
-- **Badge** (`datasetdoctor badge report.json > badge.svg`): a local SVG in the shields style, generated without any web service. The text is factual, e.g. `datasetdoctor | 2 inconsistent · 1 dead link · full scan` or `datasetdoctor | no findings · sampled`. Colours: grey when nothing was found, amber for any `inconsistent`/`found`/`dead`, light grey for `unknown`-only. No green, because green reads as "safe".
+- **Badge** (`datasetvet badge report.json > badge.svg`): a local SVG in the shields style, generated without any web service. The text is factual, e.g. `datasetvet | 2 inconsistent · 1 dead link · full scan` or `datasetvet | no findings · sampled`. Colours: grey when nothing was found, amber for any `inconsistent`/`found`/`dead`, light grey for `unknown`-only. No green, because green reads as "safe".
 
 ## 8. Accuracy evaluation
 
@@ -387,7 +387,7 @@ Each task is small, has a check you can run, and names its files. Tests never to
 | 2.9 | Duplicates + cross-split leakage on DuckDB (on disk) | `checks/health/duplicates.py`, `tests/test_duplicates.py` | synthetic splits with known dup/leak counts match exactly; works when data exceeds a tiny memory cap |
 | 2.10 | Empty rows, corrupt files, label balance | `checks/health/empty.py`, `labels.py`, tests | synthetic fixtures; corrupt Parquet file reported, scan continues |
 | 2.11 | PII pattern matcher with masking | `checks/health/pii.py`, `tests/test_pii.py` | precision fixtures (non-emails, version numbers, dates not matched); masking never prints the full value |
-| 2.12 | JSON + terminal report; CLI `check` | `report/json_out.py`, `report/terminal.py`, `cli.py` | `datasetdoctor check hf:stanfordnlp/imdb` runs end to end on the laptop; scan time and throughput logged to BUILD_LOG |
+| 2.12 | JSON + terminal report; CLI `check` | `report/json_out.py`, `report/terminal.py`, `cli.py` | `datasetvet check hf:stanfordnlp/imdb` runs end to end on the laptop; scan time and throughput logged to BUILD_LOG |
 | 2.13 | CI: lint, type check, tests on Windows + Ubuntu, Python 3.11/3.12/3.13 | `.github/workflows/ci.yml` | green on a branch (pushed only with the owner's OK) |
 
 ### Phase 3: licence + provenance (Opus 5.5, high)
@@ -430,7 +430,7 @@ Each task is small, has a check you can run, and names its files. Tests never to
 
 ## 12. Risks and open questions
 
-- **Name** (§1): keep `datasetdoctor` or rename. Owner decides before Phase 2.
+- **Name** (§1): decided, `datasetvet`. Claim the PyPI name with the first release (task 5.8), since names are first come, first served.
 - **ScanCode on Windows**: long paths. Mitigated by the optional extra and docs; CI proves it (3.8).
 - **The DPI key is a snapshot of self-reported, best-effort labels** (their own disclaimer). We publish agreement, not accuracy, plus the disagreement audit.
 - **Dataset Viewer limits are undocumented**: measured during 4.1/4.7.

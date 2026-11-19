@@ -1,5 +1,5 @@
-from datasetdoctor import __version__
-from datasetdoctor.cli import main
+from datasetvet import __version__
+from datasetvet.cli import main
 
 
 def test_version_string():

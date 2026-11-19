@@ -12,7 +12,7 @@ dist/
 htmlcov/
 
 # local caches and run state
-.datasetdoctor-cache/
+.datasetvet-cache/
 launch/state.sqlite
 launch/tmp/
 eval/cache/
