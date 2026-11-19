@@ -1,0 +1,22 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+build/
+dist/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# local caches and run state
+.datasetdoctor-cache/
+launch/state.sqlite
+launch/tmp/
+eval/cache/
+
+# never commit tokens
+.env
+*.token

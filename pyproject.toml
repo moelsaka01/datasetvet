@@ -1,0 +1,42 @@
+[build-system]
+requires = ["hatchling>=1.25"]
+build-backend = "hatchling.build"
+
+[project]
+name = "datasetdoctor"  # working name; see PLAN.md section 1
+version = "0.0.0"
+description = "Before you train on it, check it: a report card of verifiable facts about a dataset."
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+requires-python = ">=3.11"
+authors = [{ name = "Mohamed Elsaka" }]
+keywords = ["dataset", "license", "provenance", "data-quality", "huggingface"]
+classifiers = [
+  "Development Status :: 1 - Planning",
+  "Programming Language :: Python :: 3",
+  "Operating System :: OS Independent",
+]
+# Phase 2 adds the core dependencies listed in PLAN.md section 3.
+dependencies = []
+
+[project.optional-dependencies]
+# Phase 3 (task 3.4): ScanCode licence detection. Measured on Windows: needs pluggy<1.6
+# and typecode-libmagic, and a short venv path (PLAN.md section 9).
+scan = []
+dev = ["pytest>=8", "ruff>=0.6"]
+
+[project.scripts]
+datasetdoctor = "datasetdoctor.cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/datasetdoctor"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = ["network: needs internet; skipped unless -m network"]
+addopts = "-m 'not network'"
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
