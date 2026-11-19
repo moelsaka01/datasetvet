@@ -1,10 +1,14 @@
 """Built-in licence matcher: deterministic, no AI, standard library only (PLAN.md section 4).
 
-Three detectors, all against the vendored SPDX licence list (`spdx.spdx_data()`):
+Three detectors, against data derived from the SPDX licence list. The package ships **no
+licence text**: only the list's ids, names, flags and URLs (`spdx.spdx_data()`) and a
+fingerprint index (`data/spdx_fingerprints.json.gz`) holding, per licence, the multiset of
+64-bit hashes of its normalised word bigrams. `tools/vendor_spdx.py` rebuilds both from the
+official SPDX source with `build_fingerprints()` below.
 
 1. **Full text** (askalono-style). Text is normalised along the lines of the SPDX matching
    guidelines (case, punctuation, quotes, dashes, bullets, copyright lines, SPDX's
-   equivalent words), split into words, and compared as sets of word bigrams:
+   equivalent words), split into words, and compared as multisets of hashed word bigrams:
    - `dice` = 2|A∩B| / (|A|+|B|): the file *is* licence B when dice >= DICE_MIN;
    - `containment` = |A∩B| / |B|: the file *contains* licence B (e.g. a README with the MIT
      text under "## License") when containment >= CONTAIN_MIN. When two contained licences
@@ -23,13 +27,20 @@ Thresholds are fixed here and may only be tuned on the Phase 4 dev split.
 
 from __future__ import annotations
 
+import base64
+import gzip
+import hashlib
+import json
 import re
+import struct
 import unicodedata
 from collections import Counter
 from collections.abc import Iterable
 from dataclasses import dataclass, field
 from functools import lru_cache
+from importlib import resources
 from itertools import pairwise
+from typing import Any
 
 from datasetvet.licences import spdx
 
@@ -111,12 +122,28 @@ def words(text: str) -> list[str]:
     return [EQUIVALENT_WORDS.get(w, w) for w in toks]
 
 
-def bigrams(toks: list[str]) -> Counter[tuple[str, str]]:
-    """Word bigrams with their counts (a multiset, so repeated clauses count)."""
-    return Counter(pairwise(toks))
+# Bump when words() or the bigram hash changes: the shipped index must then be rebuilt.
+NORMALISER_VERSION = 1
+FINGERPRINT_FORMAT = "datasetvet-spdx-fingerprints/1"
+HASH_NOTE = ("blake2b, 8-byte digest read little-endian, of 'word1 word2' (UTF-8) after "
+             f"matcher normalisation v{NORMALISER_VERSION}")
 
 
-def _overlap(a: Counter[tuple[str, str]], b: Counter[tuple[str, str]]) -> int:
+def gram_hash(a: str, b: str) -> int:
+    return int.from_bytes(hashlib.blake2b(f"{a} {b}".encode(), digest_size=8).digest(),
+                          "little")
+
+
+def gram_hashes(toks: list[str]) -> list[int]:
+    return [gram_hash(a, b) for a, b in pairwise(toks)]
+
+
+def bigrams(toks: list[str]) -> Counter[int]:
+    """Hashed word bigrams with their counts (a multiset, so repeated clauses count)."""
+    return Counter(gram_hashes(toks))
+
+
+def _overlap(a: Counter[int], b: Counter[int]) -> int:
     if len(a) > len(b):
         a, b = b, a
     return sum(min(n, b[g]) for g, n in a.items() if g in b)
@@ -125,28 +152,104 @@ def _overlap(a: Counter[tuple[str, str]], b: Counter[tuple[str, str]]) -> int:
 @dataclass
 class _Licence:
     ids: list[str]  # first is the representative
-    grams: Counter[tuple[str, str]]
+    grams: Counter[int]
     size: int  # total bigrams
     n_words: int
 
 
+# -- fingerprint index (built by tools/vendor_spdx.py; no licence text is shipped) -------------
+
+def _varints(nums: Iterable[int]) -> bytes:
+    out = bytearray()
+    for n in nums:
+        while True:
+            b = n & 0x7F
+            n >>= 7
+            out.append(b | (0x80 if n else 0))
+            if not n:
+                break
+    return bytes(out)
+
+
+def _unvarints(data: bytes) -> list[int]:
+    out: list[int] = []
+    n = shift = 0
+    for b in data:
+        n |= (b & 0x7F) << shift
+        if b & 0x80:
+            shift += 7
+        else:
+            out.append(n)
+            n = shift = 0
+    return out
+
+
+def build_fingerprints(texts: dict[str, str], source: str, list_version: str) -> dict[str, Any]:
+    """The fingerprint index for `texts` (SPDX id -> official text).
+
+    Licences whose normalised texts are identical (GPL-2.0-only / GPL-2.0-or-later) form one
+    group. Each group stores the multiset of its bigram hashes as sorted positions in one
+    shared hash table, delta-encoded as varints (a delta of 0 repeats a bigram). The index
+    holds no words: only hashes of word pairs, their counts, and each text's word count."""
+    groups: list[dict[str, Any]] = []
+    seen: dict[tuple[str, ...], dict[str, Any]] = {}
+    for lid in sorted(texts):
+        toks = words(texts[lid])
+        same = seen.get(tuple(toks))
+        if same is not None:
+            same["ids"].append(lid)
+            continue
+        g: dict[str, Any] = {"ids": [lid], "n_words": len(toks), "grams": bigrams(toks)}
+        seen[tuple(toks)] = g
+        groups.append(g)
+    vocab = sorted(set().union(*(g["grams"] for g in groups)))
+    pos = {h: i for i, h in enumerate(vocab)}
+    out_groups = []
+    for g in groups:
+        idx = sorted(pos[h] for h, n in g["grams"].items() for _ in range(n))
+        deltas = [b - a for a, b in zip([0, *idx], idx, strict=False)]
+        out_groups.append({"ids": sorted(g["ids"], key=_prefer), "n_words": g["n_words"],
+                           "bigrams": base64.b64encode(_varints(deltas)).decode("ascii")})
+    return {"format": FINGERPRINT_FORMAT, "normaliser_version": NORMALISER_VERSION,
+            "hash": HASH_NOTE, "source": source, "list_version": list_version,
+            "hash_table": base64.b64encode(struct.pack(f"<{len(vocab)}Q", *vocab)
+                                           ).decode("ascii"),
+            "groups": out_groups}
+
+
+def fingerprint_bytes(fp: dict[str, Any]) -> bytes:
+    data = json.dumps(fp, ensure_ascii=False, sort_keys=True).encode("utf-8")
+    return gzip.compress(data, compresslevel=9, mtime=0)
+
+
+@lru_cache(maxsize=1)
+def fingerprints() -> dict[str, Any]:
+    raw = resources.files("datasetvet.data").joinpath("spdx_fingerprints.json.gz").read_bytes()
+    fp: dict[str, Any] = json.loads(gzip.decompress(raw))
+    if fp.get("format") != FINGERPRINT_FORMAT or \
+            fp.get("normaliser_version") != NORMALISER_VERSION:
+        raise RuntimeError("spdx_fingerprints.json.gz was built by another matcher version; "
+                           "rebuild it with tools/vendor_spdx.py")
+    return fp
+
+
+def index_from(fp: dict[str, Any]) -> list[_Licence]:
+    table = base64.b64decode(fp["hash_table"])
+    vocab = struct.unpack(f"<{len(table) // 8}Q", table)
+    out: list[_Licence] = []
+    for g in fp["groups"]:
+        at = 0
+        grams: Counter[int] = Counter()
+        for d in _unvarints(base64.b64decode(g["bigrams"])):
+            at += d
+            grams[vocab[at]] += 1
+        out.append(_Licence(list(g["ids"]), grams, sum(grams.values()), int(g["n_words"])))
+    return out
+
+
 @lru_cache(maxsize=1)
 def _index() -> list[_Licence]:
-    out: list[_Licence] = []
-    seen: dict[tuple[str, ...], _Licence] = {}
-    for lid, meta in sorted(spdx.spdx_data()["licences"].items()):
-        toks = words(meta["text"])
-        same = seen.get(tuple(toks))
-        if same is not None:  # identical normalised text, e.g. GPL-2.0-only / -or-later
-            same.ids.append(lid)
-            continue
-        grams = bigrams(toks)
-        lic = _Licence([lid], grams, sum(grams.values()), len(toks))
-        seen[tuple(toks)] = lic
-        out.append(lic)
-    for lic in out:
-        lic.ids.sort(key=_prefer)
-    return out
+    return index_from(fingerprints())
 
 
 def _prefer(lid: str) -> tuple[int, str]:
@@ -154,7 +257,7 @@ def _prefer(lid: str) -> tuple[int, str]:
     return (0 if lid.endswith("-only") else 1, lid)
 
 
-def dice(a: Counter[tuple[str, str]], b: Counter[tuple[str, str]]) -> float:
+def dice(a: Counter[int], b: Counter[int]) -> float:
     na, nb = sum(a.values()), sum(b.values())
     return 2 * _overlap(a, b) / (na + nb) if na and nb else 0.0
 
@@ -171,10 +274,10 @@ def _token_lines(text: str) -> tuple[list[str], list[int]]:
     return toks, lines
 
 
-def _span(toks: list[str], lines: list[int], grams: Counter[tuple[str, str]],
+def _span(hashes: list[int], lines: list[int], grams: Counter[int],
           width: int) -> tuple[int, int]:
     """Line range of the window of `width` words holding the most of the licence's bigrams."""
-    hits = [1 if (toks[i], toks[i + 1]) in grams else 0 for i in range(len(toks) - 1)]
+    hits = [1 if h in grams else 0 for h in hashes]
     if not hits:
         return (lines[0], lines[0]) if lines else (1, 1)
     width = max(1, min(width, len(hits)))
@@ -191,7 +294,8 @@ def _span(toks: list[str], lines: list[int], grams: Counter[tuple[str, str]],
 
 def match_full_text(text: str) -> list[Detection]:
     toks, lines = _token_lines(text)
-    doc = bigrams(toks)
+    hashes = gram_hashes(toks)
+    doc = Counter(hashes)
     n_doc = sum(doc.values())
     if not n_doc:
         return []
@@ -205,7 +309,7 @@ def match_full_text(text: str) -> list[Detection]:
     scored.sort(key=lambda x: (-x[0], x[2].ids[0]))
     best_dice, _cont, best = scored[0]
     if best_dice >= DICE_MIN:
-        span = _span(toks, lines, best.grams, int(best.n_words * 1.2) + 10)
+        span = _span(hashes, lines, best.grams, int(best.n_words * 1.2) + 10)
         return [_text_detection(best, "full text", best_dice, span)]
     contained = [(cont, lic) for _d, cont, lic in scored
                  if cont >= CONTAIN_MIN and lic.size >= MIN_TEXT_BIGRAMS]
@@ -217,7 +321,7 @@ def match_full_text(text: str) -> list[Detection]:
                        for _c, b in contained)]
     out = []
     for cont, lic in keep:
-        span = _span(toks, lines, lic.grams, int(lic.n_words * 1.2) + 10)
+        span = _span(hashes, lines, lic.grams, int(lic.n_words * 1.2) + 10)
         out.append(_text_detection(lic, "contains text", cont, span))
     return out
 

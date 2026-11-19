@@ -1,0 +1,40 @@
+# Accuracy evaluation config (PLAN.md section 8). Frozen with the git tag eval-config-v1
+# before any test-split status is computed; eval/run.py refuses the test split if this file
+# or src/ differs from the tag.
+
+# Rows: the answer key's Q3 rows (eval/key/key.json with an expected status).
+# Each row runs `datasetvet check hf:<id>@<audit-time sha>` with links, data health and
+# provenance off: licence consistency only (card vs README text, repo licence files, sources).
+settings:
+  check_links: false
+  check_data: false
+  provenance_depth: 0
+  check_sources: true
+
+# One status per dataset from our per-comparison statuses. Fixed before any run:
+#   card (C1) states no licence           -> missing
+#   any comparison inconsistent           -> inconsistent
+#   else any comparison consistent        -> consistent
+#   else                                  -> unknown (we abstain)
+# A comparison's own `missing` (the other side states nothing) is not evidence either way.
+aggregation: card-missing / any-inconsistent / any-consistent / unknown
+
+# Tuning on the dev split only: each scanner's thresholds, nothing else. Selection rule:
+# the most dev rows where our status equals the expected status (unknown counts as not
+# agreeing, so abstaining cannot win); ties go to the Phase 3 default.
+grid:
+  builtin:
+    dice_min: [0.80, 0.85, 0.90, 0.95]
+    contain_min: [0.90, 0.95]
+  scancode:
+    min_score: [50, 60, 70, 80, 90, 95, 100]
+
+# Selected on the dev split (eval/results/metrics-dev-grid.json, 116 scored rows):
+# builtin: all 8 grid points agree on 79 rows, so the Phase 3 default stays;
+# scancode: min_score 50 agrees on 76 rows (90: 66, 100: 60).
+frozen:
+  builtin:
+    dice_min: 0.90
+    contain_min: 0.95
+  scancode:
+    min_score: 50

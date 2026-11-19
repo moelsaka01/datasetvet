@@ -20,3 +20,8 @@ eval/cache/
 # never commit tokens
 .env
 *.token
+
+# Phase 4 run logs and state
+launch/*.log
+launch/state.sqlite-*
+launch/results/reports/

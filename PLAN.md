@@ -97,7 +97,7 @@ src/datasetvet/
     github.py            v1: source resolver (licence of a GitHub repo); v2: dataset adapter
     web.py               plain-URL source resolver (link status only + licence text if a licence page)
   licences/
-    spdx.py              vendored SPDX list + license-expression wrapper; parse, normalise, compare
+    spdx.py              SPDX list metadata (no texts) + license-expression wrapper; parse, normalise, compare
     hf_ids.py            HF licence id -> SPDX id / family / non-SPDX table (data/hf_licence_ids.csv)
     matcher.py           Phase 3: built-in matcher (full texts, notices, licence URLs; no AI)
     scanner.py           Scanner interface: builtin, or ScanCode (optional extra)
@@ -111,8 +111,8 @@ src/datasetvet/
       empty.py  labels.py  pii.py
   report/
     json_out.py  terminal.py  markdown.py  html.py  badge.py
-  data/                  hand-checked tables (CSV) with a source URL per row; spdx_licences.json.gz
-tools/vendor_spdx.py     Phase 3: rebuilds data/spdx_licences.json.gz from a pinned SPDX release
+  data/                  hand-checked tables (CSV) with a source URL per row; SPDX metadata + fingerprint index
+tools/vendor_spdx.py     rebuilds the SPDX metadata and the matcher's fingerprint index from a pinned SPDX release (Phase 4: no texts shipped)
 eval/                    DPI answer-key builder, runner, metrics (Phase 4)
 launch/                  resumable top-500 scan (Phase 4)
 tests/                   offline unit tests + recorded HTTP fixtures; `-m network` for live tests
@@ -128,7 +128,7 @@ docs/                    CHECKS.md (rules), REPORT_SCHEMA.md, EVAL.md
 | `duckdb` | on-disk hash table and duplicate/leakage queries beyond RAM | MIT |
 | `xxhash` | 128-bit row hashes (xxh3_128) | BSD-2-Clause |
 | `license-expression` (+ `boolean.py`) | SPDX parse/normalise/equivalence (1.5 MB installed) | Apache-2.0 (+ BSD-2-Clause) |
-| vendored SPDX licence list 3.29.0 (Phase 3) | 92 official texts + flags for 740 ids, 249 KB gzipped, for the built-in matcher | see §12: the list's own licence is not stated |
+| SPDX licence list 3.29.0, derived data only (Phase 4) | metadata for 740 ids (8.5 KB gzipped) and a hashed-bigram fingerprint index of 92 texts (281 KB); no licence text | see §12: the list's own licence is not stated |
 | `pyyaml` | card front matter | MIT |
 | `phonenumbers` | phone-number validation after regex candidates | Apache-2.0 |
 | `rich` | terminal report | MIT |
@@ -150,7 +150,8 @@ Tokens: an HF token or a GitHub token is read only from the user's own environme
 ~~The default install has no licence-text scanner~~ (decision of 2026-11-19, before Phase 2; **replaced by the owner's Phase 3 decision below**).
 
 **Phase 3 decision (owner, 2026-11-19): the plain install gets a built-in licence matcher.** Deterministic, matching against official SPDX licence texts (askalono-style), no AI, small and dependency-light. As built (`licences/matcher.py`, standard library only):
-- **Data:** 92 official texts from `spdx/license-list-data` tag v3.29.0 (every SPDX licence HF's id list maps to, plus other versions of the same families and common data licences), and the OSI/FSF/deprecated flags of all 740 ids. 249 KB gzipped, built by `tools/vendor_spdx.py`. Texts that are identical after normalisation form one group (GPL-2.0-only / GPL-2.0-or-later and 4 more pairs), so 87 groups.
+- **Data:** 92 official texts from `spdx/license-list-data` tag v3.29.0 (every SPDX licence HF's id list maps to, plus other versions of the same families and common data licences), and the OSI/FSF/deprecated flags of all 740 ids. Texts that are identical after normalisation form one group (GPL-2.0-only / GPL-2.0-or-later and 4 more pairs), so 87 groups.
+- **Phase 4 decision (owner, 2026-11-19): no licence texts are shipped.** The package carries only the list metadata (`spdx_licences.json.gz`, 8.5 KB) and a fingerprint index (`spdx_fingerprints.json.gz`, 281 KB): per group, the multiset of 64-bit BLAKE2b hashes of its normalised word bigrams and its word count, delta-encoded against one shared hash table. No word is stored. `tools/vendor_spdx.py` downloads the texts from the pinned tag into a git-ignored cache and regenerates both files; `--check` rebuilds them byte for byte (CI runs it). The matcher hashes the input text's bigrams the same way, so its scores are unchanged (all matcher tests pass against the index). Tests that need a real licence text read the cache and are skipped without it.
 - **Full text:** normalisation along the SPDX matching guidelines (case, quotes, dashes, copyright lines, SPDX's `equivalentwords.txt`), word bigrams counted as a multiset. A text *is* licence L when Dice >= 0.90; it *contains* L (e.g. a README with the MIT text under "## License") when containment >= 0.95, and when two contained licences overlap the larger wins (MIT inside X11). Multiset rather than set bigrams were needed: as sets, CC-BY-1.0 and CC-BY-SA-1.0 scored 0.997 against each other; as multisets every one of the 92 texts identifies itself and close relatives (MIT/MIT-0/X11, ISC/0BSD, BSD-2/3, CC-BY/BY-SA 1.0 and 4.0, GPL-3.0/AGPL-3.0) are told apart (tests).
 - **Notices:** `SPDX-License-Identifier:` lines, and licence names and ids from the SPDX list plus common short forms ("CC BY-NC 4.0", "Apache 2.0", "GPLv3", "CC0", "ODC-BY") inside a licence context: a "License:" line, a section headed License/Licensing, or within 25 words of "license"/"licence" or "released/distributed/available ... under". One-word names (MIT, ISC, Unlicense) need the word license within 3 words. A Creative Commons name without a version ("CC BY-SA") is flagged and never compared.
 - **Licence URLs:** creativecommons.org licence and deed URLs (ports only when the port is on the SPDX list), gnu.org, opendatacommons.org, spdx.org / opensource.org / choosealicense.com id URLs, and every `seeAlso` URL the SPDX list publishes. The URL itself is the evidence; it is not fetched.
@@ -508,7 +509,7 @@ Owner decisions taken at the start of Phase 3 (from the Phase 2 open questions):
 - **Licence properties**: SPDX data carries no NC/SA properties for non-CC licences, so those show none. This is narrower than the brief's wording; owner to confirm.
 - ~~Footer vs banned words~~: resolved in Phase 3 (footer reworded, §7).
 - ~~Default install has no text scanner~~: resolved in Phase 3 (built-in matcher, §4). §8 measures `builtin` and `scancode` separately.
-- **SPDX licence list data's own licence is still not stated** (Phase 3 check, 2026-11-19): GitHub reports `NOASSERTION` for `spdx/license-list-data` and `spdx/license-list-XML`; neither README nor spdx.org/licenses states a licence (the site footer says "© 2018 SPDX Workgroup a Linux Foundation Project. All Rights Reserved"). The package vendors 92 licence texts (each licence's own text) plus list metadata. Owner to decide before the first release (task 5.8) whether to keep vendoring the texts, ask SPDX, or ship only a derived bigram index.
+- **SPDX licence list data's own licence is still not stated** (re-checked 2026-11-19: GitHub's `license` field for `spdx/license-list-data` is empty; README, CONTRIBUTING and accessingLicenses.md say nothing; the spdx.org footer says "All Rights Reserved"). ~~Owner to decide whether to keep vendoring the texts~~: **decided in Phase 4: texts are not shipped**, only metadata and a derived fingerprint index (§4). A question to SPDX is drafted in `docs/drafts/spdx-license-list-data-issue.md` for the owner to post. Still open: the metadata (ids, names, flags, URLs) is shipped and comes from the same unlicensed source.
 - **Anonymous GitHub sources** can only say "no file under these 7 names", so a repo without one is `unknown`, not `missing`, unless `GITHUB_TOKEN` is set.
 - **A source repo's LICENSE often covers code, not data** (hotpot_qa: card CC-BY-SA-4.0, repo Apache-2.0). The report states the two licences and that they differ, which is the fact; it does not say which one covers the data. Phase 4's disagreement audit should count how often this is the reason.
 - **Built-in matcher coverage**: no non-SPDX licences, no paraphrases; Phase 4 measures its abstention rate against ScanCode's.

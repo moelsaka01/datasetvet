@@ -70,6 +70,9 @@ class ScanPlan:
     sample_rows: int | None = None
     quotas: dict[str, int | None] = field(default_factory=dict)  # split key -> row quota
     reason: str | None = None
+    download_cap: int | None = None  # sampled scans only: stop fetching files beyond this
+    downloaded: int = 0  # bytes fetched so far, across splits
+    capped: list[str] = field(default_factory=list)  # "split/path" files not fetched (cap)
 
     def chunk_rows(self, split_key: str) -> int | None:
         q = self.quotas.get(split_key)
@@ -83,7 +86,7 @@ class ScanPlan:
 
 
 def plan_scan(splits: list[SplitSource], *, max_scan_bytes: int, sample_rows: int, seed: int,
-              force_full: bool = False) -> ScanPlan:
+              force_full: bool = False, max_download_bytes: int | None = None) -> ScanPlan:
     bytes_total = sum(s.bytes or 0 for s in splits) if splits else 0
     known_rows = [s.rows for s in splits]
     rows_total = sum(r for r in known_rows if r is not None) \
@@ -105,8 +108,11 @@ def plan_scan(splits: list[SplitSource], *, max_scan_bytes: int, sample_rows: in
     reason = (f"{bytes_total:,} bytes is above the full-scan limit of {max_scan_bytes:,} bytes; "
               "rows are read in small chunks spread across each file read; use --full to "
               "scan everything")
+    if max_download_bytes:
+        reason += (f"; at most {max_download_bytes:,} bytes are downloaded, so files beyond "
+                   "that are not read")
     return ScanPlan("sampled", seed, bytes_total, rows_total, sample_rows=sample_rows,
-                    quotas=quotas, reason=reason)
+                    quotas=quotas, reason=reason, download_cap=max_download_bytes)
 
 
 def file_order(split: SplitSource, plan: ScanPlan) -> list[int]:
@@ -251,9 +257,15 @@ def iter_split(split: SplitSource, plan: ScanPlan, fetch: Callable[[SplitFile, P
         if quota is not None and taken >= quota:
             return
         f = split.files[file_no]
+        if plan.download_cap is not None and (
+                plan.downloaded >= plan.download_cap or
+                (f.size is not None and plan.downloaded + f.size > plan.download_cap)):
+            plan.capped.append(f"{split.key}/{f.path}")
+            continue  # a smaller file later in the order may still fit
         local: Path | None = None
         try:
             local = fetch(f, tmpdir)
+            plan.downloaded += local.stat().st_size
             if on_file:
                 on_file(f, local.stat().st_size)
             budget = None if quota is None else quota - taken

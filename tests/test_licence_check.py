@@ -1,6 +1,7 @@
 """Tasks 3.5-3.7: the comparison rule, source resolvers, provenance."""
 
 import httpx2
+from spdx_texts import TEXTS, needs_texts
 
 from datasetvet.checks.licence import (
     CardLicence,
@@ -17,7 +18,6 @@ from datasetvet.hubs.base import LinkRef, ParentRef, SourceRead, TextBlob
 from datasetvet.hubs.github import GitHubResolver, parse_repo
 from datasetvet.hubs.huggingface import parent_refs
 from datasetvet.hubs.web import WebResolver, html_to_text
-from datasetvet.licences import spdx
 from datasetvet.licences.matcher import Detection
 from datasetvet.licences.scanner import BuiltinScanner
 from datasetvet.model import DatasetRef, Evidence, Family
@@ -142,10 +142,11 @@ def test_parse_repo():
     assert parse_repo("https://gitlab.com/org/repo") is None
 
 
+@needs_texts
 def test_github_anonymous_makes_no_api_calls(router, make_http):
     router.add("https://github.com/org/repo.git/info/refs",
                httpx2.Response(200, content=refs_body(SHA)))
-    mit = spdx.spdx_data()["licences"]["MIT"]["text"]
+    mit = TEXTS["MIT"]
     router.add(f"https://raw.githubusercontent.com/org/repo/{SHA}/LICENSE.md",
                httpx2.Response(200, text=mit))
     read = GitHubResolver(make_http(router), token="").read("https://github.com/org/repo")
@@ -179,10 +180,11 @@ def test_github_token_path_is_labelled_and_confirms_none(router, make_http):
     assert compare(c1("mit"), sides_from_read(read, SCANNER)[0]).status == "missing"
 
 
+@needs_texts
 def test_github_detection_disagreeing_with_ours_is_unknown(router, make_http):
     router.add("https://github.com/org/repo.git/info/refs",
                httpx2.Response(200, content=refs_body(SHA)))
-    mit = spdx.spdx_data()["licences"]["MIT"]["text"]
+    mit = TEXTS["MIT"]
     router.add(f"https://raw.githubusercontent.com/org/repo/{SHA}/LICENSE",
                httpx2.Response(200, text=mit))
     router.json("https://api.github.com/repos/org/repo/license",
@@ -272,13 +274,14 @@ def test_depth_limit_and_unresolvable_parent():
     assert any("beyond depth 1" in n for n in nc)
 
 
+@needs_texts
 def test_url_parent_through_a_resolver():
     class FakeGitHub:
         def matches(self, url):
             return "github.com" in url
 
         def read(self, url):
-            blob = TextBlob("LICENSE", spdx.spdx_data()["licences"]["Apache-2.0"]["text"], False,
+            blob = TextBlob("LICENSE", TEXTS["Apache-2.0"], False,
                             Evidence(url="https://github.com/o/r/blob/s/LICENSE"))
             return SourceRead(url, "github.com/o/r", "github", "read", texts=[blob],
                               revision="s" * 40)

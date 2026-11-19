@@ -40,6 +40,7 @@ class Settings:
     sample_rows: int = 1_000_000
     seed: int = 0
     full: bool = False  # force a full scan above max_scan_bytes
+    max_download_bytes: int | None = None  # sampled scans: stop fetching files beyond this
     check_data: bool = True
     check_links: bool = True
     configs: list[str] | None = None  # None = every config
@@ -66,6 +67,8 @@ def from_env(base: Settings | None = None) -> Settings:
     env = os.environ
     if "DATASETVET_MAX_SCAN_BYTES" in env:
         s.max_scan_bytes = parse_bytes(env["DATASETVET_MAX_SCAN_BYTES"])
+    if "DATASETVET_MAX_DOWNLOAD_BYTES" in env:
+        s.max_download_bytes = parse_bytes(env["DATASETVET_MAX_DOWNLOAD_BYTES"])
     if "DATASETVET_SAMPLE_ROWS" in env:
         s.sample_rows = int(env["DATASETVET_SAMPLE_ROWS"])
     if "DATASETVET_SEED" in env:

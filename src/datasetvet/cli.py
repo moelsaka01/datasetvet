@@ -32,6 +32,8 @@ def build_parser() -> argparse.ArgumentParser:
                    help="full-scan limit (default 5GB); above it the data is sampled")
     c.add_argument("--sample-rows", type=int, default=None,
                    help="rows to sample above the limit (default 1,000,000)")
+    c.add_argument("--max-download-bytes", default=None,
+                   help="sampled scans only: stop downloading files beyond this (default none)")
     c.add_argument("--seed", type=int, default=None, help="sampling seed (default 0)")
     c.add_argument("--full", action="store_true", help="scan every row whatever the size")
     c.add_argument("--config", action="append", dest="configs", metavar="NAME",
@@ -64,6 +66,8 @@ def settings_from_args(args: argparse.Namespace) -> Settings:
         s.max_scan_bytes = parse_bytes(args.max_scan_bytes)
     if args.sample_rows is not None:
         s.sample_rows = args.sample_rows
+    if args.max_download_bytes is not None:
+        s.max_download_bytes = parse_bytes(args.max_download_bytes)
     if args.seed is not None:
         s.seed = args.seed
     if args.max_links is not None:

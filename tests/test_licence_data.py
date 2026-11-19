@@ -4,6 +4,7 @@ import re
 import urllib.request
 
 import pytest
+from spdx_texts import SPDX_DIR, needs_texts
 
 from datasetvet.licences import hf_ids, spdx
 from datasetvet.licences.matcher import _index
@@ -107,3 +108,50 @@ def test_no_other_property_is_emitted():
                                                    "CC0-1.0", "ODbL-1.0"))
     for word in ("commercial use", "permissive", "copyleft", "allowed", "safe", "free to"):
         assert word not in text.lower()
+
+
+# -- shipped SPDX data: derived only, no licence text ------------------------------------------
+
+def _shipped(name):
+    import gzip
+    from importlib import resources
+    return gzip.decompress(resources.files("datasetvet.data").joinpath(name).read_bytes())
+
+
+def test_shipped_spdx_data_holds_no_licence_text():
+    for name in ("spdx_licences.json.gz", "spdx_fingerprints.json.gz"):
+        raw = _shipped(name).decode("utf-8")
+        assert '"text"' not in raw, name
+        for phrase in ("hereby granted", "WITHOUT WARRANTY", "Creative Commons Corporation",
+                       "Everyone is permitted to copy", "Redistribution and use"):
+            assert phrase not in raw, (name, phrase)
+
+
+def test_fingerprint_index_covers_the_listed_licences():
+    from datasetvet.licences import matcher
+
+    fp = matcher.fingerprints()
+    assert fp["list_version"] == spdx.list_version()
+    assert TEXTED == set(spdx.spdx_data()["licences"])
+    assert len(fp["groups"]) == len(_index()) == 87
+
+
+def test_varint_roundtrip():
+    from datasetvet.licences import matcher
+
+    nums = [0, 1, 127, 128, 300, 2**40, 0, 5]
+    assert matcher._unvarints(matcher._varints(nums)) == nums
+
+
+@needs_texts
+def test_shipped_index_is_rebuilt_exactly_from_the_official_texts():
+    import importlib.util
+    from pathlib import Path
+
+    tool = Path(__file__).resolve().parents[1] / "tools" / "vendor_spdx.py"
+    spec = importlib.util.spec_from_file_location("vendor_spdx", tool)
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    meta_bytes, fp_bytes, _ = mod.build(SPDX_DIR)
+    assert meta_bytes == mod.META_OUT.read_bytes()
+    assert fp_bytes == mod.FP_OUT.read_bytes()

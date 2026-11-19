@@ -60,20 +60,24 @@ class ScanCodeScanner:
     def describe(self) -> str:
         return f"ScanCode toolkit {self._version} (detections with score >= {self.min_score:g})"
 
-    def detect(self, text: str) -> list[Detection]:
+    def raw(self, text: str) -> dict[str, Any]:
+        """ScanCode's own `get_licenses()` output for `text`, before any score threshold."""
         from scancode import api
 
         fd, path = tempfile.mkstemp(suffix=".txt", prefix="datasetvet-")
         try:
             with os.fdopen(fd, "w", encoding="utf-8") as fh:
                 fh.write(text)
-            result = api.get_licenses(location=path, include_text=True)
+            result: dict[str, Any] = api.get_licenses(location=path, include_text=True)
         finally:
             try:
                 os.unlink(path)
             except OSError:
                 pass
-        return scancode_detections(result, self.min_score)
+        return result
+
+    def detect(self, text: str) -> list[Detection]:
+        return scancode_detections(self.raw(text), self.min_score)
 
 
 def scancode_detections(result: dict[str, Any], min_score: float) -> list[Detection]:

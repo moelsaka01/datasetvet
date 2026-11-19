@@ -2,8 +2,8 @@
 scan-windows); elsewhere the absence path is tested."""
 
 import pytest
+from spdx_texts import TEXTS, needs_texts
 
-from datasetvet.licences import spdx
 from datasetvet.licences.scanner import (
     BuiltinScanner,
     ScanCodeUnavailable,
@@ -35,8 +35,9 @@ def test_scancode_notices(text, expected):
 
 
 @needs_scancode
+@needs_texts
 def test_scancode_licence_file():
-    text = spdx.spdx_data()["licences"]["Apache-2.0"]["text"]
+    text = TEXTS["Apache-2.0"]
     d = get_scanner("scancode").detect(text)
     assert [x.expression for x in d] == ["Apache-2.0"] and d[0].method == "scancode"
     assert d[0].score >= 90 and d[0].lines

@@ -1,6 +1,6 @@
 """SPDX data and expressions: the vendored licence list, parse, normalise, compare. Task 3.2.
 
-- `spdx_data()` loads `data/spdx_licences.json.gz` (official texts and flags from
+- `spdx_data()` loads `data/spdx_licences.json.gz` (ids, names, flags and URLs, no licence text, from
   github.com/spdx/license-list-data at a pinned tag; built by `tools/vendor_spdx.py`).
 - Expressions go through `license-expression` (Apache-2.0, from the ScanCode authors), so
   `GPL-2.0` and `GPL-2.0-only` are equivalent and `GPL-2.0-or-later` is not, as SPDX defines.

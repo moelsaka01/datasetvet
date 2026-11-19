@@ -1,0 +1,35 @@
+{
+ "dpi_sha": "ce6662deccf011574427b6f112df479d261960b8",
+ "summary_files": 109,
+ "entries": 3718,
+ "entries_with_hf_repo": 3492,
+ "unique_hf_repos": 792,
+ "repos_dropped": {
+  "entries disagree on the expert licence set": 81,
+  "no Inferred Metadata (no recorded card licence)": 3
+ },
+ "key_rows": 708,
+ "excluded_from_q3": {
+  "expert licence: none stated": 212,
+  "expert licence not on the SPDX list": 125
+ },
+ "q3_rows": 371,
+ "q3_expected": {
+  "missing": 52,
+  "inconsistent": 80,
+  "consistent": 239
+ },
+ "q3_by_split": {
+  "dev": {
+   "missing": 21,
+   "inconsistent": 21,
+   "consistent": 76
+  },
+  "test": {
+   "consistent": 163,
+   "missing": 31,
+   "inconsistent": 59
+  }
+ },
+ "unmapped_licence_names": {}
+}

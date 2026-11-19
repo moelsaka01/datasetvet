@@ -20,7 +20,9 @@ jobs:
       - name: Install
         run: python -m pip install -e ".[dev]"
       - name: Lint
-        run: python -m ruff check src tests
+        run: python -m ruff check src tests tools
+      - name: SPDX texts (downloaded, never committed) and a reproducibility check of the index
+        run: python tools/vendor_spdx.py --check
       - name: Type check
         run: python -m mypy src
       - name: Tests (offline)
@@ -43,5 +45,7 @@ jobs:
           python -m venv C:\dv
           # pytest 9 needs pluggy>=1.6, which breaks ScanCode's plugin loading (needs <1.6)
           C:\dv\Scripts\python.exe -m pip install -e ".[scan,dev]" "pytest<9"
+      - name: SPDX texts for the tests (downloaded, never committed)
+        run: C:\dv\Scripts\python.exe tools/vendor_spdx.py --check
       - name: ScanCode tests
         run: C:\dv\Scripts\python.exe -m pytest -q tests/test_scancode.py tests/test_matcher.py

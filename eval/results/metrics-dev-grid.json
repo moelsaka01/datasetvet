@@ -1,0 +1,1009 @@
+{
+ "run": "dev-grid",
+ "configurations": {
+  "builtin dice=0.80 contain=0.90": {
+   "rows": 118,
+   "scored": 116,
+   "excluded": {
+    "no audit-time revision": 2
+   },
+   "confusion": {
+    "consistent": {
+     "consistent": 52,
+     "inconsistent": 4,
+     "missing": 2,
+     "unknown": 18
+    },
+    "inconsistent": {
+     "consistent": 5,
+     "inconsistent": 9,
+     "missing": 0,
+     "unknown": 7
+    },
+    "missing": {
+     "consistent": 0,
+     "inconsistent": 0,
+     "missing": 18,
+     "unknown": 1
+    }
+   },
+   "decided": 90,
+   "agree": 79,
+   "agreement_decided": 0.8777777777777778,
+   "agreement_decided_wilson95": [
+    0.7942607696004786,
+    0.930364556480918
+   ],
+   "agreement_all_rows": 0.6810344827586207,
+   "agreement_all_rows_wilson95": [
+    0.5915831532829917,
+    0.758879457363061
+   ],
+   "abstention": 0.22413793103448276,
+   "abstained": 26,
+   "kappa_decided": 0.7671683913452494,
+   "inconsistent_precision": 0.6923076923076923,
+   "inconsistent_precision_n": [
+    9,
+    13
+   ],
+   "inconsistent_recall": 0.42857142857142855,
+   "inconsistent_recall_n": [
+    9,
+    21
+   ],
+   "q1_card_match": 0.9482758620689655,
+   "q1_n": [
+    110,
+    116
+   ],
+   "q2": {
+    "rows_with_github_source_and_dpi_licence": 25,
+    "agree": 24,
+    "no_detection": 0,
+    "agreement": 0.96
+   },
+   "drivers": {
+    "README text": 5,
+    "GitHub source": 11
+   }
+  },
+  "builtin dice=0.80 contain=0.95": {
+   "rows": 118,
+   "scored": 116,
+   "excluded": {
+    "no audit-time revision": 2
+   },
+   "confusion": {
+    "consistent": {
+     "consistent": 52,
+     "inconsistent": 4,
+     "missing": 2,
+     "unknown": 18
+    },
+    "inconsistent": {
+     "consistent": 5,
+     "inconsistent": 9,
+     "missing": 0,
+     "unknown": 7
+    },
+    "missing": {
+     "consistent": 0,
+     "inconsistent": 0,
+     "missing": 18,
+     "unknown": 1
+    }
+   },
+   "decided": 90,
+   "agree": 79,
+   "agreement_decided": 0.8777777777777778,
+   "agreement_decided_wilson95": [
+    0.7942607696004786,
+    0.930364556480918
+   ],
+   "agreement_all_rows": 0.6810344827586207,
+   "agreement_all_rows_wilson95": [
+    0.5915831532829917,
+    0.758879457363061
+   ],
+   "abstention": 0.22413793103448276,
+   "abstained": 26,
+   "kappa_decided": 0.7671683913452494,
+   "inconsistent_precision": 0.6923076923076923,
+   "inconsistent_precision_n": [
+    9,
+    13
+   ],
+   "inconsistent_recall": 0.42857142857142855,
+   "inconsistent_recall_n": [
+    9,
+    21
+   ],
+   "q1_card_match": 0.9482758620689655,
+   "q1_n": [
+    110,
+    116
+   ],
+   "q2": {
+    "rows_with_github_source_and_dpi_licence": 25,
+    "agree": 24,
+    "no_detection": 0,
+    "agreement": 0.96
+   },
+   "drivers": {
+    "README text": 5,
+    "GitHub source": 11
+   }
+  },
+  "builtin dice=0.85 contain=0.90": {
+   "rows": 118,
+   "scored": 116,
+   "excluded": {
+    "no audit-time revision": 2
+   },
+   "confusion": {
+    "consistent": {
+     "consistent": 52,
+     "inconsistent": 4,
+     "missing": 2,
+     "unknown": 18
+    },
+    "inconsistent": {
+     "consistent": 5,
+     "inconsistent": 9,
+     "missing": 0,
+     "unknown": 7
+    },
+    "missing": {
+     "consistent": 0,
+     "inconsistent": 0,
+     "missing": 18,
+     "unknown": 1
+    }
+   },
+   "decided": 90,
+   "agree": 79,
+   "agreement_decided": 0.8777777777777778,
+   "agreement_decided_wilson95": [
+    0.7942607696004786,
+    0.930364556480918
+   ],
+   "agreement_all_rows": 0.6810344827586207,
+   "agreement_all_rows_wilson95": [
+    0.5915831532829917,
+    0.758879457363061
+   ],
+   "abstention": 0.22413793103448276,
+   "abstained": 26,
+   "kappa_decided": 0.7671683913452494,
+   "inconsistent_precision": 0.6923076923076923,
+   "inconsistent_precision_n": [
+    9,
+    13
+   ],
+   "inconsistent_recall": 0.42857142857142855,
+   "inconsistent_recall_n": [
+    9,
+    21
+   ],
+   "q1_card_match": 0.9482758620689655,
+   "q1_n": [
+    110,
+    116
+   ],
+   "q2": {
+    "rows_with_github_source_and_dpi_licence": 25,
+    "agree": 24,
+    "no_detection": 0,
+    "agreement": 0.96
+   },
+   "drivers": {
+    "README text": 5,
+    "GitHub source": 11
+   }
+  },
+  "builtin dice=0.85 contain=0.95": {
+   "rows": 118,
+   "scored": 116,
+   "excluded": {
+    "no audit-time revision": 2
+   },
+   "confusion": {
+    "consistent": {
+     "consistent": 52,
+     "inconsistent": 4,
+     "missing": 2,
+     "unknown": 18
+    },
+    "inconsistent": {
+     "consistent": 5,
+     "inconsistent": 9,
+     "missing": 0,
+     "unknown": 7
+    },
+    "missing": {
+     "consistent": 0,
+     "inconsistent": 0,
+     "missing": 18,
+     "unknown": 1
+    }
+   },
+   "decided": 90,
+   "agree": 79,
+   "agreement_decided": 0.8777777777777778,
+   "agreement_decided_wilson95": [
+    0.7942607696004786,
+    0.930364556480918
+   ],
+   "agreement_all_rows": 0.6810344827586207,
+   "agreement_all_rows_wilson95": [
+    0.5915831532829917,
+    0.758879457363061
+   ],
+   "abstention": 0.22413793103448276,
+   "abstained": 26,
+   "kappa_decided": 0.7671683913452494,
+   "inconsistent_precision": 0.6923076923076923,
+   "inconsistent_precision_n": [
+    9,
+    13
+   ],
+   "inconsistent_recall": 0.42857142857142855,
+   "inconsistent_recall_n": [
+    9,
+    21
+   ],
+   "q1_card_match": 0.9482758620689655,
+   "q1_n": [
+    110,
+    116
+   ],
+   "q2": {
+    "rows_with_github_source_and_dpi_licence": 25,
+    "agree": 24,
+    "no_detection": 0,
+    "agreement": 0.96
+   },
+   "drivers": {
+    "README text": 5,
+    "GitHub source": 11
+   }
+  },
+  "builtin dice=0.90 contain=0.90": {
+   "rows": 118,
+   "scored": 116,
+   "excluded": {
+    "no audit-time revision": 2
+   },
+   "confusion": {
+    "consistent": {
+     "consistent": 52,
+     "inconsistent": 4,
+     "missing": 2,
+     "unknown": 18
+    },
+    "inconsistent": {
+     "consistent": 5,
+     "inconsistent": 9,
+     "missing": 0,
+     "unknown": 7
+    },
+    "missing": {
+     "consistent": 0,
+     "inconsistent": 0,
+     "missing": 18,
+     "unknown": 1
+    }
+   },
+   "decided": 90,
+   "agree": 79,
+   "agreement_decided": 0.8777777777777778,
+   "agreement_decided_wilson95": [
+    0.7942607696004786,
+    0.930364556480918
+   ],
+   "agreement_all_rows": 0.6810344827586207,
+   "agreement_all_rows_wilson95": [
+    0.5915831532829917,
+    0.758879457363061
+   ],
+   "abstention": 0.22413793103448276,
+   "abstained": 26,
+   "kappa_decided": 0.7671683913452494,
+   "inconsistent_precision": 0.6923076923076923,
+   "inconsistent_precision_n": [
+    9,
+    13
+   ],
+   "inconsistent_recall": 0.42857142857142855,
+   "inconsistent_recall_n": [
+    9,
+    21
+   ],
+   "q1_card_match": 0.9482758620689655,
+   "q1_n": [
+    110,
+    116
+   ],
+   "q2": {
+    "rows_with_github_source_and_dpi_licence": 25,
+    "agree": 24,
+    "no_detection": 0,
+    "agreement": 0.96
+   },
+   "drivers": {
+    "README text": 5,
+    "GitHub source": 11
+   }
+  },
+  "builtin dice=0.90 contain=0.95": {
+   "rows": 118,
+   "scored": 116,
+   "excluded": {
+    "no audit-time revision": 2
+   },
+   "confusion": {
+    "consistent": {
+     "consistent": 52,
+     "inconsistent": 4,
+     "missing": 2,
+     "unknown": 18
+    },
+    "inconsistent": {
+     "consistent": 5,
+     "inconsistent": 9,
+     "missing": 0,
+     "unknown": 7
+    },
+    "missing": {
+     "consistent": 0,
+     "inconsistent": 0,
+     "missing": 18,
+     "unknown": 1
+    }
+   },
+   "decided": 90,
+   "agree": 79,
+   "agreement_decided": 0.8777777777777778,
+   "agreement_decided_wilson95": [
+    0.7942607696004786,
+    0.930364556480918
+   ],
+   "agreement_all_rows": 0.6810344827586207,
+   "agreement_all_rows_wilson95": [
+    0.5915831532829917,
+    0.758879457363061
+   ],
+   "abstention": 0.22413793103448276,
+   "abstained": 26,
+   "kappa_decided": 0.7671683913452494,
+   "inconsistent_precision": 0.6923076923076923,
+   "inconsistent_precision_n": [
+    9,
+    13
+   ],
+   "inconsistent_recall": 0.42857142857142855,
+   "inconsistent_recall_n": [
+    9,
+    21
+   ],
+   "q1_card_match": 0.9482758620689655,
+   "q1_n": [
+    110,
+    116
+   ],
+   "q2": {
+    "rows_with_github_source_and_dpi_licence": 25,
+    "agree": 24,
+    "no_detection": 0,
+    "agreement": 0.96
+   },
+   "drivers": {
+    "README text": 5,
+    "GitHub source": 11
+   }
+  },
+  "builtin dice=0.95 contain=0.90": {
+   "rows": 118,
+   "scored": 116,
+   "excluded": {
+    "no audit-time revision": 2
+   },
+   "confusion": {
+    "consistent": {
+     "consistent": 52,
+     "inconsistent": 4,
+     "missing": 2,
+     "unknown": 18
+    },
+    "inconsistent": {
+     "consistent": 5,
+     "inconsistent": 9,
+     "missing": 0,
+     "unknown": 7
+    },
+    "missing": {
+     "consistent": 0,
+     "inconsistent": 0,
+     "missing": 18,
+     "unknown": 1
+    }
+   },
+   "decided": 90,
+   "agree": 79,
+   "agreement_decided": 0.8777777777777778,
+   "agreement_decided_wilson95": [
+    0.7942607696004786,
+    0.930364556480918
+   ],
+   "agreement_all_rows": 0.6810344827586207,
+   "agreement_all_rows_wilson95": [
+    0.5915831532829917,
+    0.758879457363061
+   ],
+   "abstention": 0.22413793103448276,
+   "abstained": 26,
+   "kappa_decided": 0.7671683913452494,
+   "inconsistent_precision": 0.6923076923076923,
+   "inconsistent_precision_n": [
+    9,
+    13
+   ],
+   "inconsistent_recall": 0.42857142857142855,
+   "inconsistent_recall_n": [
+    9,
+    21
+   ],
+   "q1_card_match": 0.9482758620689655,
+   "q1_n": [
+    110,
+    116
+   ],
+   "q2": {
+    "rows_with_github_source_and_dpi_licence": 25,
+    "agree": 24,
+    "no_detection": 0,
+    "agreement": 0.96
+   },
+   "drivers": {
+    "README text": 5,
+    "GitHub source": 11
+   }
+  },
+  "builtin dice=0.95 contain=0.95": {
+   "rows": 118,
+   "scored": 116,
+   "excluded": {
+    "no audit-time revision": 2
+   },
+   "confusion": {
+    "consistent": {
+     "consistent": 52,
+     "inconsistent": 4,
+     "missing": 2,
+     "unknown": 18
+    },
+    "inconsistent": {
+     "consistent": 5,
+     "inconsistent": 9,
+     "missing": 0,
+     "unknown": 7
+    },
+    "missing": {
+     "consistent": 0,
+     "inconsistent": 0,
+     "missing": 18,
+     "unknown": 1
+    }
+   },
+   "decided": 90,
+   "agree": 79,
+   "agreement_decided": 0.8777777777777778,
+   "agreement_decided_wilson95": [
+    0.7942607696004786,
+    0.930364556480918
+   ],
+   "agreement_all_rows": 0.6810344827586207,
+   "agreement_all_rows_wilson95": [
+    0.5915831532829917,
+    0.758879457363061
+   ],
+   "abstention": 0.22413793103448276,
+   "abstained": 26,
+   "kappa_decided": 0.7671683913452494,
+   "inconsistent_precision": 0.6923076923076923,
+   "inconsistent_precision_n": [
+    9,
+    13
+   ],
+   "inconsistent_recall": 0.42857142857142855,
+   "inconsistent_recall_n": [
+    9,
+    21
+   ],
+   "q1_card_match": 0.9482758620689655,
+   "q1_n": [
+    110,
+    116
+   ],
+   "q2": {
+    "rows_with_github_source_and_dpi_licence": 25,
+    "agree": 24,
+    "no_detection": 0,
+    "agreement": 0.96
+   },
+   "drivers": {
+    "README text": 5,
+    "GitHub source": 11
+   }
+  },
+  "scancode min_score=100": {
+   "rows": 118,
+   "scored": 116,
+   "excluded": {
+    "no audit-time revision": 2
+   },
+   "confusion": {
+    "consistent": {
+     "consistent": 35,
+     "inconsistent": 4,
+     "missing": 2,
+     "unknown": 35
+    },
+    "inconsistent": {
+     "consistent": 5,
+     "inconsistent": 7,
+     "missing": 0,
+     "unknown": 9
+    },
+    "missing": {
+     "consistent": 0,
+     "inconsistent": 0,
+     "missing": 18,
+     "unknown": 1
+    }
+   },
+   "decided": 71,
+   "agree": 60,
+   "agreement_decided": 0.8450704225352113,
+   "agreement_decided_wilson95": [
+    0.7434882267163929,
+    0.9112278670068841
+   ],
+   "agreement_all_rows": 0.5172413793103449,
+   "agreement_all_rows_wilson95": [
+    0.427219773046112,
+    0.6061576184439884
+   ],
+   "abstention": 0.3879310344827586,
+   "abstained": 45,
+   "kappa_decided": 0.7315228600893778,
+   "inconsistent_precision": 0.6363636363636364,
+   "inconsistent_precision_n": [
+    7,
+    11
+   ],
+   "inconsistent_recall": 0.3333333333333333,
+   "inconsistent_recall_n": [
+    7,
+    21
+   ],
+   "q1_card_match": 0.9482758620689655,
+   "q1_n": [
+    110,
+    116
+   ],
+   "q2": {
+    "rows_with_github_source_and_dpi_licence": 25,
+    "agree": 23,
+    "no_detection": 1,
+    "agreement": 0.92
+   },
+   "drivers": {
+    "GitHub source": 11
+   }
+  },
+  "scancode min_score=50": {
+   "rows": 118,
+   "scored": 116,
+   "excluded": {
+    "no audit-time revision": 2
+   },
+   "confusion": {
+    "consistent": {
+     "consistent": 49,
+     "inconsistent": 5,
+     "missing": 2,
+     "unknown": 20
+    },
+    "inconsistent": {
+     "consistent": 5,
+     "inconsistent": 9,
+     "missing": 0,
+     "unknown": 7
+    },
+    "missing": {
+     "consistent": 0,
+     "inconsistent": 0,
+     "missing": 18,
+     "unknown": 1
+    }
+   },
+   "decided": 88,
+   "agree": 76,
+   "agreement_decided": 0.8636363636363636,
+   "agreement_decided_wilson95": [
+    0.7766106394938308,
+    0.9202413317261828
+   ],
+   "agreement_all_rows": 0.6551724137931034,
+   "agreement_all_rows_wilson95": [
+    0.5649527181283869,
+    0.7354438052825154
+   ],
+   "abstention": 0.2413793103448276,
+   "abstained": 28,
+   "kappa_decided": 0.7463976945244957,
+   "inconsistent_precision": 0.6428571428571429,
+   "inconsistent_precision_n": [
+    9,
+    14
+   ],
+   "inconsistent_recall": 0.42857142857142855,
+   "inconsistent_recall_n": [
+    9,
+    21
+   ],
+   "q1_card_match": 0.9482758620689655,
+   "q1_n": [
+    110,
+    116
+   ],
+   "q2": {
+    "rows_with_github_source_and_dpi_licence": 25,
+    "agree": 24,
+    "no_detection": 0,
+    "agreement": 0.96
+   },
+   "drivers": {
+    "README text": 6,
+    "GitHub source": 11
+   }
+  },
+  "scancode min_score=60": {
+   "rows": 118,
+   "scored": 116,
+   "excluded": {
+    "no audit-time revision": 2
+   },
+   "confusion": {
+    "consistent": {
+     "consistent": 42,
+     "inconsistent": 4,
+     "missing": 2,
+     "unknown": 28
+    },
+    "inconsistent": {
+     "consistent": 6,
+     "inconsistent": 8,
+     "missing": 0,
+     "unknown": 7
+    },
+    "missing": {
+     "consistent": 0,
+     "inconsistent": 0,
+     "missing": 18,
+     "unknown": 1
+    }
+   },
+   "decided": 80,
+   "agree": 68,
+   "agreement_decided": 0.85,
+   "agreement_decided_wilson95": [
+    0.7558657249889396,
+    0.9120604596258579
+   ],
+   "agreement_all_rows": 0.5862068965517241,
+   "agreement_all_rows_wilson95": [
+    0.4952203383358904,
+    0.6716666191146108
+   ],
+   "abstention": 0.3103448275862069,
+   "abstained": 36,
+   "kappa_decided": 0.7309417040358744,
+   "inconsistent_precision": 0.6666666666666666,
+   "inconsistent_precision_n": [
+    8,
+    12
+   ],
+   "inconsistent_recall": 0.38095238095238093,
+   "inconsistent_recall_n": [
+    8,
+    21
+   ],
+   "q1_card_match": 0.9482758620689655,
+   "q1_n": [
+    110,
+    116
+   ],
+   "q2": {
+    "rows_with_github_source_and_dpi_licence": 25,
+    "agree": 24,
+    "no_detection": 0,
+    "agreement": 0.96
+   },
+   "drivers": {
+    "GitHub source": 12,
+    "README text": 1
+   }
+  },
+  "scancode min_score=70": {
+   "rows": 118,
+   "scored": 116,
+   "excluded": {
+    "no audit-time revision": 2
+   },
+   "confusion": {
+    "consistent": {
+     "consistent": 42,
+     "inconsistent": 4,
+     "missing": 2,
+     "unknown": 28
+    },
+    "inconsistent": {
+     "consistent": 6,
+     "inconsistent": 7,
+     "missing": 0,
+     "unknown": 8
+    },
+    "missing": {
+     "consistent": 0,
+     "inconsistent": 0,
+     "missing": 18,
+     "unknown": 1
+    }
+   },
+   "decided": 79,
+   "agree": 67,
+   "agreement_decided": 0.8481012658227848,
+   "agreement_decided_wilson95": [
+    0.7529994484509047,
+    0.9109181967901335
+   ],
+   "agreement_all_rows": 0.5775862068965517,
+   "agreement_all_rows_wilson95": [
+    0.4866280369998908,
+    0.6635702247055604
+   ],
+   "abstention": 0.31896551724137934,
+   "abstained": 37,
+   "kappa_decided": 0.723937099592312,
+   "inconsistent_precision": 0.6363636363636364,
+   "inconsistent_precision_n": [
+    7,
+    11
+   ],
+   "inconsistent_recall": 0.3333333333333333,
+   "inconsistent_recall_n": [
+    7,
+    21
+   ],
+   "q1_card_match": 0.9482758620689655,
+   "q1_n": [
+    110,
+    116
+   ],
+   "q2": {
+    "rows_with_github_source_and_dpi_licence": 25,
+    "agree": 24,
+    "no_detection": 0,
+    "agreement": 0.96
+   },
+   "drivers": {
+    "GitHub source": 12
+   }
+  },
+  "scancode min_score=80": {
+   "rows": 118,
+   "scored": 116,
+   "excluded": {
+    "no audit-time revision": 2
+   },
+   "confusion": {
+    "consistent": {
+     "consistent": 42,
+     "inconsistent": 4,
+     "missing": 2,
+     "unknown": 28
+    },
+    "inconsistent": {
+     "consistent": 6,
+     "inconsistent": 7,
+     "missing": 0,
+     "unknown": 8
+    },
+    "missing": {
+     "consistent": 0,
+     "inconsistent": 0,
+     "missing": 18,
+     "unknown": 1
+    }
+   },
+   "decided": 79,
+   "agree": 67,
+   "agreement_decided": 0.8481012658227848,
+   "agreement_decided_wilson95": [
+    0.7529994484509047,
+    0.9109181967901335
+   ],
+   "agreement_all_rows": 0.5775862068965517,
+   "agreement_all_rows_wilson95": [
+    0.4866280369998908,
+    0.6635702247055604
+   ],
+   "abstention": 0.31896551724137934,
+   "abstained": 37,
+   "kappa_decided": 0.723937099592312,
+   "inconsistent_precision": 0.6363636363636364,
+   "inconsistent_precision_n": [
+    7,
+    11
+   ],
+   "inconsistent_recall": 0.3333333333333333,
+   "inconsistent_recall_n": [
+    7,
+    21
+   ],
+   "q1_card_match": 0.9482758620689655,
+   "q1_n": [
+    110,
+    116
+   ],
+   "q2": {
+    "rows_with_github_source_and_dpi_licence": 25,
+    "agree": 24,
+    "no_detection": 0,
+    "agreement": 0.96
+   },
+   "drivers": {
+    "GitHub source": 12
+   }
+  },
+  "scancode min_score=90": {
+   "rows": 118,
+   "scored": 116,
+   "excluded": {
+    "no audit-time revision": 2
+   },
+   "confusion": {
+    "consistent": {
+     "consistent": 41,
+     "inconsistent": 4,
+     "missing": 2,
+     "unknown": 29
+    },
+    "inconsistent": {
+     "consistent": 5,
+     "inconsistent": 7,
+     "missing": 0,
+     "unknown": 9
+    },
+    "missing": {
+     "consistent": 0,
+     "inconsistent": 0,
+     "missing": 18,
+     "unknown": 1
+    }
+   },
+   "decided": 77,
+   "agree": 66,
+   "agreement_decided": 0.8571428571428571,
+   "agreement_decided_wilson95": [
+    0.7620252720484026,
+    0.9183175217607253
+   ],
+   "agreement_all_rows": 0.5689655172413793,
+   "agreement_all_rows_wilson95": [
+    0.47806242360837425,
+    0.6554471423520268
+   ],
+   "abstention": 0.33620689655172414,
+   "abstained": 39,
+   "kappa_decided": 0.7413740458015265,
+   "inconsistent_precision": 0.6363636363636364,
+   "inconsistent_precision_n": [
+    7,
+    11
+   ],
+   "inconsistent_recall": 0.3333333333333333,
+   "inconsistent_recall_n": [
+    7,
+    21
+   ],
+   "q1_card_match": 0.9482758620689655,
+   "q1_n": [
+    110,
+    116
+   ],
+   "q2": {
+    "rows_with_github_source_and_dpi_licence": 25,
+    "agree": 24,
+    "no_detection": 0,
+    "agreement": 0.96
+   },
+   "drivers": {
+    "GitHub source": 12
+   }
+  },
+  "scancode min_score=95": {
+   "rows": 118,
+   "scored": 116,
+   "excluded": {
+    "no audit-time revision": 2
+   },
+   "confusion": {
+    "consistent": {
+     "consistent": 38,
+     "inconsistent": 4,
+     "missing": 2,
+     "unknown": 32
+    },
+    "inconsistent": {
+     "consistent": 5,
+     "inconsistent": 7,
+     "missing": 0,
+     "unknown": 9
+    },
+    "missing": {
+     "consistent": 0,
+     "inconsistent": 0,
+     "missing": 18,
+     "unknown": 1
+    }
+   },
+   "decided": 74,
+   "agree": 63,
+   "agreement_decided": 0.8513513513513513,
+   "agreement_decided_wilson95": [
+    0.7531029907801314,
+    0.9149202769841487
+   ],
+   "agreement_all_rows": 0.5431034482758621,
+   "agreement_all_rows_wilson95": [
+    0.4525238447819796,
+    0.6309196339432711
+   ],
+   "abstention": 0.3620689655172414,
+   "abstained": 42,
+   "kappa_decided": 0.7367399741267786,
+   "inconsistent_precision": 0.6363636363636364,
+   "inconsistent_precision_n": [
+    7,
+    11
+   ],
+   "inconsistent_recall": 0.3333333333333333,
+   "inconsistent_recall_n": [
+    7,
+    21
+   ],
+   "q1_card_match": 0.9482758620689655,
+   "q1_n": [
+    110,
+    116
+   ],
+   "q2": {
+    "rows_with_github_source_and_dpi_licence": 25,
+    "agree": 24,
+    "no_detection": 0,
+    "agreement": 0.96
+   },
+   "drivers": {
+    "GitHub source": 12
+   }
+  }
+ },
+ "selected": {
+  "builtin": "builtin dice=0.90 contain=0.95",
+  "scancode": "scancode min_score=50"
+ }
+}

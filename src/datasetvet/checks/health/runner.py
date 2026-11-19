@@ -72,7 +72,7 @@ def run_health(fetch: Callable[[SplitFile, Path], Path], data: DataPlan, setting
             return ScanInfo(kind="not checked", reason=reason), not_checked_results(reason)
     plan = plan_scan(splits, max_scan_bytes=settings.max_scan_bytes,
                      sample_rows=settings.sample_rows, seed=settings.seed,
-                     force_full=settings.full)
+                     force_full=settings.full, max_download_bytes=settings.max_download_bytes)
     started = time.monotonic()
     corrupt: list[CorruptFile] = []
     states: list[SplitState] = []
@@ -91,6 +91,13 @@ def run_health(fetch: Callable[[SplitFile, Path], Path], data: DataPlan, setting
             store.close()
     seconds = time.monotonic() - started
     rows = sum(s.rows for s in states)
+    if plan.capped:
+        unread = sorted({st.split.key for st in states if st.rows == 0})
+        plan.reason = (plan.reason or "") + (
+            f"; download cap reached: {len(plan.capped)} file(s) not read"
+            + (f", so {len(unread)} split(s) have no rows in the sample: "
+               + ", ".join(unread[:10]) + (" ..." if len(unread) > 10 else "")
+               if unread else ""))
     info = ScanInfo(
         kind=plan.mode, rows_scanned=rows,
         rows_total=plan.rows_total if plan.rows_total is not None else (

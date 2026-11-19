@@ -1,60 +1,66 @@
 """Built-in licence matcher (PLAN.md section 4): full texts, notices, URLs."""
 
 import pytest
+from spdx_texts import INDEXED, TEXTS, needs_texts
 
-from datasetvet.licences import matcher, spdx
+from datasetvet.licences import matcher
 from datasetvet.licences.scanner import BuiltinScanner, get_scanner, scancode_detections
-
-TEXTS = spdx.spdx_data()["licences"]
 
 
 def exprs(text):
     return [(d.expression, d.method) for d in matcher.detect(text)]
 
 
-@pytest.mark.parametrize("lid", sorted(TEXTS))
+@needs_texts
+@pytest.mark.parametrize("lid", INDEXED)
 def test_every_vendored_text_identifies_itself(lid):
-    dets = matcher.match_full_text(TEXTS[lid]["text"])
+    dets = matcher.match_full_text(TEXTS[lid])
     assert len(dets) == 1
     d = dets[0]
     assert d.method == "full text" and d.score >= 99
     assert lid in [d.expression, *d.alternatives]
 
 
+@needs_texts
 def test_identical_texts_are_one_group():
-    d = matcher.match_full_text(TEXTS["GPL-2.0-or-later"]["text"])[0]
+    d = matcher.match_full_text(TEXTS["GPL-2.0-or-later"])[0]
     assert d.expression == "GPL-2.0-only" and d.alternatives == ["GPL-2.0-or-later"]
 
 
+@needs_texts
 def test_close_relatives_are_told_apart():
     for lid in ("MIT", "MIT-0", "X11", "ISC", "0BSD", "BSD-2-Clause", "BSD-3-Clause",
                 "CC-BY-4.0", "CC-BY-SA-4.0", "CC-BY-NC-4.0", "CC-BY-NC-SA-4.0",
                 "CC-BY-1.0", "CC-BY-SA-1.0", "GPL-3.0-only", "AGPL-3.0-only"):
-        assert matcher.match_full_text(TEXTS[lid]["text"])[0].expression == lid, lid
+        assert matcher.match_full_text(TEXTS[lid])[0].expression == lid, lid
 
 
+@needs_texts
 def test_licence_with_copyright_header_still_matches():
-    text = "Copyright (c) 2021 Some Lab\nAll rights reserved.\n\n" + TEXTS["MIT"]["text"]
+    text = "Copyright (c) 2021 Some Lab\nAll rights reserved.\n\n" + TEXTS["MIT"]
     assert exprs(text) == [("MIT", "full text")]
 
 
+@needs_texts
 def test_readme_containing_a_licence_text():
     prose = "We collected these sentences from public forums and cleaned them by hand. " * 30
     body = (f"# Data\n\n{prose}\n\n## License\n\n"
-            + TEXTS["MIT"]["text"] + "\n## Citation\n\n```\n@misc{x}\n```\n")
+            + TEXTS["MIT"] + "\n## Citation\n\n```\n@misc{x}\n```\n")
     dets = matcher.detect(body)
     assert [(d.expression, d.method) for d in dets] == [("MIT", "contains text")]
     assert dets[0].lines[0] >= 7
 
 
+@needs_texts
 def test_mit_inside_x11_reports_x11_only():
-    body = "Intro line.\n\n" + TEXTS["X11"]["text"] + "\n\nOther words here and there."
+    body = "Intro line.\n\n" + TEXTS["X11"] + "\n\nOther words here and there."
     assert [d.expression for d in matcher.detect(body)] == ["X11"]
 
 
+@needs_texts
 def test_names_inside_a_licence_text_are_not_separate_statements():
     # the LGPL text names the GNU GPL; that is part of the text
-    assert exprs(TEXTS["LGPL-3.0-only"]["text"]) == [("LGPL-3.0-only", "full text")]
+    assert exprs(TEXTS["LGPL-3.0-only"]) == [("LGPL-3.0-only", "full text")]
 
 
 @pytest.mark.parametrize("text,expected", [
@@ -124,8 +130,9 @@ def test_badge_link_and_alt_text_give_one_detection():
     assert [d.expression for d in matcher.detect(text)] == ["CC-BY-4.0"]
 
 
+@needs_texts
 def test_deterministic():
-    text = "## License\n\n" + TEXTS["CC-BY-4.0"]["text"]
+    text = "## License\n\n" + TEXTS["CC-BY-4.0"]
     assert matcher.detect(text) == matcher.detect(text)
 
 

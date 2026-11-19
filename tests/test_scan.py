@@ -137,3 +137,25 @@ def test_csv_is_sampled_in_chunks(tmp_path):
         assert ch.batch.column("x").to_pylist()[0] == ch.first_row
         xs += ch.batch.column("x").to_pylist()
     assert len(xs) == 500 and min(xs) < 500 and max(xs) > 4_500
+
+
+def test_download_cap_stops_fetching_and_is_recorded(tmp_path):
+    train = make_split(tmp_path, "train", n_files=3, rows_per_file=1000)
+    test = make_split(tmp_path, "test", n_files=1, rows_per_file=1000)
+    one = train.files[0].size
+    # quota needs two train files; the cap allows about one file in total
+    plan = plan_scan([train, test], max_scan_bytes=1, sample_rows=3000, seed=0,
+                     max_download_bytes=one + 10)
+    assert "at most" in plan.reason
+    got_train = read_all(train, plan, tmp_path)
+    got_test = read_all(test, plan, tmp_path)
+    assert len(got_train) == 1000 and got_test == []  # one file read, then the cap
+    assert plan.downloaded <= one + 10
+    assert len(plan.capped) == 3 and all(c.startswith("c/") for c in plan.capped)
+
+
+def test_download_cap_ignored_for_full_scans(tmp_path):
+    s = make_split(tmp_path)
+    plan = plan_scan([s], max_scan_bytes=10**9, sample_rows=100, seed=0, max_download_bytes=1)
+    assert plan.mode == "full" and plan.download_cap is None
+    assert len(read_all(s, plan, tmp_path)) == 3000
