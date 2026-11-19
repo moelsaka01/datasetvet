@@ -1,4 +1,4 @@
-"""Limits and settings from flags and environment (PLAN.md 5.4, 5.5). Task 2.12.
+"""Limits and settings from flags and environment (PLAN.md 4, 5.3-5.5). Task 2.12.
 
 Precedence: command-line flag > environment variable (DATASETVET_*) > default.
 A config file is not supported yet.
@@ -48,6 +48,10 @@ class Settings:
     link_retries: int = 2
     max_links: int = 200
     duckdb_memory: str = "1GB"
+    scanner: str = "auto"  # builtin / scancode / auto (ScanCode when it imports)
+    check_licences: bool = True  # licence consistency and provenance
+    check_sources: bool = True  # read stated sources (GitHub, licence pages) for C4
+    provenance_depth: int = 2
     cache_dir: Path = field(default_factory=default_cache_dir)
     use_cache: bool = True
 
@@ -68,6 +72,10 @@ def from_env(base: Settings | None = None) -> Settings:
         s.seed = int(env["DATASETVET_SEED"])
     if "DATASETVET_PHONE_REGION" in env:
         s.phone_region = env["DATASETVET_PHONE_REGION"]
+    if "DATASETVET_SCANNER" in env:
+        s.scanner = env["DATASETVET_SCANNER"]
+    if "DATASETVET_PROVENANCE_DEPTH" in env:
+        s.provenance_depth = int(env["DATASETVET_PROVENANCE_DEPTH"])
     if "DATASETVET_DUCKDB_MEMORY" in env:
         s.duckdb_memory = env["DATASETVET_DUCKDB_MEMORY"]
     return s

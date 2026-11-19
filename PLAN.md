@@ -3,7 +3,7 @@
 > **Before you train on it, check it.**
 > A CLI that checks a dataset and writes a report card of verifiable facts: what the card says, what the licence files and the source say, whether the links work, and what is in the data (duplicates, cross-split leakage, empty rows, label balance, PII-pattern matches). It never says a dataset is "safe to use", and it is not legal advice.
 
-Status: **Phase 2 (core checks without licences) complete, 2026-11-19.** Implemented: card check (no SPDX validity yet), links, data health, the Hugging Face adapter, JSON and terminal reports. Not implemented: everything in Phases 3–5. Where Phase 2 changed or clarified this plan, the section says so ("Phase 2:"). Every "measured" figure in this file was measured on 2026-11-19 from this laptop (Windows 11, Python 3.12.10) and is listed with how it was measured in [Feasibility evidence](#9-feasibility-evidence-measured-2026-11-19).
+Status: **Phase 3 (licence + provenance) complete, 2026-11-19.** Implemented: card check (with HF-id/SPDX validity), licence consistency (C1 vs C2/C3/C4), provenance, a built-in SPDX licence matcher, the optional ScanCode scanner, GitHub and web source resolvers, links, data health, the Hugging Face adapter, JSON and terminal reports. Not implemented: everything in Phases 4–5. Where Phase 2 or 3 changed or clarified this plan, the section says so ("Phase 2:", "Phase 3:"). Every "measured" figure in this file was measured on 2026-11-19 from this laptop (Windows 11, Python 3.12.10) and is listed with how it was measured in [Feasibility evidence](#9-feasibility-evidence-measured-2026-11-19).
 
 Contents: [1 Name](#1-name) · [2 Competitors](#2-competitors) · [3 Architecture](#3-architecture) · [4 Licence scanner](#4-licence-scanner-choice) · [5 Checks](#5-checks-exact-rules-and-statuses) · [6 Hub adapters](#6-hub-adapter-interface) · [7 Reports and badge](#7-report-formats-and-badge) · [8 Accuracy evaluation](#8-accuracy-evaluation) · [9 Feasibility evidence](#9-feasibility-evidence-measured-2026-11-19) · [10 Launch scan](#10-launch-scan-top-500-hf-datasets) · [11 Task list](#11-phased-task-list) · [12 Risks and open questions](#12-risks-and-open-questions)
 
@@ -97,9 +97,10 @@ src/datasetvet/
     github.py            v1: source resolver (licence of a GitHub repo); v2: dataset adapter
     web.py               plain-URL source resolver (link status only + licence text if a licence page)
   licences/
-    spdx.py              license-expression wrapper; parse, normalise, compare
+    spdx.py              vendored SPDX list + license-expression wrapper; parse, normalise, compare
     hf_ids.py            HF licence id -> SPDX id / family / non-SPDX table (data/hf_licence_ids.csv)
-    scanner.py           ScanCode wrapper (optional extra); returns detections with scores and lines
+    matcher.py           Phase 3: built-in matcher (full texts, notices, licence URLs; no AI)
+    scanner.py           Scanner interface: builtin, or ScanCode (optional extra)
     properties.py        published licence properties: SPDX flags + Creative Commons elements
   checks/
     card.py  licence.py  provenance.py  links.py
@@ -110,7 +111,8 @@ src/datasetvet/
       empty.py  labels.py  pii.py
   report/
     json_out.py  terminal.py  markdown.py  html.py  badge.py
-  data/                  hand-checked tables (CSV) with a source URL per row
+  data/                  hand-checked tables (CSV) with a source URL per row; spdx_licences.json.gz
+tools/vendor_spdx.py     Phase 3: rebuilds data/spdx_licences.json.gz from a pinned SPDX release
 eval/                    DPI answer-key builder, runner, metrics (Phase 4)
 launch/                  resumable top-500 scan (Phase 4)
 tests/                   offline unit tests + recorded HTTP fixtures; `-m network` for live tests
@@ -125,11 +127,12 @@ docs/                    CHECKS.md (rules), REPORT_SCHEMA.md, EVAL.md
 | `pyarrow` | Parquet batches | Apache-2.0 |
 | `duckdb` | on-disk hash table and duplicate/leakage queries beyond RAM | MIT |
 | `xxhash` | 128-bit row hashes (xxh3_128) | BSD-2-Clause |
-| `license-expression` | SPDX parse/normalise/equivalence | Apache-2.0 |
+| `license-expression` (+ `boolean.py`) | SPDX parse/normalise/equivalence (1.5 MB installed) | Apache-2.0 (+ BSD-2-Clause) |
+| vendored SPDX licence list 3.29.0 (Phase 3) | 92 official texts + flags for 740 ids, 249 KB gzipped, for the built-in matcher | see §12: the list's own licence is not stated |
 | `pyyaml` | card front matter | MIT |
 | `phonenumbers` | phone-number validation after regex candidates | Apache-2.0 |
 | `rich` | terminal report | MIT |
-| extra `[scan]`: `scancode-toolkit-mini` | licence text detection (§4) | Apache-2.0 AND CC-BY-4.0 (data) |
+| extra `[scan]`: `scancode-toolkit-mini`, `pluggy<1.6`, `typecode-libmagic` (Windows) | licence text detection (§4) | Apache-2.0 AND CC-BY-4.0 (data) |
 
 Tokens: an HF token or a GitHub token is read only from the user's own environment (`HF_TOKEN`, `huggingface-cli login` storage, `GITHUB_TOKEN`). The tool never asks for, prints, logs or stores a token, and reports show only "authenticated: yes/no".
 
@@ -144,21 +147,28 @@ Tokens: an HF token or a GitHub token is read only from the user's own environme
 
 **Recommendation: ScanCode toolkit**, installed as an optional extra (`pip install datasetvet[scan]`).
 
-**The default install has no licence-text scanner** (decision recorded 2026-11-19, before Phase 2). With plain `pip install datasetvet`:
-- licence evidence comes only from structured fields: the card's YAML `license` (C1, via the `hf_ids` table) and, only when `GITHUB_TOKEN` is set, GitHub's own detected licence for GitHub sources (labelled "GitHub's detection (licensee)", not ours);
-- every text-based claim (C2 README prose, C3 licence files, C4 web pages and raw GitHub LICENSE files) is `unknown (scanner not installed)`;
-- so the default install can show a card licence and its properties, but it can only reach `consistent`/`inconsistent` against GitHub's detected licence. Everything else needs the `[scan]` extra.
+~~The default install has no licence-text scanner~~ (decision of 2026-11-19, before Phase 2; **replaced by the owner's Phase 3 decision below**).
 
-The accuracy evaluation reports the two configurations separately (§8), so the cost of skipping the 652 MB extra is measured, not assumed.
+**Phase 3 decision (owner, 2026-11-19): the plain install gets a built-in licence matcher.** Deterministic, matching against official SPDX licence texts (askalono-style), no AI, small and dependency-light. As built (`licences/matcher.py`, standard library only):
+- **Data:** 92 official texts from `spdx/license-list-data` tag v3.29.0 (every SPDX licence HF's id list maps to, plus other versions of the same families and common data licences), and the OSI/FSF/deprecated flags of all 740 ids. 249 KB gzipped, built by `tools/vendor_spdx.py`. Texts that are identical after normalisation form one group (GPL-2.0-only / GPL-2.0-or-later and 4 more pairs), so 87 groups.
+- **Full text:** normalisation along the SPDX matching guidelines (case, quotes, dashes, copyright lines, SPDX's `equivalentwords.txt`), word bigrams counted as a multiset. A text *is* licence L when Dice >= 0.90; it *contains* L (e.g. a README with the MIT text under "## License") when containment >= 0.95, and when two contained licences overlap the larger wins (MIT inside X11). Multiset rather than set bigrams were needed: as sets, CC-BY-1.0 and CC-BY-SA-1.0 scored 0.997 against each other; as multisets every one of the 92 texts identifies itself and close relatives (MIT/MIT-0/X11, ISC/0BSD, BSD-2/3, CC-BY/BY-SA 1.0 and 4.0, GPL-3.0/AGPL-3.0) are told apart (tests).
+- **Notices:** `SPDX-License-Identifier:` lines, and licence names and ids from the SPDX list plus common short forms ("CC BY-NC 4.0", "Apache 2.0", "GPLv3", "CC0", "ODC-BY") inside a licence context: a "License:" line, a section headed License/Licensing, or within 25 words of "license"/"licence" or "released/distributed/available ... under". One-word names (MIT, ISC, Unlicense) need the word license within 3 words. A Creative Commons name without a version ("CC BY-SA") is flagged and never compared.
+- **Licence URLs:** creativecommons.org licence and deed URLs (ports only when the port is on the SPDX list), gnu.org, opendatacommons.org, spdx.org / opensource.org / choosealicense.com id URLs, and every `seeAlso` URL the SPDX list publishes. The URL itself is the evidence; it is not fetched.
+- **Not covered:** licences that are not on the SPDX list (Llama, OpenRAIL, custom terms), and free-text paraphrases ("for research use only"). Those give no detection, so the comparison is `missing` or `unknown`, never a guess.
+- Thresholds are fixed in code and may only be tuned on the Phase 4 dev split.
+
+**Scanner choice:** `--scanner builtin | scancode | auto` (default `auto`: ScanCode when it imports, else built-in). Every report names the scanner and version it used. ScanCode detections are kept at score >= 90 (`SCANCODE_MIN_SCORE`).
+
+The accuracy evaluation reports the two configurations separately (§8): `builtin` and `scancode`, on the same answer key, so the cost of skipping the 652 MB extra is measured, not assumed.
 
 - It is the only option that handles our hardest input, licence *statements inside dataset READMEs and web pages*, not just LICENSE files.
 - It is deterministic and gives a score and the matched lines, which become the report's evidence.
 - Its licence keys and SPDX mappings come from the same project as `license-expression`, so normalisation and comparison use one consistent licence database.
 
 Costs and how we contain them:
-- **Weight.** The core install (card check, SPDX validation, links, data health) does not need ScanCode. Without the extra, text-based licence sources report `unknown (scanner not installed)`; the report says so on its first line.
+- **Weight.** The core install (card check, SPDX validation, built-in matcher, links, data health) does not need ScanCode. Without the extra, the built-in matcher reads the texts (Phase 3).
 - **Windows install.** The extra pins `pluggy<1.6` and adds `typecode-libmagic` on Windows. The install docs say to enable long paths or create the venv at a short path such as `C:\dd\.venv`, and to run from PowerShell, not Git Bash (Git's libmagic segfaults ScanCode). CI tests the extra on Windows.
-- **Cross-check, not a second opinion.** For GitHub sources we also record GitHub's own detected licence (`/repos/{o}/{r}/license`, which is licensee) as a separate, labelled fact. If ScanCode and GitHub disagree, both are shown and the status is `unknown`, never a guess.
+- **Cross-check, not a second opinion.** For GitHub sources we also record GitHub's own detected licence (`/repos/{o}/{r}/license`, which is licensee) as a separate, labelled fact. If our scanner (built-in or ScanCode) and GitHub disagree, both are shown and the status is `unknown`, never a guess.
 
 ## 5. Checks: exact rules and statuses
 
@@ -189,6 +199,8 @@ Phase 2 clarifications, from the live test cards:
 
 HF family ids (`bsd`, `cc`, `gpl`, `lgpl`, `gfdl`, `openrail`) are reported as "a family, not a specific licence": the card check is `present`, but every consistency comparison involving them is `unknown`.
 
+Phase 3, as built (task 3.1): `data/hf_licence_ids.csv` maps all 83 ids on HF's list (hub-docs commit `fd6cf1f`, 2026-06-06) to `spdx` (53), `family` (8: also `odc-by` and `odbl`, which HF itself names as families), `non-spdx` (20: Llama, Gemma, OpenRAIL-M, ...) or `special` (2: `unknown`, `other`). Five HF ids map to deprecated SPDX ids (`gpl-2.0` -> `GPL-2.0`, also gpl-3.0, lgpl-2.1, lgpl-3.0, agpl-3.0); `license-expression` treats those as the `-only` variants, as SPDX did. A value that is not an HF id but is an SPDX id (e.g. `ODC-By-1.0`) is `present` with that fact; anything else is `invalid`. A network test fails if HF's list gains an unmapped id.
+
 ### 5.2 Licence consistency (never sampled)
 
 **Licence claims collected**, each normalised to an SPDX expression (or a ScanCode `LicenseRef-scancode-*` key for non-SPDX licences):
@@ -212,6 +224,17 @@ HF family ids (`bsd`, `cc`, `gpl`, `lgpl`, `gfdl`, `openrail`) are reported as "
 The report line always shows both sides verbatim, e.g.
 `Card says MIT (README.md@3f2a1c, YAML line 3); source github.com/org/repo LICENSE@9b1e0d says CC-BY-NC-4.0 (score 100, lines 1-12); these differ.`
 
+Phase 3, as built (`checks/licence.py`):
+- **One result per comparison**: card vs README text, card vs each licence file, card vs each source file / licence URL / HF dataset. Each sentence reads e.g. `Card says mit (SPDX MIT) (README.md@878c103, YAML line 8); github.com/robinjia/adversarial-squad LICENSE@9cd77aa says MIT (full text, score 100, lines 1-21); these are the same licence.` Properties of the other side's licence follow when it differs from the card's.
+- **Card side.** A card list (`[mit, cc-by-4.0]`) is compared as one set (`MIT AND CC-BY-4.0`); HF does not say whether a list means AND or OR. `unknown`/empty is `missing`. Family ids, `other` (with or without `license_name`) and values that are neither HF nor SPDX ids make every comparison `unknown`. Non-SPDX HF ids become `LicenseRef-hf-<id>` and compare by exact name only.
+- **Several licences in one place** (a README naming MIT for code and CC-BY-4.0 for data): `consistent` only if together they equal the card's set; otherwise `unknown` (plus "None of these is the card's licence" when that is true). One expression with AND that strictly contains the card's licence is `inconsistent` / `subset`, as specified.
+- **Identical texts**: a GPL-2.0 text matches a card's `GPL-2.0-only` or `GPL-2.0-or-later`; the fact says the text alone does not say which.
+- **README (C2)**: `missing` when the README body never mentions a licence, or when its only licence content is HF's template placeholder `[More Information Needed]` (TOC lines ignored); `unknown` when it mentions a licence and nothing is identified.
+- **Licence files (C3)**: `LICEN[CS]E*`, `COPYING*`, `*.license` anywhere in the repo, up to 10, first 512 KB each. A repo with none gets no result, only a "not checked: nothing to compare" line.
+- **Sources (C4)**: stated sources (Homepage, Repository, ... bullets and labelled links) and the card's `license_link`, minus `source_datasets` (provenance's job), the dataset's own repo, duplicate links to the same GitHub repo / HF dataset, and HF's old card-template link (`github.com/huggingface/datasets/blob/*/CONTRIBUTING.md`, which many legacy cards give as "Repository"). Up to 10 sources. Papers and homepages are listed as "not read for a licence".
+- **GitHub, anonymous** (`hubs/github.py`): HEAD pinned via git's smart-HTTP ref advertisement (`github.com/{o}/{r}.git/info/refs`, not API-limited), then raw files at that sha: the first of `LICENSE, LICENSE.md, LICENSE.txt, LICENCE, COPYING`, plus `DATA_LICENSE` and `LICENSE-DATA` (tatsu-lab/alpaca keeps its data licence there). Zero `api.github.com` calls (test). With no file found the status is `unknown` ("other file names are not checked without GITHUB_TOKEN"), because the anonymous path cannot list a repo; with `GITHUB_TOKEN`, GitHub's API saying "no licence" too makes it `missing`.
+- **Web** (`hubs/web.py`): a licence's own URL is a claim without fetching; a page whose path contains license/licence/terms/copyright/legal is fetched (512 KB), HTML reduced to text, and scanned; other pages are not read.
+
 **Licence properties** (shown next to each licence, never used to decide anything):
 - From the SPDX licence list: OSI-approved, FSF-libre, deprecated id.
 - For Creative Commons licences only: the licence elements BY / SA / NC / ND, which are part of each licence's published name and deed (creativecommons.org). Kept in `data/cc_elements.csv` with the deed URL per row.
@@ -223,6 +246,12 @@ The report line always shows both sides verbatim, e.g.
 - For each parent: resolve with the matching adapter (cross-hub allowed), read its C1 (and C3 where cheap), compare with the child's C1 using the §5.2 rule and statuses, and show both licences' properties side by side.
 - Depth limit 2 by default (`--provenance-depth`), cycle detection by `(hub, id)`, every parent pinned to a revision.
 - Unresolvable parent (`original`, `extended|other-foo`, free text) -> `unknown`, with the raw value shown.
+
+Phase 3, as built (`checks/provenance.py`):
+- `original` is not a parent. With no declared parents there is no provenance result; the report's "Not checked" list says why and names any HF datasets the README mentions (not treated as parents).
+- Legacy ids resolve through the Hub's redirect (`extended|squad` -> `rajpurkar/squad`, `glue` -> `nyu-mll/glue`), and the fact says so. A missing parent is `unknown` with the Hub's error.
+- At depth 2 each grandparent is compared with its own child (the parent), so every edge of the chain gets one status; the title says "parent of X".
+- A parent given as a URL goes through the GitHub or web resolver and the scanner, the same way as a C4 source.
 
 ### 5.4 Links (never sampled)
 
@@ -250,8 +279,9 @@ The report shows the final URL and status code. A dead link is a fact about toda
 - 5 GB: a full scan on a laptop is mostly download time (about 7 minutes at 100 Mbit/s; measured throughput is a Phase 2 task). Above it, a default run could take hours, so the user opts in with `--full`.
 
 Phase 2, as built (`checks/health/scan.py`, `hubs/huggingface.py`):
-- **Sampling detail.** Each split's quota is proportional to its rows. Within a split, files are visited in a seeded order and whole Parquet row groups are taken in a seeded order until the quota is met (the last group is cut at the quota). Not every file contributes: per-file range reads would multiply requests. Each chosen file is downloaded whole, so a split stored in one file costs its full download even when sampled. CSV/JSON Lines files have no row groups, so their first rows are read.
-- **Row groups are clusters.** On a file sorted by label (IMDB train), a 5,000-row sample showed 70/30 labels against the true 50/50. The label table says so whenever the scan is sampled.
+- **Sampling detail.** Each split's quota is proportional to its rows. Within a split, files are visited in a seeded order until the quota is met. Not every file contributes: per-file range reads would multiply requests. Each chosen file is downloaded whole, so a split stored in one file costs its full download even when sampled.
+- ~~Whole Parquet row groups are taken in a seeded order~~ (Phase 2). **Phase 3 (owner decision): many small chunks spread across each file.** Each file read is cut into slots of `min(100, quota // 100)` rows (at least 1), and slots are drawn with the seed until the file's share of the quota is met, so a split's sample comes from about 100 or more chunks across the whole file. Only row groups holding a chosen chunk are decoded. CSV/JSON Lines files are counted in a first pass and sampled the same way. The scan reason says "rows are read in small chunks spread across each file read".
+- **Clusters.** On IMDB train (one file, sorted by label) a 5,000-row sample showed 70/30 labels with row groups against the true 50/50; with chunks it shows 51.8/48.2 (seed 0, measured 2026-11-19). Files themselves can still be ordered (e.g. one label per file), so the label table keeps its warning whenever the scan is sampled, now naming the chunk size.
 - **Conversion pinned.** Parquet files are read from the `refs/convert/parquet` commit sha (from `/api/datasets/{id}/refs`), not the moving ref. The Hub does not say which main revision a conversion was built from.
 - **Original-files fallback** reads Parquet, CSV, TSV, JSON Lines and JSON (optionally `.gz`), mapped to splits by the card's `configs` or HF's file-name convention, and never reads hidden paths (`.metadata/…`). If the owner disabled the Dataset Viewer and the card has no `configs`, data health is `not checked`: nothing states which files are data.
 - **Gated datasets:** data health is `not checked`; the tool never accepts terms.
@@ -301,6 +331,7 @@ class SourceResolver(Protocol):                  # things that are sources, not 
   - `open_split` is replaced by `fetch(file, dest_dir) -> Path`, and reading/sampling lives in `checks/health/scan.py`, so every hub shares one reader;
   - `blob_url(ds, path, line)` builds evidence links;
   - `SourceResolver.link_status` is dropped, because the link checker handles every URL itself.
+- Phase 3 change: `SourceResolver.licence_claims(url)` became `read(url) -> SourceRead` (licence texts to scan, structured claims such as GitHub's detection or a licence URL, a state: read / no licence file / unreadable / skipped, and the pinned revision), so every scanner reads the same texts.
 - The registry tries adapters, then resolvers, in order; `ParentRef` carries a URL or `hub:id`, so an HF card can name a Zenodo record or GitHub repo as its parent and the provenance check follows it with the right adapter.
 - v1 ships `huggingface` (adapter) plus `github` and `web` (resolvers).
 - v2 notes, not verified in Phase 1: Zenodo has an open REST API with `metadata.license`; Kaggle's API needs a free API key (the user's own); a GitHub-hosted dataset adapter reuses the `github` resolver plus a file reader. Each needs its own feasibility check before work starts.
@@ -310,7 +341,7 @@ class SourceResolver(Protocol):                  # things that are sources, not 
 - **JSON** (`--json out.json`) is the single source of truth, with `schema_version`. It holds the tool version, ScanCode version and licence-DB version, the dataset ref and pinned sha, the scan type, the time, every fact with its evidence, and every status. All other formats render from it, so they cannot disagree.
 - **Terminal:** one block per section: status word, the facts as one-line sentences, evidence links. The first line is the scan type and anything not checked.
 - **Markdown** (`--md`), for PRs and issues, and **HTML** (`--html`): one static file, no JavaScript, no external requests, links to evidence. The HTML is the unit of the later static report website.
-- **Footer, every format:** "Facts only, not legal advice. Statuses: consistent / inconsistent / missing / unknown. No check decides whether you may use this data."
+- **Footer, every format** (reworded in Phase 3 to pass the banned-words test): "Facts only, not legal advice. Licence statuses: consistent / inconsistent / missing / unknown. No check here judges how this data can be used." The banned phrases live in `model.BANNED_PHRASES`; `tests/test_wording.py` already checks the footer, the licence properties and rendered terminal reports (task 5.3 extends it to every renderer).
 - **Badge** (`datasetvet badge report.json > badge.svg`): a local SVG in the shields style, generated without any web service. The text is factual, e.g. `datasetvet | 2 inconsistent · 1 dead link · full scan` or `datasetvet | no findings · sampled`. Colours: grey when nothing was found, amber for any `inconsistent`/`found`/`dead`, light grey for `unknown`-only. No green, because green reads as "safe".
 
 ## 8. Accuracy evaluation
@@ -327,9 +358,9 @@ class SourceResolver(Protocol):                  # things that are sources, not 
 3. Expected status: card at audit time (`HF Yaml License`) vs expert set: equal -> `consistent`; both present and different -> `inconsistent`; YAML empty -> `missing`; expert `non-SPDX`/`none` -> excluded from Q3, counted separately.
 4. Split by HF repo id hash: 30% dev (build tables, set the ScanCode threshold), 70% test. Freeze the config with a git tag before the test run.
 
-**Two scanner configurations, reported separately.** Every question below is run twice on the same key, the same dev/test split and the same frozen config, changing only the scanner:
-- `default`: the core install, no licence-text scanner (§4);
-- `scancode`: the `[scan]` extra, with the threshold tuned on the dev split.
+**Two scanner configurations, reported separately.** Every question below is run twice on the same key, the same dev/test split and the same frozen config, changing only the scanner (`--scanner builtin` / `--scanner scancode`; never `auto` in the evaluation):
+- `builtin`: the plain install's built-in SPDX matcher (§4, Phase 3), with its Dice/containment thresholds tunable on the dev split only;
+- `scancode`: the `[scan]` extra, with the score threshold tuned on the dev split.
 
 Each configuration gets its own confusion matrix, agreement with Wilson interval, kappa, abstention rate and `inconsistent` precision/recall. They are never pooled or averaged. Both runs record the tool version, ScanCode and licence-DB version (or "not installed"), and whether an HF or GitHub token was present. Any headline number in the README names its configuration.
 
@@ -423,7 +454,9 @@ Each task is small, has a check you can run, and names its files. Tests never to
 | 2.12 | JSON + terminal report; CLI `check` | `report/json_out.py`, `report/terminal.py`, `cli.py` | `datasetvet check hf:stanfordnlp/imdb` runs end to end on the laptop; scan time and throughput logged to BUILD_LOG |
 | 2.13 | CI: lint, type check, tests on Windows + Ubuntu, Python 3.11/3.12/3.13 | `.github/workflows/ci.yml` | green on a branch (pushed only with the owner's OK) |
 
-### Phase 3: licence + provenance (Opus 5.5, high)
+### Phase 3: licence + provenance (Opus 5.5, high) — done 2026-11-19
+
+Owner decisions taken at the start of Phase 3 (from the Phase 2 open questions): a built-in matcher in the plain install (3.9), chunked sampling (3.10), footer reworded (3.11). What was built, measured and left open is in BUILD_LOG.md.
 
 | # | task | files | done when |
 |---|---|---|---|
@@ -435,6 +468,9 @@ Each task is small, has a check you can run, and names its files. Tests never to
 | 3.6 | Licence consistency check (C1 vs C2/C3/C4, §5.2) | `checks/licence.py`, tests | one fixture per status and sub-fact; report sentences match the §5.2 example format |
 | 3.7 | Provenance check (declared parents, depth 2, cycles, cross-hub refs) | `checks/provenance.py`, tests | parent-licence mismatch fixture; cycle fixture terminates; `original` gives no parent |
 | 3.8 | Windows install guidance for the extra + CI job installing it on Windows at a short path | `docs/INSTALL.md`, `ci.yml` | CI installs `[scan]` on windows-latest and runs the scanner tests |
+| 3.9 | Built-in SPDX matcher in the plain install (owner decision) | `licences/matcher.py`, `data/spdx_licences.json.gz`, `tools/vendor_spdx.py`, `tests/test_matcher.py` | every vendored text identifies itself; close relatives told apart; notices and URLs; no AI, stdlib only |
+| 3.10 | Sampling: many small chunks spread across each file (owner decision) | `checks/health/scan.py`, `tests/test_scan.py` | exact, deterministic, spread across a sorted file; label warning kept |
+| 3.11 | Footer reworded; banned-words test for the footer and terminal reports | `model.py`, `tests/test_wording.py` | test passes |
 
 ### Phase 4: accuracy evaluation + launch scan (Opus 5.5, high)
 
@@ -444,8 +480,8 @@ Each task is small, has a check you can run, and names its files. Tests never to
 | 4.2 | Resumable runner with SQLite state, batching, limiter, Ctrl-C safety | `launch/run.py`, `launch/state.py`, tests | killing the process mid-batch and resuming finishes with no duplicate or missing rows (test) |
 | 4.3 | DPI key builder (pinned sha), licence-name map, dev/test split | `eval/build_key.py`, `data/dpi_licence_map.csv` | key stats match §8 counts; dropped-repo count reported |
 | 4.4 | Audit-time card revision lookup | `eval/revisions.py` | for 20 dev repos the chosen commit predates the DPI file date (test) |
-| 4.5 | Dev run of both configurations (`default`, `scancode`); tune the ScanCode threshold only, then freeze config (git tag `eval-config-v1`) | `eval/run.py`, `eval/config.yml` | tag exists before any test-split result is computed |
-| 4.6 | Test run of both configurations + metrics: confusion matrix, Wilson CI, kappa, abstention, inconsistent P/R, **one set per configuration** | `eval/metrics.py`, `eval/results/` | `RESULTS.md` has separate `default` and `scancode` sections, never pooled; owner labels 30 disagreements per configuration that has them |
+| 4.5 | Dev run of both configurations (`builtin`, `scancode`); tune only each scanner's thresholds, then freeze config (git tag `eval-config-v1`) | `eval/run.py`, `eval/config.yml` | tag exists before any test-split result is computed |
+| 4.6 | Test run of both configurations + metrics: confusion matrix, Wilson CI, kappa, abstention, inconsistent P/R, **one set per configuration** | `eval/metrics.py`, `eval/results/` | `RESULTS.md` has separate `builtin` and `scancode` sections, never pooled; owner labels 30 disagreements per configuration that has them |
 | 4.7 | Launch scan Tier A then Tier B | `launch/results/` | RESULTS.md with per-status counts, not-checked list and run dates |
 
 ### Phase 5: polish, Action, README, launch (Sonnet 5.5, medium)
@@ -470,5 +506,9 @@ Each task is small, has a check you can run, and names its files. Tests never to
 - **Launch-scan bandwidth**: unknown until 4.1 sums the sizes; Tier B's limit is set from that, not guessed.
 - **PII regexes** will have false positives and misses; the output says "pattern matches", and 2.11's fixtures measure precision on known non-PII strings. No recall claim is made.
 - **Licence properties**: SPDX data carries no NC/SA properties for non-CC licences, so those show none. This is narrower than the brief's wording; owner to confirm.
-- **Footer vs banned words** (Phase 2 finding): the §7 footer says "No check decides whether you may use this data", which contains "you may", a phrase task 5.3 bans. Reword the footer or scope the test before Phase 5.
-- **Default install has no text scanner** (§4). Without the extra, most licence consistency results will be `unknown`. Owner to decide before Phase 3 whether the core install should get a small built-in matcher (e.g. exact SPDX-id notices and full-text similarity against SPDX licence texts). Either way, §8 measures the default and ScanCode configurations separately.
+- ~~Footer vs banned words~~: resolved in Phase 3 (footer reworded, §7).
+- ~~Default install has no text scanner~~: resolved in Phase 3 (built-in matcher, §4). §8 measures `builtin` and `scancode` separately.
+- **SPDX licence list data's own licence is still not stated** (Phase 3 check, 2026-11-19): GitHub reports `NOASSERTION` for `spdx/license-list-data` and `spdx/license-list-XML`; neither README nor spdx.org/licenses states a licence (the site footer says "© 2018 SPDX Workgroup a Linux Foundation Project. All Rights Reserved"). The package vendors 92 licence texts (each licence's own text) plus list metadata. Owner to decide before the first release (task 5.8) whether to keep vendoring the texts, ask SPDX, or ship only a derived bigram index.
+- **Anonymous GitHub sources** can only say "no file under these 7 names", so a repo without one is `unknown`, not `missing`, unless `GITHUB_TOKEN` is set.
+- **A source repo's LICENSE often covers code, not data** (hotpot_qa: card CC-BY-SA-4.0, repo Apache-2.0). The report states the two licences and that they differ, which is the fact; it does not say which one covers the data. Phase 4's disagreement audit should count how often this is the reason.
+- **Built-in matcher coverage**: no non-SPDX licences, no paraphrases; Phase 4 measures its abstention rate against ScanCode's.

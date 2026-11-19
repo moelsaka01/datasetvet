@@ -2,9 +2,10 @@
 
 Never sampled. Statuses: present / missing / invalid.
 
-Not here yet: whether each licence value is a known HF licence id and maps to SPDX (task 3.1).
-Until then the licence field is `present` when it has a value other than `unknown`, `missing`
-otherwise, and `invalid` only when it is not a string or a list of strings.
+Licence field (task 3.1): each value is looked up in HF's licence id table
+(`data/hf_licence_ids.csv`). `present` if every value is an HF id or an SPDX id; `invalid` if
+a value is neither (or not a string); `missing` if absent, empty or `unknown`. Each value's
+SPDX mapping and published properties are listed as facts.
 """
 
 from __future__ import annotations
@@ -13,6 +14,10 @@ import re
 from typing import Any
 
 from datasetvet.hubs.base import Card, LinkRef
+from datasetvet.licences import spdx
+from datasetvet.licences.hf_ids import HfLicence, lookup
+from datasetvet.licences.hf_ids import source_url as hf_source_url
+from datasetvet.licences.properties import properties
 from datasetvet.model import CardStatus, CheckResult, Evidence, Fact, Family
 
 # HF's size_categories values (huggingface.co/docs/hub/datasets-cards, Hub validation list)
@@ -74,6 +79,16 @@ def check_licence_field(card: Card) -> CheckResult:
         return _result("card.licence", title, CardStatus.MISSING,
                        [Fact(f"`license` is {', '.join(vals) or 'empty'}.", ev)], values=vals)
     facts = [Fact(f"Card says license: {', '.join(vals)}.", ev, {"values": vals})]
+    bad = []
+    for v in vals:
+        if v.lower() == "unknown":
+            continue
+        h = lookup(v)
+        facts.append(Fact(_mapping_text(h), ev, {"value": v, "kind": h.kind, "spdx": h.spdx}))
+        if h.spdx:
+            facts.append(Fact("Properties: " + properties(h.spdx).text() + "."))
+        if h.kind == "not-hf":
+            bad.append(v)
     if any(v.lower() == "other" for v in vals):
         name, link = m.get("license_name"), m.get("license_link")
         detail = []
@@ -82,9 +97,27 @@ def check_licence_field(card: Card) -> CheckResult:
         facts.append(Fact(f"`license: other` with {'; '.join(detail)}.",
                           _ev(card, "license_name" if name else "license"),
                           {"license_name": name, "license_link": link}))
-    facts.append(Fact("Whether each value is a valid HF licence id and an SPDX id is not checked "
-                      "in this version (planned: Phase 3)."))
-    return _result("card.licence", title, CardStatus.PRESENT, facts, values=vals)
+    status = CardStatus.INVALID if bad else CardStatus.PRESENT
+    return _result("card.licence", title, status, facts, values=vals, invalid=bad,
+                   hf_list=hf_source_url())
+
+
+def _mapping_text(h: HfLicence) -> str:
+    if h.kind == "spdx":
+        dep = " (a deprecated SPDX id)" if (spdx.flags(h.spdx or "") or (0, 0, 0))[2] else ""
+        return f"{h.value}: HF licence id for SPDX {h.spdx}{dep}."
+    if h.kind == "spdx-not-hf":
+        return f"{h.value}: not on HF's licence id list, but the SPDX id {h.spdx}."
+    if h.kind == "family":
+        return f"{h.value}: HF id for a licence family ({h.name}), not one licence."
+    if h.kind == "non-spdx":
+        return f"{h.value}: HF id for {h.name}, which is not on the SPDX list."
+    if h.kind == "special" and h.value.lower() == "other":
+        return (f"{h.value}: HF's id for a licence not on its list; HF asks for the licence's "
+                "name in license_name and its text in a LICENSE file.")
+    if h.kind == "special":
+        return f"{h.value}: HF's id for an unknown licence."
+    return f"{h.value!r}: neither an HF licence id nor an SPDX id."
 
 
 def _text_modality(card: Card) -> bool | None:

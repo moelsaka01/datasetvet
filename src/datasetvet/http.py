@@ -295,9 +295,11 @@ class Http:
 
     # -- requests ------------------------------------------------------------------------
     def _send_once(self, method: str, url: str, *, auth: bool, max_bytes: int | None,
-                   timeout: float | None, params: dict[str, str] | None) -> Response:
+                   timeout: float | None, params: dict[str, str] | None,
+                   extra_headers: dict[str, str] | None = None) -> Response:
         key = bucket_for(url)
         headers = dict(self._auth_headers()) if (auth and _is_hf(url)) else {}
+        headers.update(extra_headers or {})
         kwargs: dict[str, Any] = {"headers": headers, "params": params}
         if timeout is not None:
             kwargs["timeout"] = timeout
@@ -333,10 +335,12 @@ class Http:
     def request(self, method: str, url: str, *, auth: bool = True, ttl: float | None = None,
                 max_bytes: int | None = None, retries: int = 3, timeout: float | None = None,
                 params: dict[str, str] | None = None, max_redirects: int = MAX_REDIRECTS,
-                ) -> Response:
+                headers: dict[str, str] | None = None) -> Response:
         """One logical request with manual redirects, retries and an optional cache.
 
         ttl: None = never cache; float('inf') = cache forever (revision-pinned URLs).
+        headers: extra request headers for this host only (never followed across a redirect to
+        another host, and never cached or logged).
         Raises FetchError for network failures after retries and for redirect loops.
         """
         if params:
@@ -350,8 +354,10 @@ class Http:
         current = url
         seen = {url}
         while True:
+            same_host = urlsplit(current).hostname == urlsplit(url).hostname
             resp = self._with_retries(method, current, auth=auth, max_bytes=max_bytes,
-                                      retries=retries, timeout=timeout)
+                                      retries=retries, timeout=timeout,
+                                      headers=headers if same_host else None)
             if resp.status in (301, 302, 303, 307, 308) and "location" in resp.headers:
                 history.append((resp.status, current))
                 nxt = urljoin(current, resp.headers["location"])
@@ -370,12 +376,13 @@ class Http:
             return resp
 
     def _with_retries(self, method: str, url: str, *, auth: bool, max_bytes: int | None,
-                      retries: int, timeout: float | None) -> Response:
+                      retries: int, timeout: float | None,
+                      headers: dict[str, str] | None = None) -> Response:
         attempt = 0
         while True:
             try:
                 resp = self._send_once(method, url, auth=auth, max_bytes=max_bytes,
-                                       timeout=timeout, params=None)
+                                       timeout=timeout, params=None, extra_headers=headers)
             except httpx2.HTTPError as exc:
                 kind = classify_exception(exc)
                 if kind == "dns" or attempt >= retries:

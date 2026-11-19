@@ -80,7 +80,8 @@ def test_end_to_end_offline(router, tmp_path):
     assert by["health.pii"].status == "found"
     links = [r for r in report.results if r.family == "links"]
     assert {r.status for r in links} == {"ok", "dead"}
-    assert any("Phase 3" in n for n in report.not_checked)
+    assert any(r.family == "licence" for r in report.results)
+    assert report.scanner.startswith(("built-in", "ScanCode"))
 
     path = tmp_path / "r.json"
     write_json(report, path)

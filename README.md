@@ -2,7 +2,7 @@
 
 **Before you train on it, check it.**
 
-> **Status: Phase 2 of 5.** Card, link and data-health checks work for Hugging Face datasets. Licence consistency and provenance are not built yet (Phase 3). The design is in [PLAN.md](PLAN.md) and the build history is in [BUILD_LOG.md](BUILD_LOG.md).
+> **Status: Phase 3 of 5.** Card, licence consistency, provenance, link and data-health checks work for Hugging Face datasets. Accuracy has not been measured yet (Phase 4). The design is in [PLAN.md](PLAN.md), the build history in [BUILD_LOG.md](BUILD_LOG.md), and install notes (including the optional ScanCode extra on Windows) in [docs/INSTALL.md](docs/INSTALL.md).
 
 ```powershell
 pip install -e .
@@ -24,8 +24,8 @@ Each fact comes with an evidence link pinned to a commit.
 ## What it will not do
 
 - **No legal judgements.** Licence statuses are only *consistent*, *inconsistent*, *missing* or *unknown*. It never says a dataset is "safe to use". **This is not legal advice.**
-- **No AI in any decision.** Licence detection uses a deterministic scanner ([ScanCode toolkit](https://github.com/aboutcode-org/scancode-toolkit)). An AI summary may be added later as an optional extra; it will be off by default and clearly labelled.
-- **No accuracy claims without measurement.** Before launch, it will be scored against the Data Provenance Initiative's hand-audited licences, with a confusion matrix ([PLAN.md section 8](PLAN.md#8-accuracy-evaluation)).
+- **No AI in any decision.** Licence detection is deterministic: a built-in matcher against the official SPDX licence texts, or optionally the [ScanCode toolkit](https://github.com/aboutcode-org/scancode-toolkit) (`pip install "datasetvet[scan]"`). Every report names the scanner it used. An AI summary may be added later as an optional extra; it will be off by default and clearly labelled.
+- **No accuracy claims without measurement.** Before launch, it will be scored against the Data Provenance Initiative's hand-audited licences, with a confusion matrix for each scanner ([PLAN.md section 8](PLAN.md#8-accuracy-evaluation)).
 
 ## Licence
 

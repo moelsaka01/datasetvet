@@ -15,9 +15,11 @@ from typing import Any
 SCHEMA_VERSION = "0.1"
 
 FOOTER = (
-    "Facts only, not legal advice. Statuses: consistent / inconsistent / missing / unknown. "
-    "No check decides whether you may use this data."
+    "Facts only, not legal advice. Licence statuses: consistent / inconsistent / missing / "
+    "unknown. No check here judges how this data can be used."
 )
+# Phrases no output may contain (PLAN.md task 5.3; tests/test_wording.py).
+BANNED_PHRASES = ("safe", "compliant", "legal to", "allowed", "you may")
 
 
 class LicenceStatus(StrEnum):
@@ -184,7 +186,7 @@ class Report:
     not_checked: list[str] = field(default_factory=list)
     authenticated: bool = False
     created_at: str = field(default_factory=now_iso)
-    scanner: str = "none (licence-text scanner not installed)"
+    scanner: str = "not run"
     settings: dict[str, Any] = field(default_factory=dict)
     schema_version: str = SCHEMA_VERSION
     footer: str = FOOTER

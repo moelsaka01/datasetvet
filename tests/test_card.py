@@ -84,7 +84,18 @@ def test_licence_field_variants():
     assert check_licence_field(card("---\nlicense: {a: 1}\n---\n")).status == "invalid"
     other = check_licence_field(card("---\nlicense: other\nlicense_name: llama2\n---\n"))
     assert other.status == "present"
-    assert "license_name: llama2" in other.facts[1].text
+    assert any("license_name: llama2" in f.text for f in other.facts)
+    bad = check_licence_field(card("---\nlicense: Apache 2.0\n---\n"))
+    assert bad.status == "invalid" and bad.data["invalid"] == ["Apache 2.0"]
+    spdx_only = check_licence_field(card("---\nlicense: ODC-By-1.0\n---\n"))
+    assert spdx_only.status == "present"
+    assert any("not on HF's licence id list, but the SPDX id ODC-By-1.0" in f.text
+               for f in spdx_only.facts)
+    fam = check_licence_field(card("---\nlicense: bsd\n---\n"))
+    assert fam.status == "present" and any("licence family" in f.text for f in fam.facts)
+    cc = check_licence_field(card("---\nlicense: cc-by-nc-4.0\n---\n"))
+    texts = " ".join(f.text for f in cc.facts)
+    assert "SPDX CC-BY-NC-4.0" in texts and "NC (NonCommercial)" in texts
 
 
 def test_language_not_required_for_image_only():

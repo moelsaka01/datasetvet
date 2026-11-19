@@ -335,9 +335,14 @@ def _labels_result(states: list[SplitState], plan: ScanPlan) -> CheckResult:
                         data={"split": f"{cfg}/{name}", "column": col,
                               "absent_from_train": missing}))
     if any_cols and plan.mode == "sampled":
-        facts.append(Fact("Counts are for the sample only. Whole row groups are sampled, so if "
-                          "a file is sorted (e.g. by label) the shares can differ from the "
-                          "full data."))
+        sizes = sorted({c for c in (plan.chunk_rows(s.split.key) for s in states) if c})
+        size = f"{sizes[-1]}" if len(sizes) == 1 else f"{sizes[0]}-{sizes[-1]}" if sizes \
+            else "?"
+        facts.append(Fact(
+            f"Counts are for the sample only. Rows were read in chunks of up to {size} rows "
+            "spread across each file read, but not every file is read, so if the files are "
+            "ordered (e.g. one label per file) the shares can differ from the full data.",
+            data={"chunk_rows": sizes}))
     if not any_cols:
         return CheckResult("health.labels", Family.HEALTH, HealthStatus.NOT_CHECKED,
                            HEALTH_CHECKS["health.labels"],

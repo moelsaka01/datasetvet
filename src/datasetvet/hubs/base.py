@@ -43,11 +43,28 @@ class TextBlob:
 
 @dataclass
 class LicenceClaim:
-    """A raw licence statement. Normalisation to SPDX is Phase 3."""
+    """A licence statement that is already structured (not found by our scanner): a card's
+    YAML `license` value, GitHub's own detected licence, or a licence's own URL."""
 
-    source: str  # "card field", "readme text", "licence file", "source"
-    raw: str
+    source: str  # "card field", "GitHub's detection (licensee)", "licence URL"
+    raw: str  # as stated: an HF id, an SPDX id, NOASSERTION
     evidence: Evidence
+
+
+@dataclass
+class SourceRead:
+    """What a source resolver read from one stated source (PLAN.md 5.2, C4)."""
+
+    url: str
+    label: str  # short name used in report sentences, e.g. "github.com/org/repo"
+    kind: str  # "github", "web page", "licence URL", "huggingface"
+    state: str  # "read", "no licence file", "unreadable", "skipped"
+    texts: list[TextBlob] = field(default_factory=list)  # licence files / pages to scan
+    claims: list[LicenceClaim] = field(default_factory=list)  # structured claims
+    note: str | None = None  # why unreadable / skipped, or what was tried
+    revision: str | None = None
+    names_tried: list[str] = field(default_factory=list)
+    confirmed_none: bool = False  # an authoritative "no licence" (GitHub's API said none)
 
 
 @dataclass
@@ -119,8 +136,10 @@ class HubAdapter(Protocol):
 
 
 class SourceResolver(Protocol):
+    name: str
+
     def matches(self, url: str) -> bool: ...
-    def licence_claims(self, url: str) -> list[LicenceClaim]: ...
+    def read(self, url: str) -> SourceRead: ...
 
 
 class UnknownRefError(ValueError):

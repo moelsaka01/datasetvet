@@ -4,17 +4,21 @@
   split, files read in path order.
 - Above the limit: **deterministic sample** of up to `sample_rows` rows. Each split gets a
   quota proportional to its rows (bytes when rows are unknown). Within a split, files are
-  visited in an order shuffled with the seed, and whole Parquet row groups are taken in a
-  seeded order until the quota is met (the last group is cut at the quota). CSV/JSON Lines
-  files have no row groups, so their first rows are read.
+  visited in an order shuffled with the seed until the quota is met. Inside each file read,
+  the rows come from **many small chunks spread across the whole file** (Phase 3 change; it was
+  whole Parquet row groups): the file is cut into slots of `chunk_rows(quota)` rows (at most
+  100, and about 100 or more chunks per split quota) and slots are drawn with the seed, so a
+  file sorted by label still gives rows from every part of it. CSV/JSON Lines files are
+  counted first, then sampled the same way.
 - Files are downloaded one at a time to a temp dir and deleted after reading, so disk use is
-  bounded by the largest file.
+  bounded by the largest file. Under sampling, not every file is read.
 """
 
 from __future__ import annotations
 
 import gzip
 import json
+import math
 import random
 from collections.abc import Callable, Iterator
 from dataclasses import dataclass, field
@@ -28,6 +32,33 @@ import pyarrow.parquet as papq
 from datasetvet.hubs.base import SplitFile, SplitSource
 
 BATCH_ROWS = 4096
+MAX_CHUNK_ROWS = 100  # a sampled file is read in chunks of at most this many rows
+MIN_CHUNKS = 100  # ... and in about this many chunks or more when the quota allows
+
+
+def chunk_rows(quota: int) -> int:
+    """Rows per sample chunk for a split quota: at most 100, small enough for ~100 chunks."""
+    return max(1, min(MAX_CHUNK_ROWS, quota // MIN_CHUNKS))
+
+
+def choose_chunks(n_rows: int, want: int, key: str, size: int) -> list[tuple[int, int]]:
+    """Seeded (start, length) row ranges in a file of `n_rows`, `want` rows in total, in file
+    order. The file is cut into slots of `size` rows; slots are drawn without replacement and
+    the last one drawn is cut so the total is exactly `want`."""
+    if want >= n_rows:
+        return [(0, n_rows)] if n_rows else []
+    slots = list(range(math.ceil(n_rows / size)))
+    random.Random(key).shuffle(slots)
+    picked: list[tuple[int, int]] = []
+    total = 0
+    for slot in slots:
+        if total >= want:
+            break
+        start = slot * size
+        length = min(size, n_rows - start, want - total)
+        picked.append((start, length))
+        total += length
+    return sorted(picked)
 
 
 @dataclass
@@ -39,6 +70,10 @@ class ScanPlan:
     sample_rows: int | None = None
     quotas: dict[str, int | None] = field(default_factory=dict)  # split key -> row quota
     reason: str | None = None
+
+    def chunk_rows(self, split_key: str) -> int | None:
+        q = self.quotas.get(split_key)
+        return chunk_rows(q) if (self.mode == "sampled" and q) else None
 
     def header(self, rows_scanned: int) -> str:
         if self.mode == "full":
@@ -68,7 +103,8 @@ def plan_scan(splits: list[SplitSource], *, max_scan_bytes: int, sample_rows: in
             q = min(q, s.rows)
         quotas[s.key] = q
     reason = (f"{bytes_total:,} bytes is above the full-scan limit of {max_scan_bytes:,} bytes; "
-              "use --full to scan everything")
+              "rows are read in small chunks spread across each file read; use --full to "
+              "scan everything")
     return ScanPlan("sampled", seed, bytes_total, rows_total, sample_rows=sample_rows,
                     quotas=quotas, reason=reason)
 
@@ -77,13 +113,6 @@ def file_order(split: SplitSource, plan: ScanPlan) -> list[int]:
     idx = list(range(len(split.files)))
     if plan.mode == "sampled":
         random.Random(f"{plan.seed}:{split.key}:files").shuffle(idx)
-    return idx
-
-
-def row_group_order(n_groups: int, split: SplitSource, f: SplitFile, plan: ScanPlan) -> list[int]:
-    idx = list(range(n_groups))
-    if plan.mode == "sampled":
-        random.Random(f"{plan.seed}:{split.key}:{f.path}:groups").shuffle(idx)
     return idx
 
 
@@ -109,6 +138,10 @@ def hf_features(schema: pa.Schema) -> dict | None:
         return None
 
 
+def _rows_key(plan: ScanPlan, split: SplitSource, f: SplitFile) -> str:
+    return f"{plan.seed}:{split.key}:{f.path}:rows"
+
+
 def _read_parquet(path: Path, split: SplitSource, f: SplitFile, file_no: int, plan: ScanPlan,
                   budget: int | None) -> Iterator[Chunk]:
     with papq.ParquetFile(path) as pf:
@@ -124,24 +157,36 @@ def _read_parquet_groups(pf: papq.ParquetFile, split: SplitSource, f: SplitFile,
     for g in range(md.num_row_groups):
         starts.append(acc)
         acc += md.row_group(g).num_rows
-    left = budget
-    for g in row_group_order(md.num_row_groups, split, f, plan):
-        if left is not None and left <= 0:
-            return
-        offset = starts[g]
+    wanted: list[tuple[int, int]] | None = None
+    if budget is not None and budget < md.num_rows:
+        size = plan.chunk_rows(split.key) or chunk_rows(budget)
+        wanted = choose_chunks(md.num_rows, budget, _rows_key(plan, split, f), size)
+    for g in range(md.num_row_groups):
+        g0 = starts[g]
         rg = md.row_group(g)
+        g1 = g0 + rg.num_rows
+        if wanted is not None and not any(a < g1 and a + n > g0 for a, n in wanted):
+            continue  # no chosen chunk in this row group: not decoded
         avg = rg.total_byte_size / rg.num_rows if rg.num_rows else 0
         # keep each batch near 64 MB in memory, even for image or audio rows
-        size = int(max(16, min(BATCH_ROWS, (64 << 20) / avg))) if avg else BATCH_ROWS
-        for batch in pf.iter_batches(batch_size=size, row_groups=[g]):
-            if left is not None:
-                if left <= 0:
-                    return
-                if batch.num_rows > left:
-                    batch = batch.slice(0, left)
-                left -= batch.num_rows
-            yield Chunk(batch, file_no, f.path, offset, feats)
+        bsize = int(max(16, min(BATCH_ROWS, (64 << 20) / avg))) if avg else BATCH_ROWS
+        offset = g0
+        for batch in pf.iter_batches(batch_size=bsize, row_groups=[g]):
+            if wanted is None:
+                yield Chunk(batch, file_no, f.path, offset, feats)
+            else:
+                yield from _slices(batch, offset, wanted, file_no, f.path, feats)
             offset += batch.num_rows
+
+
+def _slices(batch: pa.RecordBatch, offset: int, wanted: list[tuple[int, int]], file_no: int,
+            path: str, feats: dict | None) -> Iterator[Chunk]:
+    """The parts of `batch` (file rows offset .. offset+len) inside the wanted ranges."""
+    end = offset + batch.num_rows
+    for a, n in wanted:
+        lo, hi = max(a, offset), min(a + n, end)
+        if lo < hi:
+            yield Chunk(batch.slice(lo - offset, hi - lo), file_no, path, lo, feats)
 
 
 def _open_text(path: Path):
@@ -150,7 +195,7 @@ def _open_text(path: Path):
     return open(path, "rb")
 
 
-def _read_tabular(path: Path, f: SplitFile, file_no: int, budget: int | None) -> Iterator[Chunk]:
+def _tabular_batches(path: Path, f: SplitFile) -> Iterator[pa.RecordBatch]:
     fmt = f.fmt
     if fmt in ("csv", "tsv"):
         opts = pacsv.ParseOptions(delimiter="\t" if fmt == "tsv" else ",")
@@ -158,7 +203,7 @@ def _read_tabular(path: Path, f: SplitFile, file_no: int, budget: int | None) ->
         try:
             reader = pacsv.open_csv(fh, parse_options=opts,
                                     read_options=pacsv.ReadOptions(block_size=1 << 22))
-            yield from _limit(iter(reader), file_no, f.path, budget)
+            yield from reader
         finally:
             fh.close()
         return
@@ -170,28 +215,29 @@ def _read_tabular(path: Path, f: SplitFile, file_no: int, budget: int | None) ->
                 rows = json.load(fh)
             if not isinstance(rows, list):
                 raise ValueError("JSON file is not a list of records")
-            batches = iter(pa.Table.from_pylist(rows).to_batches(BATCH_ROWS))
+            yield from pa.Table.from_pylist(rows).to_batches(BATCH_ROWS)
         else:
             with _open_text(path) as fh:
                 table = pajson.read_json(fh, read_options=pajson.ReadOptions(block_size=1 << 22))
-            batches = iter(table.to_batches(BATCH_ROWS))
-    else:
-        raise ValueError(f"unsupported format {fmt!r}")
-    yield from _limit(batches, file_no, f.path, budget)
+            yield from table.to_batches(BATCH_ROWS)
+        return
+    raise ValueError(f"unsupported format {fmt!r}")
 
 
-def _limit(batches: Iterator[pa.RecordBatch], file_no: int, path: str,
-           budget: int | None) -> Iterator[Chunk]:
+def _read_tabular(path: Path, split: SplitSource, f: SplitFile, file_no: int, plan: ScanPlan,
+                  budget: int | None) -> Iterator[Chunk]:
+    wanted: list[tuple[int, int]] | None = None
+    if budget is not None:
+        n_rows = sum(b.num_rows for b in _tabular_batches(path, f))  # first pass: count
+        if budget < n_rows:
+            size = plan.chunk_rows(split.key) or chunk_rows(budget)
+            wanted = choose_chunks(n_rows, budget, _rows_key(plan, split, f), size)
     offset = 0
-    left = budget
-    for batch in batches:
-        if left is not None:
-            if left <= 0:
-                return
-            if batch.num_rows > left:
-                batch = batch.slice(0, left)
-            left -= batch.num_rows
-        yield Chunk(batch, file_no, path, offset, None)
+    for batch in _tabular_batches(path, f):
+        if wanted is None:
+            yield Chunk(batch, file_no, f.path, offset, None)
+        else:
+            yield from _slices(batch, offset, wanted, file_no, f.path, None)
         offset += batch.num_rows
 
 
@@ -212,7 +258,7 @@ def iter_split(split: SplitSource, plan: ScanPlan, fetch: Callable[[SplitFile, P
                 on_file(f, local.stat().st_size)
             budget = None if quota is None else quota - taken
             reader = (_read_parquet(local, split, f, file_no, plan, budget) if f.fmt == "parquet"
-                      else _read_tabular(local, f, file_no, budget))
+                      else _read_tabular(local, split, f, file_no, plan, budget))
             for chunk in reader:
                 taken += chunk.batch.num_rows
                 yield chunk

@@ -203,20 +203,7 @@ class HuggingFaceAdapter:
         return extract_links(card)
 
     def parents(self, card: Card) -> list[ParentRef]:
-        raw = card.metadata.get("source_datasets") or []
-        raw = raw if isinstance(raw, list) else [raw]
-        out = []
-        for v in map(str, raw):
-            if v.strip().lower() == "original":
-                continue
-            target = v.split("|", 1)[1] if v.startswith("extended|") else v
-            if target.startswith(("http://", "https://")):
-                out.append(ParentRef(raw=v, url=target))
-            elif _ID_RE.match(target):
-                out.append(ParentRef(raw=v, hub=self.name, id=target))
-            else:
-                out.append(ParentRef(raw=v))
-        return out
+        return parent_refs(card.metadata.get("source_datasets"))
 
     # -- data ----------------------------------------------------------------------------
     def splits(self, ds: DatasetRef, card: Card | None = None) -> DataPlan:
@@ -324,6 +311,27 @@ class HuggingFaceAdapter:
         dest = Path(dest_dir) / re.sub(r"[^\w.-]", "_", f.path)[-120:]
         self.http.download(f.url, dest)
         return dest
+
+
+def parent_refs(raw: Any) -> list[ParentRef]:
+    """Declared parents from a `source_datasets` value (PLAN.md 5.3). `original` is no parent;
+    `extended|other-...` and free text are kept with only their raw value (unresolvable)."""
+    vals = raw if isinstance(raw, list) else ([raw] if raw else [])
+    out = []
+    for v in map(str, vals):
+        s = v.strip()
+        if not s or s.lower() == "original":
+            continue
+        target = s.split("|", 1)[1].strip() if s.lower().startswith("extended|") else s
+        if not target or target.lower() == "extended" or target.lower().startswith("other"):
+            out.append(ParentRef(raw=s))
+        elif target.startswith(("http://", "https://")):
+            out.append(ParentRef(raw=s, url=target))
+        elif _ID_RE.match(target):
+            out.append(ParentRef(raw=s, hub="huggingface", id=target))
+        else:
+            out.append(ParentRef(raw=s))
+    return out
 
 
 def _error_text(resp: Any) -> str:

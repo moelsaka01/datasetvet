@@ -26,12 +26,17 @@ dependencies = [
   "pyyaml>=6",
   "phonenumbers>=8.13",
   "rich>=13",
+  "license-expression>=30.3",
 ]
 
 [project.optional-dependencies]
-# Phase 3 (task 3.4): ScanCode licence detection. Measured on Windows: needs pluggy<1.6
-# and typecode-libmagic, and a short venv path (PLAN.md section 9).
-scan = []
+# ScanCode licence detection (PLAN.md section 4). Measured on Windows: needs pluggy<1.6,
+# typecode-libmagic, a short venv path and PowerShell rather than Git Bash (PLAN.md 9).
+scan = [
+  "scancode-toolkit-mini>=32.5",
+  "pluggy<1.6",
+  "typecode-libmagic; sys_platform == 'win32'",
+]
 dev = ["pytest>=8", "ruff>=0.6", "mypy>=1.11", "types-PyYAML"]
 
 [project.scripts]

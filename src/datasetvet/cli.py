@@ -23,7 +23,8 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--version", action="version", version=f"datasetvet {__version__}")
     sub = parser.add_subparsers(dest="command")
     c = sub.add_parser("check", help="check a dataset and print a report",
-                       description="Check a dataset: card, links and data health.")
+                       description="Check a dataset: card, licence consistency, provenance, "
+                                   "links and data health.")
     c.add_argument("ref", help="dataset reference, e.g. hf:stanfordnlp/imdb, "
                               "hf:org/name@revision or https://huggingface.co/datasets/org/name")
     c.add_argument("--json", metavar="PATH", help="also write the JSON report to PATH")
@@ -40,6 +41,15 @@ def build_parser() -> argparse.ArgumentParser:
     c.add_argument("--no-data", action="store_true", help="skip the data-health scan")
     c.add_argument("--no-links", action="store_true", help="skip the link check")
     c.add_argument("--max-links", type=int, default=None, help="link-check limit (default 200)")
+    c.add_argument("--scanner", choices=["auto", "builtin", "scancode"], default=None,
+                   help="licence-text scanner: builtin (always installed), scancode (the "
+                        "[scan] extra) or auto (scancode when installed; default)")
+    c.add_argument("--provenance-depth", type=int, default=None, metavar="N",
+                   help="how many levels of declared parent datasets to follow (default 2)")
+    c.add_argument("--no-licence", action="store_true",
+                   help="skip licence consistency and provenance")
+    c.add_argument("--no-sources", action="store_true",
+                   help="do not read stated sources (GitHub repos, licence pages) for a licence")
     c.add_argument("--no-cache", action="store_true", help="do not use the on-disk HTTP cache")
     c.add_argument("--no-evidence", action="store_true",
                    help="terminal output without evidence URLs")
@@ -58,6 +68,12 @@ def settings_from_args(args: argparse.Namespace) -> Settings:
         s.seed = args.seed
     if args.max_links is not None:
         s.max_links = args.max_links
+    if args.scanner is not None:
+        s.scanner = args.scanner
+    if args.provenance_depth is not None:
+        s.provenance_depth = max(0, args.provenance_depth)
+    s.check_licences = not args.no_licence
+    s.check_sources = not args.no_sources
     s.full = args.full
     s.configs = args.configs
     if args.phone_region:
@@ -74,6 +90,7 @@ def cmd_check(args: argparse.Namespace) -> int:
     from datasetvet.http import FetchError
     from datasetvet.hubs.base import UnknownRefError
     from datasetvet.hubs.huggingface import DatasetNotFound
+    from datasetvet.licences.scanner import ScanCodeUnavailable
     from datasetvet.pipeline import run_check
     from datasetvet.report.json_out import write_json
     from datasetvet.report.terminal import render
@@ -93,6 +110,9 @@ def cmd_check(args: argparse.Namespace) -> int:
 
     try:
         report = run_check(args.ref, settings, progress=progress)
+    except ScanCodeUnavailable as exc:
+        print(f"datasetvet: {exc}", file=sys.stderr)
+        return EXIT_USAGE
     except UnknownRefError as exc:
         print(f"datasetvet: {exc}", file=sys.stderr)
         return EXIT_USAGE

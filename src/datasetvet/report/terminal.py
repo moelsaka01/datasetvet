@@ -19,7 +19,9 @@ STYLE = {
     "inconsistent": "yellow", "restricted": "cyan", "unreachable": "magenta",
     "unknown": "bright_black", "not checked": "bright_black",
 }
-SECTIONS = [(Family.CARD, "Card"), (Family.LINKS, "Links"), (Family.HEALTH, "Data health")]
+SECTIONS = [(Family.CARD, "Card"), (Family.LICENCE, "Licence consistency"),
+            (Family.PROVENANCE, "Provenance (declared parents)"), (Family.LINKS, "Links"),
+            (Family.HEALTH, "Data health")]
 
 
 def _mb(n: int | None) -> str:
@@ -38,13 +40,17 @@ def render(report: Report, console: Console | None = None, *, evidence: bool = T
             + (f"  [bright_black]({escape(scan.reason)})[/]" if scan.reason and
                scan.kind == "sampled" else ""))
     if report.not_checked:
-        c.print("[bright_black]Not checked: " + escape("; ".join(report.not_checked)) + "[/]")
+        c.print("[bright_black]Not checked:[/]")
+        for item in report.not_checked:
+            c.print(f"[bright_black]  - {escape(item)}[/]")
     c.print()
     c.print(f"[bold]datasetvet {escape(report.tool_version)}[/bold]  {escape(ds.hub)}:"
             f"{escape(ds.id)} @ {ds.revision[:12]}  [bright_black]{escape(ds.url or '')}[/]")
     meta = [f"checked {report.created_at}",
             f"authenticated: {'yes' if report.authenticated else 'no'}",
             f"licence scanner: {report.scanner}"]
+    if report.settings.get("github"):
+        meta.append(f"GitHub: {report.settings['github']}")
     if ds.gated:
         meta.append(f"gated: {ds.gated}")
     if scan.kind != "not checked":
@@ -61,7 +67,7 @@ def render(report: Report, console: Console | None = None, *, evidence: bool = T
             continue
         c.print()
         head = title
-        if family == Family.LINKS:
+        if family in (Family.LINKS, Family.LICENCE, Family.PROVENANCE):
             counts = Counter(r.status for r in results)
             head += " (" + ", ".join(f"{n} {s}" for s, n in sorted(counts.items())) + ")"
         if family == Family.HEALTH:

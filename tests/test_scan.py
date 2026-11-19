@@ -1,4 +1,5 @@
 import shutil
+from itertools import pairwise
 
 import pyarrow as pa
 from conftest import parquet_bytes
@@ -98,3 +99,41 @@ def test_csv_and_jsonl(tmp_path):
                          copy_fetch, work, lambda f, e: (_ for _ in ()).throw(e)):
         xs += ch.batch.column("x").to_pylist()
     assert xs == [1, 2, 3, 4, 5]
+
+
+def test_choose_chunks_is_exact_and_spread():
+    from datasetvet.checks.health.scan import choose_chunks
+
+    ch = choose_chunks(10_000, 1_000, "k", 10)
+    assert sum(n for _a, n in ch) == 1_000 and len(ch) == 100
+    assert ch == sorted(ch)
+    assert all(a + n <= b for (a, n), (b, _m) in pairwise(ch))
+    assert ch[0][0] < 1_000 and ch[-1][0] > 9_000  # from both ends of the file
+    assert choose_chunks(10_000, 1_000, "k", 10) == ch
+    assert choose_chunks(50, 80, "k", 10) == [(0, 50)]
+
+
+def test_sample_spreads_across_a_sorted_file(tmp_path):
+    # one file of 10,000 rows in 2 row groups; a 1,000-row sample used to be one row group
+    s = make_split(tmp_path, n_files=1, rows_per_file=10_000, rg=5_000)
+    plan = plan_scan([s], max_scan_bytes=1, sample_rows=1_000, seed=3)
+    vals = read_all(s, plan, tmp_path)
+    assert len(vals) == 1_000 and len(set(vals)) == 1_000
+    assert min(vals) < 1_000 and max(vals) > 9_000
+    first_half = sum(v < 5_000 for v in vals)
+    assert 350 < first_half < 650  # both row groups contribute
+
+
+def test_csv_is_sampled_in_chunks(tmp_path):
+    p = tmp_path / "a.csv"
+    p.write_text("x\n" + "".join(f"{i}\n" for i in range(5_000)))
+    split = SplitSource("d", "train", [SplitFile(str(p), "a.csv", p.stat().st_size, "csv")],
+                        5_000, 10**9, "original files", "r")
+    plan = plan_scan([split], max_scan_bytes=1, sample_rows=500, seed=0)
+    work = tmp_path / "work"
+    work.mkdir()
+    xs = []
+    for ch in iter_split(split, plan, copy_fetch, work, lambda f, e: (_ for _ in ()).throw(e)):
+        assert ch.batch.column("x").to_pylist()[0] == ch.first_row
+        xs += ch.batch.column("x").to_pylist()
+    assert len(xs) == 500 and min(xs) < 500 and max(xs) > 4_500

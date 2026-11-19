@@ -6,7 +6,7 @@ One entry per phase: the model and effort used, what was decided and why, what w
 |---|---|---|---|
 | 1 Planning | Opus 5.5 | high | done 2026-11-19 |
 | 2 Core checks (no licences) | Sonnet 5.5 planned; run on Opus 5.5 | medium planned | done 2026-11-19 |
-| 3 Licence + provenance | Opus 5.5 | high | not started |
+| 3 Licence + provenance | Opus 5.5 | high | done 2026-11-19 |
 | 4 Accuracy eval + launch scan | Opus 5.5 | high | not started |
 | 5 Polish, Action, README, launch | Sonnet 5.5 | medium | not started |
 
@@ -135,3 +135,98 @@ Run in one Claude Code session (desktop app) on the owner's Windows 11 laptop, P
 - The footer phrase "you may" conflicts with the Phase 5 banned-words list (PLAN §12).
 - Peak memory was not measured (no `time`/`psutil` on this machine).
 - Throughput suggests the 5 GB full-scan default may be slow for short-row datasets; worth re-measuring in task 4.1 before fixing the launch-scan limits.
+
+---
+
+## Phase 3: licence consistency and provenance (2026-11-19, Opus 5.5, high effort)
+
+Run in one Claude Code session (desktop app) on the owner's Windows 11 laptop, Python 3.12.10. Every live call was anonymous: no HF token and no `GITHUB_TOKEN`, so the GitHub token path is tested offline only. Only free endpoints were used.
+
+### Owner decisions on the Phase 2 open questions (given at the start of Phase 3)
+
+| question | decision | where |
+|---|---|---|
+| Built-in matcher in the plain install? | **Yes**: deterministic, against official SPDX licence texts (askalono-style), no AI, small and dependency-light. Phase 4 evaluates built-in and ScanCode **separately** on the same answer key | `licences/matcher.py`; PLAN §4, §8 (configurations renamed `builtin` / `scancode`) |
+| Sampling | **Many small chunks spread across each file**, not whole row groups; keep the label-balance warning | `checks/health/scan.py`; PLAN §5.5 |
+| Footer vs banned words | **Reword**: "Facts only, not legal advice. …" | `model.FOOTER`; `tests/test_wording.py` |
+
+### Built
+
+| task | files | state |
+|---|---|---|
+| 3.1 HF licence ids | `data/hf_licence_ids.csv`, `licences/hf_ids.py` | all 83 ids on HF's list (hub-docs `fd6cf1f`): 53 SPDX, 8 family, 20 non-SPDX, 2 special. The card check now gives `invalid` for a value that is neither an HF nor an SPDX id. The network test passes against today's list |
+| 3.2 SPDX wrapper | `licences/spdx.py` | `license-expression` 30.4.4 (+ `boolean.py`), 1.5 MB. `GPL-2.0` = `GPL-2.0-only` ≠ `GPL-2.0-or-later`; subset relation as specified |
+| 3.3 properties | `licences/properties.py`, `data/cc_elements.csv` | OSI / FSF / deprecated from the SPDX list; CC elements and deed URL for the 53 CC licences on the SPDX list (5 deed URLs spot-checked live: all HTTP 200). Nothing else is emitted (test) |
+| 3.4 ScanCode wrapper | `licences/scanner.py`, `pyproject.toml` `[scan]` | `--scanner builtin\|scancode\|auto`. Missing ScanCode is a clear error for `scancode` and a fallback for `auto`. **Run for real** (below) |
+| 3.5 resolvers | `hubs/github.py`, `hubs/web.py`, `http.py` (per-host headers) | GitHub anonymous: zero `api.github.com` calls (test). Token path labelled "GitHub's detection (licensee)"; the token goes to api.github.com only (test) |
+| 3.6 licence consistency | `checks/licence.py` | one result per comparison, four statuses, the PLAN §5.2 sentence format (a test checks it word for word) |
+| 3.7 provenance | `checks/provenance.py`, `hubs/huggingface.py` `parent_refs` | mismatch, cycle, depth and URL-parent tests |
+| 3.8 install docs + CI | `docs/INSTALL.md`, `ci.yml` job `scan-windows` | **written, not run in CI** (nothing pushed); the same steps were run locally |
+| 3.9 built-in matcher | `licences/matcher.py`, `data/spdx_licences.json.gz` (249 KB), `tools/vendor_spdx.py` | below |
+| 3.10 chunked sampling | `checks/health/scan.py` | below |
+| 3.11 footer + wording test | `model.py`, `tests/test_wording.py` | the footer, licence properties and rendered reports pass the banned-phrase regex |
+
+**Checks:** `pytest` 295 passed and 3 skipped (the ScanCode-only tests, which pass in the scan venv), plus 2 `network` tests passing; `ruff check src tests tools` clean; `mypy src` clean.
+
+### Built-in matcher: how it works and what was measured
+
+- **Data:** SPDX licence list **v3.29.0** (released 2026-09-16), 92 texts: every SPDX licence HF's id list maps to, other versions of those families, and common data licences (ODbL, ODC-By, OGL-UK-3.0, DL-DE-BY-2.0, CC ports such as CC-BY-3.0-IGO). Identical normalised texts form 5 pairs (GPL-2.0, GPL-3.0, LGPL-2.1, LGPL-3.0, AGPL-3.0: each `-only` text = its `-or-later` text), so 87 distinct texts.
+- **Full text:** Dice over word bigrams ≥ 0.90 means "is this licence"; containment ≥ 0.95 means "contains this licence".
+- **Problem found and fixed:** with bigram *sets* (first version), CC-BY-1.0 vs CC-BY-SA-1.0 scored 0.997 and CC-BY-4.0 vs CC-BY-SA-4.0 scored 0.964, so near-identical licences could tie. With bigram *multisets*, every one of the 92 texts identifies itself at ≥ 99, and close relatives are told apart (MIT / MIT-0 / X11, ISC / 0BSD, BSD-2 / BSD-3, CC-BY / CC-BY-SA at 1.0 and 4.0, GPL-3.0 / AGPL-3.0). Tested.
+- **Notices and URLs:** exact names, ids and short forms in a licence context; licence URLs from the SPDX list's `seeAlso` and from creativecommons.org. Tests found two bugs, both fixed: a CC URL's `/legalcode` was read as a country port (`leg`), and the names inside a full LGPL text (it names the GNU GPL) were counted as separate statements.
+- **Speed (this laptop):** data load 0.12 s, text index 0.14 s, a full GPL-3.0 text 0.06 s. The wheel is 336 KB including the data.
+
+### Chunked sampling: measured
+
+- Each file read is cut into slots of `min(100, quota // 100)` rows. Slots are drawn with the seed until the file's share of the quota is met.
+- IMDB, `--max-scan-bytes 30MB --sample-rows 5000 --seed 0`: train labels **51.8 / 48.2** (neg / pos), test 52.8 / 47.2. Phase 2's row-group sampling gave **70 / 30** on the same file; the true split is 50 / 50. 14 s.
+- Files can still be ordered (e.g. one label per file) and not every file is read, so the label table keeps its warning and now names the chunk size (12–25 rows in this run).
+
+### Live runs (anonymous, 2026-11-19, `--no-data`)
+
+The set: 5 datasets with licence mismatches recorded in the DPI data (`Data-Provenance-Collection` `data_summaries` at commit `ce6662d`, 109 files), 2 with declared parents, and IMDB as a control. "DPI record" is what the DPI recorded (card YAML at audit time vs GitHub's licence or the expert licence).
+
+| dataset | DPI record | built-in result | ScanCode result |
+|---|---|---|---|
+| `tatsu-lab/alpaca` | card CC BY-NC 4.0, GitHub licence Apache 2.0 | README `consistent` (CC-BY-NC-4.0, line 130); repo `LICENSE` **`inconsistent`** (Apache-2.0, score 98); repo `DATA_LICENSE` `consistent` (CC-BY-NC-4.0, score 99) | same for both files; README `unknown` (it found `LicenseRef-scancode-proprietary-license` at line 111, and nothing ≥ 90 for the CC sentence) |
+| `abisee/cnn_dailymail` | card Apache 2.0; GitHub and expert MIT | README `consistent` (Apache-2.0, line 267); `github.com/abisee/cnn-dailymail` `LICENSE.md` **`inconsistent`** (MIT, score 100) | same for the repo; README `unknown` (nothing ≥ 90) |
+| `hotpotqa/hotpot_qa` | card CC BY-SA 4.0, GitHub Apache 2.0 | README `consistent`; `github.com/hotpotqa/hotpot` `LICENSE.txt` **`inconsistent`** (Apache-2.0) | same for the repo; README `unknown` |
+| `GEM/wiki_lingua` | card CC BY-NC-SA 3.0, GitHub CC0 1.0 | README `consistent`; `github.com/esdurmus/Wikilingua` `LICENSE` **`inconsistent`** (CC0-1.0, score 100) | same for the repo; README `unknown` (proprietary-license rule) |
+| `OpenAssistant/oasst1` | card Apache 2.0, expert CC BY 4.0 | README `missing` (no licence statement in the body); repo `LICENSE` `consistent`; `github.com/LAION-AI/Open-Assistant` `LICENSE` `consistent` | identical |
+| `stanfordnlp/squad_adversarial` | not in DPI; declares `extended\|squad` | README and source `consistent` (MIT). Provenance: parent `rajpurkar/squad` **`inconsistent`** (MIT vs CC-BY-SA-4.0); grandparent `legacy-datasets/wikipedia` `unknown` (its card lists `gfdl`, a family id) | identical |
+| `dlb/plue` | not in DPI; declares `extended\|glue` | README `missing`; `github.com/ju-resplande/PLUE` `LICENSE.md` `inconsistent` (card LGPL-3.0, file is the GPL-3.0 text, score 100); parent `nyu-mll/glue` `unknown` (`license: other` without a name) | identical |
+| `stanfordnlp/imdb` | control | README `missing` (licence section holds only `[More Information Needed]`); no source licence, no parents | identical |
+
+- The DPI's recorded card-vs-GitHub mismatches were reproduced for all 4 datasets that have one (alpaca, cnn_dailymail, hotpot_qa, wiki_lingua), each GitHub file pinned to a commit. For oasst1, the DPI expert licence (CC BY 4.0) is a judgement datasetvet does not make: the card, the repo's LICENSE and the source repo all say Apache-2.0.
+- The two scanners agreed on all 9 licence-file and source comparisons and all 3 provenance comparisons. They differed on README prose in 4 of 8 datasets: the built-in matcher found the licence statement, while ScanCode at score ≥ 90 abstained or matched a `LicenseRef-scancode-proprietary-license` rule. Phase 4 measures this on the full key.
+- 10–22 HTTP requests per dataset with links on; 8–23 s per dataset (GitHub is paced at one request per second).
+- Links: all `ok` except `open-assistant.io` (`unreachable`).
+
+### ScanCode extra, installed and run (task 3.4)
+
+- Venv at a short path (`C:\Users\melsa\.dvscan`), `pip install -e ".[scan]"`: **157 s**, **774 MB**, scancode-toolkit-mini 32.5.0, pluggy 1.5.0, run from PowerShell.
+- **New conflict found:** pytest 9.2 requires `pluggy>=1.6`. Installing it upgraded pluggy to 1.7.0, which broke ScanCode again (`did not find any 'plugincode.location_provider' hooks`). With `pytest<9` (8.4.2) and `pluggy<1.6`, both work. The CI scan job pins `pytest<9`.
+- **ScanCode score finding:** "released under the CC BY-NC 4.0 license" scores **50**; "Licensed under CC BY-NC 4.0." scores 99; "License: cc-by-nc-4.0" scores 100. At the planned threshold of 90 the first is dropped. The threshold is tuned on the Phase 4 dev split only.
+- The scan venv was deleted after the runs; `docs/INSTALL.md` re-creates it in about 3 minutes.
+
+### Other problems found and fixed
+
+1. HF's old card template gives `github.com/huggingface/datasets/blob/master/CONTRIBUTING.md` as the "Repository" of many legacy datasets (IMDB). Read as a source, it compared the card with the `datasets` library's Apache-2.0 licence. That link is now skipped for licence comparisons.
+2. The same template's "Licensing Information: [More Information Needed]" made the README `unknown` ("mentions a licence"). It is now `missing`, with a note naming the placeholder; table-of-contents lines are ignored.
+3. The terminal "Not checked" line had grown into one long sentence; it is now a list.
+
+### Corrections to the plan
+
+- The plain install is no longer licence-blind (PLAN §4 rewritten; the old text is struck through).
+- `SourceResolver.licence_claims` became `read()` (PLAN §6).
+- A GitHub source with no licence file is `unknown` anonymously, and `missing` only when GitHub's API confirms (PLAN §5.2).
+- Provenance compares each grandparent with its own child, not with the root dataset (PLAN §5.3).
+
+### Not done / open
+
+- CI (both jobs) not run; nothing pushed. Python 3.11 and 3.13 not tested locally.
+- The token paths (HF and GitHub) were tested offline only; no token was present.
+- **The SPDX licence list does not state a licence for its own data** (GitHub `NOASSERTION`; the README and spdx.org say nothing; the site footer says "All Rights Reserved"). The package vendors 92 licence texts and list metadata. Owner to decide before release (PLAN §12).
+- A repository's LICENSE often covers code, not data (hotpot_qa; alpaca's `LICENSE` vs `DATA_LICENSE`). The report states both licences and that they differ; it does not say which covers the data. Worth counting in the Phase 4 disagreement audit.
+- Built-in matcher: no non-SPDX licences and no paraphrases ("research use only"). Its abstention rate against ScanCode's is a Phase 4 measurement.
+- Thresholds (built-in Dice 0.90 / containment 0.95; ScanCode 90) are untuned. Phase 4 tunes them on the dev split only.

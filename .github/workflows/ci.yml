@@ -25,3 +25,23 @@ jobs:
         run: python -m mypy src
       - name: Tests (offline)
         run: python -m pytest -q
+
+  # Task 3.8: the [scan] extra (ScanCode) on Windows. Short venv path for MAX_PATH, and
+  # PowerShell, because Git Bash's libmagic segfaults ScanCode (PLAN.md section 9).
+  scan-windows:
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: pwsh
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install with the scan extra at a short path
+        run: |
+          python -m venv C:\dv
+          # pytest 9 needs pluggy>=1.6, which breaks ScanCode's plugin loading (needs <1.6)
+          C:\dv\Scripts\python.exe -m pip install -e ".[scan,dev]" "pytest<9"
+      - name: ScanCode tests
+        run: C:\dv\Scripts\python.exe -m pytest -q tests/test_scancode.py tests/test_matcher.py
