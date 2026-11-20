@@ -39,3 +39,15 @@ def test_batch_hashes_match_row_hashes_and_input_excludes_labels():
     rows2, inputs2 = hash_columns(cols)
     assert rows2 == inputs2 == rows
     assert all(len(h) == 16 for h in rows)
+
+
+def test_timezone_aware_timestamps_hash():
+    # needs tzdata on Windows (pyproject); found on ksolovev/fine-news in the launch scan
+    import datetime
+
+    import pyarrow as pa
+
+    t = pa.array([datetime.datetime(2024, 1, 1, tzinfo=datetime.UTC)],
+                 type=pa.timestamp("us", tz="Europe/Paris"))
+    rows, _ = hash_columns(pa.table({"t": t}).to_pydict(), [])
+    assert len(rows) == 1

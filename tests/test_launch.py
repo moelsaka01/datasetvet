@@ -82,3 +82,13 @@ def test_tier_settings_and_hash(tmp_path):
     assert config_hash("A", a, "x.json") != config_hash("B", b, "x.json")
     assert config_hash("A", a, "x.json") == config_hash("A", tier_settings("A", tmp_path),
                                                         "x.json")
+
+
+def test_config_hash_names_the_code(tmp_path):
+    b = tier_settings("B", tmp_path)
+    one = {"commit": "c1", "trees": {"src": "t1"}}
+    later_docs_commit = {"commit": "c2", "trees": {"src": "t1"}}
+    code_change = {"commit": "c3", "trees": {"src": "t2"}}
+    h = config_hash("B", b, "x.json", one)
+    assert h == config_hash("B", b, "x.json", later_docs_commit)
+    assert h != config_hash("B", b, "x.json", code_change)

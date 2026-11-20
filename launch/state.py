@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS runs (
 class State:
     def __init__(self, path: Path):
         path.parent.mkdir(parents=True, exist_ok=True)
-        self.db = sqlite3.connect(path)
+        self.db = sqlite3.connect(path, timeout=60)
         self.db.execute("PRAGMA journal_mode=WAL")
         self.db.execute(SCHEMA)
         self.db.commit()

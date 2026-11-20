@@ -23,6 +23,7 @@ import argparse
 import hashlib
 import json
 import signal
+import subprocess
 import sys
 import time
 from collections.abc import Callable
@@ -38,8 +39,12 @@ from state import State
 STATE = ROOT / "launch" / "state.sqlite"
 REPORTS = ROOT / "launch" / "results" / "reports"
 
-# Tier B limits: chosen from the measured budget (BUILD_LOG Phase 4, task 4.1).
-TIER_B = {"max_scan_bytes": "1GB", "sample_rows": 20_000, "max_download_bytes": "1GB",
+# Tier B limits, chosen from the measured budget (task 4.1, launch/lists/top500-2026-11-19.json):
+# 138 of the 251 datasets with a known size are <= 100 MB (1.4 GB together), so those get a
+# full scan; everything larger is sampled (10,000 rows) and downloads at most 100 MB. A first
+# try with 200 MB measured about 4 MB/s on this laptop (download + hashing), i.e. over 4 hours
+# for the list, so the limits were halved after 7 datasets.
+TIER_B = {"max_scan_bytes": "100MB", "sample_rows": 10_000, "max_download_bytes": "100MB",
           "seed": 0}
 
 
@@ -56,11 +61,33 @@ def tier_settings(tier: str, cache_dir: Path) -> Any:
                     seed=int(TIER_B["seed"]), scanner="builtin", cache_dir=cache_dir)
 
 
-def config_hash(tier: str, settings: Any, list_name: str) -> str:
+# The code a launch scan runs: its git tree ids go into the config hash, so a finished row
+# names the exact committed code that made it, and any change to that code re-runs the scan.
+CODE_PATHS = ("src", "launch/run.py", "launch/state.py", "pyproject.toml")
+
+
+def _git(*args: str) -> str:
+    return subprocess.run(["git", *args], cwd=ROOT, capture_output=True, text=True,
+                          check=True).stdout.strip()
+
+
+def code_identity() -> dict[str, Any]:
+    """HEAD's commit and the tree ids of CODE_PATHS; refuses uncommitted changes there."""
+    dirty = _git("status", "--porcelain", "--", *CODE_PATHS)
+    if dirty:
+        raise SystemExit("uncommitted changes in the launch scan's code; commit them first so "
+                         "the config hash names the code:\n" + dirty)
+    return {"commit": _git("rev-parse", "HEAD"),
+            "trees": {p: _git("rev-parse", f"HEAD:{p}") for p in CODE_PATHS}}
+
+
+def config_hash(tier: str, settings: Any, list_name: str,
+                code: dict[str, Any] | None = None) -> str:
     from datasetvet import __version__
 
     blob = json.dumps({"tier": tier, "settings": settings.public(), "list": list_name,
-                       "version": __version__}, sort_keys=True, default=str)
+                       "version": __version__, "code": (code or {}).get("trees")},
+                      sort_keys=True, default=str)
     return hashlib.sha256(blob.encode()).hexdigest()[:16]
 
 
@@ -106,6 +133,8 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--max", type=int, default=None, help="stop after N datasets")
     ap.add_argument("--batch", type=int, default=25)
     ap.add_argument("--retry-failed", action="store_true")
+    ap.add_argument("--shard", default=None, metavar="I/N",
+                    help="only datasets whose list position %% N == I (parallel workers)")
     args = ap.parse_args(argv)
 
     from datasetvet.config import default_cache_dir
@@ -115,16 +144,21 @@ def main(argv: list[str] | None = None) -> int:
 
     frozen = json.loads(args.list.read_text("utf-8"))
     datasets = frozen["datasets"]
+    if args.shard:
+        i, n_shards = (int(x) for x in args.shard.split("/"))
+        datasets = [d for k, d in enumerate(datasets) if k % n_shards == i]
     settings = tier_settings(args.tier, default_cache_dir())
-    chash = config_hash(args.tier, settings, args.list.name)
+    code = code_identity()
+    chash = config_hash(args.tier, settings, args.list.name, code)
     state = State(STATE)
     http = Http(settings.cache_dir, host_interval=1.0)
     stop = {"now": False}
     signal.signal(signal.SIGINT, lambda *_: stop.update(now=True))
     out_dir = REPORTS / args.tier
     out_dir.mkdir(parents=True, exist_ok=True)
-    print(json.dumps({"tier": args.tier, "config_hash": chash, "authenticated":
-                      http.authenticated, "list": args.list.name}), flush=True)
+    print(json.dumps({"tier": args.tier, "config_hash": chash, "commit": code["commit"],
+                      "authenticated": http.authenticated, "list": args.list.name}),
+          flush=True)
 
     def check(ds: dict[str, Any]) -> tuple[str, int]:
         before = http.network_calls
