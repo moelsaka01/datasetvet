@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 from collections.abc import Callable
+from typing import Any
 
 from datasetvet import __version__
 from datasetvet.checks.card import check_card
@@ -94,7 +95,9 @@ def run_check(ref: str, settings: Settings, *, http: Http | None = None,
         if settings.check_data:
             say("finding the data files")
             data = adapter.splits(ds, card)
-            scan, health = run_health(adapter.fetch, data, settings, say)
+            fetch_stats: dict[str, Any] = {}
+            scan, health = run_health(adapter.fetch, data, settings, say, fetch_stats)
+            report.settings["data_fetch"] = fetch_stats
             report.scan = scan
             report.results += health
             if data.notes:

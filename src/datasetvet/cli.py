@@ -35,6 +35,10 @@ def build_parser() -> argparse.ArgumentParser:
     c.add_argument("--max-download-bytes", default=None,
                    help="sampled scans only: stop downloading files beyond this (default none)")
     c.add_argument("--seed", type=int, default=None, help="sampling seed (default 0)")
+    c.add_argument("--no-git-fetch", action="store_true",
+                   help="download every data file over HTTP, never with one git fetch")
+    c.add_argument("--fetch-workers", type=int, default=None,
+                   help="data files downloaded at the same time (default 8)")
     c.add_argument("--full", action="store_true", help="scan every row whatever the size")
     c.add_argument("--config", action="append", dest="configs", metavar="NAME",
                    help="only scan this config (repeatable)")
@@ -70,6 +74,10 @@ def settings_from_args(args: argparse.Namespace) -> Settings:
         s.max_download_bytes = parse_bytes(args.max_download_bytes)
     if args.seed is not None:
         s.seed = args.seed
+    if args.no_git_fetch:
+        s.git_fetch = False
+    if args.fetch_workers is not None:
+        s.fetch_workers = max(1, args.fetch_workers)
     if args.max_links is not None:
         s.max_links = args.max_links
     if args.scanner is not None:

@@ -125,3 +125,12 @@ def test_dns_failure_classified():
     assert classify_exception(exc) == "dns"
     assert classify_exception(httpx2.ReadTimeout("t")) == "timeout"
     assert classify_exception(httpx2.ConnectError("refused")) == "connect"
+
+
+def test_host_spacing_skips_the_hub_download_cdn():
+    sleeps: list[float] = []
+    lim = RateLimiter(sleep=sleeps.append, clock=lambda: 5.0)
+    lim.default_host_interval = 1.0
+    for host in ("us.aws.cdn.hf.co", "us.aws.cdn.hf.co", "example.org", "example.org"):
+        lim.before(host)
+    assert sleeps == [1.0]  # only the second example.org request waits

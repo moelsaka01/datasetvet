@@ -1,0 +1,748 @@
+{
+ "summary": {
+  "route": "new",
+  "baseline_hash": "d1d12f8a1d35321e",
+  "n": 40,
+  "same": 39,
+  "different": 1,
+  "baseline_seconds": 11453.3,
+  "seconds": 1952.0,
+  "baseline_requests": 31423,
+  "requests": 20735,
+  "kinds": {
+   "full": 16,
+   "not checked": 7,
+   "sampled": 17
+  },
+  "sources": {
+   "None": 7,
+   "original files": 20,
+   "parquet conversion": 13
+  }
+ },
+ "rows": [
+  {
+   "id": "gradio/frontend",
+   "sha": "70aade6a93402910af6db9f21a7bce36457f4701",
+   "equal": true,
+   "diffs": [],
+   "kind": "full",
+   "source": "original files",
+   "baseline_seconds": 3302.48,
+   "seconds": 72.09,
+   "baseline_requests": 10822,
+   "requests": 2,
+   "data_fetch": {
+    "workers": 8,
+    "git": "used",
+    "git_files": 5410,
+    "http_files": 0,
+    "fetched_ahead": 0,
+    "git_pack_bytes": 1774907
+   }
+  },
+  {
+   "id": "assassinlike/everything132",
+   "sha": "ad81f0e5bddcefa1fb3138d1c11cf3c54fdb6bc1",
+   "equal": true,
+   "diffs": [],
+   "kind": "full",
+   "source": "original files",
+   "baseline_seconds": 1775.23,
+   "seconds": 201.94,
+   "baseline_requests": 4643,
+   "requests": 4643,
+   "data_fetch": {
+    "workers": 8,
+    "git": "not used",
+    "git_files": 0,
+    "http_files": 2319,
+    "fetched_ahead": 2318
+   }
+  },
+  {
+   "id": "PGCodeLLM/radin-cyber-backups",
+   "sha": "bc10089d0cae26909da7ab16856e5f322daf2de2",
+   "equal": true,
+   "diffs": [],
+   "kind": "sampled",
+   "source": "original files",
+   "baseline_seconds": 1063.28,
+   "seconds": 500.51,
+   "baseline_requests": 3083,
+   "requests": 3099,
+   "data_fetch": {
+    "workers": 8,
+    "git": "not used",
+    "git_files": 0,
+    "http_files": 1547,
+    "fetched_ahead": 491
+   }
+  },
+  {
+   "id": "inclusionAI/OpenAoE-2000h",
+   "sha": "82dfe37fec2931901a6e4cd1ad2624a9a0b16182",
+   "equal": true,
+   "diffs": [],
+   "kind": "sampled",
+   "source": "original files",
+   "baseline_seconds": 989.58,
+   "seconds": 104.41,
+   "baseline_requests": 3150,
+   "requests": 3166,
+   "data_fetch": {
+    "workers": 8,
+    "git": "not used",
+    "git_files": 0,
+    "http_files": 1582,
+    "fetched_ahead": 1581
+   }
+  },
+  {
+   "id": "RoboDojo-Benchmark/RoboDojo",
+   "sha": "1127bda94f172d757386945af3eb3a6754d1a4e6",
+   "equal": true,
+   "diffs": [],
+   "kind": "sampled",
+   "source": "original files",
+   "baseline_seconds": 858.14,
+   "seconds": 116.95,
+   "baseline_requests": 1673,
+   "requests": 1689,
+   "data_fetch": {
+    "workers": 8,
+    "git": "not used: 7 file(s) git could serve, fewer than 20",
+    "git_files": 0,
+    "http_files": 842,
+    "fetched_ahead": 809
+   }
+  },
+  {
+   "id": "mickeykang/Event6DBlender",
+   "sha": "41cf309a2fec0f1b9738032769920db2c324ccb7",
+   "equal": true,
+   "diffs": [],
+   "kind": "sampled",
+   "source": "original files",
+   "baseline_seconds": 574.66,
+   "seconds": 60.11,
+   "baseline_requests": 1551,
+   "requests": 1551,
+   "data_fetch": {
+    "workers": 8,
+    "git": "not used",
+    "git_files": 0,
+    "http_files": 773,
+    "fetched_ahead": 771
+   }
+  },
+  {
+   "id": "hexuan21/MemoryTax-Res-Other",
+   "sha": "00968a850966d6c408e56e1ee3d4a54fc7759dca",
+   "equal": true,
+   "diffs": [],
+   "kind": "sampled",
+   "source": "original files",
+   "baseline_seconds": 549.55,
+   "seconds": 338.73,
+   "baseline_requests": 1660,
+   "requests": 1676,
+   "data_fetch": {
+    "workers": 8,
+    "git": "not used: the fetch would be up to 1,060,163,040 bytes, over 100,000,000",
+    "git_files": 0,
+    "http_files": 837,
+    "fetched_ahead": 16
+   }
+  },
+  {
+   "id": "stair-lab/nonmyopia_results",
+   "sha": "376b8c169435d6054f08045fd9657ff51768a051",
+   "equal": true,
+   "diffs": [],
+   "kind": "full",
+   "source": "original files",
+   "baseline_seconds": 482.78,
+   "seconds": 49.64,
+   "baseline_requests": 1676,
+   "requests": 1676,
+   "data_fetch": {
+    "workers": 8,
+    "git": "not used",
+    "git_files": 0,
+    "http_files": 837,
+    "fetched_ahead": 836
+   }
+  },
+  {
+   "id": "frankielp/2dgaussian-lang-output",
+   "sha": "d22cbe0e540dd04d2caaf9adbcdfac359c162ed1",
+   "equal": true,
+   "diffs": [],
+   "kind": "full",
+   "source": "original files",
+   "baseline_seconds": 334.81,
+   "seconds": 35.36,
+   "baseline_requests": 993,
+   "requests": 993,
+   "data_fetch": {
+    "workers": 8,
+    "git": "not used",
+    "git_files": 0,
+    "http_files": 494,
+    "fetched_ahead": 493
+   }
+  },
+  {
+   "id": "augaazuun/copydetect-videos",
+   "sha": "02aeaad20b2c389ecb03676c7f9a138f084c34ec",
+   "equal": true,
+   "diffs": [],
+   "kind": "sampled",
+   "source": "original files",
+   "baseline_seconds": 255.91,
+   "seconds": 37.75,
+   "baseline_requests": 428,
+   "requests": 428,
+   "data_fetch": {
+    "workers": 8,
+    "git": "not used",
+    "git_files": 0,
+    "http_files": 213,
+    "fetched_ahead": 209
+   }
+  },
+  {
+   "id": "IPEC-COMMUNITY/fractal20220817_data_lerobot",
+   "sha": "91bf7d7f7ce50770a1ba5c6db14b8d1c0815122e",
+   "equal": true,
+   "diffs": [],
+   "kind": "sampled",
+   "source": "original files",
+   "baseline_seconds": 233.69,
+   "seconds": 30.12,
+   "baseline_requests": 452,
+   "requests": 468,
+   "data_fetch": {
+    "workers": 8,
+    "git": "not used",
+    "git_files": 0,
+    "http_files": 233,
+    "fetched_ahead": 232
+   }
+  },
+  {
+   "id": "jumuunhaan/copyright-videos-dataset",
+   "sha": "b02e79df1b7bfa84a5cdf5987a85234a204133eb",
+   "equal": true,
+   "diffs": [],
+   "kind": "sampled",
+   "source": "original files",
+   "baseline_seconds": 219.23,
+   "seconds": 31.5,
+   "baseline_requests": 416,
+   "requests": 416,
+   "data_fetch": {
+    "workers": 8,
+    "git": "not used: 0 file(s) git could serve, fewer than 20",
+    "git_files": 0,
+    "http_files": 207,
+    "fetched_ahead": 204
+   }
+  },
+  {
+   "id": "Sharpa-Robotics/SharpaDex-v1.0",
+   "sha": "549f933019c4bbe0c7fe3788c8a1a1005b88d9ef",
+   "equal": true,
+   "diffs": [],
+   "kind": "full",
+   "source": "parquet conversion",
+   "baseline_seconds": 21.53,
+   "seconds": 9.55,
+   "baseline_requests": 6,
+   "requests": 6,
+   "data_fetch": {
+    "workers": 8,
+    "git": "not used",
+    "git_files": 0,
+    "http_files": 1,
+    "fetched_ahead": 0
+   }
+  },
+  {
+   "id": "HuggingFaceM4/FineVisionMax",
+   "sha": "b5b1081169033ebf64f5621316b650f2a0ef8214",
+   "equal": true,
+   "diffs": [],
+   "kind": "sampled",
+   "source": "parquet conversion",
+   "baseline_seconds": 2.59,
+   "seconds": 2.49,
+   "baseline_requests": 4,
+   "requests": 4,
+   "data_fetch": {
+    "workers": 8,
+    "git": "not used",
+    "git_files": 0,
+    "http_files": 0,
+    "fetched_ahead": 0
+   }
+  },
+  {
+   "id": "djghosh/wds_objectnet_test",
+   "sha": "05901479683557d2843ab4ab0b3105193403c690",
+   "equal": true,
+   "diffs": [],
+   "kind": "full",
+   "source": "parquet conversion",
+   "baseline_seconds": 2.59,
+   "seconds": 2.48,
+   "baseline_requests": 6,
+   "requests": 6,
+   "data_fetch": {
+    "workers": 8,
+    "git": "not used",
+    "git_files": 0,
+    "http_files": 1,
+    "fetched_ahead": 0
+   }
+  },
+  {
+   "id": "HuggingFaceH4/MATH-500",
+   "sha": "6e4ed1a2a79af7d8630a6b768ec859cb5af4d3be",
+   "equal": true,
+   "diffs": [],
+   "kind": "full",
+   "source": "parquet conversion",
+   "baseline_seconds": 2.11,
+   "seconds": 2.7,
+   "baseline_requests": 6,
+   "requests": 6,
+   "data_fetch": {
+    "workers": 8,
+    "git": "not used",
+    "git_files": 0,
+    "http_files": 1,
+    "fetched_ahead": 0
+   }
+  },
+  {
+   "id": "ccoffee20/flatpak",
+   "sha": "4113e96bc2e3b52e180ae8eae0fb395a1876d95d",
+   "equal": true,
+   "diffs": [],
+   "kind": "not checked",
+   "source": null,
+   "baseline_seconds": 9.14,
+   "seconds": 8.83,
+   "baseline_requests": 5,
+   "requests": 5,
+   "data_fetch": {}
+  },
+  {
+   "id": "mvp-lab/LLaVA-OneVision-1.5-Mid-Training-85M",
+   "sha": "6ca51e61173b24e5b80958a5ed1383aad2981fd8",
+   "equal": true,
+   "diffs": [],
+   "kind": "sampled",
+   "source": "original files",
+   "baseline_seconds": 8.97,
+   "seconds": 9.52,
+   "baseline_requests": 5,
+   "requests": 5,
+   "data_fetch": {
+    "workers": 8,
+    "git": "not used: 0 file(s) git could serve, fewer than 20",
+    "git_files": 0,
+    "http_files": 0,
+    "fetched_ahead": 0
+   }
+  },
+  {
+   "id": "ayuo/hd_tmp",
+   "sha": "4cbb9c1101b0ab08195cd0a0f7790526918169fa",
+   "equal": true,
+   "diffs": [],
+   "kind": "not checked",
+   "source": null,
+   "baseline_seconds": 9.41,
+   "seconds": 8.84,
+   "baseline_requests": 5,
+   "requests": 5,
+   "data_fetch": {}
+  },
+  {
+   "id": "bigcode/bigcodebench",
+   "sha": "b74c0d0bf70d2c0bc459be537895cca163007f1a",
+   "equal": true,
+   "diffs": [],
+   "kind": "full",
+   "source": "parquet conversion",
+   "baseline_seconds": 7.51,
+   "seconds": 4.62,
+   "baseline_requests": 14,
+   "requests": 14,
+   "data_fetch": {
+    "workers": 8,
+    "git": "not used",
+    "git_files": 0,
+    "http_files": 5,
+    "fetched_ahead": 4
+   }
+  },
+  {
+   "id": "jat-project/jat-dataset-tokenized",
+   "sha": "3711fdaec69f2d8d7b67feff4ff3086259063eac",
+   "equal": true,
+   "diffs": [],
+   "kind": "sampled",
+   "source": "original files",
+   "baseline_seconds": 108.98,
+   "seconds": 99.62,
+   "baseline_requests": 52,
+   "requests": 68,
+   "data_fetch": {
+    "workers": 8,
+    "git": "not used: 0 file(s) git could serve, fewer than 20",
+    "git_files": 0,
+    "http_files": 33,
+    "fetched_ahead": 8
+   }
+  },
+  {
+   "id": "agents-last-exam/agents-last-exam-data",
+   "sha": "e9a2674a62f7d8069f136e642c10e8d8e9979dbf",
+   "equal": true,
+   "diffs": [],
+   "kind": "sampled",
+   "source": "original files",
+   "baseline_seconds": 46.31,
+   "seconds": 14.17,
+   "baseline_requests": 110,
+   "requests": 126,
+   "data_fetch": {
+    "workers": 8,
+    "git": "not used: the fetch would be up to 2,976,488,468 bytes, over 100,000,000",
+    "git_files": 0,
+    "http_files": 62,
+    "fetched_ahead": 59
+   }
+  },
+  {
+   "id": "nicoboou/IDRCell100k",
+   "sha": "ba8b95954a27cac131902c2154083a5f02e14b8e",
+   "equal": true,
+   "diffs": [],
+   "kind": "full",
+   "source": "parquet conversion",
+   "baseline_seconds": 28.59,
+   "seconds": 24.28,
+   "baseline_requests": 6,
+   "requests": 6,
+   "data_fetch": {
+    "workers": 8,
+    "git": "not used",
+    "git_files": 0,
+    "http_files": 1,
+    "fetched_ahead": 0
+   }
+  },
+  {
+   "id": "McGill-NLP/WebLINX-full",
+   "sha": "36ef9f79b43df50e25b7f3b68e5c9f6ccf4160e8",
+   "equal": true,
+   "diffs": [],
+   "kind": "sampled",
+   "source": "original files",
+   "baseline_seconds": 73.61,
+   "seconds": 19.22,
+   "baseline_requests": 13,
+   "requests": 13,
+   "data_fetch": {
+    "workers": 8,
+    "git": "not used",
+    "git_files": 0,
+    "http_files": 4,
+    "fetched_ahead": 1
+   }
+  },
+  {
+   "id": "HuggingFaceFW/finephrase",
+   "sha": "78cf4a5ed0099214979c094c963e699c19163838",
+   "equal": true,
+   "diffs": [],
+   "kind": "sampled",
+   "source": "parquet conversion",
+   "baseline_seconds": 17.73,
+   "seconds": 8.72,
+   "baseline_requests": 6,
+   "requests": 6,
+   "data_fetch": {
+    "workers": 8,
+    "git": "not used",
+    "git_files": 0,
+    "http_files": 1,
+    "fetched_ahead": 0
+   }
+  },
+  {
+   "id": "carlotabronze/sm-stuff",
+   "sha": "009a2baf2184546519b82be3b99910a52106c958",
+   "equal": true,
+   "diffs": [],
+   "kind": "full",
+   "source": "original files",
+   "baseline_seconds": 16.28,
+   "seconds": 4.75,
+   "baseline_requests": 36,
+   "requests": 36,
+   "data_fetch": {
+    "workers": 8,
+    "git": "not used: 3 file(s) git could serve, fewer than 20",
+    "git_files": 0,
+    "http_files": 17,
+    "fetched_ahead": 16
+   }
+  },
+  {
+   "id": "ChongyanChen/VQAonline",
+   "sha": "dcc0329a8ce60b8c0d9914336414ffc7edc6c59e",
+   "equal": true,
+   "diffs": [],
+   "kind": "full",
+   "source": "parquet conversion",
+   "baseline_seconds": 24.81,
+   "seconds": 12.17,
+   "baseline_requests": 10,
+   "requests": 10,
+   "data_fetch": {
+    "workers": 8,
+    "git": "not used",
+    "git_files": 0,
+    "http_files": 3,
+    "fetched_ahead": 2
+   }
+  },
+  {
+   "id": "saarthiatu/jee-pdfs",
+   "sha": "041127465205bec651a28cc3d54245af014ae361",
+   "equal": true,
+   "diffs": [],
+   "kind": "sampled",
+   "source": "original files",
+   "baseline_seconds": 35.31,
+   "seconds": 17.7,
+   "baseline_requests": 61,
+   "requests": 77,
+   "data_fetch": {
+    "workers": 8,
+    "git": "not used",
+    "git_files": 0,
+    "http_files": 36,
+    "fetched_ahead": 22
+   }
+  },
+  {
+   "id": "nvidia/simready-central-status",
+   "sha": "cad2b96b263cc019d39ce7ff5ce0a594052517df",
+   "equal": true,
+   "diffs": [],
+   "kind": "full",
+   "source": "parquet conversion",
+   "baseline_seconds": 3.3,
+   "seconds": 2.69,
+   "baseline_requests": 6,
+   "requests": 6,
+   "data_fetch": {
+    "workers": 8,
+    "git": "not used",
+    "git_files": 0,
+    "http_files": 1,
+    "fetched_ahead": 0
+   }
+  },
+  {
+   "id": "agibot-world/AgiBotWorld-Beta",
+   "sha": "2252b3fdc88dc67fa5d5e4b771e1b86f5e71c278",
+   "equal": true,
+   "diffs": [],
+   "kind": "not checked",
+   "source": null,
+   "baseline_seconds": 0.94,
+   "seconds": 0.55,
+   "baseline_requests": 2,
+   "requests": 2,
+   "data_fetch": {}
+  },
+  {
+   "id": "allenai/winogrande",
+   "sha": "01e74176c63542e6b0bcb004dcdea22d94fb67b5",
+   "equal": true,
+   "diffs": [],
+   "kind": "full",
+   "source": "parquet conversion",
+   "baseline_seconds": 21.11,
+   "seconds": 6.66,
+   "baseline_requests": 40,
+   "requests": 40,
+   "data_fetch": {
+    "workers": 8,
+    "git": "not used",
+    "git_files": 0,
+    "http_files": 18,
+    "fetched_ahead": 17
+   }
+  },
+  {
+   "id": "hf-doc-build/doc-build-dev",
+   "sha": "494fce0367580237ed1073a60ac801abb072f521",
+   "equal": true,
+   "diffs": [],
+   "kind": "not checked",
+   "source": null,
+   "baseline_seconds": 10.78,
+   "seconds": 10.42,
+   "baseline_requests": 5,
+   "requests": 5,
+   "data_fetch": {}
+  },
+  {
+   "id": "wei82/precancer-omics-data",
+   "sha": "bbace4982e1035816e5e92571bcb21d45ef3dc89",
+   "equal": true,
+   "diffs": [],
+   "kind": "not checked",
+   "source": null,
+   "baseline_seconds": 10.61,
+   "seconds": 9.8,
+   "baseline_requests": 5,
+   "requests": 5,
+   "data_fetch": {}
+  },
+  {
+   "id": "neashton/windsorml",
+   "sha": "8a6ca32ae22c94f54df2186d1b0ccf9662a294c2",
+   "equal": true,
+   "diffs": [],
+   "kind": "full",
+   "source": "parquet conversion",
+   "baseline_seconds": 23.83,
+   "seconds": 17.09,
+   "baseline_requests": 6,
+   "requests": 6,
+   "data_fetch": {
+    "workers": 8,
+    "git": "not used",
+    "git_files": 0,
+    "http_files": 1,
+    "fetched_ahead": 0
+   }
+  },
+  {
+   "id": "3dcodeverse/3dcodeverse-2m",
+   "sha": "1d3935d94760922ef7a55f4a1a3e19a3b90ec702",
+   "equal": true,
+   "diffs": [],
+   "kind": "sampled",
+   "source": "original files",
+   "baseline_seconds": 47.66,
+   "seconds": 20.62,
+   "baseline_requests": 76,
+   "requests": 80,
+   "data_fetch": {
+    "workers": 8,
+    "git": "not used",
+    "git_files": 0,
+    "http_files": 39,
+    "fetched_ahead": 31
+   }
+  },
+  {
+   "id": "liwu/MNBVC",
+   "sha": "c153d877b4af9c66026ee6fa4eefbc29dd8c11b0",
+   "equal": true,
+   "diffs": [],
+   "kind": "sampled",
+   "source": "original files",
+   "baseline_seconds": 80.56,
+   "seconds": 22.59,
+   "baseline_requests": 7,
+   "requests": 7,
+   "data_fetch": {
+    "workers": 8,
+    "git": "not used: 0 file(s) git could serve, fewer than 20",
+    "git_files": 0,
+    "http_files": 1,
+    "fetched_ahead": 0
+   }
+  },
+  {
+   "id": "visionhdstream/data-vision-01",
+   "sha": "9565885eee63334674206b8c6c61191e12b29797",
+   "equal": false,
+   "diffs": [
+    ".results[7].facts[0].evidence[0].revision: baseline '35e8b1bd982f01eaa4ac975e0f9368f1e2137f96' != new 'de46364440ad8a8dab624501a73e5d3d169952ee'",
+    ".results[7].facts[0].evidence[0].url: baseline 'https://huggingface.co/datasets/visionhdstream/data-vision-01/resolve/35e8b1bd982f01eaa4ac975e0f9368f1e2137f96/default/t' != new 'https://huggingface.co/datasets/visionhdstream/data-vision-01/resolve/de46364440ad8a8dab624501a73e5d3d169952ee/default/t'",
+    ".scan.source_revision: baseline '35e8b1bd982f01eaa4ac975e0f9368f1e2137f96' != new 'de46364440ad8a8dab624501a73e5d3d169952ee'"
+   ],
+   "kind": "full",
+   "source": "parquet conversion",
+   "baseline_seconds": 2.77,
+   "seconds": 3.02,
+   "baseline_requests": 6,
+   "requests": 6,
+   "data_fetch": {
+    "workers": 8,
+    "git": "not used",
+    "git_files": 0,
+    "http_files": 1,
+    "fetched_ahead": 0
+   }
+  },
+  {
+   "id": "zdbfv/M3_VOS",
+   "sha": "26e2f40df0905a7cbf10fa02588eab7c0f6cdeab",
+   "equal": true,
+   "diffs": [],
+   "kind": "not checked",
+   "source": null,
+   "baseline_seconds": 5.26,
+   "seconds": 3.25,
+   "baseline_requests": 2,
+   "requests": 2,
+   "data_fetch": {}
+  },
+  {
+   "id": "meloqiao/us-stock-data",
+   "sha": "1f9ff6cfeadbbcb5870177f8d6e22f460e1db8c4",
+   "equal": true,
+   "diffs": [],
+   "kind": "full",
+   "source": "parquet conversion",
+   "baseline_seconds": 190.19,
+   "seconds": 24.95,
+   "baseline_requests": 374,
+   "requests": 374,
+   "data_fetch": {
+    "workers": 8,
+    "git": "not used",
+    "git_files": 0,
+    "http_files": 185,
+    "fetched_ahead": 184
+   }
+  },
+  {
+   "id": "nureasoning/nuReasoning",
+   "sha": "26bb09b29fc9ebc3889ed8d0a9e42850e271442e",
+   "equal": true,
+   "diffs": [],
+   "kind": "not checked",
+   "source": null,
+   "baseline_seconds": 1.44,
+   "seconds": 1.59,
+   "baseline_requests": 2,
+   "requests": 2,
+   "data_fetch": {}
+  }
+ ]
+}

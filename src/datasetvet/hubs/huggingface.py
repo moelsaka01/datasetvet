@@ -21,6 +21,7 @@ from datasetvet.http import FetchError, Http
 from datasetvet.hubs.base import (
     Card,
     DataPlan,
+    GitPlan,
     LicenceClaim,
     LinkRef,
     ParentRef,
@@ -28,13 +29,17 @@ from datasetvet.hubs.base import (
     SplitFile,
     SplitSource,
     TextBlob,
+    local_name,
 )
 from datasetvet.model import DatasetRef, Evidence
 
 HUB = "https://huggingface.co"
 VIEWER = "https://datasets-server.huggingface.co"
 FOREVER = float("inf")
+MAX_BLOB = 10 * 1024 * 1024  # the Hub keeps larger files in LFS, which git does not serve
+LISTING_CAP = 100_000  # the Hub's file listing seen to stop at exactly this many entries
 
+_SHA_RE = re.compile(r"[0-9a-f]{40}")
 _ID_RE = re.compile(r"^[A-Za-z0-9][\w.-]*(/[A-Za-z0-9][\w.-]*)?$")
 _URL_RE = re.compile(r"https?://[^\s<>\"'\)\]\}`|]+", re.IGNORECASE)
 _MD_LINK_RE = re.compile(r"\[([^\]]{1,60})\]\((https?://[^\s)]+)\)")
@@ -305,10 +310,29 @@ class HuggingFaceAdapter:
                 revision=ds.revision, label_columns=list(lab), label_names=lab))
         if not splits:
             return DataPlan([], not_checked="no data files matched the card's configs")
-        return DataPlan(splits)
+        return DataPlan(splits, git=self._git_plan(ds, splits))
+
+    def _git_plan(self, ds: DatasetRef, splits: list[SplitSource]) -> GitPlan | None:
+        """The data files git can serve (not in LFS, at most MAX_BLOB), with their blob ids
+        as the Hub lists them, and an upper bound of what one filtered fetch downloads."""
+        if not (ds.revision and _SHA_RE.fullmatch(ds.revision)):
+            return None
+        siblings = self.info(ds).get("siblings", [])
+        if len(siblings) >= LISTING_CAP:
+            return None  # the listing may be cut off, so the fetch size cannot be bounded
+        small = {s["rfilename"]: s for s in siblings
+                 if not s.get("lfs") and s.get("blobId") and s.get("size") is not None
+                 and s["size"] <= MAX_BLOB}
+        wanted = {f.path for s in splits for f in s.files}
+        blob_ids = {p: small[p]["blobId"] for p in wanted if p in small}
+        # every small blob comes with the fetch, plus LFS pointers and trees (~100-200 bytes)
+        estimate = (sum(s["size"] for s in small.values())
+                    + 200 * (len(siblings) - len(small)) + 100 * len(siblings))
+        return GitPlan(url=f"{HUB}/datasets/{ds.id}", sha=ds.revision, blob_ids=blob_ids,
+                       pack_estimate=estimate, max_blob=MAX_BLOB)
 
     def fetch(self, f: SplitFile, dest_dir: Path) -> Path:
-        dest = Path(dest_dir) / re.sub(r"[^\w.-]", "_", f.path)[-120:]
+        dest = Path(dest_dir) / local_name(f.path)
         self.http.download(f.url, dest)
         return dest
 

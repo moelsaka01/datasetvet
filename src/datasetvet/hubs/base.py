@@ -6,6 +6,7 @@ GitHub-hosted in v2) implements.
 
 from __future__ import annotations
 
+import re
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any, Protocol, runtime_checkable
@@ -109,6 +110,22 @@ class SplitSource:
         return f"{self.config}/{self.split}"
 
 
+def local_name(path: str) -> str:
+    """File name for a downloaded data file (the suffix decides how it is read)."""
+    return re.sub(r"[^\w.-]", "_", path)[-120:]
+
+
+@dataclass
+class GitPlan:
+    """How to read a split's small files with one git fetch (datasetvet.hubs.gitpack)."""
+
+    url: str  # git remote, e.g. https://huggingface.co/datasets/org/name
+    sha: str  # the pinned commit the data files come from
+    blob_ids: dict[str, str]  # data file path -> git blob id, for files git can serve
+    pack_estimate: int  # bytes of every blob the fetch would bring (upper bound)
+    max_blob: int = 10 * 1024 * 1024  # blobs above this size are left out of the fetch
+
+
 @dataclass
 class DataPlan:
     """What the adapter could find about the data, before the scan planner decides."""
@@ -116,6 +133,7 @@ class DataPlan:
     splits: list[SplitSource]
     not_checked: str | None = None  # reason no data can be read, if any
     notes: list[str] = field(default_factory=list)
+    git: GitPlan | None = None  # set when the files can also be read with one git fetch
 
 
 @runtime_checkable

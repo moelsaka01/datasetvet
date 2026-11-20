@@ -49,6 +49,8 @@ class Settings:
     link_retries: int = 2
     max_links: int = 200
     duckdb_memory: str = "1GB"
+    git_fetch: bool = True  # read many small repo files with one git fetch (if git exists)
+    fetch_workers: int = 8  # data files downloaded at the same time (1 = one at a time)
     scanner: str = "auto"  # builtin / scancode / auto (ScanCode when it imports)
     check_licences: bool = True  # licence consistency and provenance
     check_sources: bool = True  # read stated sources (GitHub, licence pages) for C4
@@ -81,4 +83,8 @@ def from_env(base: Settings | None = None) -> Settings:
         s.provenance_depth = int(env["DATASETVET_PROVENANCE_DEPTH"])
     if "DATASETVET_DUCKDB_MEMORY" in env:
         s.duckdb_memory = env["DATASETVET_DUCKDB_MEMORY"]
+    if "DATASETVET_GIT_FETCH" in env:
+        s.git_fetch = env["DATASETVET_GIT_FETCH"].strip().lower() not in ("0", "false", "no")
+    if "DATASETVET_FETCH_WORKERS" in env:
+        s.fetch_workers = max(1, int(env["DATASETVET_FETCH_WORKERS"]))
     return s

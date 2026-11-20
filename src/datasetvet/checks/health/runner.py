@@ -16,6 +16,7 @@ from typing import Any
 
 from datasetvet.checks.health.duplicates import HashStore
 from datasetvet.checks.health.empty import CorruptFile, EmptyCounter
+from datasetvet.checks.health.fetching import Fetcher
 from datasetvet.checks.health.labels import (
     LabelCounter,
     labels_from_hf_features,
@@ -59,7 +60,10 @@ def not_checked_results(reason: str) -> list[CheckResult]:
 
 
 def run_health(fetch: Callable[[SplitFile, Path], Path], data: DataPlan, settings: Settings,
-               progress: Progress | None = None) -> tuple[ScanInfo, list[CheckResult]]:
+               progress: Progress | None = None, fetch_stats: dict[str, Any] | None = None,
+               ) -> tuple[ScanInfo, list[CheckResult]]:
+    """Scan the data. `fetch_stats`, if given, receives how the files were fetched (git /
+    HTTP counts); it never changes the results."""
     say = progress or (lambda _m: None)
     if data.not_checked:
         info = ScanInfo(kind="not checked", reason=data.not_checked)
@@ -79,16 +83,21 @@ def run_health(fetch: Callable[[SplitFile, Path], Path], data: DataPlan, setting
     with tempfile.TemporaryDirectory(prefix="datasetvet-") as tmp:
         tmpdir = Path(tmp)
         store = HashStore(tmpdir, settings.duckdb_memory)
+        fetcher = Fetcher(fetch, splits, plan, tmpdir, workers=settings.fetch_workers,
+                          git=data.git, use_git=settings.git_fetch, say=say)
         try:
             for split in splits:
                 st = SplitState(split, pii=PiiScanner(region=settings.phone_region))
                 states.append(st)
-                _scan_split(st, plan, fetch, tmpdir, store, corrupt, say)
+                _scan_split(st, plan, fetcher, tmpdir, store, corrupt, say)
             say("comparing row hashes")
             dups = store.duplicates()
             leaks = store.leakage()
         finally:
+            fetcher.close()
             store.close()
+            if fetch_stats is not None:
+                fetch_stats.update(fetcher.stats)
     seconds = time.monotonic() - started
     rows = sum(s.rows for s in states)
     if plan.capped:

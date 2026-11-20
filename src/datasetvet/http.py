@@ -21,6 +21,7 @@ import logging
 import random
 import re
 import socket
+import threading
 import time
 from collections.abc import Callable
 from dataclasses import dataclass, field
@@ -37,6 +38,10 @@ log = logging.getLogger("datasetvet.http")
 
 USER_AGENT = f"datasetvet/{__version__} (dataset report CLI; +https://pypi.org/project/datasetvet/)"
 HF_HOSTS = frozenset({"huggingface.co", "datasets-server.huggingface.co"})
+# The Hub's download CDN (signed redirects from /resolve/, e.g. us.aws.cdn.hf.co). It is built
+# for bulk downloads, so the one-request-per-second spacing for other hosts does not apply;
+# RateLimit headers and 429s still do.
+HF_CDN_SUFFIX = ".hf.co"
 LOW_WATER = 0.20  # pace a bucket once r < 20% of q
 MAX_429_RETRIES = 3
 MAX_429_SLEEP = 300.0
@@ -128,6 +133,10 @@ class RateLimiter:
         self.min_interval = min_interval or {}
         self.default_host_interval = 0.0
         self.slept: list[float] = []
+        # data files may be downloaded from several threads (checks.health.fetching); the
+        # lock keeps the bucket state consistent, and a pause inside `before` holds it, so
+        # spacing and rate-limit waits apply to all threads together
+        self.lock = threading.RLock()
 
     def _bucket(self, key: str) -> _Bucket:
         return self.buckets.setdefault(key, _Bucket())
@@ -138,10 +147,14 @@ class RateLimiter:
             self.sleep(seconds)
 
     def before(self, key: str) -> None:
+        with self.lock:
+            self._before(key)
+
+    def _before(self, key: str) -> None:
         b = self._bucket(key)
         now = self.clock()
-        interval = self.min_interval.get(key, self.default_host_interval
-                                         if ":" not in key else 0.0)
+        spaced = ":" not in key and not (key == "hf.co" or key.endswith(HF_CDN_SUFFIX))
+        interval = self.min_interval.get(key, self.default_host_interval if spaced else 0.0)
         if interval and b.last_request:
             wait = interval - (now - b.last_request)
             if wait > 0:
@@ -154,6 +167,10 @@ class RateLimiter:
         b.last_request = self.clock()
 
     def update(self, key: str, headers: dict[str, str]) -> None:
+        with self.lock:
+            self._update(key, headers)
+
+    def _update(self, key: str, headers: dict[str, str]) -> None:
         name, r, t, q, w = parse_ratelimit(headers)
         if r is None and q is None:
             return
@@ -248,6 +265,7 @@ class Http:
             headers={"user-agent": USER_AGENT},
         )
         self.network_calls = 0
+        self._count_lock = threading.Lock()
         self._auth: dict[str, str] | None = None
 
     @property
@@ -306,7 +324,7 @@ class Http:
         tries_429 = 0
         while True:
             self.limiter.before(key)
-            self.network_calls += 1
+            self._count()
             with self.client.stream(method, url, **kwargs) as r:
                 hdrs = {k.lower(): v for k, v in r.headers.items()}
                 self.limiter.update(key, hdrs)
@@ -399,6 +417,10 @@ class Http:
     def get_json(self, url: str, **kw: Any) -> Any:
         return self.request("GET", url, **kw).json()
 
+    def _count(self) -> None:
+        with self._count_lock:
+            self.network_calls += 1
+
     def download(self, url: str, dest: Path, *, auth: bool = True, retries: int = 3) -> int:
         """Stream a file to `dest` (redirects handled by hand). Returns bytes written."""
         current = url
@@ -408,7 +430,7 @@ class Http:
                 key = bucket_for(current)
                 headers = dict(self._auth_headers()) if (auth and _is_hf(current)) else {}
                 self.limiter.before(key)
-                self.network_calls += 1
+                self._count()
                 try:
                     with self.client.stream("GET", current, headers=headers,
                                             timeout=httpx2.Timeout(60.0, read=120.0)) as r:

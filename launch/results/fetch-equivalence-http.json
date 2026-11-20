@@ -1,0 +1,44 @@
+{
+ "summary": {
+  "route": "http",
+  "baseline_hash": "d1d12f8a1d35321e",
+  "n": 1,
+  "same": 0,
+  "different": 1,
+  "baseline_seconds": 2.8,
+  "seconds": 2.5,
+  "baseline_requests": 6,
+  "requests": 6,
+  "kinds": {
+   "full": 1
+  },
+  "sources": {
+   "parquet conversion": 1
+  }
+ },
+ "rows": [
+  {
+   "id": "visionhdstream/data-vision-01",
+   "sha": "9565885eee63334674206b8c6c61191e12b29797",
+   "equal": false,
+   "diffs": [
+    ".results[7].facts[0].evidence[0].revision: baseline '35e8b1bd982f01eaa4ac975e0f9368f1e2137f96' != new 'de46364440ad8a8dab624501a73e5d3d169952ee'",
+    ".results[7].facts[0].evidence[0].url: baseline 'https://huggingface.co/datasets/visionhdstream/data-vision-01/resolve/35e8b1bd982f01eaa4ac975e0f9368f1e2137f96/default/t' != new 'https://huggingface.co/datasets/visionhdstream/data-vision-01/resolve/de46364440ad8a8dab624501a73e5d3d169952ee/default/t'",
+    ".scan.source_revision: baseline '35e8b1bd982f01eaa4ac975e0f9368f1e2137f96' != new 'de46364440ad8a8dab624501a73e5d3d169952ee'"
+   ],
+   "kind": "full",
+   "source": "parquet conversion",
+   "baseline_seconds": 2.77,
+   "seconds": 2.5,
+   "baseline_requests": 6,
+   "requests": 6,
+   "data_fetch": {
+    "workers": 1,
+    "git": "not used",
+    "git_files": 0,
+    "http_files": 1,
+    "fetched_ahead": 0
+   }
+  }
+ ]
+}
