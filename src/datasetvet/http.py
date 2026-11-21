@@ -304,7 +304,7 @@ class Http:
             return
         paths[0].parent.mkdir(parents=True, exist_ok=True)
         keep = {k: v for k, v in resp.headers.items()
-                if k in ("content-type", "etag", "x-repo-commit", "last-modified")}
+                if k in ("content-type", "etag", "x-repo-commit", "last-modified", "link")}
         paths[1].write_bytes(resp.content)
         paths[0].write_text(json.dumps({
             "status": resp.status, "url": resp.url, "headers": keep,

@@ -149,7 +149,9 @@ class DatasetRef:
 
 @dataclass
 class ScanInfo:
-    """What the data-health pass covered. `kind` is "full", "sampled" or "not checked"."""
+    """What the data-health pass covered. `kind` is "full", "sampled" or "not checked".
+    `listing_complete=False` means the repo's file list was cut off, so a `full` scan read only
+    the files that were listed and is headed "Partial scan", never "Full scan"."""
 
     kind: str = "not checked"
     rows_scanned: int = 0
@@ -161,15 +163,21 @@ class ScanInfo:
     source_revision: str | None = None
     reason: str | None = None  # why not checked, or why sampled
     seconds: float | None = None
-    partial: bool = False
+    partial: bool = False  # some files could not be read as rows
+    listing_complete: bool = True  # False: the hub's file list was cut off (never "Full scan")
 
     def header(self) -> str:
+        failed = " (partial: some files could not be read)" if self.partial else ""
         if self.kind == "full":
-            return "Full scan" + (" (partial: some files failed)" if self.partial else "")
+            if not self.listing_complete:
+                return "Partial scan: the repo's file list is incomplete" + failed
+            return "Full scan" + failed
         if self.kind == "sampled":
             total = f"{self.rows_total:,}" if self.rows_total is not None else "unknown"
             text = f"Sampled: {self.rows_scanned:,} of {total} rows (seed {self.seed})"
-            return text + (" (partial: some files failed)" if self.partial else "")
+            if not self.listing_complete:
+                text += " (partial file list: the sample drew from part of the repo)"
+            return text + failed
         return "Data not checked" + (f": {self.reason}" if self.reason else "")
 
     @classmethod

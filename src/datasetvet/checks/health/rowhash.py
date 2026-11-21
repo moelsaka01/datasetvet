@@ -13,7 +13,7 @@ from __future__ import annotations
 import datetime as _dt
 import decimal
 import struct
-from collections.abc import Iterable, Sequence
+from collections.abc import Iterable, Mapping, Sequence
 from typing import Any
 
 import xxhash
@@ -80,7 +80,7 @@ def hash_row(row: dict[str, Any], columns: Iterable[str] | None = None) -> bytes
     return xxhash.xxh3_128_digest(encode_row(row, columns))
 
 
-def hash_columns(columns: dict[str, Sequence[Any]], label_columns: Iterable[str] = (),
+def hash_columns(columns: Mapping[str, Sequence[Any]], label_columns: Iterable[str] = (),
                  ) -> tuple[list[bytes], list[bytes]]:
     """Hash a batch given as {column: values}. Returns (row hashes, input hashes)."""
     names = sorted(columns)

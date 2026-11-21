@@ -81,12 +81,18 @@ def run_check(ref: str, settings: Settings, *, http: Http | None = None,
 
             checker = LinkChecker(http, settings, gated_lookup=gated)
             link_results, link_nc = check_links(links, checker, settings.max_links, say)
-            paths = [f.path for f in adapter.files(ds)]
-            for config, pattern in missing_data_files(card.metadata.get("configs"), paths):
-                ev = Evidence(url=adapter.blob_url(ds, "README.md",
-                                                   card.key_lines.get("configs")),
-                              revision=ds.revision, path="README.md")
-                link_results.append(missing_file_result(pattern, config, ev))
+            listing = adapter.listing(ds)
+            not_in_list = missing_data_files(card.metadata.get("configs"),
+                                             [f.path for f in listing.files])
+            if listing.complete:
+                for config, pattern in not_in_list:
+                    ev = Evidence(url=adapter.blob_url(ds, "README.md",
+                                                       card.key_lines.get("configs")),
+                                  revision=ds.revision, path="README.md")
+                    link_results.append(missing_file_result(pattern, config, ev))
+            elif not_in_list:  # a path missing from a cut-off list may still exist
+                link_nc.append(f"{len(not_in_list)} card data_files path(s) not verified: "
+                               f"{listing.note}")
             report.results += link_results
             report.not_checked += link_nc
         else:

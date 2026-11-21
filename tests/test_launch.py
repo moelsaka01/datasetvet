@@ -92,3 +92,28 @@ def test_config_hash_names_the_code(tmp_path):
     h = config_hash("B", b, "x.json", one)
     assert h == config_hash("B", b, "x.json", later_docs_commit)
     assert h != config_hash("B", b, "x.json", code_change)
+
+
+def test_only_restricts_a_run_to_the_named_datasets_and_leaves_other_rows_alone(tmp_path):
+    from run import select_only
+
+    state = State(tmp_path / "s.sqlite")
+    run(DATASETS, "B", state, "old", lambda ds: ("{}", 1), say=lambda _m: None)
+    chosen = select_only(DATASETS, {"org/ds2", "org/ds5"})
+    assert [d["id"] for d in chosen] == ["org/ds2", "org/ds5"]  # list order, not set order
+    assert run(chosen, "B", state, "new", lambda ds: ("{}", 1), say=lambda _m: None) == 2
+    hashes = {r["dataset_id"]: r["config_hash"] for r in state.rows("B")}
+    assert hashes["org/ds2"] == hashes["org/ds5"] == "new"
+    assert {h for i, h in hashes.items() if i not in ("org/ds2", "org/ds5")} == {"old"}
+    with pytest.raises(SystemExit, match="org/zzz"):
+        select_only(DATASETS, {"org/zzz"})  # a name that is not in the list is an error
+
+
+def test_load_only_reads_json_and_text(tmp_path):
+    from run import load_only
+
+    (tmp_path / "a.json").write_text('{"B": ["x/y", "p/q"], "A": ["p/q"]}')
+    (tmp_path / "b.txt").write_text("# comment\nx/y\n\np/q  \n")
+    assert load_only(tmp_path / "a.json", "B") == {"x/y", "p/q"}
+    assert load_only(tmp_path / "a.json", "A") == {"p/q"}
+    assert load_only(tmp_path / "b.txt", "B") == {"x/y", "p/q"}

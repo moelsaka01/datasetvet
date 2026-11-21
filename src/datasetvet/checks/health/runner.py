@@ -14,8 +14,15 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
 
+import pyarrow as pa
+
 from datasetvet.checks.health.duplicates import HashStore
-from datasetvet.checks.health.empty import CorruptFile, EmptyCounter
+from datasetvet.checks.health.empty import (
+    KIND_LABELS,
+    EmptyCounter,
+    UnreadableFile,
+    classify_error,
+)
 from datasetvet.checks.health.fetching import Fetcher
 from datasetvet.checks.health.labels import (
     LabelCounter,
@@ -25,6 +32,7 @@ from datasetvet.checks.health.labels import (
 from datasetvet.checks.health.pii import PiiScanner
 from datasetvet.checks.health.rowhash import COLLISION_NOTE, hash_columns
 from datasetvet.checks.health.scan import ScanPlan, iter_split, plan_scan
+from datasetvet.checks.health.values import batch_to_pydict
 from datasetvet.config import Settings
 from datasetvet.hubs.base import DataPlan, SplitFile, SplitSource
 from datasetvet.model import CheckResult, Evidence, Fact, Family, HealthStatus, ScanInfo
@@ -34,7 +42,7 @@ HEALTH_CHECKS = {
     "health.duplicates": "Duplicate rows within a split",
     "health.leakage": "Leakage across splits",
     "health.empty": "Empty rows",
-    "health.corrupt": "Unreadable files",
+    "health.unreadable": "Files that could not be read as rows",
     "health.labels": "Label columns",
     "health.pii": "PII pattern matches",
 }
@@ -78,7 +86,7 @@ def run_health(fetch: Callable[[SplitFile, Path], Path], data: DataPlan, setting
                      sample_rows=settings.sample_rows, seed=settings.seed,
                      force_full=settings.full, max_download_bytes=settings.max_download_bytes)
     started = time.monotonic()
-    corrupt: list[CorruptFile] = []
+    unreadable: list[UnreadableFile] = []
     states: list[SplitState] = []
     with tempfile.TemporaryDirectory(prefix="datasetvet-") as tmp:
         tmpdir = Path(tmp)
@@ -89,7 +97,7 @@ def run_health(fetch: Callable[[SplitFile, Path], Path], data: DataPlan, setting
             for split in splits:
                 st = SplitState(split, pii=PiiScanner(region=settings.phone_region))
                 states.append(st)
-                _scan_split(st, plan, fetcher, tmpdir, store, corrupt, say)
+                _scan_split(st, plan, fetcher, tmpdir, store, unreadable, say)
             say("comparing row hashes")
             dups = store.duplicates()
             leaks = store.leakage()
@@ -110,37 +118,39 @@ def run_health(fetch: Callable[[SplitFile, Path], Path], data: DataPlan, setting
     info = ScanInfo(
         kind=plan.mode, rows_scanned=rows,
         rows_total=plan.rows_total if plan.rows_total is not None else (
-            rows if plan.mode == "full" and not corrupt else None),
+            rows if plan.mode == "full" and not unreadable else None),
         bytes_total=plan.bytes_total, bytes_read=sum(s.bytes_read for s in states),
         seed=plan.seed if plan.mode == "sampled" else None,
         source=splits[0].source if splits else None,
         source_revision=splits[0].revision if splits else None,
-        reason=plan.reason, seconds=round(seconds, 2), partial=bool(corrupt),
+        reason=plan.reason, seconds=round(seconds, 2), partial=bool(unreadable),
+        listing_complete=data.listing_complete,
     )
     results = [
         _dup_result(dups, states, plan),
         _leak_result(leaks, states, plan),
         _empty_result(states, plan),
-        _corrupt_result(corrupt),
+        _unreadable_result(unreadable),
         _labels_result(states, plan),
         _pii_result(states, plan),
     ]
     for r in results:
         r.data["scan"] = info.header()
-        if corrupt and r.check != "health.corrupt":
+        if unreadable and r.check != "health.unreadable":
             r.data["partial"] = True
     return info, results
 
 
 def _scan_split(st: SplitState, plan: ScanPlan, fetch, tmpdir: Path, store: HashStore,
-                corrupt: list[CorruptFile], say: Progress) -> None:
+                unreadable: list[UnreadableFile], say: Progress) -> None:
     split = st.split
     quota = plan.quotas.get(split.key)
     say(f"reading {split.key} ({len(split.files)} file(s)"
         + (f", sample quota {quota:,} rows" if quota else "") + ")")
 
     def on_error(f: SplitFile, exc: BaseException) -> None:
-        corrupt.append(CorruptFile(split.key, f.path, f"{type(exc).__name__}: {exc}"[:300]))
+        unreadable.append(UnreadableFile(split.key, f.path, f"{type(exc).__name__}: {exc}"[:300],
+                                         classify_error(exc)))
 
     def on_file(_f: SplitFile, size: int) -> None:
         st.files_read += 1
@@ -154,8 +164,14 @@ def _scan_split(st: SplitState, plan: ScanPlan, fetch, tmpdir: Path, store: Hash
             st.label_cols, st.label_how = pick_label_columns(names, classlabels)
             for c in st.label_cols:
                 st.labels[c] = LabelCounter(names=classlabels.get(c))
-        cols = batch.to_pydict()
-        row_h, input_h = hash_columns(cols, st.label_cols)
+        try:
+            cols = batch_to_pydict(batch)
+            row_h, input_h = hash_columns(cols, st.label_cols)
+        except (pa.ArrowException, ValueError, TypeError, OverflowError) as exc:
+            # a batch that cannot be turned into values stops that file, not the dataset
+            if not any(u.split == split.key and u.path == chunk.file_path for u in unreadable):
+                on_error(split.files[chunk.file_no], exc)
+            continue
         store.add(split.key, split.config, chunk.file_no, chunk.first_row, row_h, input_h)
         st.empty.add_columns(cols, chunk.file_no, chunk.first_row)
         for c in st.label_cols:
@@ -293,17 +309,17 @@ def _empty_result(states: list[SplitState], plan: ScanPlan) -> CheckResult:
                        HEALTH_CHECKS["health.empty"], facts)
 
 
-def _corrupt_result(corrupt: list[CorruptFile]) -> CheckResult:
-    if not corrupt:
-        return CheckResult("health.corrupt", Family.HEALTH, HealthStatus.NONE_FOUND,
-                           HEALTH_CHECKS["health.corrupt"],
-                           [Fact("Every file that was read opened and decoded.")])
-    facts = [Fact(f"{c.split}: {c.path} could not be read ({c.error}). The split's other "
-                  "results are partial.", data={"split": c.split, "path": c.path,
-                                                "error": c.error})
-             for c in corrupt]
-    return CheckResult("health.corrupt", Family.HEALTH, HealthStatus.FOUND,
-                       HEALTH_CHECKS["health.corrupt"], facts)
+def _unreadable_result(unreadable: list[UnreadableFile]) -> CheckResult:
+    title = HEALTH_CHECKS["health.unreadable"]
+    if not unreadable:
+        return CheckResult("health.unreadable", Family.HEALTH, HealthStatus.NONE_FOUND, title,
+                           [Fact("Every file that was read could be read as rows.")])
+    facts = [Fact(f"{c.split}: {c.path} could not be read as rows ({KIND_LABELS[c.kind]}: "
+                  f"{c.error}). This does not by itself mean the file is damaged. The split's "
+                  "other results are partial.",
+                  data={"split": c.split, "path": c.path, "error": c.error, "kind": c.kind})
+             for c in unreadable]
+    return CheckResult("health.unreadable", Family.HEALTH, HealthStatus.FOUND, title, facts)
 
 
 def _labels_result(states: list[SplitState], plan: ScanPlan) -> CheckResult:

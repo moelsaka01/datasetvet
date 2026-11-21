@@ -1,6 +1,6 @@
 """Which launch-scan datasets had a file listing cut off by the Hub (RESULTS.md section 2).
 
-Usage:  python launch/check_listing_cap.py LIST
+Usage:  python launch/check_listing_cap.py LIST [--all]
 
 The Hub's dataset API (`/api/datasets/{id}/revision/{sha}`) returns at most 100,000 entries
 in `siblings`. datasetvet's HF adapter (at commit a3f5428 and before) takes the repo's file
@@ -14,6 +14,10 @@ For each dataset this script re-reads `siblings` at the frozen sha (one anonymou
 through datasetvet's rate-limited Http) for every Tier A report with a missing-file result
 and every Tier B report read from original files, and writes
 launch/results/listing-truncated.json. It changes no state row and no report.
+
+`--all` (Phase 4.5) checks every dataset in LIST instead, because a Tier A licence-file search
+also used the cut-off list, and writes launch/results/listing-truncated-all.json. The fix for
+the cut-off itself is in the HF adapter (`HuggingFaceAdapter.listing`).
 """
 
 from __future__ import annotations
@@ -26,8 +30,9 @@ from typing import Any
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
-REPORTS = ROOT / "launch" / "results" / "reports"
+REPORTS = ROOT / "launch" / "results" / "reports-first-scan"
 OUT = ROOT / "launch" / "results" / "listing-truncated.json"
+OUT_ALL = ROOT / "launch" / "results" / "listing-truncated-all.json"
 LISTING_CAP = 100_000
 
 
@@ -36,22 +41,25 @@ def missing_files(rep: dict) -> int:
                and r["facts"] and "(missing file)" in r["facts"][0]["text"])
 
 
-def main(list_path: Path) -> None:
+def main(list_path: Path, check_all: bool = False) -> None:
     from datasetvet.config import default_cache_dir
     from datasetvet.http import Http
 
     frozen = {d["id"]: d for d in json.loads(list_path.read_text("utf-8"))["datasets"]}
     want: dict[str, dict] = {}
-    for p in sorted((REPORTS / "A").glob("*.json")):
-        rep = json.loads(p.read_text("utf-8"))
-        n = missing_files(rep)
-        if n:
-            want.setdefault(rep["dataset"]["id"], {})["tier_A_missing_file_results"] = n
-    for p in sorted((REPORTS / "B").glob("*.json")):
-        rep = json.loads(p.read_text("utf-8"))
-        scan = rep.get("scan") or {}
-        if scan.get("source") == "original files":
-            want.setdefault(rep["dataset"]["id"], {})["tier_B_scan"] = scan.get("kind")
+    if check_all:
+        want = {i: {} for i in frozen}
+    else:
+        for p in sorted((REPORTS / "A").glob("*.json")):
+            rep = json.loads(p.read_text("utf-8"))
+            n = missing_files(rep)
+            if n:
+                want.setdefault(rep["dataset"]["id"], {})["tier_A_missing_file_results"] = n
+        for p in sorted((REPORTS / "B").glob("*.json")):
+            rep = json.loads(p.read_text("utf-8"))
+            scan = rep.get("scan") or {}
+            if scan.get("source") == "original files":
+                want.setdefault(rep["dataset"]["id"], {})["tier_B_scan"] = scan.get("kind")
     http = Http(default_cache_dir(), host_interval=1.0)
     try:
         for i, row in want.items():
@@ -62,12 +70,13 @@ def main(list_path: Path) -> None:
     finally:
         http.close()
     out: dict[str, Any] = {"listing_cap": LISTING_CAP, "checked": len(want),
-           "truncated": sorted(i for i, r in want.items() if r["truncated"]),
-           "datasets": dict(sorted(want.items()))}
-    OUT.write_text(json.dumps(out, indent=1) + "\n", "utf-8")
+                           "truncated": sorted(i for i, r in want.items() if r["truncated"]),
+                           "datasets": dict(sorted(want.items()))}
+    target = OUT_ALL if check_all else OUT
+    target.write_text(json.dumps(out, indent=1) + "\n", "utf-8")
     print(f"{len(out['truncated'])} of {len(want)} checked datasets have a listing of "
-          f"{LISTING_CAP:,} files -> {OUT}")
+          f"{LISTING_CAP:,} files -> {target}")
 
 
 if __name__ == "__main__":
-    main(Path(sys.argv[1]))
+    main(Path(sys.argv[1]), "--all" in sys.argv[2:])

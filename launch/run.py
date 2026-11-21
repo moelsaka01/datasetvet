@@ -15,6 +15,10 @@ Usage:
 - Batches of `--batch` datasets (default 25) with a checkpoint line after each; `--max N`
   stops after N datasets this invocation. Ctrl-C finishes the dataset in flight and exits.
 - Each report is also written to launch/results/reports/<tier>/<org>__<name>.json.
+- `--only FILE` restricts a run to the datasets named in FILE (a JSON object `{"A": [...],
+  "B": [...]}` as written by launch/rescan_set.py, or one dataset id per line). A rescan under
+  a new config hash replaces only those rows; every other row keeps the hash of the run that
+  made it.
 """
 
 from __future__ import annotations
@@ -91,6 +95,23 @@ def config_hash(tier: str, settings: Any, list_name: str,
     return hashlib.sha256(blob.encode()).hexdigest()[:16]
 
 
+def load_only(path: Path, tier: str) -> set[str]:
+    """Dataset ids named in a `--only` file: JSON `{"A": [...], "B": [...]}` or one id per line."""
+    text = path.read_text("utf-8")
+    if path.suffix.lower() == ".json":
+        return set(json.loads(text).get(tier, []))
+    return {ln.strip() for ln in text.splitlines() if ln.strip() and not ln.startswith("#")}
+
+
+def select_only(datasets: list[dict[str, Any]], only: set[str]) -> list[dict[str, Any]]:
+    """The listed datasets whose id is in `only`, in list order. A name not in the list is an
+    error: a typo must not silently rescan nothing."""
+    unknown = only - {d["id"] for d in datasets}
+    if unknown:
+        raise SystemExit("not in the frozen list: " + ", ".join(sorted(unknown)))
+    return [d for d in datasets if d["id"] in only]
+
+
 def run(datasets: list[dict[str, Any]], tier: str, state: State, chash: str,
         check: Callable[[dict[str, Any]], tuple[str, int]], *, batch: int = 25,
         max_n: int | None = None, retry_failed: bool = False,
@@ -133,6 +154,8 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--max", type=int, default=None, help="stop after N datasets")
     ap.add_argument("--batch", type=int, default=25)
     ap.add_argument("--retry-failed", action="store_true")
+    ap.add_argument("--only", type=Path, default=None, metavar="FILE",
+                    help="only the datasets named in FILE (see the module docstring)")
     ap.add_argument("--shard", default=None, metavar="I/N",
                     help="only datasets whose list position %% N == I (parallel workers)")
     args = ap.parse_args(argv)
@@ -144,6 +167,8 @@ def main(argv: list[str] | None = None) -> int:
 
     frozen = json.loads(args.list.read_text("utf-8"))
     datasets = frozen["datasets"]
+    if args.only:
+        datasets = select_only(datasets, load_only(args.only, args.tier))
     if args.shard:
         i, n_shards = (int(x) for x in args.shard.split("/"))
         datasets = [d for k, d in enumerate(datasets) if k % n_shards == i]

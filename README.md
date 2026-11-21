@@ -17,7 +17,7 @@ datasetvet will be a free, local CLI that checks a dataset (Hugging Face first) 
 - **Licence consistency:** the card's licence compared with the README text, the repo's licence files, and the licence of the source it points to.
 - **Provenance:** the licences of declared parent datasets, side by side.
 - **Links:** dead source URLs and missing files.
-- **Data health:** exact duplicates within splits, leakage across train/test, empty or corrupt rows, label balance, PII-pattern matches. A full scan by default; large datasets are sampled, and the report always says which.
+- **Data health:** exact duplicates within splits, leakage across train/test, empty rows, files that could not be read as rows, label balance, PII-pattern matches. A full scan by default; large datasets are sampled, and the report always says which.
 
 Each fact comes with an evidence link pinned to a commit.
 

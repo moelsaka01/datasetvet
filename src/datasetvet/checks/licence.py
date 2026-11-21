@@ -370,7 +370,8 @@ TEMPLATE_LINK_RE = re.compile(r"github\.com/huggingface/datasets/blob/[^/]+/CONT
 
 
 def licence_files(ctx: LicenceContext) -> tuple[list[OtherSide], list[str]]:
-    paths = [f.path for f in ctx.adapter.files(ctx.ds) if LICENCE_FILE_RE.search(f.path)]
+    listing = ctx.adapter.listing(ctx.ds)
+    paths = [f.path for f in listing.files if LICENCE_FILE_RE.search(f.path)]
     sides = []
     for path in sorted(paths)[:MAX_LICENCE_FILES]:
         where = f"{path}@{ctx.ds.revision[:7]}"
@@ -383,6 +384,9 @@ def licence_files(ctx: LicenceContext) -> tuple[list[OtherSide], list[str]]:
             continue
         sides.append(side_from_text(blob, ctx.scanner, path, where))
     nc = []
+    if not listing.complete:
+        nc.append(f"licence files: a licence file outside the repo's partial file list would "
+                  f"be missed ({listing.note})")
     if len(paths) > MAX_LICENCE_FILES:
         nc.append(f"licence files beyond the first {MAX_LICENCE_FILES} "
                   f"({len(paths) - MAX_LICENCE_FILES} more)")

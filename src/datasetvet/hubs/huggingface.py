@@ -24,6 +24,7 @@ from datasetvet.hubs.base import (
     GitPlan,
     LicenceClaim,
     LinkRef,
+    Listing,
     ParentRef,
     RepoFile,
     SplitFile,
@@ -37,7 +38,10 @@ HUB = "https://huggingface.co"
 VIEWER = "https://datasets-server.huggingface.co"
 FOREVER = float("inf")
 MAX_BLOB = 10 * 1024 * 1024  # the Hub keeps larger files in LFS, which git does not serve
-LISTING_CAP = 100_000  # the Hub's file listing seen to stop at exactly this many entries
+LISTING_CAP = 100_000  # the dataset API's `siblings` list stops at exactly this many entries
+TREE_PAGE = 1000  # the tree API's page size (it refuses a larger `limit`)
+MAX_TREE_PAGES = 5000  # 5 million files; beyond it the listing is reported as incomplete
+_NEXT_LINK_RE = re.compile(r'<([^>]+)>\s*;\s*rel="next"')
 
 _SHA_RE = re.compile(r"[0-9a-f]{40}")
 _ID_RE = re.compile(r"^[A-Za-z0-9][\w.-]*(/[A-Za-z0-9][\w.-]*)?$")
@@ -53,10 +57,29 @@ SPLIT_WORDS = {
 }
 SUPPORTED_EXT = {".parquet": "parquet", ".csv": "csv", ".tsv": "tsv", ".jsonl": "jsonl",
                  ".json": "json", ".ndjson": "jsonl"}
+# Files that are never data, whatever their extension (PLAN.md 5.5): tokenizer, model and
+# package configuration, and the dependency folders of a committed environment. They are
+# skipped only when the card does not name them in `configs`.
+NON_DATA_NAMES = frozenset({
+    "config.json", "tokenizer.json", "tokenizer_config.json", "special_tokens_map.json",
+    "added_tokens.json", "vocab.json", "generation_config.json", "preprocessor_config.json",
+    "dataset_info.json", "dataset_infos.json", "package.json", "package-lock.json",
+    "tsconfig.json", "composer.json"})
+NON_DATA_DIRS = frozenset({"site-packages", "dist-packages", "node_modules", "__pycache__"})
 
 
 class DatasetNotFound(LookupError):
     pass
+
+
+def is_non_data_path(path: str) -> bool:
+    """True for tokenizer/model/package configuration files and files inside dependency
+    folders (site-packages, node_modules, ...): they are not data, so they are never read."""
+    parts = path.split("/")
+    name = parts[-1].lower()
+    if name in NON_DATA_NAMES or name.endswith(".index.json"):  # model.safetensors.index.json
+        return True
+    return any(p.lower() in NON_DATA_DIRS for p in parts[:-1])
 
 
 def file_format(path: str) -> str | None:
@@ -94,6 +117,7 @@ class HuggingFaceAdapter:
     def __init__(self, http: Http):
         self.http = http
         self._info: dict[tuple[str, str], dict[str, Any]] = {}
+        self._listings: dict[tuple[str, str], Listing] = {}
 
     # -- refs ----------------------------------------------------------------------------
     def matches(self, ref: str) -> bool:
@@ -165,7 +189,10 @@ class HuggingFaceAdapter:
     def card(self, ds: DatasetRef) -> Card:
         info = self.info(ds)
         tags = list(info.get("tags") or [])
-        has_readme = any(s.get("rfilename") == "README.md" for s in info.get("siblings", []))
+        siblings = info.get("siblings", [])
+        has_readme = any(s.get("rfilename") == "README.md" for s in siblings)
+        if not has_readme and len(siblings) >= LISTING_CAP:  # the list may be cut off
+            has_readme = any(f.path == "README.md" for f in self.listing(ds).files)
         ev = Evidence(url=self.blob_url(ds, "README.md"), revision=ds.revision,
                       path="README.md")
         if not has_readme:
@@ -185,8 +212,70 @@ class HuggingFaceAdapter:
         return parse_card(resp.text, ev, tags)
 
     def files(self, ds: DatasetRef) -> list[RepoFile]:
-        return [RepoFile(s["rfilename"], s.get("size")) for s in self.info(ds).get("siblings",
-                                                                                   [])]
+        return self.listing(ds).files
+
+    def listing(self, ds: DatasetRef) -> Listing:
+        """The repo's files at the pinned revision. The dataset API's `siblings` stops at
+        100,000 entries, so a list of that size is read again through the paged tree API; if
+        that fails, the result says `complete=False` and nothing may treat it as the whole
+        repo."""
+        key = (ds.id, ds.revision)
+        if key not in self._listings:
+            siblings = self.info(ds).get("siblings", [])
+            files = [_sibling_file(s) for s in siblings]
+            self._listings[key] = (Listing(files) if len(siblings) < LISTING_CAP
+                                   else self._tree_listing(ds, files))
+        return self._listings[key]
+
+    def _tree_listing(self, ds: DatasetRef, partial: list[RepoFile]) -> Listing:
+        base = f"{HUB}/api/datasets/{ds.id}/tree/{quote(ds.revision, safe='')}"
+
+        def incomplete(why: str) -> Listing:
+            return Listing(partial, False, note=(
+                f"the file list is incomplete: the dataset API lists at most {LISTING_CAP:,} "
+                f"files and the paged tree API could not be read in full ({why}); "
+                f"only {len(partial):,} files are listed"))
+
+        url: str | None = base
+        params: dict[str, str] | None = {"recursive": "true", "expand": "false",
+                                         "limit": str(TREE_PAGE)}
+        seen: set[str] = set()
+        files: list[RepoFile] = []
+        pages = 0
+        while url:
+            pages += 1
+            if pages > MAX_TREE_PAGES:
+                return incomplete(f"more than {MAX_TREE_PAGES:,} pages")
+            try:
+                resp = self.http.get(url, params=params, ttl=FOREVER)
+            except FetchError as exc:
+                return incomplete(f"{exc.kind} on page {pages}")
+            if not resp.ok:
+                return incomplete(f"HTTP {resp.status} from the tree API on page {pages}")
+            try:
+                items = resp.json()
+            except ValueError:
+                return incomplete(f"page {pages} was not JSON")
+            if not isinstance(items, list):
+                return incomplete(f"page {pages} was not a list")
+            files += [_tree_file(e) for e in items
+                      if isinstance(e, dict) and e.get("type") == "file" and e.get("path")]
+            m = _NEXT_LINK_RE.search(resp.headers.get("link", ""))
+            url, params = (m.group(1) if m else None), None
+            if url:
+                nxt = urlsplit(url)
+                if nxt.scheme != "https" or nxt.hostname != "huggingface.co" \
+                        or not nxt.path.startswith(f"/api/datasets/{ds.id}/tree/"):
+                    return incomplete("the next page link leads away from the Hub")
+                if url in seen:
+                    return incomplete(f"the tree API repeated a page (loop at page {pages})")
+                seen.add(url)
+        if len(files) < len(partial):
+            return incomplete(f"the tree API returned {len(files):,} files, fewer than the "
+                              "dataset API's list")
+        return Listing(files, True, note=(
+            f"read through the paged tree API ({pages:,} pages) because the dataset API lists "
+            f"at most {LISTING_CAP:,} files"))
 
     def read_text(self, ds: DatasetRef, path: str, max_bytes: int) -> TextBlob:
         resp = self.http.get(self._resolve_url(ds, path), ttl=FOREVER, max_bytes=max_bytes)
@@ -286,17 +375,35 @@ class HuggingFaceAdapter:
         return DataPlan(splits, notes=notes)
 
     def _original_plan(self, ds: DatasetRef, card: Card) -> DataPlan:
+        listing = self.listing(ds)
+        notes: list[str] = [listing.note] if listing.note and not listing.complete else []
         # hidden files and folders (.gitattributes, .metadata/...) are never data
-        files = [f for f in self.files(ds) if f.path != "README.md"
+        files = [f for f in listing.files if f.path != "README.md"
                  and not any(part.startswith(".") for part in f.path.split("/"))]
         supported = [f for f in files if file_format(f.path)]
         if not supported:
             exts = sorted({Path(f.path).suffix.lower() or "(none)" for f in files})[:12]
-            return DataPlan([], not_checked=(
+            return DataPlan([], notes=notes, not_checked=(
                 "unsupported format: no Parquet conversion and no Parquet, CSV or JSON Lines "
-                f"files in the repo (file types: {', '.join(exts) or 'none'})"))
-        mapping = map_data_files(card.metadata.get("configs"), [f.path for f in supported])
+                f"files in the repo (file types: {', '.join(exts) or 'none'})"),
+                listing_complete=listing.complete)
         by_path = {f.path: f for f in supported}
+        mapping = configs_mapping(card.metadata.get("configs"), list(by_path))
+        if not mapping:  # the card names no files: every file that could be data is a guess
+            data_paths = [p for p in by_path if not is_non_data_path(p)]
+            skipped = sorted(set(by_path) - set(data_paths))
+            if skipped:
+                notes.append(
+                    f"skipped {len(skipped):,} file(s) that are not data (tokenizer or config "
+                    "JSON, package metadata, dependency folders): "
+                    + ", ".join(skipped[:5]) + (" ..." if len(skipped) > 5 else ""))
+            if not data_paths:
+                return DataPlan([], notes=notes, not_checked=(
+                    "no data files: every Parquet, CSV or JSON file in the repo is not data "
+                    "(tokenizer or config JSON, package metadata or a dependency folder)"),
+                    listing_complete=listing.complete)
+            mapping = infer_mapping(data_paths)
+            by_path = {p: by_path[p] for p in data_paths}
         info_rows = card_split_rows(card.metadata)
         labels = card_label_features(card.metadata)
         splits = []
@@ -309,24 +416,26 @@ class HuggingFaceAdapter:
                 bytes=sum(f.size or 0 for f in sfiles), source="original files",
                 revision=ds.revision, label_columns=list(lab), label_names=lab))
         if not splits:
-            return DataPlan([], not_checked="no data files matched the card's configs")
-        return DataPlan(splits, git=self._git_plan(ds, splits))
+            return DataPlan([], notes=notes, listing_complete=listing.complete,
+                            not_checked="no data files matched the card's configs")
+        return DataPlan(splits, notes=notes, git=self._git_plan(ds, splits),
+                        listing_complete=listing.complete)
 
     def _git_plan(self, ds: DatasetRef, splits: list[SplitSource]) -> GitPlan | None:
         """The data files git can serve (not in LFS, at most MAX_BLOB), with their blob ids
         as the Hub lists them, and an upper bound of what one filtered fetch downloads."""
         if not (ds.revision and _SHA_RE.fullmatch(ds.revision)):
             return None
-        siblings = self.info(ds).get("siblings", [])
-        if len(siblings) >= LISTING_CAP:
-            return None  # the listing may be cut off, so the fetch size cannot be bounded
-        small = {s["rfilename"]: s for s in siblings
-                 if not s.get("lfs") and s.get("blobId") and s.get("size") is not None
-                 and s["size"] <= MAX_BLOB}
+        listing = self.listing(ds)
+        if not listing.complete:
+            return None  # the list is cut off, so the fetch size cannot be bounded
+        siblings = listing.files
+        small = {f.path: f for f in siblings
+                 if not f.lfs and f.blob_id and f.size is not None and f.size <= MAX_BLOB}
         wanted = {f.path for s in splits for f in s.files}
-        blob_ids = {p: small[p]["blobId"] for p in wanted if p in small}
+        blob_ids = {p: bid for p in wanted if p in small and (bid := small[p].blob_id)}
         # every small blob comes with the fetch, plus LFS pointers and trees (~100-200 bytes)
-        estimate = (sum(s["size"] for s in small.values())
+        estimate = (sum(f.size or 0 for f in small.values())
                     + 200 * (len(siblings) - len(small)) + 100 * len(siblings))
         return GitPlan(url=f"{HUB}/datasets/{ds.id}", sha=ds.revision, blob_ids=blob_ids,
                        pack_estimate=estimate, max_blob=MAX_BLOB)
@@ -335,6 +444,14 @@ class HuggingFaceAdapter:
         dest = Path(dest_dir) / local_name(f.path)
         self.http.download(f.url, dest)
         return dest
+
+
+def _sibling_file(s: dict[str, Any]) -> RepoFile:
+    return RepoFile(s["rfilename"], s.get("size"), s.get("blobId"), bool(s.get("lfs")))
+
+
+def _tree_file(e: dict[str, Any]) -> RepoFile:
+    return RepoFile(e["path"], e.get("size"), e.get("oid"), bool(e.get("lfs")))
 
 
 def parent_refs(raw: Any) -> list[ParentRef]:
@@ -438,8 +555,8 @@ def _glob_match(path: str, pattern: str) -> bool:
         "**/", ""))
 
 
-def map_data_files(configs: Any, paths: list[str]) -> dict[tuple[str, str], list[str]]:
-    """(config, split) -> repo paths, from the card's `configs` or HF's file-name convention."""
+def configs_mapping(configs: Any, paths: list[str]) -> dict[tuple[str, str], list[str]]:
+    """(config, split) -> repo paths named by the card's `configs[].data_files` (may be {})."""
     out: dict[tuple[str, str], list[str]] = {}
     if isinstance(configs, list) and configs:
         for cfg in configs:
@@ -450,11 +567,21 @@ def map_data_files(configs: Any, paths: list[str]) -> dict[tuple[str, str], list
                 hits = [p for p in paths if any(_glob_match(p, pat) for pat in patterns)]
                 if hits:
                     out.setdefault((name, split), []).extend(hits)
-        if out:
-            return out
+    return out
+
+
+def infer_mapping(paths: list[str]) -> dict[tuple[str, str], list[str]]:
+    """HF's file-name convention (train/validation/test in the path), for a card with no
+    `configs`."""
+    out: dict[tuple[str, str], list[str]] = {}
     for p in paths:
         out.setdefault(("default", infer_split(p)), []).append(p)
     return out
+
+
+def map_data_files(configs: Any, paths: list[str]) -> dict[tuple[str, str], list[str]]:
+    """(config, split) -> repo paths, from the card's `configs` or HF's file-name convention."""
+    return configs_mapping(configs, paths) or infer_mapping(paths)
 
 
 def _data_file_patterns(data_files: Any) -> list[tuple[str, list[str]]]:

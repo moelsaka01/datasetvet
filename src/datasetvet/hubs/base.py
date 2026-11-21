@@ -32,6 +32,22 @@ class Card:
 class RepoFile:
     path: str
     size: int | None = None
+    blob_id: str | None = None  # git blob id, when the hub lists one
+    lfs: bool = False  # stored in LFS (git serves only a pointer)
+
+
+@dataclass
+class Listing:
+    """A repo's file list at one revision, and whether it is the whole list.
+
+    A hub may stop listing at some size (the Hugging Face dataset API stops at 100,000
+    entries). `complete` is False when the list could not be read in full: callers must not
+    treat a file missing from it as missing from the repo, and a scan built from it is not a
+    "Full scan"."""
+
+    files: list[RepoFile]
+    complete: bool = True
+    note: str | None = None  # how it was read, or why it is incomplete
 
 
 @dataclass
@@ -134,6 +150,7 @@ class DataPlan:
     not_checked: str | None = None  # reason no data can be read, if any
     notes: list[str] = field(default_factory=list)
     git: GitPlan | None = None  # set when the files can also be read with one git fetch
+    listing_complete: bool = True  # False: the repo's file list is cut off (see Listing)
 
 
 @runtime_checkable
@@ -144,6 +161,7 @@ class HubAdapter(Protocol):
     def resolve(self, ref: str) -> DatasetRef: ...
     def card(self, ds: DatasetRef) -> Card: ...
     def files(self, ds: DatasetRef) -> list[RepoFile]: ...
+    def listing(self, ds: DatasetRef) -> Listing: ...
     def read_text(self, ds: DatasetRef, path: str, max_bytes: int) -> TextBlob: ...
     def native_licences(self, ds: DatasetRef) -> list[LicenceClaim]: ...
     def stated_sources(self, card: Card) -> list[LinkRef]: ...

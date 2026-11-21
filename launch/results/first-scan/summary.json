@@ -1,0 +1,225 @@
+{
+ "listed": 500,
+ "tier_A": {
+  "config_hashes": {
+   "d0b085a50bef68aa": 500
+  },
+  "seconds": 2937.1700000000005,
+  "http_requests": 2921.0,
+  "done": 499,
+  "failed": 1,
+  "errors": {
+   "DatasetNotFound": 1
+  },
+  "gated": 31,
+  "card_licence": {
+   "present": 299,
+   "missing": 200
+  },
+  "with_any_licence_comparison": 499,
+  "licence_any_inconsistent": {
+   "k": 37,
+   "n": 499,
+   "share": 0.0741,
+   "wilson95": [
+    0.0543,
+    0.1005
+   ]
+  },
+  "licence_any_consistent_none_inconsistent": {
+   "k": 109,
+   "n": 499,
+   "share": 0.2184,
+   "wilson95": [
+    0.1844,
+    0.2568
+   ]
+  },
+  "licence_comparison_statuses": {
+   "consistent": 214,
+   "inconsistent": 62,
+   "missing": 289,
+   "unknown": 289
+  },
+  "with_declared_parents": 11,
+  "provenance_any_inconsistent": 2,
+  "provenance_statuses": {
+   "consistent": 0,
+   "inconsistent": 2,
+   "missing": 4,
+   "unknown": 8
+  },
+  "links_checked": 1156,
+  "link_statuses": {
+   "ok": 402,
+   "dead": 731,
+   "restricted": 11,
+   "unreachable": 7,
+   "unknown": 5
+  },
+  "datasets_with_dead_link": {
+   "k": 23,
+   "n": 168,
+   "share": 0.1369,
+   "wilson95": [
+    0.093,
+    0.1971
+   ]
+  },
+  "missing_file_results": 716,
+  "missing_file_results_in_truncated_listings": 157,
+  "datasets_with_dead_link_excluding_truncated": {
+   "k": 15,
+   "n": 168,
+   "share": 0.0893,
+   "wilson95": [
+    0.0549,
+    0.1421
+   ]
+  }
+ },
+ "tier_B": {
+  "config_hashes": {
+   "2472d09329f26eb6": 500
+  },
+  "seconds": 75800.64999999992,
+  "http_requests": 602535.0,
+  "done": 494,
+  "failed": 6,
+  "errors": {
+   "DatasetNotFound": 3,
+   "ArrowIndexError": 2,
+   "ValueError": 1
+  },
+  "scan_kind": {
+   "full": 195,
+   "not checked": 102,
+   "sampled": 197
+  },
+  "scan_source": {
+   "parquet conversion": 230,
+   "original files": 162,
+   "": 102
+  },
+  "fetch_git": {
+   "not used": 370,
+   "": 102,
+   "used": 22
+  },
+  "original_files_listing_truncated": {
+   "full": 18,
+   "sampled": 46
+  },
+  "fetch_git_files": 49975,
+  "fetch_http_files": 301441,
+  "slowest": [
+   [
+    "nvidia/PhysicalAI-WorldModel-Synthetic-Autonomous-Driving-Scenarios",
+    15074.08
+   ],
+   [
+    "lyzenghq/banned-historical-archives",
+    12782.61
+   ],
+   [
+    "AquaV/genshin-voices-separated",
+    9968.31
+   ],
+   [
+    "TGMR/one_pass_ingestion",
+    6893.36
+   ],
+   [
+    "pjpjq/blofin-oi-data",
+    2970.72
+   ],
+   [
+    "espnet/yodas2",
+    2440.91
+   ]
+  ],
+  "download_capped": 135,
+  "bytes_read_total": 12278924781,
+  "rows_scanned_total": 13181583,
+  "duplicates": {
+   "found": {
+    "k": 74,
+    "n": 392,
+    "share": 0.1888,
+    "wilson95": [
+     0.1531,
+     0.2305
+    ]
+   },
+   "statuses": {
+    "none found": 318,
+    "found": 74,
+    "not checked": 102
+   }
+  },
+  "leakage": {
+   "found": {
+    "k": 24,
+    "n": 392,
+    "share": 0.0612,
+    "wilson95": [
+     0.0415,
+     0.0895
+    ]
+   },
+   "statuses": {
+    "none found": 368,
+    "not checked": 102,
+    "found": 24
+   }
+  },
+  "empty": {
+   "found": {
+    "k": 13,
+    "n": 392,
+    "share": 0.0332,
+    "wilson95": [
+     0.0195,
+     0.0559
+    ]
+   },
+   "statuses": {
+    "none found": 379,
+    "not checked": 102,
+    "found": 13
+   }
+  },
+  "corrupt": {
+   "found": {
+    "k": 47,
+    "n": 392,
+    "share": 0.1199,
+    "wilson95": [
+     0.0914,
+     0.1558
+    ]
+   },
+   "statuses": {
+    "none found": 345,
+    "not checked": 102,
+    "found": 47
+   }
+  },
+  "pii": {
+   "found": {
+    "k": 61,
+    "n": 253,
+    "share": 0.2411,
+    "wilson95": [
+     0.1925,
+     0.2974
+    ]
+   },
+   "statuses": {
+    "not checked": 241,
+    "none found": 192,
+    "found": 61
+   }
+  }
+ }
+}

@@ -26,3 +26,8 @@ launch/*.log
 launch/*.err
 launch/state.sqlite-*
 launch/results/reports/
+
+# Phase 4.5: copies of the first scan (local only; the committed record is launch/results/first-scan/)
+launch/first-scan-state.sqlite
+launch/results/reports-first-scan/
+launch/results/tmp/

@@ -219,15 +219,62 @@ def _tabular_batches(path: Path, f: SplitFile) -> Iterator[pa.RecordBatch]:
         if head.startswith(b"["):
             with _open_text(path) as fh:
                 rows = json.load(fh)
-            if not isinstance(rows, list):
-                raise ValueError("JSON file is not a list of records")
-            yield from pa.Table.from_pylist(rows).to_batches(BATCH_ROWS)
+            yield from _rows_to_batches(rows)
         else:
-            with _open_text(path) as fh:
-                table = pajson.read_json(fh, read_options=pajson.ReadOptions(block_size=1 << 22))
-            yield from table.to_batches(BATCH_ROWS)
+            yield from _json_values_to_batches(path)
         return
     raise ValueError(f"unsupported format {fmt!r}")
+
+
+def _rows_to_batches(rows: list) -> Iterator[pa.RecordBatch]:
+    """Parsed JSON values to batches. Objects are the rows. When no item is an object, each
+    item is a row of one column named `value` (a JSON array of strings, numbers or lists). A
+    mix of objects and other items is not one table of rows."""
+    if not rows:
+        return
+    n_objects = sum(isinstance(r, dict) for r in rows)
+    if n_objects == len(rows):
+        table = pa.Table.from_pylist(rows)
+    elif n_objects == 0:
+        table = pa.Table.from_pylist([{"value": r} for r in rows])
+    else:
+        raise ValueError("JSON array mixes objects and non-objects, so it is not one table "
+                         "of rows")
+    yield from table.to_batches(BATCH_ROWS)
+
+
+def _json_values(text: str) -> Iterator[object]:
+    """Every JSON value in `text`, one after another (JSON Lines, or pretty-printed values)."""
+    dec = json.JSONDecoder()
+    i, n = 0, len(text)
+    while True:
+        while i < n and (text[i].isspace() or text[i] == chr(0xFEFF)):  # blanks, BOM
+            i += 1
+        if i >= n:
+            return
+        value, i = dec.raw_decode(text, i)
+        yield value
+
+
+def _json_values_to_batches(path: Path) -> Iterator[pa.RecordBatch]:
+    """JSON Lines or a single JSON value. pyarrow's reader is used first; it has two failure
+    modes that are not the file's fault, so Python's own parser is used instead when pyarrow
+    (a) builds an array that fails validation (for example `{"a": [null, null]}` nested in
+    structs gives an index error on conversion) or (b) stops on a limit of its own (an object
+    longer than its block size). Files pyarrow says are empty stay empty."""
+    try:
+        with _open_text(path) as fh:
+            table = pajson.read_json(fh, read_options=pajson.ReadOptions(block_size=1 << 22))
+        table.validate(full=True)
+    except pa.ArrowInvalid as exc:
+        low = str(exc).lower()
+        if "empty json file" in low or "document is empty" in low:
+            raise
+        with _open_text(path) as fh:
+            text = fh.read().decode("utf-8")
+        yield from _rows_to_batches(list(_json_values(text)))
+        return
+    yield from table.to_batches(BATCH_ROWS)
 
 
 def _read_tabular(path: Path, split: SplitSource, f: SplitFile, file_no: int, plan: ScanPlan,
@@ -276,7 +323,7 @@ def iter_split(split: SplitSource, plan: ScanPlan, fetch: Callable[[SplitFile, P
                 yield chunk
         except GeneratorExit:
             raise
-        except Exception as exc:  # noqa: BLE001  corrupt or unreadable file: report, carry on
+        except Exception as exc:  # noqa: BLE001  a file that could not be read: report, carry on
             on_error(f, exc)
         finally:
             if local is not None:
