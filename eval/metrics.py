@@ -128,6 +128,27 @@ def drivers(recs: list[dict[str, Any]]) -> dict[str, int]:
     return dict(out)
 
 
+def posthoc_without_sources(recs: list[dict[str, Any]]) -> dict[str, Any]:
+    """POST-HOC, exploratory (chosen after seeing the test results, not part of the frozen
+    config): the same aggregation using only the card's own repo (README text and repo
+    licence files), ignoring stated sources such as GitHub repos, whose LICENSE often covers
+    code rather than data."""
+    out = []
+    for r in recs:
+        if not r.get("status") or "comparisons" not in r:
+            continue
+        own = [c["status"] for c in r["comparisons"]
+               if c["check"] == "licence.readme" or c["check"].startswith("licence.file:")]
+        state = (r.get("c1") or {}).get("state", "")
+        st = ("missing" if state == "missing" else "inconsistent" if "inconsistent" in own
+              else "consistent" if "consistent" in own else "unknown")
+        out.append(dict(r, status=st))
+    m = metrics(out)
+    return {k: m[k] for k in ("scored", "confusion", "decided", "agree", "agreement_decided",
+                              "agreement_decided_wilson95", "abstention", "kappa_decided",
+                              "inconsistent_precision_n", "inconsistent_recall_n")}
+
+
 def pick(by_conf: dict[str, list[dict[str, Any]]]) -> dict[str, Any]:
     """config.yml's selection rule: most agreeing rows; ties go to the Phase 3 default."""
     defaults = {"builtin": "builtin dice=0.90 contain=0.95", "scancode": "scancode min_score=90"}
@@ -168,6 +189,9 @@ def main(run: str) -> None:
         by_conf[r["config"]].append(r)
     out = {conf: metrics(recs) for conf, recs in sorted(by_conf.items())}
     result: dict[str, Any] = {"run": run, "configurations": out}
+    if run == "test":
+        result["posthoc_without_sources"] = {conf: posthoc_without_sources(recs)
+                                             for conf, recs in sorted(by_conf.items())}
     if run.endswith("grid"):
         result["selected"] = pick(by_conf)
     (RES / f"metrics-{run}.json").write_text(json.dumps(result, indent=1) + "\n", "utf-8")

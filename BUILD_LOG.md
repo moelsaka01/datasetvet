@@ -7,7 +7,7 @@ One entry per phase: the model and effort used, what was decided and why, what w
 | 1 Planning | Opus 5.5 | high | done 2026-11-19 |
 | 2 Core checks (no licences) | Sonnet 5.5 planned; run on Opus 5.5 | medium planned | done 2026-11-19 |
 | 3 Licence + provenance | Opus 5.5 | high | done 2026-11-19 |
-| 4 Accuracy eval + launch scan | Opus 5.5 | high | not started |
+| 4 Accuracy eval + launch scan | Opus 5.5 | high | done 2026-11-21 |
 | 5 Polish, Action, README, launch | Sonnet 5.5 | medium | not started |
 
 ---
@@ -230,3 +230,88 @@ The set: 5 datasets with licence mismatches recorded in the DPI data (`Data-Prov
 - A repository's LICENSE often covers code, not data (hotpot_qa; alpaca's `LICENSE` vs `DATA_LICENSE`). The report states both licences and that they differ; it does not say which covers the data. Worth counting in the Phase 4 disagreement audit.
 - Built-in matcher: no non-SPDX licences and no paraphrases ("research use only"). Its abstention rate against ScanCode's is a Phase 4 measurement.
 - Thresholds (built-in Dice 0.90 / containment 0.95; ScanCode 90) are untuned. Phase 4 tunes them on the dev split only.
+
+## Phase 4: accuracy evaluation and launch scan (2026-11-19 to 2026-11-21, Opus 5.5, high effort)
+
+Run in one Claude Code session (desktop app) on the owner's Windows 11 laptop, Python 3.12.10, Claude Pro plan. The owner said they were logged in with `huggingface-cli login`, but `huggingface_hub` found no token (no `HF_TOKEN`, no file at `~/.cache/huggingface/token`), so **every Hugging Face call was anonymous**. No `GITHUB_TOKEN`. Results, method and limits are in `RESULTS.md`. Commits: `5254aab` (part 1), `5c9076c` (part 2), `a3f5428` (faster fetching), and the final commit with the results. Nothing pushed.
+
+### Owner decisions (given at the start of Phase 4)
+
+| question | decision | where |
+|---|---|---|
+| SPDX licence texts (their licence is not stated) | **Ship no licence text.** Only list metadata and a derived fingerprint index, with a script that regenerates both from the official SPDX release | `tools/vendor_spdx.py`, `data/spdx_fingerprints.json.gz`; PLAN §4, §12 |
+| A question to SPDX | Draft a short GitHub issue; the owner posts it | `docs/drafts/spdx-license-list-data-issue.md` |
+| Launch scan | Top ~500 by downloads, resumable, rate-limit friendly, huge datasets sampled and labelled, run in batches with a usage check between them | `launch/` |
+| Faster fetching (asked mid-scan) | Combine a git pack and parallel downloads, **with an equivalence test first**; then commit it so the scan's config hash names a commit | `a3f5428` |
+
+### Built
+
+| task | files | state |
+|---|---|---|
+| SPDX: no texts shipped | `tools/vendor_spdx.py`, `data/spdx_licences.json.gz` (249 KB → 8.5 KB), `data/spdx_fingerprints.json.gz` (281 KB), `licences/matcher.py` | per group of identical texts: the multiset of 64-bit BLAKE2b hashes of its normalised word bigrams, delta-encoded against one shared table; no word stored. `--check` rebuilds both files byte for byte. Matcher scores unchanged (all matcher tests pass against the index); tests needing a real text read a git-ignored cache and skip without it |
+| 4.1 list + budget | `launch/freeze_list.py`, `launch/lists/top500-2026-11-19.json` | 500 datasets, each pinned to a sha; sizes known for 251 (291 TB of Parquet); 829 requests, 23 min |
+| 4.2 runner | `launch/run.py`, `launch/state.py` | SQLite state per (dataset, tier) with config hash; `--max`, `--batch`, `--retry-failed`, `--shard I/N`; Ctrl-C finishes the dataset in flight. Part 2: the config hash includes the git tree ids of `src/`, `launch/run.py`, `launch/state.py`, `pyproject.toml`, and the scan refuses a dirty tree |
+| 4.3 key | `eval/build_key.py`, `eval/dpi_licence_map.csv` (52 names), `eval/key/` | DPI `ce6662d`: 109 files, 3,718 entries, 3,492 with an HF repo, **792** unique repos (PLAN §8 gave 804 from the Phase 1 probe); 81 dropped (entries disagree), 3 dropped (no card licence recorded); 708 key rows; 371 for Q3 (239 consistent, 80 inconsistent, 52 missing) |
+| 4.4 revisions | `eval/revisions.py`, `tests/test_eval_revisions.py` | latest `main` commit at or before the DPI file's last change |
+| 4.5 dev + freeze | `eval/run.py`, `eval/config.yml`, tag `eval-config-v1` (`5254aab`, local) | built-in: all 8 grid points gave 79/116, kept 0.90 / 0.95. ScanCode: ≥ 50 gave 76 (≥ 90: 66), so 50. `eval/run.py` refuses the test split unless config, runner and `src/` match the tag |
+| 4.6 test + metrics | `eval/metrics.py`, `eval/results/` | below; the post-hoc "own repo only" view is labelled exploratory in the code and in RESULTS |
+| 4.7 launch scan | `launch/results/`, `launch/summarize.py`, `launch/check_listing_cap.py` | below |
+| Faster fetching | `hubs/gitpack.py`, `checks/health/fetching.py`, `http.py`, `--no-git-fetch`, `--fetch-workers` | below |
+
+**Checks** (final commit): `pytest` 320 passed and 3 skipped (ScanCode-only); `ruff check src tests tools eval launch` clean; `mypy src` clean, and `launch/summarize.py`, `launch/check_listing_cap.py` clean.
+
+### Accuracy evaluation (test split, 245 rows scored)
+
+| | built-in | ScanCode (≥ 50) |
+|---|---|---|
+| agreement, decided rows | 76.0% (139/183; 69.3–81.6%) | 74.9% (131/175; 67.9–80.7%) |
+| abstention | 25.3% | 28.6% |
+| kappa | 0.53 | 0.52 |
+| `inconsistent` precision / recall | 37% / 28% | 34% / 26% |
+
+- The built-in matcher is at least as close to the DPI key as ScanCode, with fewer abstentions; the intervals overlap. Skipping the 774 MB extra costs nothing measurable on this key.
+- Main disagreement: a source repo's LICENSE covers its code, the DPI's expert set records the data licence (27 "expected consistent → ours inconsistent" for built-in; 33 of our `inconsistent` come from a GitHub source).
+- Q1 card parsing 91.8% (225/245); Q2 GitHub source licences 45/45.
+- 8 test rows excluded: the repo's history now needs a login (HTTP 401).
+- The 30-row disagreement samples per scanner are written; **not labelled yet** (owner).
+
+### Launch scan
+
+- **Tier A** (2026-11-19, `5254aab`, config hash `d0b085a50bef68aa`, before code trees were hashed): 499 of 500; 2,921 requests, 2,937 s. Card licence present in 299; of those 37 have an `inconsistent` comparison.
+- **Tier B, first attempt** (2026-11-19, config hash `d1d12f8a1d35321e`): 200 MB full-scan limit measured about 4 MB/s (over 4 hours for the list), so the limits were halved after 7 datasets: **100 MB full scan, 10,000-row sample, 100 MB download cap, seed 0**. Three shards in parallel. A timezone-aware timestamp failed without `tzdata` on Windows (fixed in `pyproject.toml`, test in `test_rowhash.py`). The run was stopped after the owner asked about speed: one repo of 5,410 small files had taken 55 minutes, one HTTP request per file, no 429s.
+- **Tier B, final** (2026-11-20 14:34 to 2026-11-21 06:35, `a3f5428`, config hash `2472d09329f26eb6`): 3 rounds of up to 60 per shard, usage checked before each round (5-hour window at 18% or less), then one retry. 494 done, 6 failed; 392 with data read (195 full, 197 sampled), 102 `not checked`; 602,535 requests, 75,801 s across 3 processes; no 429.
+- Findings, counts and intervals: RESULTS §2.
+
+### Faster fetching: what was measured
+
+- **Cause of the slowness:** serial per-file latency (0.3–1 s), not rate limits; plus `http.py` spaced requests to the Hub's download CDN (`*.hf.co`) 1 s apart like any non-API host. The normal CLI had the same spacing.
+- **Ideas tried and dropped:**
+  - Asking the Hub's git server for many explicit blob ids fails above about 10 ("fatal: expected 'packfile'").
+  - `git ls-tree -l` in a partial clone fetches every blob lazily; `GIT_NO_LAZY_FETCH=1` and `cat-file --batch-all-objects` avoid it.
+  - The tree API pages 1,000 entries at a time; `siblings` with `blobs=true` gives blob ids and sizes in one call.
+  - Skipping duplicate files by blob id was dropped: it would make reports depend on the fetch route.
+- **Equivalence** (`launch/fetch_equivalence.py`, 40 datasets: the 12 slowest and 28 random): 39 reports identical field by field to the one-file-at-a-time route at the same revision; the 40th differs only in its Parquet-conversion commit, which HF rebuilt on 2026-11-20 (the old route shows the same change). Time 11,453 s → 1,952 s; 12 slowest 10,639 → 1,579 s; `gradio/frontend` 3,302 s → 72 s (10,822 → 2 requests, 5,410 files from a 1.77 MB pack).
+- **In the final Tier B:** the git pack served 49,975 files for 22 datasets; 301,441 files came over HTTP, up to 8 at a time.
+
+### Problems found and fixed
+
+1. Fetch-ahead could pass the download cap by one file (the file being read was not counted as in flight). Caught by a unit test, fixed before the equivalence run.
+2. `launch/state.py`: parallel shards needed a SQLite busy timeout.
+3. `tzdata` on Windows (above).
+4. The launch scan could run on uncommitted code, so its config hash did not name a commit. Fixed in part 2 (code trees in the hash, dirty tree refused).
+5. `launch/summarize.py` now records the config hash(es) behind each tier's rows, timing, scan source and fetch-route counts, and marks cut-off listings.
+
+### Problems found and not fixed (they need a code change, which would re-run the scan)
+
+1. **The Hub's `siblings` list stops at 100,000 entries**, and the HF adapter takes the file list from it. 69 of the 169 datasets checked have exactly 100,000. 64 Tier B scans read a partial list (18 labelled "Full scan"); 8 Tier A datasets got 157 false "missing file" link results. The four slowest datasets (1.9–4.2 h each, 59% of Tier B time) are among them. Fix: page through the tree API when `siblings` has 100,000 entries. RESULTS gives every share with and without them.
+2. **"corrupt" overstates what happens:** 47 datasets had a file that could not be read; 38 are `.json` files that are not row tables (tokenizers, configs), 8 hit a datasetvet bug (`AttributeError` on a JSON array of non-objects), 1 a 404 for a listed file. 0 of 230 Parquet-conversion scans. The check needs another name and should skip non-data JSON.
+3. `ValueError` on nanosecond timestamps that do not fit a Python `datetime` (1 dataset); `ArrowIndexError` (2 datasets, not diagnosed).
+4. `SCANCODE_MIN_SCORE` in `licences/scanner.py` is still 90; the frozen eval config uses 50. Changing the default is a release decision (the eval tag pins `src/`).
+
+### Not done / open
+
+- The owner's labels for the 60 disagreement rows (`eval/results/disagreements-*.csv`).
+- Post the SPDX issue (`docs/drafts/spdx-license-list-data-issue.md`). The list metadata still comes from the unlicensed source.
+- **The old licence texts are still in git history** (Phase 3 commit `3a6b650`, `data/spdx_licences.json.gz` at 249 KB). Rewrite history before the first push if they must not be published.
+- No HF token was found: `hf auth login` (from the venv) would double the API allowance and read gated cards.
+- CI (both jobs) not run; nothing pushed. The tag `eval-config-v1` is local.

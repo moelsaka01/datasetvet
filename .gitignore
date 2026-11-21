@@ -23,5 +23,6 @@ eval/cache/
 
 # Phase 4 run logs and state
 launch/*.log
+launch/*.err
 launch/state.sqlite-*
 launch/results/reports/

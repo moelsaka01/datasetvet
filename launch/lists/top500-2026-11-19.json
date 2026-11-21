@@ -1,0 +1,6611 @@
+{
+ "meta": {
+  "frozen_at": "2026-11-19T21:11:11+0400",
+  "n": 500,
+  "skipped_while_listing": {
+   "private": 0,
+   "disabled": 0
+  },
+  "hf_token": false,
+  "requests": 829,
+  "seconds": 1392,
+  "sizes_known": 251,
+  "bytes_parquet_known_total": 291417324091072
+ },
+ "datasets": [
+  {
+   "rank": 1,
+   "id": "huggingface/documentation-images",
+   "sha": "4fc113021e9a33f1af39ba3292e901b54bf208db",
+   "downloads_30d": 4238148,
+   "gated": false,
+   "license_tags": [
+    "license:cc-by-nc-sa-4.0"
+   ],
+   "bytes_parquet": 15150,
+   "bytes_original": null,
+   "rows": 73,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 2,
+   "id": "neashton/windsorml",
+   "sha": "8a6ca32ae22c94f54df2186d1b0ccf9662a294c2",
+   "downloads_30d": 2985969,
+   "gated": false,
+   "license_tags": [
+    "license:cc-by-sa-4.0"
+   ],
+   "bytes_parquet": 26712720,
+   "bytes_original": null,
+   "rows": 192854,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 3,
+   "id": "tropos-labs/eigen-face-dataset-256",
+   "sha": "341f2d0097d3a26ba4bd9e82dc8dac03b9a75f3d",
+   "downloads_30d": 2933955,
+   "gated": false,
+   "license_tags": [],
+   "size_error": "HTTP 501 Job has been terminated due to a temporary spike in resource usage and may be restarted later."
+  },
+  {
+   "rank": 4,
+   "id": "allenai/objaverse",
+   "sha": "556637099bf4fa79ea7b239d0d9c328b8a2e9ac8",
+   "downloads_30d": 2366772,
+   "gated": false,
+   "license_tags": [
+    "license:odc-by"
+   ],
+   "size_error": "HTTP 500 The server is busier than usual and the response is not ready yet. Please retry later."
+  },
+  {
+   "rank": 5,
+   "id": "Salesforce/wikitext",
+   "sha": "b08601e04326c79dfdd32d625aee71d232d685c3",
+   "downloads_30d": 2319928,
+   "gated": false,
+   "license_tags": [
+    "license:cc-by-sa-3.0",
+    "license:gfdl"
+   ],
+   "bytes_parquet": 643678879,
+   "bytes_original": 643678879,
+   "rows": 3708608,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 6,
+   "id": "agibot-world/AgiBotWorld2026",
+   "sha": "95b159a10305a0385f369aba5d4b16242526d17b",
+   "downloads_30d": 2068299,
+   "gated": false,
+   "license_tags": [
+    "license:cc-by-nc-sa-4.0"
+   ],
+   "bytes_parquet": 158840014,
+   "bytes_original": null,
+   "rows": 736502,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 7,
+   "id": "IaLoverSpaghetti/LocaIAinHTML",
+   "sha": "df26d77f9a1001b1e863d57574cc2031d611d9db",
+   "downloads_30d": 2027662,
+   "gated": false,
+   "license_tags": [],
+   "size_error": "HTTP 500 No (supported) data files found in IaLoverSpaghetti/LocaIAinHTML"
+  },
+  {
+   "rank": 8,
+   "id": "nicoboou/IDRCell100k",
+   "sha": "ba8b95954a27cac131902c2154083a5f02e14b8e",
+   "downloads_30d": 1749475,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 39057409,
+   "bytes_original": null,
+   "rows": 308899,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 9,
+   "id": "nvidia/simready-assets",
+   "sha": "21b045a878e13d4ca922f0f8ebc2ff1e84bb06d4",
+   "downloads_30d": 1713377,
+   "gated": false,
+   "license_tags": [
+    "license:cc-by-4.0"
+   ],
+   "size_error": "HTTP 501 Not supported: dataset viewer is disabled in nvidia/simready-assets configuration."
+  },
+  {
+   "rank": 10,
+   "id": "3dcodeverse/3dcodeverse-2m",
+   "sha": "1d3935d94760922ef7a55f4a1a3e19a3b90ec702",
+   "downloads_30d": 1589350,
+   "gated": false,
+   "license_tags": [
+    "license:cc-by-nc-sa-4.0"
+   ],
+   "bytes_parquet": 0,
+   "bytes_original": 0,
+   "rows": 0,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 11,
+   "id": "DAGroup-PKU/Open-HumanWAM-50K",
+   "sha": "9da483ca2e22fcd936e9f92da91806cf4de7a899",
+   "downloads_30d": 1528907,
+   "gated": "auto",
+   "license_tags": [
+    "license:apache-2.0"
+   ],
+   "size_error": "HTTP 401 The dataset does not exist, or is not accessible without authentication (private or gated). Please check the spelling of the dataset name or retry with authenti"
+  },
+  {
+   "rank": 12,
+   "id": "OPR-Project/OxfordRobotCar_OpenPlaceRecognition",
+   "sha": "14ac6ad1df250dd70efab18c097a731d4cb5a554",
+   "downloads_30d": 1450844,
+   "gated": false,
+   "license_tags": [
+    "license:cc-by-nc-sa-4.0"
+   ],
+   "size_error": "HTTP 500 Cannot get the config names for the dataset."
+  },
+  {
+   "rank": 13,
+   "id": "xlangai/ubuntu_osworld_file_cache",
+   "sha": "e28460ae734cb1b33901d232cef8747c20ccd677",
+   "downloads_30d": 1376641,
+   "gated": false,
+   "license_tags": [
+    "license:apache-2.0"
+   ],
+   "size_error": "HTTP 500 No (supported) data files found in xlangai/ubuntu_osworld_file_cache"
+  },
+  {
+   "rank": 14,
+   "id": "ayuo/hd_tmp",
+   "sha": "4cbb9c1101b0ab08195cd0a0f7790526918169fa",
+   "downloads_30d": 1343798,
+   "gated": false,
+   "license_tags": [],
+   "size_error": "HTTP 500 No (supported) data files found in ayuo/hd_tmp"
+  },
+  {
+   "rank": 15,
+   "id": "sjkhfuk1/foffo",
+   "sha": "98de457aee977b962bd7d12808b38f17c869d34c",
+   "downloads_30d": 1331654,
+   "gated": false,
+   "license_tags": [],
+   "size_error": "HTTP 500 No (supported) data files found in sjkhfuk1/foffo"
+  },
+  {
+   "rank": 16,
+   "id": "openai/gsm8k",
+   "sha": "740312add88f781978c0658806c59bc2815b9866",
+   "downloads_30d": 1217166,
+   "gated": false,
+   "license_tags": [
+    "license:mit"
+   ],
+   "bytes_parquet": 5889887,
+   "bytes_original": 5889887,
+   "rows": 17584,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 17,
+   "id": "lerobot/FineART",
+   "sha": "15746b76ddc21ffd38d73888fefe2e7a1496385b",
+   "downloads_30d": 1164501,
+   "gated": false,
+   "license_tags": [
+    "license:cc-by-4.0"
+   ],
+   "bytes_parquet": 0,
+   "bytes_original": 0,
+   "rows": 0,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 18,
+   "id": "ryanmarten/OpenThoughts-1k-sample",
+   "sha": "a82400884621626d41bef89b7604f8054e7e00e0",
+   "downloads_30d": 1136504,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 27302269,
+   "bytes_original": 27302269,
+   "rows": 2000,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 19,
+   "id": "tasl-lab/uniocc",
+   "sha": "e81775b36e376f591a1145ca054b72fd541a67eb",
+   "downloads_30d": 1098974,
+   "gated": false,
+   "license_tags": [
+    "license:mit"
+   ],
+   "bytes_parquet": 0,
+   "bytes_original": 0,
+   "rows": 0,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 20,
+   "id": "nvidia/PhysicalAI-Robotics-GR00T-X-Embodiment-Sim",
+   "sha": "ea7ac0b68f87da62f1e726771bba0fe74300802f",
+   "downloads_30d": 1051472,
+   "gated": false,
+   "license_tags": [
+    "license:cc-by-4.0"
+   ],
+   "bytes_parquet": 0,
+   "bytes_original": 0,
+   "rows": 0,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 21,
+   "id": "filapro/cad-recode-v1.5",
+   "sha": "4696421935de9e9a71f1e092d8eee8b341d04619",
+   "downloads_30d": 1036052,
+   "gated": false,
+   "license_tags": [
+    "license:cc-by-nc-4.0"
+   ],
+   "size_error": "HTTP 500 Cannot get the config names for the dataset."
+  },
+  {
+   "rank": 22,
+   "id": "wei82/precancer-omics-data",
+   "sha": "bbace4982e1035816e5e92571bcb21d45ef3dc89",
+   "downloads_30d": 986185,
+   "gated": false,
+   "license_tags": [
+    "license:other"
+   ],
+   "size_error": "HTTP 501 Not supported: dataset viewer is disabled in wei82/precancer-omics-data configuration."
+  },
+  {
+   "rank": 23,
+   "id": "xlangai/osworld_v2_assets",
+   "sha": "3a140a3df8f351b22bb5b9526846f078e738777f",
+   "downloads_30d": 884185,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 55513,
+   "bytes_original": null,
+   "rows": 345,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 24,
+   "id": "Osamap3/PSP_ph",
+   "sha": "64687265fd2deaaf51c0c4c8655cdd267e4ba7dd",
+   "downloads_30d": 866165,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 566029,
+   "bytes_original": null,
+   "rows": 6112,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 25,
+   "id": "Drakesuper/rodridre",
+   "sha": "7faff65ced45b9291654a05d4d6031831ee773af",
+   "downloads_30d": 809374,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 14795,
+   "bytes_original": null,
+   "rows": 132,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 26,
+   "id": "XDOF/ABC-130k",
+   "sha": "d4c79f5aecb902f3157e6139661cb1b0b2a36689",
+   "downloads_30d": 806536,
+   "gated": "auto",
+   "license_tags": [
+    "license:apache-2.0"
+   ],
+   "size_error": "HTTP 401 The dataset does not exist, or is not accessible without authentication (private or gated). Please check the spelling of the dataset name or retry with authenti"
+  },
+  {
+   "rank": 27,
+   "id": "Dagonulca/figofigofigofigo",
+   "sha": "a0e7b0f3ff20377e0ef1234f4ac8912a0af6bcbf",
+   "downloads_30d": 803007,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 33224,
+   "bytes_original": null,
+   "rows": 293,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 28,
+   "id": "allenai/c4",
+   "sha": "1588ec454efa1a09f29cd18ddd04fe05fc8653a2",
+   "downloads_30d": 774294,
+   "gated": false,
+   "license_tags": [
+    "license:odc-by"
+   ],
+   "bytes_parquet": 235747270962,
+   "bytes_original": null,
+   "rows": 114005516,
+   "rows_estimated": 10353901556,
+   "size_partial": true
+  },
+  {
+   "rank": 29,
+   "id": "roisincrtai/ptb-xl-1.0.3",
+   "sha": "8caff550132c41fe8cf8a9bcf9b2d0300263b725",
+   "downloads_30d": 742419,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 6200877,
+   "bytes_original": null,
+   "rows": 87858,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 30,
+   "id": "challenge-2026/challenge_data",
+   "sha": "3ea5d89d6ad6025841c736ecab6d7ab931fd87cf",
+   "downloads_30d": 712712,
+   "gated": false,
+   "license_tags": [
+    "license:cc-by-sa-4.0"
+   ],
+   "bytes_parquet": 0,
+   "bytes_original": 0,
+   "rows": 0,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 31,
+   "id": "HennyPr/ps2_hf2",
+   "sha": "6953042499b19e06370692840da6a2b22550a35b",
+   "downloads_30d": 698709,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 926,
+   "bytes_original": null,
+   "rows": 1,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 32,
+   "id": "evaleval/EEE_datastore",
+   "sha": "a2812b92e2c5e3fe10b5146bba0f0a123e9a340c",
+   "downloads_30d": 630637,
+   "gated": false,
+   "license_tags": [
+    "license:mit"
+   ],
+   "bytes_parquet": 1216889,
+   "bytes_original": 1216889,
+   "rows": 8234,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 33,
+   "id": "carlotabronze/sm-stuff",
+   "sha": "009a2baf2184546519b82be3b99910a52106c958",
+   "downloads_30d": 615373,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 0,
+   "bytes_original": 0,
+   "rows": 0,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 34,
+   "id": "world-igr-plum/regions",
+   "sha": "f15723da1af8e80ab4eeff9c8d92d030875e981e",
+   "downloads_30d": 603464,
+   "gated": false,
+   "license_tags": [
+    "license:mit"
+   ],
+   "bytes_parquet": 0,
+   "bytes_original": 0,
+   "rows": 0,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 35,
+   "id": "huggingface/DEH-image-scan-data",
+   "sha": "efac82456c5aaa4572d0faadd438f1da1777a1cd",
+   "downloads_30d": 591445,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 1415,
+   "bytes_original": null,
+   "rows": 6,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 36,
+   "id": "visionhdstream/data-vision-01",
+   "sha": "9565885eee63334674206b8c6c61191e12b29797",
+   "downloads_30d": 590650,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 24090,
+   "bytes_original": null,
+   "rows": 222,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 37,
+   "id": "cais/mmlu",
+   "sha": "c30699e8356da336a370243923dbaf21066bb9fe",
+   "downloads_30d": 581420,
+   "gated": false,
+   "license_tags": [
+    "license:mit"
+   ],
+   "bytes_parquet": 103650732,
+   "bytes_original": 103650732,
+   "rows": 231400,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 38,
+   "id": "banned-historical-archives/banned-historical-archives",
+   "sha": "7ee825405a889ac77b0d404fac868f9813da0c83",
+   "downloads_30d": 559676,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 139404,
+   "bytes_original": null,
+   "rows": 1,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 39,
+   "id": "pulmo/ncbi-genbank-complete",
+   "sha": "7f2fd793a45f5013a81c7890aed7c83e5c22ff1a",
+   "downloads_30d": 559493,
+   "gated": false,
+   "license_tags": [
+    "license:apache-2.0"
+   ],
+   "bytes_parquet": 0,
+   "bytes_original": 0,
+   "rows": 0,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 40,
+   "id": "allenai/ai2_arc",
+   "sha": "210d026faf9955653af8916fad021475a3f00453",
+   "downloads_30d": 533294,
+   "gated": false,
+   "license_tags": [
+    "license:cc-by-sa-4.0"
+   ],
+   "bytes_parquet": 1212395,
+   "bytes_original": 1212395,
+   "rows": 7787,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 41,
+   "id": "omegalabsinc/omega-voice",
+   "sha": "d9523560cfce580a2abfb76fbf7abd75c9d561d9",
+   "downloads_30d": 521703,
+   "gated": false,
+   "license_tags": [
+    "license:mit"
+   ],
+   "bytes_parquet": 0,
+   "bytes_original": 0,
+   "rows": 0,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 42,
+   "id": "Sharpa-Robotics/SharpaDex-v1.0",
+   "sha": "549f933019c4bbe0c7fe3788c8a1a1005b88d9ef",
+   "downloads_30d": 521634,
+   "gated": false,
+   "license_tags": [
+    "license:cc-by-nc-4.0"
+   ],
+   "bytes_parquet": 43803689,
+   "bytes_original": null,
+   "rows": 185855,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 43,
+   "id": "ieasybooks-org/prophet-mosque-library",
+   "sha": "fc5372ff6258e20d51c4ddf0b4326695675ef12c",
+   "downloads_30d": 520596,
+   "gated": false,
+   "license_tags": [
+    "license:mit"
+   ],
+   "bytes_parquet": 14800346,
+   "bytes_original": 51575132,
+   "rows": 48718,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 44,
+   "id": "mvp-lab/LLaVA-OneVision-1.5-Mid-Training-85M",
+   "sha": "6ca51e61173b24e5b80958a5ed1383aad2981fd8",
+   "downloads_30d": 505304,
+   "gated": false,
+   "license_tags": [
+    "license:apache-2.0"
+   ],
+   "bytes_parquet": 46662982783932,
+   "bytes_original": 46662982783932,
+   "rows": 91493097,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 45,
+   "id": "Maximilians/ps2_hf1",
+   "sha": "a72377e27aa8b3adf8fdad68bb14b10c4f5a5b70",
+   "downloads_30d": 498244,
+   "gated": false,
+   "license_tags": [],
+   "size_error": "HTTP 500 Cannot get the config names for the dataset."
+  },
+  {
+   "rank": 46,
+   "id": "k9cli/video-vec2wav2-tokenizer",
+   "sha": "c9052ed00574099c1e109380abf296a6d3576e90",
+   "downloads_30d": 497948,
+   "gated": false,
+   "license_tags": [],
+   "size_error": "HTTP 501 Job has been terminated due to a temporary spike in resource usage and may be restarted later."
+  },
+  {
+   "rank": 47,
+   "id": "adscli/copycheck-videos",
+   "sha": "2c655985a4bada6f36931b4b7748aa694b608022",
+   "downloads_30d": 493097,
+   "gated": false,
+   "license_tags": [
+    "license:other"
+   ],
+   "bytes_parquet": 0,
+   "bytes_original": 0,
+   "rows": 0,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 48,
+   "id": "Salesforce/GiftEvalPretrain",
+   "sha": "6830b624de7ed2b3d3e5b85bb6959d81dcc5d874",
+   "downloads_30d": 486592,
+   "gated": false,
+   "license_tags": [
+    "license:apache-2.0"
+   ],
+   "bytes_parquet": 0,
+   "bytes_original": 0,
+   "rows": 0,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 49,
+   "id": "sunblaze-ucb/cybergym",
+   "sha": "bde190ded494e52bc684b66073b436c9d992c7c6",
+   "downloads_30d": 481074,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 318220,
+   "bytes_original": null,
+   "rows": 1507,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 50,
+   "id": "miniiohinkimsavol/copyright-detection-videos",
+   "sha": "99d93e586a6e2e0d0b644b1a9160556e0e75c175",
+   "downloads_30d": 475095,
+   "gated": false,
+   "license_tags": [
+    "license:other"
+   ],
+   "bytes_parquet": 0,
+   "bytes_original": 0,
+   "rows": 0,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 51,
+   "id": "ksolovev/fine-news",
+   "sha": "7a841090e69f3c58a9e04b0c39213d879af68e8a",
+   "downloads_30d": 475026,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 0,
+   "bytes_original": 0,
+   "rows": 0,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 52,
+   "id": "hf-doc-build/doc-build-dev",
+   "sha": "494fce0367580237ed1073a60ac801abb072f521",
+   "downloads_30d": 469836,
+   "gated": false,
+   "license_tags": [
+    "license:mit"
+   ],
+   "size_error": "HTTP 501 Not supported: dataset viewer is disabled in hf-doc-build/doc-build-dev configuration."
+  },
+  {
+   "rank": 53,
+   "id": "nyu-mll/glue",
+   "sha": "bcdcba79d07bc864c1c254ccfcedcce55bcc9a8c",
+   "downloads_30d": 467452,
+   "gated": false,
+   "license_tags": [
+    "license:other"
+   ],
+   "bytes_parquet": 162249633,
+   "bytes_original": 162249633,
+   "rows": 1485043,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 54,
+   "id": "helenqu/GenPairs",
+   "sha": "7786b47f609cdf85d33533c8dace13093d8eb342",
+   "downloads_30d": 463489,
+   "gated": false,
+   "license_tags": [
+    "license:mit"
+   ],
+   "bytes_parquet": 0,
+   "bytes_original": 0,
+   "rows": 0,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 55,
+   "id": "k9cli/video-vec2wav2-tokenizer-2",
+   "sha": "1a57c4926005dc9914980ee05ee2ead62ccb5f8f",
+   "downloads_30d": 453337,
+   "gated": false,
+   "license_tags": [],
+   "size_error": "HTTP 500 Cannot get the config names for the dataset."
+  },
+  {
+   "rank": 56,
+   "id": "m-a-p/FineFineWeb",
+   "sha": "7fd92dc825a75cbff271a5a52eea0eda91a2c112",
+   "downloads_30d": 450758,
+   "gated": false,
+   "license_tags": [
+    "license:apache-2.0"
+   ],
+   "bytes_parquet": 2880985782,
+   "bytes_original": null,
+   "rows": 1646140,
+   "rows_estimated": 4884567598,
+   "size_partial": true
+  },
+  {
+   "rank": 57,
+   "id": "epfml/FineWeb-HQ",
+   "sha": "e58199cdd52438d94405df1a4d8630cc5f13bf84",
+   "downloads_30d": 437700,
+   "gated": false,
+   "license_tags": [
+    "license:odc-by"
+   ],
+   "bytes_parquet": 15838798067157,
+   "bytes_original": 15838798067157,
+   "rows": 2445786576,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 58,
+   "id": "Kthera/pesoz",
+   "sha": "bbee2cd560d1661ab98cc51b1dc6c952586a7e2c",
+   "downloads_30d": 432779,
+   "gated": false,
+   "license_tags": [],
+   "size_error": "HTTP 500 Cannot get the config names for the dataset."
+  },
+  {
+   "rank": 59,
+   "id": "k9cli/video-vec2wav2-tokenizer-3",
+   "sha": "24726382854139720b245c45ca4e3330beed7f17",
+   "downloads_30d": 431870,
+   "gated": false,
+   "license_tags": [],
+   "size_error": "HTTP 500 No (supported) data files found in k9cli/video-vec2wav2-tokenizer-3"
+  },
+  {
+   "rank": 60,
+   "id": "gradio/frontend",
+   "sha": "70aade6a93402910af6db9f21a7bce36457f4701",
+   "downloads_30d": 428731,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 0,
+   "bytes_original": 0,
+   "rows": 0,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 61,
+   "id": "HuggingFaceFW/fineweb-edu",
+   "sha": "87f09149ef4734204d70ed1d046ddc9ca3f2b8f9",
+   "downloads_30d": 423945,
+   "gated": false,
+   "license_tags": [
+    "license:odc-by"
+   ],
+   "bytes_parquet": 10358470137499,
+   "bytes_original": 10358470137499,
+   "rows": 3496736741,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 62,
+   "id": "liwu/MNBVC",
+   "sha": "c153d877b4af9c66026ee6fa4eefbc29dd8c11b0",
+   "downloads_30d": 419604,
+   "gated": false,
+   "license_tags": [
+    "license:mit"
+   ],
+   "size_error": "HTTP 500 Cannot get the config names for the dataset."
+  },
+  {
+   "rank": 63,
+   "id": "TIGER-Lab/MMLU-Pro",
+   "sha": "b189ec765aa7ed75c8acfea42df31fdae71f97be",
+   "downloads_30d": 413586,
+   "gated": false,
+   "license_tags": [
+    "license:mit"
+   ],
+   "bytes_parquet": 4187042,
+   "bytes_original": 4187042,
+   "rows": 12102,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 64,
+   "id": "Tuxifan/UbuntuIRC",
+   "sha": "2728ed347f13143f836b56332055651b77890d69",
+   "downloads_30d": 410832,
+   "gated": false,
+   "license_tags": [
+    "license:cc0-1.0"
+   ],
+   "bytes_parquet": 57757028,
+   "bytes_original": null,
+   "rows": 1215792,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 65,
+   "id": "hf-doc-build/doc-build",
+   "sha": "583186106cf4a1e3171de4f64bcbce41a2a93563",
+   "downloads_30d": 407644,
+   "gated": false,
+   "license_tags": [
+    "license:mit"
+   ],
+   "size_error": "HTTP 501 Not supported: dataset viewer is disabled in hf-doc-build/doc-build configuration."
+  },
+  {
+   "rank": 66,
+   "id": "numix/balises-openwindmap-pyrenees",
+   "sha": "17d3218d4cd01132bcaa4c111f609b12cd33cf57",
+   "downloads_30d": 399780,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 0,
+   "bytes_original": 0,
+   "rows": 0,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 67,
+   "id": "McGill-NLP/WebLINX-full",
+   "sha": "36ef9f79b43df50e25b7f3b68e5c9f6ccf4160e8",
+   "downloads_30d": 399496,
+   "gated": false,
+   "license_tags": [],
+   "size_error": "HTTP 500 Cannot get the config names for the dataset."
+  },
+  {
+   "rank": 68,
+   "id": "lioooox/T2I-CoReBench-Images",
+   "sha": "2350e0f664d849626df392cb93954b66019c18ee",
+   "downloads_30d": 396987,
+   "gated": false,
+   "license_tags": [
+    "license:apache-2.0"
+   ],
+   "bytes_parquet": 5071727079,
+   "bytes_original": null,
+   "rows": 3700,
+   "rows_estimated": 13428,
+   "size_partial": true
+  },
+  {
+   "rank": 69,
+   "id": "meloqiao/us-stock-data",
+   "sha": "1f9ff6cfeadbbcb5870177f8d6e22f460e1db8c4",
+   "downloads_30d": 380233,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 9392278,
+   "bytes_original": 9392278,
+   "rows": 209802,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 70,
+   "id": "assassinlike/everything132",
+   "sha": "ad81f0e5bddcefa1fb3138d1c11cf3c54fdb6bc1",
+   "downloads_30d": 379753,
+   "gated": false,
+   "license_tags": [],
+   "size_error": "HTTP 501 Job has been terminated due to a temporary spike in resource usage and may be restarted later."
+  },
+  {
+   "rank": 71,
+   "id": "siril-spcc/gaia",
+   "sha": "bad27a59dfa8058e3236955195579d9c77c654a6",
+   "downloads_30d": 373638,
+   "gated": false,
+   "license_tags": [
+    "license:gpl-3.0"
+   ],
+   "size_error": "HTTP 500 No (supported) data files found in siril-spcc/gaia"
+  },
+  {
+   "rank": 72,
+   "id": "VoiceOfML/VOMEBOOK",
+   "sha": "e6bc20cfec1b874ac75e83e53120c50735b8b71e",
+   "downloads_30d": 373532,
+   "gated": false,
+   "license_tags": [
+    "license:gpl-3.0"
+   ],
+   "bytes_parquet": 11866197,
+   "bytes_original": null,
+   "rows": 47488,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 73,
+   "id": "ccoffee20/flatpak",
+   "sha": "4113e96bc2e3b52e180ae8eae0fb395a1876d95d",
+   "downloads_30d": 369200,
+   "gated": false,
+   "license_tags": [],
+   "size_error": "HTTP 500 No (supported) data files found in ccoffee20/flatpak"
+  },
+  {
+   "rank": 74,
+   "id": "agents-course/course-images",
+   "sha": "d500ca088f407051ab7a1ef0789bdee1d2d01a3f",
+   "downloads_30d": 368212,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 1090407,
+   "bytes_original": 1090865,
+   "rows": 2,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 75,
+   "id": "YiboZhang2001/TexVerse",
+   "sha": "5f1f5a1f8a6c7e63feafaf87c238fd8ce459aafc",
+   "downloads_30d": 365277,
+   "gated": false,
+   "license_tags": [
+    "license:odc-by"
+   ],
+   "bytes_parquet": 0,
+   "bytes_original": 0,
+   "rows": 0,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 76,
+   "id": "Chelsea707/arxiv-cs-2020-2025-pdfs",
+   "sha": "94aa2a47fe14d63c36d48e9932cccac925678cfd",
+   "downloads_30d": 363742,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 0,
+   "bytes_original": 0,
+   "rows": 0,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 77,
+   "id": "HuggingFaceFW/fineweb",
+   "sha": "9bb295ddab0e05d785b879661af7260fed5140fc",
+   "downloads_30d": 361078,
+   "gated": false,
+   "license_tags": [
+    "license:odc-by"
+   ],
+   "bytes_parquet": 108230522701685,
+   "bytes_original": 108230522701685,
+   "rows": 52453695892,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 78,
+   "id": "RoboDojo-Benchmark/RoboDojo",
+   "sha": "1127bda94f172d757386945af3eb3a6754d1a4e6",
+   "downloads_30d": 356370,
+   "gated": false,
+   "license_tags": [
+    "license:apache-2.0"
+   ],
+   "size_error": "HTTP 500 Couldn't infer the same data file format for all splits. Got {NamedSplit('train'): ('json', {}), NamedSplit('test'): ('imagefolder', {})}"
+  },
+  {
+   "rank": 79,
+   "id": "TGMR/one_pass_ingestion",
+   "sha": "c5c68751ea0be2d6ac0d44b3dd8489a43404012a",
+   "downloads_30d": 356030,
+   "gated": false,
+   "license_tags": [],
+   "size_error": "HTTP 501 Job has been terminated due to a temporary spike in resource usage and may be restarted later."
+  },
+  {
+   "rank": 80,
+   "id": "huggingface/badges",
+   "sha": "05b1d96517868a58a66174409a84b497c413a1bd",
+   "downloads_30d": 347817,
+   "gated": false,
+   "license_tags": [
+    "license:mit"
+   ],
+   "size_error": "HTTP 500 No (supported) data files found in huggingface/badges"
+  },
+  {
+   "rank": 81,
+   "id": "inclusionAI/OpenAoE-2000h",
+   "sha": "82dfe37fec2931901a6e4cd1ad2624a9a0b16182",
+   "downloads_30d": 347280,
+   "gated": false,
+   "license_tags": [
+    "license:other"
+   ],
+   "bytes_parquet": 0,
+   "bytes_original": 0,
+   "rows": 0,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 82,
+   "id": "shash42/forecast-news",
+   "sha": "d0aac8c2f01c20f696806ef1f1c64af68bcdaff8",
+   "downloads_30d": 347054,
+   "gated": false,
+   "license_tags": [
+    "license:apache-2.0"
+   ],
+   "bytes_parquet": 2953996767,
+   "bytes_original": null,
+   "rows": 2589357,
+   "rows_estimated": 49533649,
+   "size_partial": true
+  },
+  {
+   "rank": 83,
+   "id": "Emmyc2/psp",
+   "sha": "3b8f1728eb8cb532d5d246bbf5c4ba1747bbaa82",
+   "downloads_30d": 346609,
+   "gated": false,
+   "license_tags": [],
+   "size_error": "HTTP 500 No (supported) data files found in Emmyc2/psp"
+  },
+  {
+   "rank": 84,
+   "id": "lmarena-ai/leaderboard-dataset",
+   "sha": "b9863c64b88ca180037b5c2dcd65742b7ea8cf70",
+   "downloads_30d": 343435,
+   "gated": false,
+   "license_tags": [
+    "license:cc-by-4.0"
+   ],
+   "bytes_parquet": 139257954,
+   "bytes_original": 139257954,
+   "rows": 2775031,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 85,
+   "id": "anon8231489123/ShareGPT_Vicuna_unfiltered",
+   "sha": "192ab2185289094fc556ec8ce5ce1e8e587154ca",
+   "downloads_30d": 341302,
+   "gated": false,
+   "license_tags": [
+    "license:apache-2.0"
+   ],
+   "size_error": "HTTP 500 No (supported) data files found in anon8231489123/ShareGPT_Vicuna_unfiltered"
+  },
+  {
+   "rank": 86,
+   "id": "57xj5SHr/Tui9DGhp",
+   "sha": "25a2e77fd311eb50573d009bd45ad4feaf27ae9f",
+   "downloads_30d": 340161,
+   "gated": false,
+   "license_tags": [
+    "license:mit"
+   ],
+   "size_error": "HTTP 500 The server is busier than usual and the response is not ready yet. Please retry later."
+  },
+  {
+   "rank": 87,
+   "id": "nyarlathotep12/MXStuff",
+   "sha": "1ba123a5a27541693c41424de73f04797c7e5a5c",
+   "downloads_30d": 332015,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 1057,
+   "bytes_original": null,
+   "rows": 7,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 88,
+   "id": "allenai/MADLAD-400",
+   "sha": "9d886a76bd8fa69b294f2dd3843dacb8388ee5a5",
+   "downloads_30d": 331099,
+   "gated": false,
+   "license_tags": [
+    "license:odc-by"
+   ],
+   "size_error": "HTTP 500 No (supported) data files found in allenai/MADLAD-400"
+  },
+  {
+   "rank": 89,
+   "id": "mickeykang/Event6DBlender",
+   "sha": "41cf309a2fec0f1b9738032769920db2c324ccb7",
+   "downloads_30d": 329860,
+   "gated": false,
+   "license_tags": [
+    "license:cc-by-nc-4.0"
+   ],
+   "size_error": "HTTP 500 Cannot get the config names for the dataset."
+  },
+  {
+   "rank": 90,
+   "id": "harborframework/terminal-bench-science-lfs",
+   "sha": "cf019ba0ece48c40c82fd4d8f5ca77b8904f6133",
+   "downloads_30d": 326246,
+   "gated": false,
+   "license_tags": [
+    "license:apache-2.0"
+   ],
+   "size_error": "HTTP 500 Couldn't infer the same data file format for all splits. Got {NamedSplit('train'): ('imagefolder', {}), NamedSplit('validation'): ('parquet', {})}"
+  },
+  {
+   "rank": 91,
+   "id": "wikimedia/wikipedia",
+   "sha": "b04c8d1ceb2f5cd4588862100d08de323dccfbaa",
+   "downloads_30d": 322428,
+   "gated": false,
+   "license_tags": [
+    "license:cc-by-sa-3.0",
+    "license:gfdl"
+   ],
+   "bytes_parquet": 71791889649,
+   "bytes_original": 71791889649,
+   "rows": 61614907,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 92,
+   "id": "MINT-SJTU/RW-RL-Dataset",
+   "sha": "e18a20263435640c96f5f995f769a621302fd5f2",
+   "downloads_30d": 318714,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 26886666,
+   "bytes_original": null,
+   "rows": 152048,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 93,
+   "id": "huggingface-course/documentation-images",
+   "sha": "96e71ad956904da670e6827274fc2c9b735b09d5",
+   "downloads_30d": 299300,
+   "gated": false,
+   "license_tags": [
+    "license:apache-2.0"
+   ],
+   "bytes_parquet": 217645,
+   "bytes_original": 238938,
+   "rows": 2,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 94,
+   "id": "OpenFinMind/stock_dataset",
+   "sha": "51f2e1ea9c53fa9a8c47412724ff18559440521d",
+   "downloads_30d": 296520,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 0,
+   "bytes_original": 0,
+   "rows": 0,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 95,
+   "id": "zdbfv/M3_VOS",
+   "sha": "26e2f40df0905a7cbf10fa02588eab7c0f6cdeab",
+   "downloads_30d": 290749,
+   "gated": false,
+   "license_tags": [
+    "license:apache-2.0"
+   ],
+   "bytes_parquet": 0,
+   "bytes_original": 0,
+   "rows": 0,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 96,
+   "id": "google-research-datasets/mbpp",
+   "sha": "4bb6404fdc6cacfda99d4ac4205087b89d32030c",
+   "downloads_30d": 290525,
+   "gated": false,
+   "license_tags": [
+    "license:cc-by-4.0"
+   ],
+   "bytes_parquet": 351491,
+   "bytes_original": 351491,
+   "rows": 1401,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 97,
+   "id": "openai/gdpval",
+   "sha": "11e7900cdcac61bc4daf59e65feb238acda98fbf",
+   "downloads_30d": 290427,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 1913489,
+   "bytes_original": 1913489,
+   "rows": 220,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 98,
+   "id": "Forceless/Zenodo10K",
+   "sha": "e59bf3ec11f7518a6c84dc145d83c0675d412522",
+   "downloads_30d": 290148,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 2028492,
+   "bytes_original": 2028492,
+   "rows": 10448,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 99,
+   "id": "YipengGao/3DCodeBench",
+   "sha": "b9ebb354234efcec00573e31917a07fe11603742",
+   "downloads_30d": 287679,
+   "gated": false,
+   "license_tags": [
+    "license:mit"
+   ],
+   "bytes_parquet": 200788333,
+   "bytes_original": 200788333,
+   "rows": 12963,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 100,
+   "id": "openai/openai_humaneval",
+   "sha": "7dce6050a7d6d172f3cc5c32aa97f52fa1a2e544",
+   "downloads_30d": 287502,
+   "gated": false,
+   "license_tags": [
+    "license:mit"
+   ],
+   "bytes_parquet": 83920,
+   "bytes_original": 83920,
+   "rows": 164,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 101,
+   "id": "updatebao/geonamebase_1",
+   "sha": "890fdab12391217536f563b7d4a9f728dce16b1d",
+   "downloads_30d": 286740,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 11354671,
+   "bytes_original": null,
+   "rows": 99927,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 102,
+   "id": "jat-project/jat-dataset-tokenized",
+   "sha": "3711fdaec69f2d8d7b67feff4ff3086259063eac",
+   "downloads_30d": 286467,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 163726387673,
+   "bytes_original": null,
+   "rows": 31962087,
+   "rows_estimated": null,
+   "size_partial": true
+  },
+  {
+   "rank": 103,
+   "id": "Rowan/hellaswag",
+   "sha": "218ec52e09a7e7462a5400043bb9a69a41d06b76",
+   "downloads_30d": 284581,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 36793872,
+   "bytes_original": 36793872,
+   "rows": 59950,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 104,
+   "id": "IPEC-COMMUNITY/droid_lerobot",
+   "sha": "96dd57f36d85a542a874e73aea5d9e0843caea58",
+   "downloads_30d": 283364,
+   "gated": false,
+   "license_tags": [
+    "license:apache-2.0"
+   ],
+   "bytes_parquet": 0,
+   "bytes_original": 0,
+   "rows": 0,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 105,
+   "id": "HuggingFaceM4/FineVisionMax",
+   "sha": "b5b1081169033ebf64f5621316b650f2a0ef8214",
+   "downloads_30d": 282570,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 4662297653404,
+   "bytes_original": 4662297653404,
+   "rows": 24243243,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 106,
+   "id": "XiaomiMiMo/MiMo-V2.6-RL-oss",
+   "sha": "e8e81e4945270b6212204bad99de1e598f7fb077",
+   "downloads_30d": 281538,
+   "gated": false,
+   "license_tags": [
+    "license:apache-2.0"
+   ],
+   "bytes_parquet": 20225309,
+   "bytes_original": 20225309,
+   "rows": 7684,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 107,
+   "id": "frankielp/2dgaussian-lang-output",
+   "sha": "d22cbe0e540dd04d2caaf9adbcdfac359c162ed1",
+   "downloads_30d": 277918,
+   "gated": false,
+   "license_tags": [],
+   "size_error": "HTTP 501 Job has been terminated due to a temporary spike in resource usage and may be restarted later."
+  },
+  {
+   "rank": 108,
+   "id": "nureasoning/nuReasoning",
+   "sha": "26bb09b29fc9ebc3889ed8d0a9e42850e271442e",
+   "downloads_30d": 274865,
+   "gated": "auto",
+   "license_tags": [
+    "license:other"
+   ],
+   "size_error": "HTTP 401 The dataset does not exist, or is not accessible without authentication (private or gated). Please check the spelling of the dataset name or retry with authenti"
+  },
+  {
+   "rank": 109,
+   "id": "harborframework/terminal-bench-3.0",
+   "sha": "2ee5a897d6be85513b41f44b945c4ff4d3e04a1d",
+   "downloads_30d": 271592,
+   "gated": false,
+   "license_tags": [
+    "license:apache-2.0"
+   ],
+   "size_error": "HTTP 500 Couldn't infer the same data file format for all splits. Got {NamedSplit('validation'): (None, {}), NamedSplit('test'): ('pdffolder', {})}"
+  },
+  {
+   "rank": 110,
+   "id": "uoft-cs/cifar10",
+   "sha": "0b2714987fa478483af9968de7c934580d0bb9a2",
+   "downloads_30d": 269824,
+   "gated": false,
+   "license_tags": [
+    "license:unknown"
+   ],
+   "bytes_parquet": 143646105,
+   "bytes_original": 143646105,
+   "rows": 60000,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 111,
+   "id": "OmniAICreator/RoyalRoad-1.61M",
+   "sha": "0e4df3f22999a7b7fa13b1e7564a09b5f3eb964e",
+   "downloads_30d": 265202,
+   "gated": false,
+   "license_tags": [
+    "license:mit"
+   ],
+   "bytes_parquet": 12456682830,
+   "bytes_original": 12456682830,
+   "rows": 1613875,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 112,
+   "id": "camel-ai/SETA-Env",
+   "sha": "3c3bc8975b05826bf41769bd6b2da76ad1b6dd42",
+   "downloads_30d": 262127,
+   "gated": false,
+   "license_tags": [
+    "license:apache-2.0"
+   ],
+   "size_error": "HTTP 500 Couldn't infer the same data file format for all splits. Got {NamedSplit('train'): ('csv', {}), NamedSplit('validation'): ('json', {}), NamedSplit('test'): ('js"
+  },
+  {
+   "rank": 113,
+   "id": "harborframework/terminal-bench-2.1",
+   "sha": "3e235dff6880252a587fa479c09bcb1e16edf2eb",
+   "downloads_30d": 262067,
+   "gated": false,
+   "license_tags": [
+    "license:apache-2.0"
+   ],
+   "bytes_parquet": 131354,
+   "bytes_original": null,
+   "rows": 89,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 114,
+   "id": "MIC-DKFZ/OpenMind",
+   "sha": "7a1d5ce1ff35de400b7f4c0dc957a69c5b581409",
+   "downloads_30d": 259678,
+   "gated": false,
+   "license_tags": [
+    "license:cc-by-4.0"
+   ],
+   "bytes_parquet": 41195,
+   "bytes_original": null,
+   "rows": 238,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 115,
+   "id": "Believe0029/scannetv2",
+   "sha": "ec7598e756c9d8899bac62be55cc7e1586e50648",
+   "downloads_30d": 257564,
+   "gated": false,
+   "license_tags": [],
+   "size_error": "HTTP 501 Job has been terminated due to a temporary spike in resource usage and may be restarted later."
+  },
+  {
+   "rank": 116,
+   "id": "nvidia/PhysicalAI-Autonomous-Vehicles",
+   "sha": "14ed7a77897edafb113dc86fde8b8173ae7fb028",
+   "downloads_30d": 256724,
+   "gated": "auto",
+   "license_tags": [
+    "license:other"
+   ],
+   "size_error": "HTTP 401 The dataset does not exist, or is not accessible without authentication (private or gated). Please check the spelling of the dataset name or retry with authenti"
+  },
+  {
+   "rank": 117,
+   "id": "Metanova/Submission-Archive",
+   "sha": "10d033c0ea428e70d01d4e3a968ac3fef4c541d8",
+   "downloads_30d": 256325,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 0,
+   "bytes_original": 0,
+   "rows": 0,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 118,
+   "id": "laion/voice-acting-cutscene-prompts",
+   "sha": "e7bffa37667306fd193288842bf81e089a1f3cd4",
+   "downloads_30d": 255233,
+   "gated": false,
+   "license_tags": [
+    "license:cc-by-4.0"
+   ],
+   "bytes_parquet": 4880927482,
+   "bytes_original": 4880927482,
+   "rows": 4057000,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 119,
+   "id": "genrobot2025/Gen-HumanEgo",
+   "sha": "3cca54aeba0d9af3ebf4995b035d23b41f9387da",
+   "downloads_30d": 253040,
+   "gated": "auto",
+   "license_tags": [
+    "license:cc-by-sa-4.0"
+   ],
+   "size_error": "HTTP 401 The dataset does not exist, or is not accessible without authentication (private or gated). Please check the spelling of the dataset name or retry with authenti"
+  },
+  {
+   "rank": 120,
+   "id": "DBDin/suupp",
+   "sha": "04a402ce3f70d029a44f53b4b866289b58cade43",
+   "downloads_30d": 248437,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 2368,
+   "bytes_original": null,
+   "rows": 12,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 121,
+   "id": "espnet/yodas3.1",
+   "sha": "3247e8cabda1e8e9418a6d8fe582e8c1abe75861",
+   "downloads_30d": 248267,
+   "gated": false,
+   "license_tags": [
+    "license:cc-by-4.0"
+   ],
+   "bytes_parquet": 51985771470,
+   "bytes_original": 51985771470,
+   "rows": 4076386,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 122,
+   "id": "agents-last-exam/agents-last-exam-data",
+   "sha": "e9a2674a62f7d8069f136e642c10e8d8e9979dbf",
+   "downloads_30d": 245057,
+   "gated": false,
+   "license_tags": [
+    "license:cc-by-4.0"
+   ],
+   "bytes_parquet": 0,
+   "bytes_original": 0,
+   "rows": 0,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 123,
+   "id": "jumuunhaan/copyright-videos-dataset",
+   "sha": "b02e79df1b7bfa84a5cdf5987a85234a204133eb",
+   "downloads_30d": 242738,
+   "gated": false,
+   "license_tags": [
+    "license:other"
+   ],
+   "bytes_parquet": 0,
+   "bytes_original": 0,
+   "rows": 0,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 124,
+   "id": "eddmpython/dartlab-data",
+   "sha": "376db34448e94488e9825f415768ecbc52ed45b4",
+   "downloads_30d": 241818,
+   "gated": false,
+   "license_tags": [
+    "license:cc-by-4.0"
+   ],
+   "bytes_parquet": 0,
+   "bytes_original": 0,
+   "rows": 0,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 125,
+   "id": "Voxel51/LVIS",
+   "sha": "6ec528891affae65bda44e9f014038eb30e64fca",
+   "downloads_30d": 239778,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 0,
+   "bytes_original": 0,
+   "rows": 0,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 126,
+   "id": "KAKA22/SpreadsheetBench-v2",
+   "sha": "5a2215ed4121945ab09d8723df2995602090b042",
+   "downloads_30d": 239066,
+   "gated": false,
+   "license_tags": [
+    "license:mit"
+   ],
+   "size_error": "HTTP 500 No (supported) data files found in KAKA22/SpreadsheetBench-v2"
+  },
+  {
+   "rank": 127,
+   "id": "LingYu-Robotics/lingyu-realworld-robotics-dataset",
+   "sha": "4d82b3b769c7813d991c5a24c8be98dbbfdff248",
+   "downloads_30d": 238898,
+   "gated": false,
+   "license_tags": [
+    "license:cc-by-nc-sa-4.0"
+   ],
+   "bytes_parquet": 7894605,
+   "bytes_original": null,
+   "rows": 39789,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 128,
+   "id": "hexuan21/MemoryTax-Res-Other",
+   "sha": "00968a850966d6c408e56e1ee3d4a54fc7759dca",
+   "downloads_30d": 237338,
+   "gated": false,
+   "license_tags": [
+    "license:cc-by-4.0"
+   ],
+   "bytes_parquet": 0,
+   "bytes_original": 0,
+   "rows": 0,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 129,
+   "id": "nvidia/simready-central-status",
+   "sha": "cad2b96b263cc019d39ce7ff5ce0a594052517df",
+   "downloads_30d": 235468,
+   "gated": false,
+   "license_tags": [
+    "license:apache-2.0"
+   ],
+   "bytes_parquet": 862,
+   "bytes_original": null,
+   "rows": 1,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 130,
+   "id": "AquaV/genshin-voices-separated",
+   "sha": "0eeb103d7a26f89fd9dd4c68e20bd9a9b720a834",
+   "downloads_30d": 233504,
+   "gated": false,
+   "license_tags": [],
+   "size_error": "HTTP 500 Cannot get the config names for the dataset."
+  },
+  {
+   "rank": 131,
+   "id": "worldbenchmark/IntuitivePhysics",
+   "sha": "c72084cfc4500035032450b812bfd6b2956ed3e9",
+   "downloads_30d": 232368,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 42941348,
+   "bytes_original": null,
+   "rows": 280500,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 132,
+   "id": "ekal1337/KIPAS_CLIENTS",
+   "sha": "5b469c7455717ba20bc9b430d786f749096726e8",
+   "downloads_30d": 231802,
+   "gated": false,
+   "license_tags": [],
+   "size_error": "HTTP 500 No (supported) data files found in ekal1337/KIPAS_CLIENTS"
+  },
+  {
+   "rank": 133,
+   "id": "IPEC-COMMUNITY/language_table_lerobot",
+   "sha": "634ac1e50023777c21b299d95aaf2bfdc8514ae9",
+   "downloads_30d": 231736,
+   "gated": false,
+   "license_tags": [
+    "license:apache-2.0"
+   ],
+   "bytes_parquet": 0,
+   "bytes_original": 0,
+   "rows": 0,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 134,
+   "id": "mlfoundations/MINT-1T-HTML",
+   "sha": "906a8b85cea61198ff7339c4dd711ad0b5361847",
+   "downloads_30d": 231442,
+   "gated": false,
+   "license_tags": [
+    "license:cc-by-4.0"
+   ],
+   "bytes_parquet": 3055698368,
+   "bytes_original": null,
+   "rows": 897871,
+   "rows_estimated": 623434645,
+   "size_partial": true
+  },
+  {
+   "rank": 135,
+   "id": "djghosh/wds_objectnet_test",
+   "sha": "05901479683557d2843ab4ab0b3105193403c690",
+   "downloads_30d": 231247,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 715,
+   "bytes_original": null,
+   "rows": 1,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 136,
+   "id": "andaba/RT-Pose",
+   "sha": "3e1d81791dfa491aafdc8a2db8b7b02acde42e1c",
+   "downloads_30d": 230802,
+   "gated": false,
+   "license_tags": [
+    "license:cc-by-nc-sa-4.0"
+   ],
+   "bytes_parquet": 26011932,
+   "bytes_original": null,
+   "rows": 225819,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 137,
+   "id": "Winterllling/HF",
+   "sha": "c43cb3489a17cfb0d4bbe6afde5b3bf19b640079",
+   "downloads_30d": 225641,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 28311,
+   "bytes_original": null,
+   "rows": 180,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 138,
+   "id": "mlfoundations/dclm-baseline-1.0",
+   "sha": "a3b142c183aebe5af344955ae20836eb34dcf69b",
+   "downloads_30d": 224886,
+   "gated": false,
+   "license_tags": [
+    "license:cc-by-4.0"
+   ],
+   "bytes_parquet": 2964249141,
+   "bytes_original": null,
+   "rows": 779982,
+   "rows_estimated": 3017780768,
+   "size_partial": true
+  },
+  {
+   "rank": 139,
+   "id": "wegrthj/e94fjt-v654-data",
+   "sha": "6dd97422cf19a763b90eb0d56f8256e578c97bb4",
+   "downloads_30d": 224665,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 0,
+   "bytes_original": 0,
+   "rows": 0,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 140,
+   "id": "HuggingFaceH4/MATH-500",
+   "sha": "6e4ed1a2a79af7d8630a6b768ec859cb5af4d3be",
+   "downloads_30d": 220197,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 208262,
+   "bytes_original": null,
+   "rows": 500,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 141,
+   "id": "saarthiatu/jee-pdfs",
+   "sha": "041127465205bec651a28cc3d54245af014ae361",
+   "downloads_30d": 219983,
+   "gated": false,
+   "license_tags": [],
+   "size_error": "HTTP 500 No (supported) data files found in saarthiatu/jee-pdfs"
+  },
+  {
+   "rank": 142,
+   "id": "applied-ai-018/pretraining_v1-omega_books",
+   "sha": "54b95f40c52b3d03bb07e672ab05a0e677d3e0a7",
+   "downloads_30d": 217731,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 277002682199,
+   "bytes_original": 277002682199,
+   "rows": 103802366,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 143,
+   "id": "augaazuun/copydetect-videos",
+   "sha": "02aeaad20b2c389ecb03676c7f9a138f084c34ec",
+   "downloads_30d": 215752,
+   "gated": false,
+   "license_tags": [
+    "license:other"
+   ],
+   "bytes_parquet": 0,
+   "bytes_original": 0,
+   "rows": 0,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 144,
+   "id": "venvoo/china-a-share-l2-level2-limit-order-book-tick-data",
+   "sha": "2d13c816b70afd49bbadce63c4ec20679d669290",
+   "downloads_30d": 215184,
+   "gated": "manual",
+   "license_tags": [
+    "license:other"
+   ],
+   "size_error": "HTTP 401 The dataset does not exist, or is not accessible without authentication (private or gated). Please check the spelling of the dataset name or retry with authenti"
+  },
+  {
+   "rank": 145,
+   "id": "Haitao999/things-eeg",
+   "sha": "944f0d50e37e125eb6b7b98d14a41571c9ed0ef7",
+   "downloads_30d": 214184,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 5148366,
+   "bytes_original": null,
+   "rows": 33560,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 146,
+   "id": "aoiandroid/android-times-articles",
+   "sha": "41520b02f74134eb14af47f9da41829c6557cab2",
+   "downloads_30d": 213750,
+   "gated": false,
+   "license_tags": [
+    "license:other"
+   ],
+   "bytes_parquet": 438004,
+   "bytes_original": null,
+   "rows": 1949,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 147,
+   "id": "ahnaftaz/locus-commit-pool-v1",
+   "sha": "6883f90b50d88cda272b63ef49d0493ad6a9b476",
+   "downloads_30d": 213364,
+   "gated": false,
+   "license_tags": [
+    "license:other"
+   ],
+   "bytes_parquet": 0,
+   "bytes_original": 0,
+   "rows": 0,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 148,
+   "id": "google/fleurs",
+   "sha": "70bb2e84b976b7e960aa89f1c648e09c59f894dd",
+   "downloads_30d": 209205,
+   "gated": false,
+   "license_tags": [
+    "license:cc-by-4.0"
+   ],
+   "bytes_parquet": 630499951454,
+   "bytes_original": 630499951454,
+   "rows": 768120,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 149,
+   "id": "ChongyanChen/VQAonline",
+   "sha": "dcc0329a8ce60b8c0d9914336414ffc7edc6c59e",
+   "downloads_30d": 206407,
+   "gated": false,
+   "license_tags": [
+    "license:cc-by-sa-4.0"
+   ],
+   "bytes_parquet": 74648410,
+   "bytes_original": null,
+   "rows": 64696,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 150,
+   "id": "HuggingFaceFW/finephrase",
+   "sha": "78cf4a5ed0099214979c094c963e699c19163838",
+   "downloads_30d": 205479,
+   "gated": false,
+   "license_tags": [
+    "license:odc-by"
+   ],
+   "bytes_parquet": 3791215500749,
+   "bytes_original": 3791215500749,
+   "rows": 1015005264,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 151,
+   "id": "harborframework/terminal-bench",
+   "sha": "c113b65be3040328e8d56a1361d90556d39ede4d",
+   "downloads_30d": 204844,
+   "gated": false,
+   "license_tags": [
+    "license:apache-2.0"
+   ],
+   "bytes_parquet": 157115,
+   "bytes_original": null,
+   "rows": 66,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 152,
+   "id": "allenai/winogrande",
+   "sha": "01e74176c63542e6b0bcb004dcdea22d94fb67b5",
+   "downloads_30d": 204724,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 4606571,
+   "bytes_original": 4606571,
+   "rows": 81442,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 153,
+   "id": "espnet/yodas2",
+   "sha": "631fc446cb1a41ee93a1d390a167c6e08c2597a3",
+   "downloads_30d": 203453,
+   "gated": false,
+   "license_tags": [
+    "license:cc-by-3.0"
+   ],
+   "size_error": "HTTP 500 Cannot get the config names for the dataset."
+  },
+  {
+   "rank": 154,
+   "id": "HorizonRobotics/robo_orchard_sim_assets",
+   "sha": "282ac5877744058e444936754934b183d623da6e",
+   "downloads_30d": 201805,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 56069,
+   "bytes_original": null,
+   "rows": 360,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 155,
+   "id": "fujinchu/imgbed",
+   "sha": "a63cb9a786aef175641185f36c4a882397d8b616",
+   "downloads_30d": 201398,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 1702,
+   "bytes_original": null,
+   "rows": 1,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 156,
+   "id": "mercor/apex-agents",
+   "sha": "92c86856cf1b11f9833a8a076b3a45a63afa3929",
+   "downloads_30d": 200464,
+   "gated": "auto",
+   "license_tags": [
+    "license:cc-by-4.0"
+   ],
+   "size_error": "HTTP 401 The dataset does not exist, or is not accessible without authentication (private or gated). Please check the spelling of the dataset name or retry with authenti"
+  },
+  {
+   "rank": 157,
+   "id": "PleIAs/common_corpus",
+   "sha": "307910e4c5d040d6f318e6edf2a2b97849155771",
+   "downloads_30d": 200333,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 429962586,
+   "bytes_original": 429962586,
+   "rows": 69907,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 158,
+   "id": "mteb/results",
+   "sha": "d657b39660861f0c10378c403484712d2df9a930",
+   "downloads_30d": 200027,
+   "gated": false,
+   "license_tags": [
+    "license:cc0-1.0"
+   ],
+   "bytes_parquet": 113740718,
+   "bytes_original": 113740718,
+   "rows": 8936497,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 159,
+   "id": "aps/super_glue",
+   "sha": "3de24cf8022e94f4ee4b9d55a6f539891524d646",
+   "downloads_30d": 198855,
+   "gated": false,
+   "license_tags": [
+    "license:other"
+   ],
+   "bytes_parquet": 102519012,
+   "bytes_original": 102519012,
+   "rows": 196313,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 160,
+   "id": "facebook/seamless-interaction",
+   "sha": "ba9e212ab927ba05bfd80778f53bf9de69f65e3b",
+   "downloads_30d": 196676,
+   "gated": false,
+   "license_tags": [
+    "license:cc-by-nc-4.0"
+   ],
+   "bytes_parquet": 0,
+   "bytes_original": 0,
+   "rows": 0,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 161,
+   "id": "Spreadsheet-RL/Spreadsheet-RL",
+   "sha": "6f274cd4cbc27e656d7ddae7c3b591669866dc84",
+   "downloads_30d": 196545,
+   "gated": false,
+   "license_tags": [
+    "license:cc-by-sa-4.0"
+   ],
+   "bytes_parquet": 18638399,
+   "bytes_original": 18638399,
+   "rows": 33860,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 162,
+   "id": "roneneldan/TinyStories",
+   "sha": "f54c09fd23315a6f9c86f9dc80f725de7d8f9c64",
+   "downloads_30d": 195795,
+   "gated": false,
+   "license_tags": [
+    "license:cdla-sharing-1.0"
+   ],
+   "bytes_parquet": 1000775442,
+   "bytes_original": 1000775442,
+   "rows": 2141709,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 163,
+   "id": "ChaoHuangCS/Muddy_Mix",
+   "sha": "aa16762ed7b83901543988f7c387dec36a0fa4af",
+   "downloads_30d": 195605,
+   "gated": "auto",
+   "license_tags": [],
+   "size_error": "HTTP 401 The dataset does not exist, or is not accessible without authentication (private or gated). Please check the spelling of the dataset name or retry with authenti"
+  },
+  {
+   "rank": 164,
+   "id": "banned-historical-archives/zhongyangribao",
+   "sha": "ec0db204615e22642ab1029f767f99df64556496",
+   "downloads_30d": 195188,
+   "gated": false,
+   "license_tags": [],
+   "size_error": "HTTP 500 No (supported) data files found in banned-historical-archives/zhongyangribao"
+  },
+  {
+   "rank": 165,
+   "id": "ieasybooks-org/waqfeya-library",
+   "sha": "6baff87f74cd3c53a6f3495d25c55b706cb55af8",
+   "downloads_30d": 194352,
+   "gated": false,
+   "license_tags": [
+    "license:mit"
+   ],
+   "bytes_parquet": 3362009,
+   "bytes_original": null,
+   "rows": 10150,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 166,
+   "id": "AiEDA/iDATA",
+   "sha": "095591b95a517e465d7cec7385b2e4c4f4c389b8",
+   "downloads_30d": 193243,
+   "gated": false,
+   "license_tags": [
+    "license:gpl"
+   ],
+   "bytes_parquet": 0,
+   "bytes_original": 0,
+   "rows": 0,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 167,
+   "id": "KAKA22/SpreadsheetBench",
+   "sha": "ab0b742b0fc95b946f212d80ac7771b5531272e4",
+   "downloads_30d": 192746,
+   "gated": false,
+   "license_tags": [
+    "license:cc-by-sa-4.0"
+   ],
+   "bytes_parquet": 0,
+   "bytes_original": 0,
+   "rows": 0,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 168,
+   "id": "longisland3/ptb-xl",
+   "sha": "34a5563a01793b150ac61fe0ec919a09fc0d044a",
+   "downloads_30d": 192465,
+   "gated": false,
+   "license_tags": [],
+   "size_error": "HTTP 500 Cannot get the config names for the dataset."
+  },
+  {
+   "rank": 169,
+   "id": "HuggingFaceFW/fineweb-2",
+   "sha": "af9c13333eb981300149d5ca60a8e9d659b276b9",
+   "downloads_30d": 192233,
+   "gated": false,
+   "license_tags": [
+    "license:odc-by"
+   ],
+   "bytes_parquet": 8665209958349,
+   "bytes_original": 8665209958349,
+   "rows": 4484929995,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 170,
+   "id": "LanguageBind/Open-Sora-Plan-v1.1.0",
+   "sha": "ab77293def393e6938f11a7bfd12163decfb9620",
+   "downloads_30d": 191583,
+   "gated": false,
+   "license_tags": [
+    "license:mit"
+   ],
+   "bytes_parquet": 5432443003,
+   "bytes_original": null,
+   "rows": 100,
+   "rows_estimated": 162434,
+   "size_partial": true
+  },
+  {
+   "rank": 171,
+   "id": "oshonzongiintsetseg/videocopy-dataset",
+   "sha": "4a765bf798d7e2f89e10d4043efafffc8d6fde85",
+   "downloads_30d": 190387,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 0,
+   "bytes_original": 0,
+   "rows": 0,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 172,
+   "id": "google/IFEval",
+   "sha": "966cd89545d6b6acfd7638bc708b98261ca58e84",
+   "downloads_30d": 189286,
+   "gated": false,
+   "license_tags": [
+    "license:apache-2.0"
+   ],
+   "bytes_parquet": 96256,
+   "bytes_original": 207111,
+   "rows": 541,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 173,
+   "id": "PGCodeLLM/radin-cyber-backups",
+   "sha": "bc10089d0cae26909da7ab16856e5f322daf2de2",
+   "downloads_30d": 188611,
+   "gated": false,
+   "license_tags": [],
+   "size_error": "HTTP 501 Job has been terminated due to a temporary spike in resource usage and may be restarted later."
+  },
+  {
+   "rank": 174,
+   "id": "TianxingChen/RoboTwin2.0",
+   "sha": "3dc3b798668feb99ac61cc9086d84cbcc3d79186",
+   "downloads_30d": 188049,
+   "gated": false,
+   "license_tags": [
+    "license:mit"
+   ],
+   "bytes_parquet": 0,
+   "bytes_original": 0,
+   "rows": 0,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 175,
+   "id": "benediktkol/DDOS",
+   "sha": "1ed1314d32ef3a5a7e1434000783a8433517bd0e",
+   "downloads_30d": 188023,
+   "gated": false,
+   "license_tags": [
+    "license:cc-by-nc-4.0"
+   ],
+   "bytes_parquet": 0,
+   "bytes_original": 0,
+   "rows": 0,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 176,
+   "id": "WorldEngineAI/WEB-Dataset",
+   "sha": "a11094a6402bf6243b1c1583f522f2782383f28a",
+   "downloads_30d": 187078,
+   "gated": "auto",
+   "license_tags": [
+    "license:cc-by-nc-4.0"
+   ],
+   "size_error": "HTTP 401 The dataset does not exist, or is not accessible without authentication (private or gated). Please check the spelling of the dataset name or retry with authenti"
+  },
+  {
+   "rank": 177,
+   "id": "hf-internal-testing/transformers_circleci_workflow_runs",
+   "sha": "5c1075ceb3ee461764056c7b6d3eee9944e2fcca",
+   "downloads_30d": 187012,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 0,
+   "bytes_original": 0,
+   "rows": 0,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 178,
+   "id": "benchflow/skillsbench-leaderboard",
+   "sha": "f104580363a9642563593c475620196ecd36687d",
+   "downloads_30d": 186972,
+   "gated": false,
+   "license_tags": [
+    "license:apache-2.0"
+   ],
+   "size_error": "HTTP 501 Job has been terminated due to a temporary spike in resource usage and may be restarted later."
+  },
+  {
+   "rank": 179,
+   "id": "agibot-world/AgiBotWorld-Beta",
+   "sha": "2252b3fdc88dc67fa5d5e4b771e1b86f5e71c278",
+   "downloads_30d": 185608,
+   "gated": "auto",
+   "license_tags": [],
+   "size_error": "HTTP 401 The dataset does not exist, or is not accessible without authentication (private or gated). Please check the spelling of the dataset name or retry with authenti"
+  },
+  {
+   "rank": 180,
+   "id": "defeatbeta/yahoo-finance-data",
+   "sha": "c9fbec276a61f9e06ac2a989afdab3235ae10a59",
+   "downloads_30d": 185278,
+   "gated": false,
+   "license_tags": [
+    "license:odc-by"
+   ],
+   "size_error": "HTTP 501 Not supported: dataset viewer is disabled in defeatbeta/yahoo-finance-data configuration."
+  },
+  {
+   "rank": 181,
+   "id": "princeton-nlp/SWE-bench_Verified",
+   "sha": "c104f840cc67f8b6eec6f759ebc8b2693d585d4a",
+   "downloads_30d": 182556,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 2096679,
+   "bytes_original": 2096679,
+   "rows": 500,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 182,
+   "id": "nebulaanish/quick-canvas-benchmark",
+   "sha": "69ed00fa0fb61bc746c9df88ada412d88d8521e2",
+   "downloads_30d": 181828,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 0,
+   "bytes_original": 0,
+   "rows": 0,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 183,
+   "id": "brownu/deform360",
+   "sha": "5ea8c5d3fc7b4a7b4f9f921f2ceb1de24610f6a4",
+   "downloads_30d": 180471,
+   "gated": false,
+   "license_tags": [
+    "license:mit"
+   ],
+   "bytes_parquet": 0,
+   "bytes_original": 0,
+   "rows": 0,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 184,
+   "id": "trentmkelly/polymarket_historical_data",
+   "sha": "933fd74885e35eb8cd1215dbb6d9ccf779988a0d",
+   "downloads_30d": 180171,
+   "gated": false,
+   "license_tags": [
+    "license:cc-by-4.0"
+   ],
+   "bytes_parquet": 22511231927,
+   "bytes_original": 22511231927,
+   "rows": 204434413,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 185,
+   "id": "IPEC-COMMUNITY/fractal20220817_data_lerobot",
+   "sha": "91bf7d7f7ce50770a1ba5c6db14b8d1c0815122e",
+   "downloads_30d": 179066,
+   "gated": false,
+   "license_tags": [
+    "license:apache-2.0"
+   ],
+   "bytes_parquet": 0,
+   "bytes_original": 0,
+   "rows": 0,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 186,
+   "id": "i998979/TransitApp",
+   "sha": "1e565b36e45c7eb8876e31c31b0e4f6625ba839c",
+   "downloads_30d": 178415,
+   "gated": false,
+   "license_tags": [],
+   "size_error": "HTTP 500 The server is busier than usual and the response is not ready yet. Please retry later."
+  },
+  {
+   "rank": 187,
+   "id": "Symato/cc",
+   "sha": "c0e1add8a2af3bcdf3ca481d91f6640fb3db7eba",
+   "downloads_30d": 177424,
+   "gated": false,
+   "license_tags": [
+    "license:mit"
+   ],
+   "bytes_parquet": 0,
+   "bytes_original": 0,
+   "rows": 0,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 188,
+   "id": "bigcode/bigcodebench",
+   "sha": "b74c0d0bf70d2c0bc459be537895cca163007f1a",
+   "downloads_30d": 176779,
+   "gated": false,
+   "license_tags": [
+    "license:apache-2.0"
+   ],
+   "bytes_parquet": 11807878,
+   "bytes_original": 11807878,
+   "rows": 5700,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 189,
+   "id": "Harleyda/app-bin",
+   "sha": "7695edbd55a6b12451b72b284fb4d1fe99c7156e",
+   "downloads_30d": 176414,
+   "gated": false,
+   "license_tags": [],
+   "size_error": "HTTP 500 No (supported) data files found in Harleyda/app-bin"
+  },
+  {
+   "rank": 190,
+   "id": "patrickvonplaten/images",
+   "sha": "3f984cbf8a8602aa78782dc2ccaf037929d5ab5e",
+   "downloads_30d": 173206,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 24747731,
+   "bytes_original": 26580410,
+   "rows": 21,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 191,
+   "id": "Helsinki-NLP/fineweb-edu-translated",
+   "sha": "d82b075a4a8152727b232876aade2ade003e12b9",
+   "downloads_30d": 173064,
+   "gated": false,
+   "license_tags": [
+    "license:odc-by"
+   ],
+   "bytes_parquet": 5435552754452,
+   "bytes_original": 5435552754452,
+   "rows": 1999563091,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 192,
+   "id": "configinc/HABIT",
+   "sha": "bae97d251907743f8fb6db7e70c61d361df4dc1e",
+   "downloads_30d": 172837,
+   "gated": false,
+   "license_tags": [
+    "license:cc-by-4.0"
+   ],
+   "bytes_parquet": 17670140828,
+   "bytes_original": 17670140828,
+   "rows": 5946347,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 193,
+   "id": "Voxel51/OxfordFlowers102",
+   "sha": "4ec03ecbfe028c9fdec5d8faf4df4d22e59d49d2",
+   "downloads_30d": 171597,
+   "gated": false,
+   "license_tags": [
+    "license:other"
+   ],
+   "bytes_parquet": 568855831,
+   "bytes_original": 584688211,
+   "rows": 16379,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 194,
+   "id": "Sandflow/sand3d-objaverse",
+   "sha": "92dd5858c177734782734c20f20b2de522b229bf",
+   "downloads_30d": 171580,
+   "gated": false,
+   "license_tags": [
+    "license:cc-by-4.0"
+   ],
+   "bytes_parquet": 1612950429,
+   "bytes_original": 1612950429,
+   "rows": 66887,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 195,
+   "id": "GSMA/3GPP",
+   "sha": "a056f6018a7e8e67052aa68a702e272d0ae95d75",
+   "downloads_30d": 171147,
+   "gated": false,
+   "license_tags": [
+    "license:other"
+   ],
+   "size_error": "HTTP 500 Cannot get the config names for the dataset."
+  },
+  {
+   "rank": 196,
+   "id": "IPEC-COMMUNITY/bridge_orig_lerobot",
+   "sha": "0e9d76d07e9df3ea3eba257b2520d4913833fad2",
+   "downloads_30d": 170670,
+   "gated": false,
+   "license_tags": [
+    "license:apache-2.0"
+   ],
+   "bytes_parquet": 0,
+   "bytes_original": 0,
+   "rows": 0,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 197,
+   "id": "Yanis236/fsc-180k",
+   "sha": "19d5cc3550061f28e15355f28db9d19d538b7f8c",
+   "downloads_30d": 169428,
+   "gated": false,
+   "license_tags": [],
+   "size_error": "HTTP 500 The previous steps are still being processed"
+  },
+  {
+   "rank": 198,
+   "id": "facebook/show3d-dataset",
+   "sha": "81403d3e4254cef959027118bc668bb2f26c86f6",
+   "downloads_30d": 168317,
+   "gated": false,
+   "license_tags": [
+    "license:cc-by-nc-4.0"
+   ],
+   "bytes_parquet": 58088,
+   "bytes_original": 58088,
+   "rows": 2137,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 199,
+   "id": "EleutherAI/hendrycks_math",
+   "sha": "21a5633873b6a120296cce3e2df9d5550074f4a3",
+   "downloads_30d": 167444,
+   "gated": false,
+   "license_tags": [
+    "license:mit"
+   ],
+   "bytes_parquet": 4883857,
+   "bytes_original": 4883857,
+   "rows": 12500,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 200,
+   "id": "stair-lab/nonmyopia_results",
+   "sha": "376b8c169435d6054f08045fd9657ff51768a051",
+   "downloads_30d": 167029,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 0,
+   "bytes_original": 0,
+   "rows": 0,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 201,
+   "id": "csoai/councilof-ai-evidence",
+   "sha": "c1999c93ae5e11e13c6c20d11d627beeeb900590",
+   "downloads_30d": 166818,
+   "gated": false,
+   "license_tags": [
+    "license:cc-by-4.0"
+   ],
+   "size_error": "HTTP 501 Not supported: dataset viewer is disabled in csoai/councilof-ai-evidence configuration."
+  },
+  {
+   "rank": 202,
+   "id": "nvidia/PhysicalAI-Robotics-Open-H-Embodiment",
+   "sha": "e29dda7cabf2a2626634c7822db27695553ae523",
+   "downloads_30d": 164625,
+   "gated": false,
+   "license_tags": [
+    "license:cc-by-4.0"
+   ],
+   "bytes_parquet": 0,
+   "bytes_original": 0,
+   "rows": 0,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 203,
+   "id": "djain95/sae-jailbreaks-cache",
+   "sha": "9113eb88c3bfa82b6a2d955b361c9092e522d198",
+   "downloads_30d": 164114,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 0,
+   "bytes_original": 0,
+   "rows": 0,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 204,
+   "id": "ieasybooks-org/shamela-waqfeya-library",
+   "sha": "9d351576c6f707058e2d0410978dd138700a275c",
+   "downloads_30d": 163218,
+   "gated": false,
+   "license_tags": [
+    "license:mit"
+   ],
+   "bytes_parquet": 1558452,
+   "bytes_original": null,
+   "rows": 4667,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 205,
+   "id": "cadene/droid_1.0.1",
+   "sha": "56b622ac23335c2bb5909e1e3c72416033c65acf",
+   "downloads_30d": 162759,
+   "gated": false,
+   "license_tags": [
+    "license:apache-2.0"
+   ],
+   "bytes_parquet": 0,
+   "bytes_original": 0,
+   "rows": 0,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 206,
+   "id": "Voxel51/Food101",
+   "sha": "ca43fa0a4be79855e8210cd50f809d45ed379b27",
+   "downloads_30d": 161700,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 1790747192,
+   "bytes_original": 1810467390,
+   "rows": 35001,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 207,
+   "id": "Rentoddb/dbsuera",
+   "sha": "80078f751ec87cc541ac916c29079e1a03f80510",
+   "downloads_30d": 161564,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 16937,
+   "bytes_original": null,
+   "rows": 154,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 208,
+   "id": "mlfoundations/dcvlm_pool_large",
+   "sha": "c76328c4afd15d3a6333b68a48dabf4f8f0819cc",
+   "downloads_30d": 161082,
+   "gated": false,
+   "license_tags": [
+    "license:other"
+   ],
+   "size_error": "HTTP 501 Not supported: dataset viewer is disabled in mlfoundations/dcvlm_pool_large configuration."
+  },
+  {
+   "rank": 209,
+   "id": "stanfordnlp/imdb",
+   "sha": "e6281661ce1c48d982bc483cf8a173c1bbeb5d31",
+   "downloads_30d": 160492,
+   "gated": false,
+   "license_tags": [
+    "license:other"
+   ],
+   "bytes_parquet": 83446840,
+   "bytes_original": 83446840,
+   "rows": 100000,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 210,
+   "id": "nicknock12/a2a-knowledges",
+   "sha": "f080630c235b8d2bb66354ceedcf5733671191a8",
+   "downloads_30d": 160425,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 138050,
+   "bytes_original": null,
+   "rows": 1074,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 211,
+   "id": "coatfusion/coat-fusion-assets-anonymous",
+   "sha": "7b6006fef73ad8d78dc7b01d0307117ce47b8be3",
+   "downloads_30d": 159922,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 0,
+   "bytes_original": 0,
+   "rows": 0,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 212,
+   "id": "McAuley-Lab/Amazon-Reviews-2023",
+   "sha": "2b6d039ed471f2ba5fd2acb718bf33b0a7e5598e",
+   "downloads_30d": 159603,
+   "gated": false,
+   "license_tags": [],
+   "size_error": "HTTP 501 The dataset viewer doesn't support this dataset because it runs arbitrary Python code. You can convert it to a Parquet data-only dataset by using the convert_to"
+  },
+  {
+   "rank": 213,
+   "id": "helenqu/ImageNet-Paste",
+   "sha": "61077ff6c1c29155e5c4f947b7f07ab91e84283f",
+   "downloads_30d": 159531,
+   "gated": false,
+   "license_tags": [
+    "license:mit"
+   ],
+   "bytes_parquet": 2123038404,
+   "bytes_original": 2122400517,
+   "rows": 50000,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 214,
+   "id": "google/physical-engineerings-last-exam",
+   "sha": "e0c21fa558c3127785656398e3b3bd7da5e5a5a6",
+   "downloads_30d": 157772,
+   "gated": "auto",
+   "license_tags": [
+    "license:cc-by-4.0"
+   ],
+   "size_error": "HTTP 401 The dataset does not exist, or is not accessible without authentication (private or gated). Please check the spelling of the dataset name or retry with authenti"
+  },
+  {
+   "rank": 215,
+   "id": "ehabnegm/100-hour-Egyptian-dataset-single-speaker",
+   "sha": "03e4938f4c53b2ed6d2d36ca4dbf73175b1c43ee",
+   "downloads_30d": 157549,
+   "gated": false,
+   "license_tags": [
+    "license:cc-by-nc-4.0"
+   ],
+   "bytes_parquet": 6210272,
+   "bytes_original": null,
+   "rows": 15653,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 216,
+   "id": "allenai/openbookqa",
+   "sha": "388097ea7776314e93a529163e0fea805b8a6454",
+   "downloads_30d": 157333,
+   "gated": false,
+   "license_tags": [
+    "license:unknown"
+   ],
+   "bytes_parquet": 1393402,
+   "bytes_original": 1393402,
+   "rows": 11914,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 217,
+   "id": "rajpurkar/squad",
+   "sha": "7b6d24c440a36b6815f21b70d25016731768db1f",
+   "downloads_30d": 157259,
+   "gated": false,
+   "license_tags": [
+    "license:cc-by-sa-4.0"
+   ],
+   "bytes_parquet": 16278203,
+   "bytes_original": 16278203,
+   "rows": 98169,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 218,
+   "id": "subhan1501/fake-face-detection-dataset",
+   "sha": "ee3719e23d973767e42b279708fc48dc0f306c93",
+   "downloads_30d": 156539,
+   "gated": false,
+   "license_tags": [
+    "license:mit"
+   ],
+   "bytes_parquet": 56177521,
+   "bytes_original": null,
+   "rows": 427032,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 219,
+   "id": "ibrahimhamamci/CT-RATE",
+   "sha": "546640db5d4674f6e6b36d40d2cfcd57c8b39e21",
+   "downloads_30d": 155201,
+   "gated": "auto",
+   "license_tags": [
+    "license:cc-by-nc-sa-4.0"
+   ],
+   "size_error": "HTTP 401 The dataset does not exist, or is not accessible without authentication (private or gated). Please check the spelling of the dataset name or retry with authenti"
+  },
+  {
+   "rank": 220,
+   "id": "manu/project_gutenberg",
+   "sha": "164853d214065df26a630ee1ab91a0c39e461caf",
+   "downloads_30d": 153613,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 14399256761,
+   "bytes_original": 14399256761,
+   "rows": 75570,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 221,
+   "id": "aisa-group/PostTrainBench-Trajectories",
+   "sha": "6a07c4698176f6f00af9c7a7e56fe5143403718a",
+   "downloads_30d": 153287,
+   "gated": false,
+   "license_tags": [
+    "license:apache-2.0"
+   ],
+   "bytes_parquet": 0,
+   "bytes_original": 0,
+   "rows": 0,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 222,
+   "id": "robbyant/robotwin-clean-and-aug-lerobot",
+   "sha": "595d4acc7e026aa57afba218f4170c6d79e39103",
+   "downloads_30d": 153000,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 20124397,
+   "bytes_original": null,
+   "rows": 82500,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 223,
+   "id": "pjpjq/blofin-oi-data",
+   "sha": "2b6a7585c834e4bf9d2e8bc8b42a37dfdd9cf377",
+   "downloads_30d": 152925,
+   "gated": false,
+   "license_tags": [],
+   "size_error": "HTTP 501 Job has been terminated due to a temporary spike in resource usage and may be restarted later."
+  },
+  {
+   "rank": 224,
+   "id": "stillbull1sh/solana",
+   "sha": "99977516a58152bfb8871aafe21e468cf9a3ea0b",
+   "downloads_30d": 152597,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 0,
+   "bytes_original": 0,
+   "rows": 0,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 225,
+   "id": "adyen/DABstep",
+   "sha": "fd8be331592faaa66192738f35e89c12d54eed2b",
+   "downloads_30d": 151128,
+   "gated": false,
+   "license_tags": [
+    "license:cc-by-4.0"
+   ],
+   "bytes_parquet": 1306169222,
+   "bytes_original": null,
+   "rows": 1048679,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 226,
+   "id": "james-ra-henry/Rosetta-Activations",
+   "sha": "f4eb03e0dc768a12d61fad14cff567d92fac4892",
+   "downloads_30d": 149683,
+   "gated": false,
+   "license_tags": [
+    "license:mit"
+   ],
+   "bytes_parquet": 5549,
+   "bytes_original": null,
+   "rows": 204,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 227,
+   "id": "ThomasTheMaker/ptb-xl-ecg",
+   "sha": "ef558e84986fa2218f35c93c721fe605f5a02b6a",
+   "downloads_30d": 148919,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 6241208,
+   "bytes_original": 8312583,
+   "rows": 87858,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 228,
+   "id": "ritwika96/qwen3.8-27b-arc1120-base-traces-20261025",
+   "sha": "114b14587263442b15fe813bec1f39eaa9e5fb1e",
+   "downloads_30d": 147719,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 0,
+   "bytes_original": 0,
+   "rows": 0,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 229,
+   "id": "HPLT/HPLT2.0_cleaned",
+   "sha": "d1324a5283f762ee62c2a5c81de08fc6450ea540",
+   "downloads_30d": 146295,
+   "gated": false,
+   "license_tags": [
+    "license:cc0-1.0"
+   ],
+   "bytes_parquet": 14897792520173,
+   "bytes_original": 14897792520173,
+   "rows": 5272038036,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 230,
+   "id": "jat-project/jat-dataset",
+   "sha": "921defdd6f8ae5271f2d4925150c48dba0cb3199",
+   "downloads_30d": 145735,
+   "gated": false,
+   "license_tags": [
+    "license:apache-2.0"
+   ],
+   "bytes_parquet": 1073837782327,
+   "bytes_original": null,
+   "rows": 258457671,
+   "rows_estimated": null,
+   "size_partial": true
+  },
+  {
+   "rank": 231,
+   "id": "IPEC-COMMUNITY/FastUMI_100k_lerobot",
+   "sha": "4cf7cca8fdc15d6f71ee0055553ce8a5e78aa9a0",
+   "downloads_30d": 145060,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 0,
+   "bytes_original": 0,
+   "rows": 0,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 232,
+   "id": "manus4oHER/cia-declassified-reading-room",
+   "sha": "42ac4ab298a4f2b4510743b3d3dcb0cc9ff6d76e",
+   "downloads_30d": 144903,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 1038493,
+   "bytes_original": null,
+   "rows": 62959,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 233,
+   "id": "RekaAI/RekaDaily-10k-raw",
+   "sha": "800e8ba00cf05ce28679439685203b3886727ee9",
+   "downloads_30d": 144587,
+   "gated": false,
+   "license_tags": [
+    "license:apache-2.0"
+   ],
+   "bytes_parquet": 1208088540,
+   "bytes_original": 1208088540,
+   "rows": 824100,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 234,
+   "id": "zhaocharile66/My_Hermes_Dataset",
+   "sha": "600e14b393487c9f790964e89fdda15c0d109bea",
+   "downloads_30d": 142131,
+   "gated": false,
+   "license_tags": [],
+   "size_error": "HTTP 500 The server is busier than usual and the response is not ready yet. Please retry later."
+  },
+  {
+   "rank": 235,
+   "id": "open-thoughts/OpenThoughts-114k",
+   "sha": "bd093c3994fd54d2390985b66988ddf282a55eb6",
+   "downloads_30d": 142039,
+   "gated": false,
+   "license_tags": [
+    "license:apache-2.0"
+   ],
+   "bytes_parquet": 3548507435,
+   "bytes_original": 3548507435,
+   "rows": 227914,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 236,
+   "id": "harborframework/parity-experiments",
+   "sha": "9e2aebde419579e58d7183136184b0071faac3a3",
+   "downloads_30d": 141593,
+   "gated": false,
+   "license_tags": [],
+   "size_error": "HTTP 501 Job has been terminated due to a temporary spike in resource usage and may be restarted later."
+  },
+  {
+   "rank": 237,
+   "id": "jamesqijingsong/chengyu",
+   "sha": "9c3915f62195a589d1a18ba8ff95bdc7a2b97ef5",
+   "downloads_30d": 141241,
+   "gated": false,
+   "license_tags": [
+    "license:cc-by-nc-4.0"
+   ],
+   "bytes_parquet": 0,
+   "bytes_original": 0,
+   "rows": 0,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 238,
+   "id": "Helsinki-NLP/nemotron-cc-translated",
+   "sha": "cc3a748c2f52c7bebf57640fbfd3956c82de10ec",
+   "downloads_30d": 141001,
+   "gated": false,
+   "license_tags": [
+    "license:cc0-1.0"
+   ],
+   "bytes_parquet": 9047413765494,
+   "bytes_original": 9047413765494,
+   "rows": 7383870713,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 239,
+   "id": "open-r1/OpenR1-Math-220k",
+   "sha": "e4e141ec9dea9f8326f4d347be56105859b2bd68",
+   "downloads_30d": 140141,
+   "gated": false,
+   "license_tags": [
+    "license:apache-2.0"
+   ],
+   "bytes_parquet": 8435506438,
+   "bytes_original": 8435506438,
+   "rows": 450258,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 240,
+   "id": "project-numina/NuminaMath-CoT",
+   "sha": "9d8d210c9f6a36c8f3cd84045668c9b7800ef517",
+   "downloads_30d": 139260,
+   "gated": false,
+   "license_tags": [
+    "license:apache-2.0"
+   ],
+   "bytes_parquet": 1234351634,
+   "bytes_original": 1234351634,
+   "rows": 859594,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 241,
+   "id": "sanket3dx/medicine_db",
+   "sha": "3e3b33a30666c12e00e0f005a97217ef9d090dfc",
+   "downloads_30d": 138530,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 15005,
+   "bytes_original": null,
+   "rows": 2,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 242,
+   "id": "builddotai/Egocentric-100K",
+   "sha": "fae604b751b25337d6fd8c4c53e595910c28f68f",
+   "downloads_30d": 138505,
+   "gated": "auto",
+   "license_tags": [
+    "license:apache-2.0"
+   ],
+   "size_error": "HTTP 401 The dataset does not exist, or is not accessible without authentication (private or gated). Please check the spelling of the dataset name or retry with authenti"
+  },
+  {
+   "rank": 243,
+   "id": "SZLHOLDINGS/killinchu-osint-corpus",
+   "sha": "29c8de68bfabee27557c19fc28b5dfab72ecc58d",
+   "downloads_30d": 138469,
+   "gated": false,
+   "license_tags": [
+    "license:other"
+   ],
+   "size_error": "HTTP 500 The server is busier than usual and the response is not ready yet. Please retry later."
+  },
+  {
+   "rank": 244,
+   "id": "Falcon79epok/symbion-multi-ohlcv",
+   "sha": "fd252a98d117751c7a1287c389983abd15504ec2",
+   "downloads_30d": 138370,
+   "gated": false,
+   "license_tags": [],
+   "size_error": "HTTP 500 The server is busier than usual and the response is not ready yet. Please retry later."
+  },
+  {
+   "rank": 245,
+   "id": "DL3DV/DL3DV-ALL-960P",
+   "sha": "abb4dab0d4b6d93c32e6d901c06c35bad03210fb",
+   "downloads_30d": 138260,
+   "gated": "auto",
+   "license_tags": [],
+   "size_error": "HTTP 401 The dataset does not exist, or is not accessible without authentication (private or gated). Please check the spelling of the dataset name or retry with authenti"
+  },
+  {
+   "rank": 246,
+   "id": "Narsil/image_dummy",
+   "sha": "c124571b5100f55549c6d62fd869a791f898cfc6",
+   "downloads_30d": 136770,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 2506,
+   "bytes_original": 498122,
+   "rows": 3,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 247,
+   "id": "wegrthj/kbcpjv-v654-data",
+   "sha": "850959def27fb085d9471b14c2a59d37c93c4126",
+   "downloads_30d": 136501,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 0,
+   "bytes_original": 0,
+   "rows": 0,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 248,
+   "id": "cadene/droid",
+   "sha": "c8fbc029c9786fd4377ea20d9535e86d88199c0f",
+   "downloads_30d": 136346,
+   "gated": false,
+   "license_tags": [
+    "license:apache-2.0"
+   ],
+   "bytes_parquet": 0,
+   "bytes_original": 0,
+   "rows": 0,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 249,
+   "id": "OpenMOSS-Team/OmniAction",
+   "sha": "4bf63e05313de71c988462a3c012f14b920a4d1b",
+   "downloads_30d": 136333,
+   "gated": false,
+   "license_tags": [
+    "license:cc-by-nc-4.0"
+   ],
+   "size_error": "HTTP 500 No (supported) data files found in OpenMOSS-Team/OmniAction"
+  },
+  {
+   "rank": 250,
+   "id": "spark-school/school-corpus",
+   "sha": "8fadd82804100d9dcecf19bfea73800a8ac39955",
+   "downloads_30d": 135913,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 0,
+   "bytes_original": 0,
+   "rows": 0,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 251,
+   "id": "Atesting1/webarena-env",
+   "sha": "d28451f44a6a05ed753fede8c70b0be91c0239d0",
+   "downloads_30d": 135865,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 0,
+   "bytes_original": 0,
+   "rows": 0,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 252,
+   "id": "zai-org/RPC-Bench",
+   "sha": "0259caeeeb958007d1b318a757c91c8f5c7ff46c",
+   "downloads_30d": 135368,
+   "gated": false,
+   "license_tags": [
+    "license:other"
+   ],
+   "bytes_parquet": 31775467,
+   "bytes_original": null,
+   "rows": 202731,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 253,
+   "id": "harborframework/terminal-bench-2.0",
+   "sha": "f2e8c75e23add71613117eecc9498f53bcd7e04e",
+   "downloads_30d": 134790,
+   "gated": false,
+   "license_tags": [
+    "license:apache-2.0"
+   ],
+   "size_error": "HTTP 500 Couldn't infer the same data file format for all splits. Got {NamedSplit('train'): ('webdataset', {}), NamedSplit('test'): (None, {})}"
+  },
+  {
+   "rank": 254,
+   "id": "wegrthj/l36l5h-qi9l-data",
+   "sha": "8e7e4422505a7a1c4f0f9b302800b1de8360078f",
+   "downloads_30d": 134338,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 0,
+   "bytes_original": 0,
+   "rows": 0,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 255,
+   "id": "hf-vision/course-assets",
+   "sha": "5e88de973e1bda37a7d8a6b98449c47d309f8927",
+   "downloads_30d": 133772,
+   "gated": false,
+   "license_tags": [
+    "license:apache-2.0"
+   ],
+   "bytes_parquet": 5834823,
+   "bytes_original": 5832395,
+   "rows": 6,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 256,
+   "id": "wildflow/sweet-corals",
+   "sha": "265724cf6f1a6453116f710c86d2dd32b6285c33",
+   "downloads_30d": 133355,
+   "gated": false,
+   "license_tags": [
+    "license:cc-by-4.0"
+   ],
+   "bytes_parquet": 5050667405,
+   "bytes_original": null,
+   "rows": 1200,
+   "rows_estimated": null,
+   "size_partial": true
+  },
+  {
+   "rank": 257,
+   "id": "sourlreapwr/RobotArena-Benchmark",
+   "sha": "f4b2e1da17a82a1988fa0fbb6a99b4abfcab0c59",
+   "downloads_30d": 133155,
+   "gated": "auto",
+   "license_tags": [
+    "license:cc-by-4.0"
+   ],
+   "size_error": "HTTP 401 The dataset does not exist, or is not accessible without authentication (private or gated). Please check the spelling of the dataset name or retry with authenti"
+  },
+  {
+   "rank": 258,
+   "id": "anisoleai/fineweb-tokenized",
+   "sha": "ef1311f460b42138d7a2d18f51e9cc38cedda089",
+   "downloads_30d": 132775,
+   "gated": false,
+   "license_tags": [
+    "license:odc-by"
+   ],
+   "bytes_parquet": 8157879640125,
+   "bytes_original": 8157879640125,
+   "rows": 4131984348623,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 259,
+   "id": "lyzenghq/zhongyangribao",
+   "sha": "c0422bed6a121c5d899fdd1817a4804efbd0634e",
+   "downloads_30d": 132024,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 0,
+   "bytes_original": null,
+   "rows": 213880,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 260,
+   "id": "ml-resources/tsinghua_topic_dataset",
+   "sha": "58bb8ff4b2814b491a31fb992b95180f68ae708a",
+   "downloads_30d": 131334,
+   "gated": false,
+   "license_tags": [
+    "license:apache-2.0"
+   ],
+   "size_error": "HTTP 501 Job has been terminated due to a temporary spike in resource usage and may be restarted later."
+  },
+  {
+   "rank": 261,
+   "id": "shi-labs/oneformer_demo",
+   "sha": "4d683bd5bf84e9c8b5537dce306230bde409fe89",
+   "downloads_30d": 129859,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 0,
+   "bytes_original": 0,
+   "rows": 0,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 262,
+   "id": "DL3DV/DL3DV-Benchmark",
+   "sha": "9684e8382278c5e18173c1e72bd246daf2874539",
+   "downloads_30d": 129758,
+   "gated": "auto",
+   "license_tags": [],
+   "size_error": "HTTP 401 The dataset does not exist, or is not accessible without authentication (private or gated). Please check the spelling of the dataset name or retry with authenti"
+  },
+  {
+   "rank": 263,
+   "id": "hotchpotch/s1mb-result",
+   "sha": "22998bf7dbc3b2224e72e21252a88b959d37dd66",
+   "downloads_30d": 129096,
+   "gated": false,
+   "license_tags": [
+    "license:other"
+   ],
+   "bytes_parquet": 0,
+   "bytes_original": 0,
+   "rows": 0,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 264,
+   "id": "visionhdstream/data-vision-02",
+   "sha": "de8843b13e6deeda5804d683c008cd78242a89ea",
+   "downloads_30d": 128429,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 11212,
+   "bytes_original": null,
+   "rows": 96,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 265,
+   "id": "nebius/SWE-rebench-V2",
+   "sha": "d7608f017a29ab256400ad4b73d5248d97204966",
+   "downloads_30d": 128196,
+   "gated": false,
+   "license_tags": [
+    "license:cc-by-4.0"
+   ],
+   "bytes_parquet": 428839266,
+   "bytes_original": 428839266,
+   "rows": 32079,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 266,
+   "id": "ahashanahmed/csv",
+   "sha": "5c26ea682e8847a36f2d22f335931146a548d43c",
+   "downloads_30d": 127760,
+   "gated": false,
+   "license_tags": [],
+   "size_error": "HTTP 500 The server is busier than usual and the response is not ready yet. Please retry later."
+  },
+  {
+   "rank": 267,
+   "id": "programbench/ProgramBench-Tests",
+   "sha": "5954a1957b5e0d770ec2c5523506abd212806315",
+   "downloads_30d": 127193,
+   "gated": false,
+   "license_tags": [
+    "license:mit"
+   ],
+   "bytes_parquet": 0,
+   "bytes_original": 0,
+   "rows": 0,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 268,
+   "id": "EssentialAI/essential-web-v1.0",
+   "sha": "ce4eccc7e9604667b6d7f32cb6274b8b41f3113d",
+   "downloads_30d": 127147,
+   "gated": false,
+   "license_tags": [
+    "license:odc-by"
+   ],
+   "bytes_parquet": 0,
+   "bytes_original": 0,
+   "rows": 0,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 269,
+   "id": "HuggingFaceM4/the_cauldron",
+   "sha": "847a98a779b1652d65111daf20c972dfcd333605",
+   "downloads_30d": 126516,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 168903960966,
+   "bytes_original": 168903960966,
+   "rows": 1880992,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 270,
+   "id": "Lichess/standard-chess-games",
+   "sha": "de4e636eddf568a9394cc01fb0b9e1da04a6babf",
+   "downloads_30d": 126314,
+   "gated": false,
+   "license_tags": [
+    "license:cc0-1.0"
+   ],
+   "bytes_parquet": 4938473321112,
+   "bytes_original": 4938473321112,
+   "rows": 7136017970,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 271,
+   "id": "a1557811266/Per-400k",
+   "sha": "bbb01675182feca1434ae3fbb97a9355d9337a25",
+   "downloads_30d": 125862,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 0,
+   "bytes_original": 0,
+   "rows": 0,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 272,
+   "id": "permutans/arxiv-papers-by-subject",
+   "sha": "1bfcc055550b6f648c19946844ab0cab482da685",
+   "downloads_30d": 125602,
+   "gated": false,
+   "license_tags": [
+    "license:mit"
+   ],
+   "bytes_parquet": 0,
+   "bytes_original": 0,
+   "rows": 0,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 273,
+   "id": "lyzenghq/banned-historical-archives",
+   "sha": "7d7ac37da551ec6ecf721e370ceef160cba132a4",
+   "downloads_30d": 124979,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 0,
+   "bytes_original": 0,
+   "rows": 0,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 274,
+   "id": "project-numina/olympiads",
+   "sha": "5486690cc16bc362d45b6db75bdd5c7a709ca574",
+   "downloads_30d": 124685,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 17569275,
+   "bytes_original": null,
+   "rows": 13088,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 275,
+   "id": "HuggingFaceCode/stack-v3-train",
+   "sha": "159792e76c98d74843d3be3fb003aad925e3a8f0",
+   "downloads_30d": 123766,
+   "gated": false,
+   "license_tags": [
+    "license:odc-by"
+   ],
+   "bytes_parquet": 3545642520539,
+   "bytes_original": 3545642520539,
+   "rows": 172801182,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 276,
+   "id": "MRSAudio/MRSAudio",
+   "sha": "31b322b6e0850a34a2b1ee1eaba0bdaef8a24d7a",
+   "downloads_30d": 123730,
+   "gated": false,
+   "license_tags": [
+    "license:cc-by-sa-4.0"
+   ],
+   "bytes_parquet": 3429906,
+   "bytes_original": null,
+   "rows": 246410,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 277,
+   "id": "Gourieff/ReActor",
+   "sha": "079e0e459cd4261bbcba8c71d47df54a4ded7642",
+   "downloads_30d": 123724,
+   "gated": false,
+   "license_tags": [
+    "license:mit"
+   ],
+   "size_error": "HTTP 501 Not supported: dataset viewer is disabled in Gourieff/ReActor configuration."
+  },
+  {
+   "rank": 278,
+   "id": "MJPansa/qwen38-eagle4-native-features-24m-20261026-f2638314",
+   "sha": "8c68e252df3cc3e0ce900c3c988a46c5dd85dccb",
+   "downloads_30d": 123666,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 0,
+   "bytes_original": 0,
+   "rows": 0,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 279,
+   "id": "ACERobotics/ACE-Data-0",
+   "sha": "490ef485529d2816746b9a9d5ea97fbba8205986",
+   "downloads_30d": 122224,
+   "gated": false,
+   "license_tags": [
+    "license:other"
+   ],
+   "size_error": "HTTP 501 Not supported: dataset viewer is disabled in ACERobotics/ACE-Data-0 configuration."
+  },
+  {
+   "rank": 280,
+   "id": "GokuScraper/seedance-2-prompts-datasets",
+   "sha": "66dacc5fd21062f9e078a6099b2ac817616a0717",
+   "downloads_30d": 122147,
+   "gated": false,
+   "license_tags": [
+    "license:cc-by-4.0"
+   ],
+   "bytes_parquet": 0,
+   "bytes_original": 0,
+   "rows": 0,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 281,
+   "id": "secemp9/arxiv-complete",
+   "sha": "cee894837962fede5612cccf2a4c7cacf49b4c3a",
+   "downloads_30d": 121720,
+   "gated": false,
+   "license_tags": [
+    "license:other"
+   ],
+   "bytes_parquet": 7426679912733,
+   "bytes_original": 7426679912733,
+   "rows": 127593477,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 282,
+   "id": "baber/piqa",
+   "sha": "142f6d7367fd9877f0fb3b5734ea6a545f54cdd1",
+   "downloads_30d": 121579,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 3434326,
+   "bytes_original": 3434326,
+   "rows": 21035,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 283,
+   "id": "BenchCAD/BenchCAD",
+   "sha": "5919f578ab09ec283603a082fab07c7639ab56eb",
+   "downloads_30d": 121341,
+   "gated": false,
+   "license_tags": [
+    "license:cc-by-4.0"
+   ],
+   "bytes_parquet": 893346451,
+   "bytes_original": 893346451,
+   "rows": 21048,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 284,
+   "id": "leggedrobotics/grand_tour_dataset",
+   "sha": "af6b6dd6f91696f8ec8c98134e195514834911b2",
+   "downloads_30d": 121099,
+   "gated": false,
+   "license_tags": [
+    "license:mit"
+   ],
+   "bytes_parquet": 0,
+   "bytes_original": 0,
+   "rows": 0,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 285,
+   "id": "huggingface/brand-assets",
+   "sha": "233827f481bf0f0f413795f1f3cd1b131f77e55a",
+   "downloads_30d": 120905,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 364832,
+   "bytes_original": 363657,
+   "rows": 4,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 286,
+   "id": "huylhn1810/aic_2025",
+   "sha": "fbe0ba5afd5d148d2aa226d72c99fbd160f4511e",
+   "downloads_30d": 120700,
+   "gated": false,
+   "license_tags": [],
+   "size_error": "HTTP 501 Job has been terminated due to a temporary spike in resource usage and may be restarted later."
+  },
+  {
+   "rank": 287,
+   "id": "BuLei/imgbed",
+   "sha": "0246341e1d246c09d10d5492e05f7194f71b3122",
+   "downloads_30d": 120060,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 87570,
+   "bytes_original": null,
+   "rows": 569,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 288,
+   "id": "nvidia/SAGE-10k",
+   "sha": "d425de49ff445fd3903d790a11461d23ffd0c7dd",
+   "downloads_30d": 119777,
+   "gated": false,
+   "license_tags": [
+    "license:apache-2.0"
+   ],
+   "bytes_parquet": 0,
+   "bytes_original": 0,
+   "rows": 0,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 289,
+   "id": "tahoebio/Tahoe-100M",
+   "sha": "349e2a55f5538a3e73b32a06c6bdd8e9e87011e8",
+   "downloads_30d": 119767,
+   "gated": false,
+   "license_tags": [
+    "license:cc0-1.0"
+   ],
+   "bytes_parquet": 428799919496,
+   "bytes_original": 428799919496,
+   "rows": 4286159337,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 290,
+   "id": "j-shen3/MAVOS-DD",
+   "sha": "2830596db44100ef90ff903efd1b48c62e66f5cf",
+   "downloads_30d": 119657,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 10741089,
+   "bytes_original": null,
+   "rows": 87038,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 291,
+   "id": "vaishaal/ImageNetV2",
+   "sha": "d626240be2538720e83103a0e1178d24aca8b12c",
+   "downloads_30d": 119481,
+   "gated": false,
+   "license_tags": [
+    "license:mit"
+   ],
+   "bytes_parquet": 3705446571,
+   "bytes_original": 3759913472,
+   "rows": 30000,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 292,
+   "id": "akshithio/arva",
+   "sha": "67eea27d3b5c1a921befcc1bb2ca168b5de99cb8",
+   "downloads_30d": 119419,
+   "gated": false,
+   "license_tags": [
+    "license:other"
+   ],
+   "size_error": "HTTP 500 No (supported) data files found in akshithio/arva"
+  },
+  {
+   "rank": 293,
+   "id": "l1997i/DurLAR_S",
+   "sha": "291a3db12ad1d76a82f1bb0b5a8fd65cd5faa1fc",
+   "downloads_30d": 118971,
+   "gated": false,
+   "license_tags": [
+    "license:cc-by-4.0"
+   ],
+   "bytes_parquet": 5273748686,
+   "bytes_original": null,
+   "rows": 12000,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 294,
+   "id": "behavior-1k/2025-challenge-demos",
+   "sha": "33639692425296185f245aaa648530178c7b3d2b",
+   "downloads_30d": 118739,
+   "gated": false,
+   "license_tags": [
+    "license:mit"
+   ],
+   "bytes_parquet": 0,
+   "bytes_original": 0,
+   "rows": 0,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 295,
+   "id": "zeyuanyin/Dome-Objaverse",
+   "sha": "d45c6d047679d1505a3fe65adecf36d7127f9433",
+   "downloads_30d": 118671,
+   "gated": false,
+   "license_tags": [
+    "license:cc-by-4.0"
+   ],
+   "size_error": "HTTP 501 Not supported: dataset viewer is disabled in zeyuanyin/Dome-Objaverse configuration."
+  },
+  {
+   "rank": 296,
+   "id": "cot-leaderboard/cot-eval-traces-2.0",
+   "sha": "204241e891a5cd99b40a3096b0f67e89f7349933",
+   "downloads_30d": 118627,
+   "gated": false,
+   "license_tags": [
+    "license:openrail"
+   ],
+   "bytes_parquet": 5298598431,
+   "bytes_original": 5298598431,
+   "rows": 3748714,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 297,
+   "id": "happyhackingspace/dit",
+   "sha": "9ffc04b123e664bf8fee958baa31072726c1479d",
+   "downloads_30d": 118088,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 0,
+   "bytes_original": 0,
+   "rows": 0,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 298,
+   "id": "markov-ai/cad-1000-hours",
+   "sha": "a8b90f4a75c7dc01ccd177aad177aca11573e137",
+   "downloads_30d": 117374,
+   "gated": false,
+   "license_tags": [
+    "license:cc-by-nc-4.0"
+   ],
+   "bytes_parquet": 0,
+   "bytes_original": 0,
+   "rows": 0,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 299,
+   "id": "rl-llm-wiki/knowledge-base",
+   "sha": "cd603d60bedc94147cafe9b476f6ca17320061a6",
+   "downloads_30d": 117073,
+   "gated": false,
+   "license_tags": [
+    "license:cc-by-4.0"
+   ],
+   "size_error": "HTTP 500 No (supported) data files found in rl-llm-wiki/knowledge-base"
+  },
+  {
+   "rank": 300,
+   "id": "EleutherAI/lambada_openai",
+   "sha": "900124bf3b8235c6daf21033af9948b3f07346c4",
+   "downloads_30d": 116846,
+   "gated": false,
+   "license_tags": [
+    "license:mit"
+   ],
+   "bytes_parquet": 7300889,
+   "bytes_original": 7300889,
+   "rows": 30918,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 301,
+   "id": "allenai/sciq",
+   "sha": "2c94ad3e1aafab77146f384e23536f97a4849815",
+   "downloads_30d": 116671,
+   "gated": false,
+   "license_tags": [
+    "license:cc-by-nc-3.0"
+   ],
+   "bytes_parquet": 4674410,
+   "bytes_original": 4674410,
+   "rows": 13679,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 302,
+   "id": "InnovatorLab/Innovator-VL-Instruct-46M",
+   "sha": "1e7bac4db314fcc99e43601632c6ad7de71b3a6c",
+   "downloads_30d": 116170,
+   "gated": false,
+   "license_tags": [
+    "license:mit"
+   ],
+   "bytes_parquet": 11339821499731,
+   "bytes_original": 11339821499731,
+   "rows": 46077178,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 303,
+   "id": "SWE-bench/SWE-bench_Verified",
+   "sha": "78f471bf655a3137b2e8a75af1501690ec009ec3",
+   "downloads_30d": 115677,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 6304616,
+   "bytes_original": 6304616,
+   "rows": 500,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 304,
+   "id": "bigcode/the-stack",
+   "sha": "153f6301d232928d7f90d09b37fceb4fadc2c950",
+   "downloads_30d": 114687,
+   "gated": "auto",
+   "license_tags": [
+    "license:other"
+   ],
+   "size_error": "HTTP 401 The dataset does not exist, or is not accessible without authentication (private or gated). Please check the spelling of the dataset name or retry with authenti"
+  },
+  {
+   "rank": 305,
+   "id": "Ritabrata04/masscount-cf",
+   "sha": "550977eee721d07b2a353db6afa0cf28349daecb",
+   "downloads_30d": 114532,
+   "gated": false,
+   "license_tags": [
+    "license:cc-by-4.0"
+   ],
+   "bytes_parquet": 0,
+   "bytes_original": 0,
+   "rows": 0,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 306,
+   "id": "openslr/librispeech_asr",
+   "sha": "71cacbfb7e2354c4226d01e70d77d5fca3d04ba1",
+   "downloads_30d": 114141,
+   "gated": false,
+   "license_tags": [
+    "license:cc-by-4.0"
+   ],
+   "bytes_parquet": 123675340604,
+   "bytes_original": 123675340604,
+   "rows": 584734,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 307,
+   "id": "SwayStar123/preprocessed_commoncatalog-cc-by",
+   "sha": "f3c9f1c6ef0cd52a877b2039b0665d7b71f01dd9",
+   "downloads_30d": 113603,
+   "gated": false,
+   "license_tags": [
+    "license:cc-by-4.0"
+   ],
+   "bytes_parquet": 267267847547,
+   "bytes_original": 267267847547,
+   "rows": 14581672,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 308,
+   "id": "fancyzhx/ag_news",
+   "sha": "eb185aade064a813bc0b7f42de02595523103ca4",
+   "downloads_30d": 113573,
+   "gated": false,
+   "license_tags": [
+    "license:unknown"
+   ],
+   "bytes_parquet": 19820267,
+   "bytes_original": 19820267,
+   "rows": 127600,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 309,
+   "id": "neigezhu/china-a-share-1min-ohlcv",
+   "sha": "ba589a11534825044fe5a6b84838f50ba8d8d188",
+   "downloads_30d": 113433,
+   "gated": false,
+   "license_tags": [
+    "license:apache-2.0"
+   ],
+   "bytes_parquet": 7429337,
+   "bytes_original": 7429337,
+   "rows": 540094,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 310,
+   "id": "jordangong/the-stack-v2-smollm3",
+   "sha": "506c7660a78acc5195fbf2ed6545ae309ee600d0",
+   "downloads_30d": 113046,
+   "gated": false,
+   "license_tags": [
+    "license:other"
+   ],
+   "bytes_parquet": 0,
+   "bytes_original": 0,
+   "rows": 0,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 311,
+   "id": "Thingi10K/Thingi10K",
+   "sha": "2d5d3b2f3cd3711028ad75b12788c13b25559ec6",
+   "downloads_30d": 111841,
+   "gated": false,
+   "license_tags": [],
+   "size_error": "HTTP 501 Not supported: dataset viewer is disabled in Thingi10K/Thingi10K configuration."
+  },
+  {
+   "rank": 312,
+   "id": "nvidia/Open-H-RF",
+   "sha": "4d1c88e8898a68f2d91e09c4b0259fc9638a72fc",
+   "downloads_30d": 111431,
+   "gated": false,
+   "license_tags": [
+    "license:cc-by-4.0"
+   ],
+   "size_error": "HTTP 501 Not supported: dataset viewer is disabled in nvidia/Open-H-RF configuration."
+  },
+  {
+   "rank": 313,
+   "id": "s17660101713/hagrid-subset",
+   "sha": "87f6d981c1701bcbfb5c7d4963677009fb560ec3",
+   "downloads_30d": 111356,
+   "gated": false,
+   "license_tags": [
+    "license:mit"
+   ],
+   "bytes_parquet": 22964710,
+   "bytes_original": null,
+   "rows": 154758,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 314,
+   "id": "actiquest-dev/tarakanov-notes",
+   "sha": "5d8e5190adee9e26e730d5a59c5f11a11c5b9cee",
+   "downloads_30d": 111245,
+   "gated": false,
+   "license_tags": [],
+   "size_error": "HTTP 500 The server is busier than usual and the response is not ready yet. Please retry later."
+  },
+  {
+   "rank": 315,
+   "id": "IFM/Math-Reasoning",
+   "sha": "e249295774c3a66943e1483dbf53e0c811bc41dd",
+   "downloads_30d": 110871,
+   "gated": false,
+   "license_tags": [
+    "license:apache-2.0"
+   ],
+   "bytes_parquet": 4462527215756,
+   "bytes_original": 4462527215756,
+   "rows": 2016081194,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 316,
+   "id": "nvidia/OpenMathInstruct-2",
+   "sha": "469216e3f46f4dacf476b382e192485ea51a143e",
+   "downloads_30d": 110204,
+   "gated": false,
+   "license_tags": [
+    "license:cc-by-4.0"
+   ],
+   "bytes_parquet": 12628023456,
+   "bytes_original": 12628023456,
+   "rows": 21972791,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 317,
+   "id": "MJPansa/qwen38-eagle4-native-features-37m-20261024-5277c167",
+   "sha": "f7ae65f242005141d28742753d16510356663439",
+   "downloads_30d": 110011,
+   "gated": false,
+   "license_tags": [
+    "license:other"
+   ],
+   "bytes_parquet": 5691152,
+   "bytes_original": null,
+   "rows": 21188,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 318,
+   "id": "scorpionjacketguy/physics-course-vids",
+   "sha": "5268a9f34f5202ad26fcc370bbf420ec1f9cfc32",
+   "downloads_30d": 109661,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 1327,
+   "bytes_original": null,
+   "rows": 2,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 319,
+   "id": "smol-course/images",
+   "sha": "ce9c68e6381265edb375ce362d2522f5703d74b5",
+   "downloads_30d": 109381,
+   "gated": false,
+   "license_tags": [
+    "license:apache-2.0"
+   ],
+   "bytes_parquet": 4384236,
+   "bytes_original": 4625000,
+   "rows": 9,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 320,
+   "id": "CQILAB/GenSC-6G",
+   "sha": "92b8d0788ad46455fee0b3e4eafb9433fbac2691",
+   "downloads_30d": 109259,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 6700735206,
+   "bytes_original": 6700735206,
+   "rows": 6149,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 321,
+   "id": "allenai/dolma3.5_pool",
+   "sha": "d2bf6ae7aeda502ff8c5eb5ad425b90ae2f10279",
+   "downloads_30d": 109174,
+   "gated": false,
+   "license_tags": [
+    "license:odc-by"
+   ],
+   "size_error": "HTTP 501 Job has been terminated due to a temporary spike in resource usage and may be restarted later."
+  },
+  {
+   "rank": 322,
+   "id": "Idavidrein/gpqa",
+   "sha": "83022cefff930aea54f654c0b282e74b9eeda5c6",
+   "downloads_30d": 108932,
+   "gated": "auto",
+   "license_tags": [
+    "license:cc-by-4.0"
+   ],
+   "size_error": "HTTP 401 The dataset does not exist, or is not accessible without authentication (private or gated). Please check the spelling of the dataset name or retry with authenti"
+  },
+  {
+   "rank": 323,
+   "id": "harborframework/terminal-bench-science",
+   "sha": "3fa37d3e709a156f5e61e0c6f03d110362172a12",
+   "downloads_30d": 108474,
+   "gated": false,
+   "license_tags": [
+    "license:apache-2.0"
+   ],
+   "bytes_parquet": 462370,
+   "bytes_original": null,
+   "rows": 70,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 324,
+   "id": "nmasi/era5",
+   "sha": "b673f560d8e8a91e6aba312b26b17e755c004b08",
+   "downloads_30d": 108088,
+   "gated": false,
+   "license_tags": [],
+   "size_error": "HTTP 500 No (supported) data files found in nmasi/era5"
+  },
+  {
+   "rank": 325,
+   "id": "hf-internal-testing/librispeech_asr_dummy",
+   "sha": "5be91486e11a2d616f4ec5db8d3fd248585ac07a",
+   "downloads_30d": 107942,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 9192059,
+   "bytes_original": 9192059,
+   "rows": 73,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 326,
+   "id": "lmms-lab/LLaVA-Video-178K",
+   "sha": "6d8c562dc26d70042a0d9704d1cae58c94b89098",
+   "downloads_30d": 107390,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 645286834,
+   "bytes_original": null,
+   "rows": 1627017,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 327,
+   "id": "ybisk/piqa",
+   "sha": "2e8ac2dffd59bac8c3c6714948f4c551a0848bb0",
+   "downloads_30d": 107126,
+   "gated": false,
+   "license_tags": [
+    "license:unknown"
+   ],
+   "size_error": "HTTP 501 The dataset viewer doesn't support this dataset because it runs arbitrary Python code. You can convert it to a Parquet data-only dataset by using the convert_to"
+  },
+  {
+   "rank": 328,
+   "id": "autogluon/fev_datasets",
+   "sha": "d3e7e720f4158eab03ebcb021f1cce779cd92acc",
+   "downloads_30d": 107050,
+   "gated": false,
+   "license_tags": [
+    "license:other"
+   ],
+   "bytes_parquet": 657543355,
+   "bytes_original": 657543355,
+   "rows": 127866,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 329,
+   "id": "jzr99/mesh4d_dataset",
+   "sha": "b735f4b301e4466915235c735a6b7154b43cebaa",
+   "downloads_30d": 106890,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 14084533,
+   "bytes_original": null,
+   "rows": 101791,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 330,
+   "id": "applied-ai-018/pretraining_v1-omega",
+   "sha": "1259edf8cf91738a1d46e1e8da3b4508a1eb6af1",
+   "downloads_30d": 106699,
+   "gated": false,
+   "license_tags": [],
+   "size_error": "HTTP 500 No (supported) data files found in applied-ai-018/pretraining_v1-omega"
+  },
+  {
+   "rank": 331,
+   "id": "raushan-testing-hf/videos-test",
+   "sha": "4cba700bd771f44d72b549253da025c32e944d42",
+   "downloads_30d": 106602,
+   "gated": false,
+   "license_tags": [
+    "license:apache-2.0"
+   ],
+   "bytes_parquet": 1882,
+   "bytes_original": null,
+   "rows": 7,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 332,
+   "id": "allenai/MolmoAct2-BimanualYAM-Dataset",
+   "sha": "e9f21ae15074330839f2ac25ed4b49d76dfa1f9c",
+   "downloads_30d": 106023,
+   "gated": false,
+   "license_tags": [
+    "license:apache-2.0"
+   ],
+   "bytes_parquet": 3284795948,
+   "bytes_original": 3284795948,
+   "rows": 76046658,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 333,
+   "id": "Robeedau/airlens-live",
+   "sha": "43704d756c22f49b3d2726b6155261dfeb73813d",
+   "downloads_30d": 105948,
+   "gated": false,
+   "license_tags": [
+    "license:other"
+   ],
+   "bytes_parquet": 77177933,
+   "bytes_original": null,
+   "rows": 1114120,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 334,
+   "id": "truthfulqa/truthful_qa",
+   "sha": "741b8276f2d1982aa3d5b832d3ee81ed3b896490",
+   "downloads_30d": 105667,
+   "gated": false,
+   "license_tags": [
+    "license:apache-2.0"
+   ],
+   "bytes_parquet": 493682,
+   "bytes_original": 493682,
+   "rows": 1634,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 335,
+   "id": "penfever/cvebench-harbor",
+   "sha": "a1b8dc635697a9a7171815a3fd8e098ae67e7fe2",
+   "downloads_30d": 105497,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 64562,
+   "bytes_original": null,
+   "rows": 80,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 336,
+   "id": "jamesqijingsong/zidian",
+   "sha": "83da951223ace0fa77d32be0887415b81046b243",
+   "downloads_30d": 105407,
+   "gated": false,
+   "license_tags": [
+    "license:cc-by-nc-4.0"
+   ],
+   "bytes_parquet": 746065577,
+   "bytes_original": 745935683,
+   "rows": 8614,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 337,
+   "id": "manhdungcr7/aic2026-keyframes",
+   "sha": "7349100eb7ce7969a33bfb6596ab8a84d5b37fa8",
+   "downloads_30d": 105332,
+   "gated": false,
+   "license_tags": [],
+   "size_error": "HTTP 501 Job has been terminated due to a temporary spike in resource usage and may be restarted later."
+  },
+  {
+   "rank": 338,
+   "id": "bop-benchmark/hot3d",
+   "sha": "30fe9674782f32e1e5edba98476b6ff4300132c5",
+   "downloads_30d": 104727,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 10080060128,
+   "bytes_original": null,
+   "rows": 17000,
+   "rows_estimated": 767718,
+   "size_partial": true
+  },
+  {
+   "rank": 339,
+   "id": "ZTWHHH/envs_1",
+   "sha": "eb9643f6e2b72d32ed33ef8d7db78570a060520f",
+   "downloads_30d": 104496,
+   "gated": false,
+   "license_tags": [],
+   "size_error": "HTTP 500 Couldn't infer the same data file format for all splits. Got {NamedSplit('train'): (None, {}), NamedSplit('validation'): (None, {}), NamedSplit('test'): ('text'"
+  },
+  {
+   "rank": 340,
+   "id": "genrobot2025/10Kh-RealOmin-OpenData",
+   "sha": "fcbc0d38550e134f273426aa7c9cc2b491270bc4",
+   "downloads_30d": 104051,
+   "gated": "auto",
+   "license_tags": [
+    "license:cc-by-sa-4.0"
+   ],
+   "size_error": "HTTP 401 The dataset does not exist, or is not accessible without authentication (private or gated). Please check the spelling of the dataset name or retry with authenti"
+  },
+  {
+   "rank": 341,
+   "id": "Voxel51/PIDray",
+   "sha": "4c30154c7337b03e8988d6e50adfaf3e0332909f",
+   "downloads_30d": 103905,
+   "gated": false,
+   "license_tags": [
+    "license:apache-2.0"
+   ],
+   "bytes_parquet": 2672361854,
+   "bytes_original": 2673001884,
+   "rows": 9483,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 342,
+   "id": "pmchard/3D-ADAM",
+   "sha": "ed7530023e03173d304b7d6ab51a6ee4796ba7f7",
+   "downloads_30d": 103777,
+   "gated": false,
+   "license_tags": [
+    "license:cc-by-nc-sa-4.0"
+   ],
+   "bytes_parquet": 4908563196,
+   "bytes_original": null,
+   "rows": 9000,
+   "rows_estimated": null,
+   "size_partial": true
+  },
+  {
+   "rank": 343,
+   "id": "Yshh525/rho-internalize-v1-20261021",
+   "sha": "084958e0c83338ec500e030d976534693c4f239a",
+   "downloads_30d": 103712,
+   "gated": false,
+   "license_tags": [
+    "license:cc-by-nc-4.0"
+   ],
+   "bytes_parquet": 0,
+   "bytes_original": 0,
+   "rows": 0,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 344,
+   "id": "EleutherAI/wikitext_document_level",
+   "sha": "647234772b9554e208af6c826f23b99e3cac88c8",
+   "downloads_30d": 103436,
+   "gated": false,
+   "license_tags": [
+    "license:cc-by-sa-3.0"
+   ],
+   "bytes_parquet": 624630494,
+   "bytes_original": 624630494,
+   "rows": 60634,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 345,
+   "id": "laion/small-overlapping-speech-bench",
+   "sha": "ff83755c3dc4967732956337e4c5036070a5f68e",
+   "downloads_30d": 103397,
+   "gated": false,
+   "license_tags": [
+    "license:cc-by-4.0"
+   ],
+   "bytes_parquet": 33367045,
+   "bytes_original": 33391873,
+   "rows": 100,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 346,
+   "id": "zh19990906/hagrid-subset",
+   "sha": "04635e8ca700cd9576f15271e504a9aa5f05eef9",
+   "downloads_30d": 103145,
+   "gated": false,
+   "license_tags": [
+    "license:mit"
+   ],
+   "bytes_parquet": 22642767,
+   "bytes_original": null,
+   "rows": 154758,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 347,
+   "id": "semianalysisai/cc-traces-weka-062126",
+   "sha": "23f152f6f0f9399a85901b89a6458def0ef16729",
+   "downloads_30d": 102949,
+   "gated": false,
+   "license_tags": [
+    "license:apache-2.0"
+   ],
+   "bytes_parquet": 1846598237,
+   "bytes_original": null,
+   "rows": 393,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 348,
+   "id": "sagels/new-dataset",
+   "sha": "058d5e788d253ef1163393a670ad73d0fd7d1114",
+   "downloads_30d": 102717,
+   "gated": false,
+   "license_tags": [
+    "license:apache-2.0"
+   ],
+   "size_error": "HTTP 500 The server is busier than usual and the response is not ready yet. Please retry later."
+  },
+  {
+   "rank": 349,
+   "id": "ekal1337/helloworld123",
+   "sha": "321c2ed0649d13ea29ae3ac622b788c52aac3141",
+   "downloads_30d": 102684,
+   "gated": false,
+   "license_tags": [],
+   "size_error": "HTTP 500 No (supported) data files found in ekal1337/helloworld123"
+  },
+  {
+   "rank": 350,
+   "id": "open-index/hacker-news",
+   "sha": "c54ced5973b95d80cd934b8921f44ec8d87c3cd1",
+   "downloads_30d": 102323,
+   "gated": false,
+   "license_tags": [
+    "license:odc-by"
+   ],
+   "bytes_parquet": 0,
+   "bytes_original": 0,
+   "rows": 0,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 351,
+   "id": "espnet/yodas",
+   "sha": "0cad6a0ebec75e945fef92084052be69457fe9d1",
+   "downloads_30d": 101264,
+   "gated": false,
+   "license_tags": [
+    "license:cc-by-3.0"
+   ],
+   "size_error": "HTTP 500 Cannot get the config names for the dataset."
+  },
+  {
+   "rank": 352,
+   "id": "daimonrobotics/Daimon-Infinity",
+   "sha": "a0e39d60a804de53a57177cd5d277d2e4b1e23dc",
+   "downloads_30d": 101075,
+   "gated": false,
+   "license_tags": [
+    "license:cc-by-nc-sa-4.0"
+   ],
+   "bytes_parquet": 1132798,
+   "bytes_original": null,
+   "rows": 4929,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 353,
+   "id": "nvidia/video-to-data-robot-dexterity-task-library-and-dataset",
+   "sha": "2376c2eb477685ac5da47d3b634fbed31c0ccef5",
+   "downloads_30d": 101006,
+   "gated": false,
+   "license_tags": [
+    "license:cc-by-4.0"
+   ],
+   "bytes_parquet": 0,
+   "bytes_original": 0,
+   "rows": 0,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 354,
+   "id": "wegrthj/kbcpjv-qi9l-raw",
+   "sha": "aa9e487de29facba4034463c701b25978b4161f8",
+   "downloads_30d": 100127,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 0,
+   "bytes_original": 0,
+   "rows": 0,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 355,
+   "id": "tienmanh93/MDC",
+   "sha": "10776c708549d09d578e643a6f1c44858fddc5df",
+   "downloads_30d": 99941,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 50114,
+   "bytes_original": null,
+   "rows": 310,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 356,
+   "id": "Forithmus/MR-RATE",
+   "sha": "f6e39794e7820c96c18465231a30da424e6d1c69",
+   "downloads_30d": 99200,
+   "gated": "auto",
+   "license_tags": [
+    "license:cc-by-nc-sa-4.0"
+   ],
+   "size_error": "HTTP 401 The dataset does not exist, or is not accessible without authentication (private or gated). Please check the spelling of the dataset name or retry with authenti"
+  },
+  {
+   "rank": 357,
+   "id": "zhangtao-whu/sam_tfrecords",
+   "sha": "6e789e6c57f34a47aaeab05a0d3b39cc558acf19",
+   "downloads_30d": 99145,
+   "gated": false,
+   "license_tags": [],
+   "size_error": "HTTP 500 No (supported) data files found in zhangtao-whu/sam_tfrecords"
+  },
+  {
+   "rank": 358,
+   "id": "erickfm/slippi-public-dataset-v3.7",
+   "sha": "c82be5f6e43f3388555cfe0cf8652580601f396d",
+   "downloads_30d": 98710,
+   "gated": false,
+   "license_tags": [
+    "license:cc0-1.0"
+   ],
+   "size_error": "HTTP 500 No (supported) data files found in erickfm/slippi-public-dataset-v3.7"
+  },
+  {
+   "rank": 359,
+   "id": "HuggingFaceM4/FineVision",
+   "sha": "3c380a731a3429c1d04693d6ec16d7e683def84c",
+   "downloads_30d": 97725,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 4485346767688,
+   "bytes_original": null,
+   "rows": 24209105,
+   "rows_estimated": 24242174,
+   "size_partial": true
+  },
+  {
+   "rank": 360,
+   "id": "livecodebench/code_generation_lite",
+   "sha": "0fe84c3912ea0c4d4a78037083943e8f0c4dd505",
+   "downloads_30d": 97723,
+   "gated": false,
+   "license_tags": [
+    "license:cc"
+   ],
+   "size_error": "HTTP 500 Cannot get the config names for the dataset."
+  },
+  {
+   "rank": 361,
+   "id": "nkp37/OpenVid-1M",
+   "sha": "d8a63bd22989c80b5734ec2bb989f4e1b61a5807",
+   "downloads_30d": 97552,
+   "gated": false,
+   "license_tags": [
+    "license:cc-by-4.0"
+   ],
+   "bytes_parquet": 0,
+   "bytes_original": 0,
+   "rows": 0,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 362,
+   "id": "LejuRobotics/LET-Base-Dataset",
+   "sha": "e484380461ef32aa436cf3ac8425748754d30a5b",
+   "downloads_30d": 97451,
+   "gated": false,
+   "license_tags": [
+    "license:cc-by-nc-sa-4.0"
+   ],
+   "bytes_parquet": 0,
+   "bytes_original": 0,
+   "rows": 0,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 363,
+   "id": "chuqiaoLyu/Xspark-HumanTouch",
+   "sha": "81822a10cac5def2638db546eaeced581d71a8b5",
+   "downloads_30d": 97222,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 8533684,
+   "bytes_original": null,
+   "rows": 52826,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 364,
+   "id": "RealmanRobot/RealSource-World",
+   "sha": "7b9a1667ba69032404f5299eba0837be68da16c7",
+   "downloads_30d": 95745,
+   "gated": "auto",
+   "license_tags": [
+    "license:cc-by-nc-sa-4.0"
+   ],
+   "size_error": "HTTP 401 The dataset does not exist, or is not accessible without authentication (private or gated). Please check the spelling of the dataset name or retry with authenti"
+  },
+  {
+   "rank": 365,
+   "id": "HenryYHW/ADAS-TO",
+   "sha": "7696e8364ed81428a843dd21afb9cf2130ae9d0b",
+   "downloads_30d": 95432,
+   "gated": "manual",
+   "license_tags": [
+    "license:cc-by-nc-4.0"
+   ],
+   "size_error": "HTTP 401 The dataset does not exist, or is not accessible without authentication (private or gated). Please check the spelling of the dataset name or retry with authenti"
+  },
+  {
+   "rank": 366,
+   "id": "yuanm1135/DSERT-RoLL",
+   "sha": "94ff7d31fc403d6f9f1e180ee833c1e0cd418e6b",
+   "downloads_30d": 94887,
+   "gated": false,
+   "license_tags": [
+    "license:cc-by-4.0"
+   ],
+   "bytes_parquet": 0,
+   "bytes_original": 0,
+   "rows": 0,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 367,
+   "id": "yhx91zdl/music",
+   "sha": "ef60372ce7fe8a75e0aba109bb53be44eb5d0b3f",
+   "downloads_30d": 94848,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 356937,
+   "bytes_original": null,
+   "rows": 2304,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 368,
+   "id": "neashton/drivaerml",
+   "sha": "5d448b209bf654503c64ce7261c34fa125f46392",
+   "downloads_30d": 94669,
+   "gated": false,
+   "license_tags": [
+    "license:cc-by-sa-4.0"
+   ],
+   "size_error": "HTTP 501 Not supported: dataset viewer is disabled in neashton/drivaerml configuration."
+  },
+  {
+   "rank": 369,
+   "id": "HubLabs/HubEgo-100K",
+   "sha": "7a632f536f19e0b48e7b7adbd97f5c3f0b666f35",
+   "downloads_30d": 94225,
+   "gated": "auto",
+   "license_tags": [
+    "license:cc-by-4.0"
+   ],
+   "size_error": "HTTP 401 The dataset does not exist, or is not accessible without authentication (private or gated). Please check the spelling of the dataset name or retry with authenti"
+  },
+  {
+   "rank": 370,
+   "id": "clip-benchmark/wds_objectnet",
+   "sha": "62c19009d5b2ce97eb7e044c3252624665f6ec38",
+   "downloads_30d": 93974,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 5185285547,
+   "bytes_original": null,
+   "rows": 1300,
+   "rows_estimated": null,
+   "size_partial": true
+  },
+  {
+   "rank": 371,
+   "id": "ceval/ceval-exam",
+   "sha": "617524a00b307ff6f9933702f724131fe12ca7ce",
+   "downloads_30d": 93833,
+   "gated": false,
+   "license_tags": [
+    "license:cc-by-nc-sa-4.0"
+   ],
+   "bytes_parquet": 3695960,
+   "bytes_original": 3695960,
+   "rows": 13948,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 372,
+   "id": "mandarjoshi/trivia_qa",
+   "sha": "0f7faf33a3908546c6fd5b73a660e0f8ff173c2f",
+   "downloads_30d": 93474,
+   "gated": false,
+   "license_tags": [
+    "license:unknown"
+   ],
+   "bytes_parquet": 34780579138,
+   "bytes_original": 34780579138,
+   "rows": 913686,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 373,
+   "id": "builddotai/Egocentric-10K",
+   "sha": "3e5f87c88c54ce8343865d8e2a8c171f18385a05",
+   "downloads_30d": 93452,
+   "gated": "auto",
+   "license_tags": [
+    "license:apache-2.0"
+   ],
+   "size_error": "HTTP 401 The dataset does not exist, or is not accessible without authentication (private or gated). Please check the spelling of the dataset name or retry with authenti"
+  },
+  {
+   "rank": 374,
+   "id": "trl-internal-testing/zen",
+   "sha": "47aee340f33dd6161e2baa618240b8514666c822",
+   "downloads_30d": 93301,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 64473,
+   "bytes_original": 64473,
+   "rows": 266,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 375,
+   "id": "openclimatefix/dwd-icon-global",
+   "sha": "00266df181ed9995d5d8febd9fee3c4e2679e1ef",
+   "downloads_30d": 92683,
+   "gated": "auto",
+   "license_tags": [
+    "license:cc-by-4.0"
+   ],
+   "size_error": "HTTP 401 The dataset does not exist, or is not accessible without authentication (private or gated). Please check the spelling of the dataset name or retry with authenti"
+  },
+  {
+   "rank": 376,
+   "id": "Jetbard/tmx-feed-g9nh5j",
+   "sha": "d3a4f09f544fbd9957e2808d2cfcc22875c5dadb",
+   "downloads_30d": 92455,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 0,
+   "bytes_original": 0,
+   "rows": 0,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 377,
+   "id": "HRDexDB/HRDexDB",
+   "sha": "cf972925eab6645202b53e79385ea5ce84c787a6",
+   "downloads_30d": 92233,
+   "gated": false,
+   "license_tags": [
+    "license:cc-by-nc-4.0"
+   ],
+   "bytes_parquet": 519671,
+   "bytes_original": 519671,
+   "rows": 50863,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 378,
+   "id": "MMMU/MMMU",
+   "sha": "876ce5cb130f7f7e290ce4d9984357737d4db5cf",
+   "downloads_30d": 92192,
+   "gated": false,
+   "license_tags": [
+    "license:apache-2.0"
+   ],
+   "bytes_parquet": 3655862232,
+   "bytes_original": 3655862232,
+   "rows": 11550,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 379,
+   "id": "malcolmrey/samples",
+   "sha": "e45b80acbe9f15a2728616d886125700737661ec",
+   "downloads_30d": 92169,
+   "gated": false,
+   "license_tags": [
+    "license:cc0-1.0"
+   ],
+   "bytes_parquet": 1211447,
+   "bytes_original": null,
+   "rows": 9923,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 380,
+   "id": "disco-eth/EuroSpeech",
+   "sha": "7a55bbcee3933f5d9817bb2d4c37399d596f543d",
+   "downloads_30d": 91929,
+   "gated": false,
+   "license_tags": [
+    "license:other"
+   ],
+   "bytes_parquet": 5640606774703,
+   "bytes_original": 5640606774703,
+   "rows": 12263228,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 381,
+   "id": "Efficient-Large-Model/Sana-assets",
+   "sha": "1a95af6fb9c7c5e20e12ace64928322f430304c1",
+   "downloads_30d": 91614,
+   "gated": false,
+   "license_tags": [
+    "license:mit"
+   ],
+   "size_error": "HTTP 500 Couldn't infer the same data file format for all splits. Got {NamedSplit('train'): ('videofolder', {}), NamedSplit('validation'): ('pdffolder', {})}"
+  },
+  {
+   "rank": 382,
+   "id": "unitxt/data",
+   "sha": "bc8a70432205f6beb7ad5373b5167076542f20b4",
+   "downloads_30d": 91578,
+   "gated": false,
+   "license_tags": [],
+   "size_error": "HTTP 500 Cannot get the config names for the dataset."
+  },
+  {
+   "rank": 383,
+   "id": "superkaiba1/explore-persona-space-data",
+   "sha": "f97e70565579ff9cc3f6d3076f3f14d90a793a46",
+   "downloads_30d": 91543,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 0,
+   "bytes_original": 0,
+   "rows": 0,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 384,
+   "id": "updatebao/country",
+   "sha": "fd3bd4cb9988bbc88b5f5e457930908dc88935e0",
+   "downloads_30d": 91525,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 589713600,
+   "bytes_original": 592213301,
+   "rows": 7491,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 385,
+   "id": "xlangai/recommendation",
+   "sha": "29d0ef70124b152b1eb198974ac29b59609422e8",
+   "downloads_30d": 91447,
+   "gated": false,
+   "license_tags": [],
+   "size_error": "HTTP 500 Couldn't infer the same data file format for all splits. Got {NamedSplit('train'): ('videofolder', {}), NamedSplit('validation'): ('json', {}), NamedSplit('test"
+  },
+  {
+   "rank": 386,
+   "id": "ILSVRC/imagenet-1k",
+   "sha": "49e2ee26f3810fb5a7536bbf732a7b07389a47b5",
+   "downloads_30d": 91116,
+   "gated": "auto",
+   "license_tags": [
+    "license:other"
+   ],
+   "size_error": "HTTP 401 The dataset does not exist, or is not accessible without authentication (private or gated). Please check the spelling of the dataset name or retry with authenti"
+  },
+  {
+   "rank": 387,
+   "id": "cfilt/IITB-IndicMonoDoc",
+   "sha": "6d5ca366f1f846c68cbf63444cbcf42918683dc3",
+   "downloads_30d": 91088,
+   "gated": false,
+   "license_tags": [
+    "license:cc-by-4.0"
+   ],
+   "size_error": "HTTP 501 Not supported: dataset viewer is disabled in cfilt/IITB-IndicMonoDoc configuration."
+  },
+  {
+   "rank": 388,
+   "id": "allenai/dolma3_mix-6T-1025-7B",
+   "sha": "2ca900fbe14e86c5c83d064d9f0882f1c0b8c05b",
+   "downloads_30d": 90956,
+   "gated": false,
+   "license_tags": [
+    "license:odc-by"
+   ],
+   "bytes_parquet": 2382456084,
+   "bytes_original": null,
+   "rows": 484455,
+   "rows_estimated": 1348014992,
+   "size_partial": true
+  },
+  {
+   "rank": 389,
+   "id": "picbreeder-vlm/picbreeder-vlm-archive",
+   "sha": "370e000b97e398345bc70505a180c12ba69f3dfc",
+   "downloads_30d": 90932,
+   "gated": false,
+   "license_tags": [
+    "license:cc-by-nc-4.0"
+   ],
+   "bytes_parquet": 1034233776,
+   "bytes_original": 1034233776,
+   "rows": 263596,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 390,
+   "id": "khtao/OpenMind",
+   "sha": "b00fb4b5f21bfaae7b5626e25a4de2f5a3a45c1c",
+   "downloads_30d": 90329,
+   "gated": false,
+   "license_tags": [
+    "license:cc-by-4.0"
+   ],
+   "bytes_parquet": 0,
+   "bytes_original": null,
+   "rows": 238,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 391,
+   "id": "rytfh/edtyhgv",
+   "sha": "e05bd05f296e305f8940e36c3da233b8e91f51ec",
+   "downloads_30d": 89891,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 0,
+   "bytes_original": 0,
+   "rows": 0,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 392,
+   "id": "zekaiwang/trex_dataset",
+   "sha": "8b478400a9167d59ede0fdbfea616cb5e9791885",
+   "downloads_30d": 89611,
+   "gated": false,
+   "license_tags": [
+    "license:mit"
+   ],
+   "bytes_parquet": 3664038362,
+   "bytes_original": 3664038362,
+   "rows": 5478923,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 393,
+   "id": "theairlabcmu/tartanair2",
+   "sha": "0d2d145e973832742a2aaa04b7d2ebffc8d82817",
+   "downloads_30d": 89523,
+   "gated": false,
+   "license_tags": [
+    "license:bsd-3-clause"
+   ],
+   "bytes_parquet": 0,
+   "bytes_original": 0,
+   "rows": 0,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 394,
+   "id": "FineEnvs/SmolDataEnvs",
+   "sha": "6c439f075cf550793b1bfd7b887a41e51f3b23ab",
+   "downloads_30d": 89498,
+   "gated": false,
+   "license_tags": [
+    "license:mit"
+   ],
+   "bytes_parquet": 1130699,
+   "bytes_original": 1130699,
+   "rows": 5394,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 395,
+   "id": "nvidia/RFD4-Proteina",
+   "sha": "95a7d244d64343de40784ecb9238ef9de4e0db37",
+   "downloads_30d": 89444,
+   "gated": false,
+   "license_tags": [
+    "license:cc-by-4.0"
+   ],
+   "bytes_parquet": 3422511585,
+   "bytes_original": 3422511585,
+   "rows": 75798880,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 396,
+   "id": "tatsu-lab/alpaca",
+   "sha": "dce01c9b08f87459cf36a430d809084718273017",
+   "downloads_30d": 89259,
+   "gated": false,
+   "license_tags": [
+    "license:cc-by-nc-4.0"
+   ],
+   "bytes_parquet": 24246638,
+   "bytes_original": 24246638,
+   "rows": 52002,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 397,
+   "id": "society-ethics/stable-bias-generations",
+   "sha": "46f705e4b0f9274e199339f37f5f49d6abcad5e5",
+   "downloads_30d": 89147,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 0,
+   "bytes_original": 0,
+   "rows": 0,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 398,
+   "id": "japanese-asr/whisper_transcriptions.reazon_speech_all",
+   "sha": "96995b6abe6f447be95f4d6b7daa36476b809b46",
+   "downloads_30d": 89133,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 2519800396170,
+   "bytes_original": 2519800396170,
+   "rows": 17347033,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 399,
+   "id": "yifengzhu-hf/LIBERO-datasets",
+   "sha": "f13aa24a3da8c43c7225569f28c562979fa0e35a",
+   "downloads_30d": 88984,
+   "gated": false,
+   "license_tags": [
+    "license:apache-2.0"
+   ],
+   "size_error": "HTTP 500 No (supported) data files found in yifengzhu-hf/LIBERO-datasets"
+  },
+  {
+   "rank": 400,
+   "id": "HuggingFaceFW/finepdfs",
+   "sha": "220bac3acbf07789502c621d2d33952f51ac7f86",
+   "downloads_30d": 88863,
+   "gated": false,
+   "license_tags": [
+    "license:odc-by"
+   ],
+   "bytes_parquet": 5375306119709,
+   "bytes_original": 5375306119709,
+   "rows": 476178356,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 401,
+   "id": "vincewin/CREST_data",
+   "sha": "6c8c52841b343a714361db145b24ddbbf3334649",
+   "downloads_30d": 88638,
+   "gated": false,
+   "license_tags": [
+    "license:cc-by-4.0"
+   ],
+   "size_error": "HTTP 500 The server is busier than usual and the response is not ready yet. Please retry later."
+  },
+  {
+   "rank": 402,
+   "id": "tau/commonsense_qa",
+   "sha": "94630fe30dad47192a8546eb75f094926d47e155",
+   "downloads_30d": 88497,
+   "gated": false,
+   "license_tags": [
+    "license:mit"
+   ],
+   "bytes_parquet": 1558570,
+   "bytes_original": 1558570,
+   "rows": 12102,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 403,
+   "id": "anfera236/HHDC",
+   "sha": "d0c7dc6a218f0e2c2afdfcb05afdb31b25d11263",
+   "downloads_30d": 88398,
+   "gated": false,
+   "license_tags": [
+    "license:cc-by-4.0"
+   ],
+   "bytes_parquet": 4642822201,
+   "bytes_original": 4642822201,
+   "rows": 89336,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 404,
+   "id": "DeepSeekOracle/lattice-marines-wins",
+   "sha": "d1c0f07629195cebfbc6f35d9705b3783175165b",
+   "downloads_30d": 88384,
+   "gated": false,
+   "license_tags": [
+    "license:mit"
+   ],
+   "bytes_parquet": 0,
+   "bytes_original": 0,
+   "rows": 0,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 405,
+   "id": "Genesis-Intelligence/assets",
+   "sha": "d571c25abb363a5facc603b7f6be62e6e0ad46da",
+   "downloads_30d": 88270,
+   "gated": false,
+   "license_tags": [
+    "license:mit"
+   ],
+   "bytes_parquet": 34400,
+   "bytes_original": null,
+   "rows": 238,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 406,
+   "id": "mm-eval/ZeroBench",
+   "sha": "a582a7af3029f4ad252206b3ff9c6c4d4eb5182c",
+   "downloads_30d": 88215,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 258411325,
+   "bytes_original": 258411325,
+   "rows": 434,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 407,
+   "id": "hanchong/synthetic-infrared-maritime-vessel-dataset-flux2klein",
+   "sha": "487006c07cea133291f7b9d4fb8cd93f80cf7dd6",
+   "downloads_30d": 88028,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 29287752,
+   "bytes_original": null,
+   "rows": 174200,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 408,
+   "id": "predict-quant/poly-btc-orderbook",
+   "sha": "421f01c5a172942547302c05c5f8a957746a681d",
+   "downloads_30d": 87892,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 0,
+   "bytes_original": 0,
+   "rows": 0,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 409,
+   "id": "zmodelerlover/amd-nr",
+   "sha": "5bb7ed4c76b0f88acb30d24f7d6e953fd81203ed",
+   "downloads_30d": 87685,
+   "gated": false,
+   "license_tags": [],
+   "size_error": "HTTP 500 No (supported) data files found in zmodelerlover/amd-nr"
+  },
+  {
+   "rank": 410,
+   "id": "yaak-ai/L2D",
+   "sha": "cc09487951af469a14ea22108b64c3b9e6cb717d",
+   "downloads_30d": 87555,
+   "gated": false,
+   "license_tags": [
+    "license:apache-2.0"
+   ],
+   "bytes_parquet": 1163833247,
+   "bytes_original": 1163833247,
+   "rows": 26466954,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 411,
+   "id": "SWE-bench/SWE-smith",
+   "sha": "ea6d7173829c7ec8fa16c22055699ff2e9188091",
+   "downloads_30d": 87533,
+   "gated": false,
+   "license_tags": [
+    "license:mit"
+   ],
+   "bytes_parquet": 277767206,
+   "bytes_original": 277767206,
+   "rows": 59136,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 412,
+   "id": "lizb6626/Arb-Objaverse",
+   "sha": "0840f781c75a16b38b011bc2b8df97499b0a39e1",
+   "downloads_30d": 87221,
+   "gated": false,
+   "license_tags": [
+    "license:mit"
+   ],
+   "bytes_parquet": 0,
+   "bytes_original": 0,
+   "rows": 0,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 413,
+   "id": "nvidia/Nemotron-CC-v2",
+   "sha": "2669787c66d18601c0e91167fd520be6c1245865",
+   "downloads_30d": 86955,
+   "gated": "manual",
+   "license_tags": [
+    "license:other"
+   ],
+   "size_error": "HTTP 401 The dataset does not exist, or is not accessible without authentication (private or gated). Please check the spelling of the dataset name or retry with authenti"
+  },
+  {
+   "rank": 414,
+   "id": "VLM2Vec/MVBench",
+   "sha": "9efd4e53e46bf00f49a91cda5768376b581a838a",
+   "downloads_30d": 86896,
+   "gated": false,
+   "license_tags": [
+    "license:mit"
+   ],
+   "bytes_parquet": 327665,
+   "bytes_original": null,
+   "rows": 4000,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 415,
+   "id": "hexuan21/MemoryTax-Res-GPT-5-6-luna",
+   "sha": "a5988f107d6b506a20a20bff7fe93765666546b9",
+   "downloads_30d": 86238,
+   "gated": false,
+   "license_tags": [
+    "license:cc-by-4.0"
+   ],
+   "bytes_parquet": 0,
+   "bytes_original": 0,
+   "rows": 0,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 416,
+   "id": "nvidia/OpenMathReasoning",
+   "sha": "d3d08664755704f422af97d43a7ff0ded4bd95df",
+   "downloads_30d": 85944,
+   "gated": false,
+   "license_tags": [
+    "license:cc-by-4.0"
+   ],
+   "bytes_parquet": 49525153867,
+   "bytes_original": 49525153867,
+   "rows": 5678317,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 417,
+   "id": "jeongyh98/DSERT-RoLL",
+   "sha": "a8e1162b1cc5c95e50ff2020d206af965758ddef",
+   "downloads_30d": 85505,
+   "gated": false,
+   "license_tags": [
+    "license:cc-by-4.0"
+   ],
+   "bytes_parquet": 3857,
+   "bytes_original": null,
+   "rows": 196,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 418,
+   "id": "gnucleus-ai/cad-gen-freecad-bench-v3",
+   "sha": "114f19d80b6b72763a0d7e2681148417081bbe64",
+   "downloads_30d": 85290,
+   "gated": false,
+   "license_tags": [
+    "license:apache-2.0"
+   ],
+   "bytes_parquet": 251996,
+   "bytes_original": 251996,
+   "rows": 1300,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 419,
+   "id": "icdn14/content-20261027be6e",
+   "sha": "ba163be42d5340ac61ab014843e56317f9c91584",
+   "downloads_30d": 85088,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 7701553,
+   "bytes_original": null,
+   "rows": 50065,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 420,
+   "id": "boltzgen/inference-data",
+   "sha": "c3d36fd276e9caf098c75d4113c6d5eb320b1a4c",
+   "downloads_30d": 84880,
+   "gated": false,
+   "license_tags": [
+    "license:mit"
+   ],
+   "size_error": "HTTP 500 No (supported) data files found in boltzgen/inference-data"
+  },
+  {
+   "rank": 421,
+   "id": "meta-math/MetaMathQA",
+   "sha": "aa4f34d3d2d3231299b5b03d9b3e5a20da45aa18",
+   "downloads_30d": 84713,
+   "gated": false,
+   "license_tags": [
+    "license:mit"
+   ],
+   "bytes_parquet": 187622686,
+   "bytes_original": 395626321,
+   "rows": 395000,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 422,
+   "id": "Voxel51/dacl10k",
+   "sha": "7aa4a3e6fd8818d94bdf51b9d02ea0443808f68b",
+   "downloads_30d": 84703,
+   "gated": false,
+   "license_tags": [
+    "license:cc-by-4.0"
+   ],
+   "bytes_parquet": 4604250461,
+   "bytes_original": null,
+   "rows": 7910,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 423,
+   "id": "IPEC-COMMUNITY/kuka_lerobot",
+   "sha": "e17b0de50bf8711222d957aac2b21245ef33af75",
+   "downloads_30d": 84664,
+   "gated": false,
+   "license_tags": [
+    "license:apache-2.0"
+   ],
+   "bytes_parquet": 0,
+   "bytes_original": 0,
+   "rows": 0,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 424,
+   "id": "Collapsecdn/collapsecdn",
+   "sha": "63647325eb44eb00706811cab833bba5d6cdcaf5",
+   "downloads_30d": 84606,
+   "gated": false,
+   "license_tags": [],
+   "size_error": "HTTP 500 No (supported) data files found in Collapsecdn/collapsecdn"
+  },
+  {
+   "rank": 425,
+   "id": "ReadyAi/organic_query_results_dataset",
+   "sha": "d304b822131a3e1b3ba8e971dc5698c187ed3108",
+   "downloads_30d": 84493,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 0,
+   "bytes_original": 0,
+   "rows": 0,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 426,
+   "id": "songweig/imagenet_sketch",
+   "sha": "0d8b8b5380efe50baae075842505918ad43c88fe",
+   "downloads_30d": 84487,
+   "gated": false,
+   "license_tags": [
+    "license:unknown"
+   ],
+   "size_error": "HTTP 501 The dataset viewer doesn't support this dataset because it runs arbitrary Python code. You can convert it to a Parquet data-only dataset by using the convert_to"
+  },
+  {
+   "rank": 427,
+   "id": "HuggingFaceH4/ultrachat_200k",
+   "sha": "8049631c405ae6576f93f445c6b8166f76f5505a",
+   "downloads_30d": 84434,
+   "gated": false,
+   "license_tags": [
+    "license:mit"
+   ],
+   "bytes_parquet": 1624049723,
+   "bytes_original": 1624049723,
+   "rows": 515311,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 428,
+   "id": "agents-last-exam/agents-last-exam-reference",
+   "sha": "e6a990308d79da249d596871c2cc9a40396e4e22",
+   "downloads_30d": 84371,
+   "gated": "manual",
+   "license_tags": [
+    "license:cc-by-4.0"
+   ],
+   "size_error": "HTTP 401 The dataset does not exist, or is not accessible without authentication (private or gated). Please check the spelling of the dataset name or retry with authenti"
+  },
+  {
+   "rank": 429,
+   "id": "ap-mt/flip2-multi-sequence-prompt-ablation-generated-variants-amylase",
+   "sha": "b5c883bb7749c8603147e7b74b4a61c139f50e6c",
+   "downloads_30d": 84284,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 383096649,
+   "bytes_original": 383096649,
+   "rows": 1093276,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 430,
+   "id": "YiboZhang2001/TexVerse-1K",
+   "sha": "c750f48efc16aa774c16a19856053fd921c597e1",
+   "downloads_30d": 84258,
+   "gated": false,
+   "license_tags": [
+    "license:odc-by"
+   ],
+   "bytes_parquet": 0,
+   "bytes_original": 0,
+   "rows": 0,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 431,
+   "id": "happy8825/co3d-annotations",
+   "sha": "fff2fa3a993cfe93d4534df44a0e85aaa477bae3",
+   "downloads_30d": 84165,
+   "gated": false,
+   "license_tags": [
+    "license:cc-by-nc-4.0"
+   ],
+   "size_error": "HTTP 500 No (supported) data files found in happy8825/co3d-annotations"
+  },
+  {
+   "rank": 432,
+   "id": "desmondlzy/bigs-data",
+   "sha": "5b82f88ef44341ccb12cac2e4675c8367174de69",
+   "downloads_30d": 84117,
+   "gated": false,
+   "license_tags": [
+    "license:cc-by-sa-4.0"
+   ],
+   "bytes_parquet": 0,
+   "bytes_original": 0,
+   "rows": 0,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 433,
+   "id": "StringFellow/fusion-dw",
+   "sha": "7582bdfdc180c16015d9e297873db3ebdce7d4aa",
+   "downloads_30d": 84080,
+   "gated": false,
+   "license_tags": [
+    "license:apache-2.0"
+   ],
+   "bytes_parquet": 76501840,
+   "bytes_original": 76501840,
+   "rows": 2707615,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 434,
+   "id": "lmms-lab/EgoLife",
+   "sha": "143fb319be7aa5ae210c936bf4f0f3a86092afb0",
+   "downloads_30d": 83946,
+   "gated": false,
+   "license_tags": [
+    "license:mit"
+   ],
+   "bytes_parquet": 354019,
+   "bytes_original": null,
+   "rows": 32001,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 435,
+   "id": "diffusers/community-pipelines-mirror",
+   "sha": "1c888726a0b13391b0ca05d943a592439370ffd0",
+   "downloads_30d": 83057,
+   "gated": false,
+   "license_tags": [],
+   "size_error": "HTTP 500 No (supported) data files found in diffusers/community-pipelines-mirror"
+  },
+  {
+   "rank": 436,
+   "id": "ServiceNow/AgentHorizon",
+   "sha": "c9fcd9fd857657cb86ae2b3cc35ea2271889bec1",
+   "downloads_30d": 82776,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 18804313,
+   "bytes_original": null,
+   "rows": 112266,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 437,
+   "id": "hotpotqa/hotpot_qa",
+   "sha": "1908d6afbbead072334abe2965f91bd2709910ab",
+   "downloads_30d": 82156,
+   "gated": false,
+   "license_tags": [
+    "license:cc-by-sa-4.0"
+   ],
+   "bytes_parquet": 746626351,
+   "bytes_original": 746626351,
+   "rows": 203109,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 438,
+   "id": "NMontanaBrown/saramis_abdomen",
+   "sha": "12c63f673ab6ed37b5db575004a9207d7c09351e",
+   "downloads_30d": 81470,
+   "gated": false,
+   "license_tags": [
+    "license:cc-by-nc-sa-4.0"
+   ],
+   "size_error": "HTTP 500 Cannot get the config names for the dataset."
+  },
+  {
+   "rank": 439,
+   "id": "jm-rt/arvo-cybergym-2000",
+   "sha": "75a80a9f1f534b26e31a502a5f7b0824565dfac1",
+   "downloads_30d": 81448,
+   "gated": false,
+   "license_tags": [],
+   "size_error": "HTTP 500 The dataset is empty."
+  },
+  {
+   "rank": 440,
+   "id": "hanchong/synthetic-infrared-maritime-vessel-dataset-flux2klein-degraded",
+   "sha": "8d6fd616b9092c0e4dfde5feeec109a6c69ef684",
+   "downloads_30d": 81314,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 30918279,
+   "bytes_original": null,
+   "rows": 174200,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 441,
+   "id": "amidarliintoirog/copyright-videos-2023",
+   "sha": "04eedb58c29ca1f1a29cccbf9b40b4db1296a2f6",
+   "downloads_30d": 81208,
+   "gated": false,
+   "license_tags": [
+    "license:other"
+   ],
+   "bytes_parquet": 0,
+   "bytes_original": 0,
+   "rows": 0,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 442,
+   "id": "NMontanaBrown/saramis_amos",
+   "sha": "5bf6f519d818284d526410c9ccf3ead66d844cfc",
+   "downloads_30d": 81121,
+   "gated": false,
+   "license_tags": [
+    "license:cc-by-nc-sa-4.0"
+   ],
+   "size_error": "HTTP 500 Cannot get the config names for the dataset."
+  },
+  {
+   "rank": 443,
+   "id": "OpenDriveLab/OpenScene",
+   "sha": "a76f840b65e972bc45e56c2adced897498e9a026",
+   "downloads_30d": 80931,
+   "gated": false,
+   "license_tags": [
+    "license:cc-by-nc-sa-4.0"
+   ],
+   "size_error": "HTTP 500 No (supported) data files found in OpenDriveLab/OpenScene"
+  },
+  {
+   "rank": 444,
+   "id": "McGill-NLP/weblinx-browsergym",
+   "sha": "9db39ad436c452c92feaaaa0c7e70a0330289827",
+   "downloads_30d": 80648,
+   "gated": false,
+   "license_tags": [
+    "license:cc-by-nc-sa-4.0"
+   ],
+   "size_error": "HTTP 500 Cannot get the config names for the dataset."
+  },
+  {
+   "rank": 445,
+   "id": "KakologArchives/KakologArchives",
+   "sha": "362b297bf7af8b9bc8e9a99f80185b6a728585c0",
+   "downloads_30d": 80350,
+   "gated": false,
+   "license_tags": [
+    "license:mit"
+   ],
+   "size_error": "HTTP 500 The server is busier than usual and the response is not ready yet. Please retry later."
+  },
+  {
+   "rank": 446,
+   "id": "HuggingFaceVLA/community_dataset_v3",
+   "sha": "89a1ecc770b1e99112d845e13076db1b481eb13a",
+   "downloads_30d": 80232,
+   "gated": false,
+   "license_tags": [
+    "license:apache-2.0"
+   ],
+   "bytes_parquet": 2337831,
+   "bytes_original": null,
+   "rows": 12526,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 447,
+   "id": "yinhuankuang/rl-game-traces-rise-of-the-tomb-raider",
+   "sha": "207865300a2a8aada884b5d72919eecd547052c2",
+   "downloads_30d": 80185,
+   "gated": false,
+   "license_tags": [
+    "license:other"
+   ],
+   "bytes_parquet": 0,
+   "bytes_original": 0,
+   "rows": 0,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 448,
+   "id": "hrdq/Dota2PornFx",
+   "sha": "6382a9a8c27f95de4dcd8afcb9a51a43b9c38e0a",
+   "downloads_30d": 80162,
+   "gated": false,
+   "license_tags": [
+    "license:other"
+   ],
+   "bytes_parquet": 1573,
+   "bytes_original": null,
+   "rows": 1,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 449,
+   "id": "abisee/cnn_dailymail",
+   "sha": "96df5e686bee6baa90b8bee7c28b81fa3fa6223d",
+   "downloads_30d": 79941,
+   "gated": false,
+   "license_tags": [
+    "license:apache-2.0"
+   ],
+   "bytes_parquet": 2511116452,
+   "bytes_original": 2511116452,
+   "rows": 935913,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 450,
+   "id": "m-a-p/Matrix",
+   "sha": "c13c43bc3232816543751a61a46e9a23503361bd",
+   "downloads_30d": 79442,
+   "gated": false,
+   "license_tags": [
+    "license:apache-2.0"
+   ],
+   "bytes_parquet": 3192037291,
+   "bytes_original": null,
+   "rows": 2499047,
+   "rows_estimated": 6432706860,
+   "size_partial": true
+  },
+  {
+   "rank": 451,
+   "id": "huggingface-deep-rl-course/course-images",
+   "sha": "5da96cc4570034a6019c49d4d2957d77eb967ec9",
+   "downloads_30d": 79396,
+   "gated": false,
+   "license_tags": [],
+   "size_error": "HTTP 500 Couldn't infer the same data file format for all splits. Got {NamedSplit('train'): ('imagefolder', {}), NamedSplit('test'): (None, {})}"
+  },
+  {
+   "rank": 452,
+   "id": "JobBench/job-bench",
+   "sha": "d43a66575635da0d3f6cb9a20976dc1a60f3ffc9",
+   "downloads_30d": 79374,
+   "gated": false,
+   "license_tags": [
+    "license:mit"
+   ],
+   "bytes_parquet": 992200,
+   "bytes_original": 992200,
+   "rows": 128,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 453,
+   "id": "sanjay810/mv2-dataset",
+   "sha": "79d55e2ac1e16fc1c2fa0badc74d0e48e41dfaf7",
+   "downloads_30d": 79184,
+   "gated": false,
+   "license_tags": [
+    "license:other"
+   ],
+   "bytes_parquet": 2699368,
+   "bytes_original": null,
+   "rows": 20000,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 454,
+   "id": "own2pwn-fr/ctfhoard-corpus",
+   "sha": "250f0d6dfc5e16e48ec71e72761ec04b6f9510f7",
+   "downloads_30d": 79088,
+   "gated": false,
+   "license_tags": [],
+   "size_error": "HTTP 501 Job has been terminated due to a temporary spike in resource usage and may be restarted later."
+  },
+  {
+   "rank": 455,
+   "id": "wegrthj/l36l5h-v654-raw",
+   "sha": "a57250c8b312220d6bb219b58c8045163d4b2189",
+   "downloads_30d": 79036,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 0,
+   "bytes_original": 0,
+   "rows": 0,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 456,
+   "id": "vsevolodpl/REPID",
+   "sha": "62b05892a8b5344fa5fd2d321120a314b071ae97",
+   "downloads_30d": 78876,
+   "gated": false,
+   "license_tags": [
+    "license:other"
+   ],
+   "bytes_parquet": 20924830,
+   "bytes_original": null,
+   "rows": 151666,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 457,
+   "id": "locuslab/TOFU",
+   "sha": "324592d84ae4f482ac7249b9285c2ecdb53e3a68",
+   "downloads_30d": 78780,
+   "gated": false,
+   "license_tags": [
+    "license:mit"
+   ],
+   "bytes_parquet": 2946329,
+   "bytes_original": 6319716,
+   "rows": 18114,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 458,
+   "id": "lmms-eval/Video-MME",
+   "sha": "ead1408f75b618502df9a1d8e0950166bf0a2a0b",
+   "downloads_30d": 78612,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 405167,
+   "bytes_original": 405167,
+   "rows": 2700,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 459,
+   "id": "neurodeskorg/webapps",
+   "sha": "7ec5394736769ea0e9d6a11b22ab67fa4ac3f0df",
+   "downloads_30d": 78446,
+   "gated": false,
+   "license_tags": [
+    "license:mit"
+   ],
+   "bytes_parquet": 0,
+   "bytes_original": 0,
+   "rows": 0,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 460,
+   "id": "nvidia/PhysicalAI-WorldModel-Synthetic-Autonomous-Driving-Scenarios",
+   "sha": "c6fceba249770c5f8c61c7a6addab847003dca4f",
+   "downloads_30d": 78369,
+   "gated": false,
+   "license_tags": [
+    "license:other"
+   ],
+   "bytes_parquet": 0,
+   "bytes_original": 0,
+   "rows": 0,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 461,
+   "id": "amphion/Emilia-Dataset",
+   "sha": "d7f2f7340a6385696f3766c8049fa920a4707c07",
+   "downloads_30d": 78111,
+   "gated": "auto",
+   "license_tags": [
+    "license:cc-by-4.0"
+   ],
+   "size_error": "HTTP 401 The dataset does not exist, or is not accessible without authentication (private or gated). Please check the spelling of the dataset name or retry with authenti"
+  },
+  {
+   "rank": 462,
+   "id": "bigscience/P3",
+   "sha": "db485208b9f41d46c1d0975202328d08f8199046",
+   "downloads_30d": 78093,
+   "gated": false,
+   "license_tags": [
+    "license:apache-2.0"
+   ],
+   "bytes_parquet": 66360311583,
+   "bytes_original": 66360311583,
+   "rows": 122039002,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 463,
+   "id": "atokforps/latent_v1_fullrun_alpha3_06",
+   "sha": "df8a8b5d3a4c66c1929007b0d24d291c1963f5e8",
+   "downloads_30d": 77883,
+   "gated": false,
+   "license_tags": [],
+   "size_error": "HTTP 500 No (supported) data files found in atokforps/latent_v1_fullrun_alpha3_06"
+  },
+  {
+   "rank": 464,
+   "id": "icdn11/content-20261102a1e1",
+   "sha": "b2b6790f3a40f7383c495055b227ef0db2d99a77",
+   "downloads_30d": 77634,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 6555347,
+   "bytes_original": null,
+   "rows": 42565,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 465,
+   "id": "icdn21/content-20261102f0b3",
+   "sha": "5e4c849dd14ccf244520a81243ee3a5ec76f0cf2",
+   "downloads_30d": 77587,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 6446819,
+   "bytes_original": null,
+   "rows": 41858,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 466,
+   "id": "BVRA/animal-clef-2026",
+   "sha": "971bd14323ef10047ee8f79e5d0506c2ed3f9524",
+   "downloads_30d": 77426,
+   "gated": false,
+   "license_tags": [
+    "license:other"
+   ],
+   "bytes_parquet": 3738445,
+   "bytes_original": null,
+   "rows": 15483,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 467,
+   "id": "yuanbosz/a-share-minute-bars",
+   "sha": "a1e297ac4a9e021841998501dbf1c0030d56d0a1",
+   "downloads_30d": 77245,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 0,
+   "bytes_original": 0,
+   "rows": 0,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 468,
+   "id": "Voxel51/mvtec-ad",
+   "sha": "30a183a3b96e3aef953f230784b123b719b09d97",
+   "downloads_30d": 77228,
+   "gated": false,
+   "license_tags": [
+    "license:cc-by-nc-sa-4.0"
+   ],
+   "bytes_parquet": 5096872845,
+   "bytes_original": null,
+   "rows": 5200,
+   "rows_estimated": null,
+   "size_partial": true
+  },
+  {
+   "rank": 469,
+   "id": "mippia/HAIM",
+   "sha": "371be01815b65274762d6d0a33e2cb70e24b9baa",
+   "downloads_30d": 77088,
+   "gated": false,
+   "license_tags": [
+    "license:cc-by-nc-4.0"
+   ],
+   "bytes_parquet": 4855442043,
+   "bytes_original": 4855442043,
+   "rows": 1900,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 470,
+   "id": "icdn10/content-202610220785",
+   "sha": "98f1ec713c40b1d12f0638f01f1c9b88fcda1b81",
+   "downloads_30d": 77026,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 7693547,
+   "bytes_original": null,
+   "rows": 50007,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 471,
+   "id": "simple-world-lab/HiFi-UMI-2K",
+   "sha": "a53b7b5784afdd50b2fda9195c9f724ef75ffdaf",
+   "downloads_30d": 76985,
+   "gated": false,
+   "license_tags": [
+    "license:cc-by-4.0"
+   ],
+   "bytes_parquet": 31849347510,
+   "bytes_original": 31849347510,
+   "rows": 192297515,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 472,
+   "id": "icdn13/content-20261022ca11",
+   "sha": "e408aaa40f36fde153e1652196980bb43051d376",
+   "downloads_30d": 76801,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 7702325,
+   "bytes_original": null,
+   "rows": 50071,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 473,
+   "id": "RichardErkhov/DASP",
+   "sha": "15d2f4bdcbedefba559f65614ed51049f2437eeb",
+   "downloads_30d": 76736,
+   "gated": false,
+   "license_tags": [
+    "license:cc-by-sa-3.0"
+   ],
+   "bytes_parquet": 0,
+   "bytes_original": 0,
+   "rows": 0,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 474,
+   "id": "UMTRI/MatPredict",
+   "sha": "6aa045cc996c486aa60bb3a85bafc377e1e5c6f6",
+   "downloads_30d": 76700,
+   "gated": false,
+   "license_tags": [
+    "license:mit"
+   ],
+   "size_error": "HTTP 500 Cannot get the config names for the dataset."
+  },
+  {
+   "rank": 475,
+   "id": "alonsoapp/TABLET-Large",
+   "sha": "2293fa673778e1ef134c8f2926c18a21960e8bec",
+   "downloads_30d": 76587,
+   "gated": false,
+   "license_tags": [
+    "license:cc-by-4.0"
+   ],
+   "bytes_parquet": 1307536813623,
+   "bytes_original": 1307536813623,
+   "rows": 3505311,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 476,
+   "id": "eidon-ai/tracker-pov",
+   "sha": "47c55ccc6d0308894ab482009c6fa91569057a08",
+   "downloads_30d": 76512,
+   "gated": false,
+   "license_tags": [
+    "license:cc-by-4.0"
+   ],
+   "bytes_parquet": 5089768,
+   "bytes_original": null,
+   "rows": 13451,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 477,
+   "id": "hjq766/imabed",
+   "sha": "4ae8166212a809dfa78bc5db64f5e05628148dde",
+   "downloads_30d": 76473,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 438856,
+   "bytes_original": null,
+   "rows": 2645,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 478,
+   "id": "jasperai/monet",
+   "sha": "a718d526ddcd9bd13681784d1fd02a2082d4e615",
+   "downloads_30d": 76284,
+   "gated": false,
+   "license_tags": [
+    "license:apache-2.0"
+   ],
+   "bytes_parquet": 0,
+   "bytes_original": 0,
+   "rows": 0,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 479,
+   "id": "SII-Monument-Valley/CiQi-VQA",
+   "sha": "f0c808fbeaf38912a5122ab45f5f1f0171657c0a",
+   "downloads_30d": 76281,
+   "gated": false,
+   "license_tags": [
+    "license:cc-by-nc-4.0"
+   ],
+   "bytes_parquet": 0,
+   "bytes_original": 0,
+   "rows": 0,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 480,
+   "id": "jamie33/July",
+   "sha": "ed0109c22fdf11b78daad8c17c98b1e2f057526b",
+   "downloads_30d": 76251,
+   "gated": false,
+   "license_tags": [
+    "license:mit"
+   ],
+   "bytes_parquet": 0,
+   "bytes_original": 0,
+   "rows": 0,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 481,
+   "id": "Sbaiiiiii/looked-up",
+   "sha": "077a748e7d4ab3831d2cad909d4b0882be289b07",
+   "downloads_30d": 76217,
+   "gated": false,
+   "license_tags": [
+    "license:cc0-1.0"
+   ],
+   "bytes_parquet": 6305978822,
+   "bytes_original": 6305978822,
+   "rows": 1724837068,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 482,
+   "id": "icdn22/content-2026102648a7",
+   "sha": "b313881a9c23266ffc4def99d7f7e5a7de6a9d8a",
+   "downloads_30d": 76166,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 6451730,
+   "bytes_original": null,
+   "rows": 41893,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 483,
+   "id": "Voxel51/Stanford-Dogs-Imbalanced",
+   "sha": "5ba5b5ade6c1e9e130324d711969916366de1e02",
+   "downloads_30d": 76142,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 0,
+   "bytes_original": 0,
+   "rows": 0,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 484,
+   "id": "cais/hle",
+   "sha": "5a81a4c7271a2a2a312b9a690f0c2fde837e4c29",
+   "downloads_30d": 76082,
+   "gated": "auto",
+   "license_tags": [
+    "license:mit"
+   ],
+   "size_error": "HTTP 401 The dataset does not exist, or is not accessible without authentication (private or gated). Please check the spelling of the dataset name or retry with authenti"
+  },
+  {
+   "rank": 485,
+   "id": "inria-soda/tabular-benchmark",
+   "sha": "8d0ff9103525b7e3579b180230fddb3186258301",
+   "downloads_30d": 76039,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 517595100,
+   "bytes_original": 1595645079,
+   "rows": 17220314,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 486,
+   "id": "yyd7/OneStreamer-Core-SourceVideo",
+   "sha": "4317979a0d9b741620459943f3b4d5f0b8c8fe30",
+   "downloads_30d": 76010,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 0,
+   "bytes_original": 0,
+   "rows": 0,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 487,
+   "id": "Sandflow/sand3d-cad",
+   "sha": "e67fb4cff2dd2ceda037c2511128c053e62ba523",
+   "downloads_30d": 75989,
+   "gated": false,
+   "license_tags": [
+    "license:cc-by-4.0"
+   ],
+   "bytes_parquet": 206192152,
+   "bytes_original": 206192152,
+   "rows": 24495,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 488,
+   "id": "WanyueZhang/MulSeT",
+   "sha": "edfd9c68e8afcb6bf20554e967e5e015572f4b7d",
+   "downloads_30d": 75964,
+   "gated": false,
+   "license_tags": [
+    "license:apache-2.0"
+   ],
+   "bytes_parquet": 0,
+   "bytes_original": 0,
+   "rows": 0,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 489,
+   "id": "Maxwell-Jia/AIME_2024",
+   "sha": "8d88b2876a82a080e2f172cc9b25d0d9d2cb4792",
+   "downloads_30d": 75358,
+   "gated": false,
+   "license_tags": [
+    "license:mit"
+   ],
+   "bytes_parquet": 37189,
+   "bytes_original": 37189,
+   "rows": 30,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 490,
+   "id": "mlfoundations/dcvlm-baseline-200b",
+   "sha": "251523f5a04d7a852223454182cea63bc9f95063",
+   "downloads_30d": 75130,
+   "gated": false,
+   "license_tags": [
+    "license:other"
+   ],
+   "bytes_parquet": 638504725,
+   "bytes_original": 638504725,
+   "rows": 10000,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 491,
+   "id": "icdn12/content-20261022147b",
+   "sha": "8db72ee3c0f5edf4d8f28ae10a515d36379709c0",
+   "downloads_30d": 74976,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 7692785,
+   "bytes_original": null,
+   "rows": 50004,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 492,
+   "id": "skylenage-ai/HLE-Verified",
+   "sha": "0bc83643672d4f68a5f89998617a639d85e7318b",
+   "downloads_30d": 74960,
+   "gated": false,
+   "license_tags": [],
+   "bytes_parquet": 335073788,
+   "bytes_original": 335073788,
+   "rows": 2500,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 493,
+   "id": "agibot-world/AgiBotWorldChallenge-2026",
+   "sha": "2d162c170a46333f14f489f74dc334775a573c43",
+   "downloads_30d": 74760,
+   "gated": false,
+   "license_tags": [
+    "license:cc-by-nc-sa-4.0"
+   ],
+   "size_error": "HTTP 501 Not supported: dataset viewer is disabled in agibot-world/AgiBotWorldChallenge-2026 configuration."
+  },
+  {
+   "rank": 494,
+   "id": "polydata5/polymarket-updown-5m-ws",
+   "sha": "d5180dd8f94d2f0ddbf48caacc9c817cf681d110",
+   "downloads_30d": 74514,
+   "gated": "auto",
+   "license_tags": [
+    "license:cc-by-4.0"
+   ],
+   "size_error": "HTTP 401 The dataset does not exist, or is not accessible without authentication (private or gated). Please check the spelling of the dataset name or retry with authenti"
+  },
+  {
+   "rank": 495,
+   "id": "gorilla-llm/Berkeley-Function-Calling-Leaderboard",
+   "sha": "61fc0608cfd831fcfbbaa676ebdfef0ed963eeda",
+   "downloads_30d": 74466,
+   "gated": false,
+   "license_tags": [
+    "license:apache-2.0"
+   ],
+   "size_error": "HTTP 500 No (supported) data files found in gorilla-llm/Berkeley-Function-Calling-Leaderboard"
+  },
+  {
+   "rank": 496,
+   "id": "1aurent/unsplash-lite",
+   "sha": "3a14e110981b9cdc7e4701fc40d1c2154a5aaaae",
+   "downloads_30d": 74298,
+   "gated": false,
+   "license_tags": [
+    "license:other"
+   ],
+   "bytes_parquet": 618337921,
+   "bytes_original": 618337921,
+   "rows": 25000,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 497,
+   "id": "BitRobot/HIW-500-LeRobot",
+   "sha": "2d32431d3be3b0621c462759b02f7b378e53c2cc",
+   "downloads_30d": 74075,
+   "gated": false,
+   "license_tags": [
+    "license:cc-by-4.0"
+   ],
+   "bytes_parquet": 13217915443,
+   "bytes_original": 13217915443,
+   "rows": 40839947,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 498,
+   "id": "sunshk/2025-challenge-orchestrator-v3_2",
+   "sha": "c11c16f41dfd8b9aece474a8bfde1fe4fd7e00b7",
+   "downloads_30d": 73982,
+   "gated": false,
+   "license_tags": [],
+   "size_error": "HTTP 500 Cannot get the config names for the dataset."
+  },
+  {
+   "rank": 499,
+   "id": "cadene/agibot_alpha_v30",
+   "sha": "2aa4e5de3fc91421a7a8a76bef617f94d0e5be28",
+   "downloads_30d": 73960,
+   "gated": false,
+   "license_tags": [
+    "license:apache-2.0"
+   ],
+   "bytes_parquet": 21180809239,
+   "bytes_original": 21180809239,
+   "rows": 47510201,
+   "rows_estimated": null,
+   "size_partial": false
+  },
+  {
+   "rank": 500,
+   "id": "HuggingFaceTB/smollm-corpus",
+   "sha": "3ba9d605774198c5868892d7a8deda78031a781f",
+   "downloads_30d": 73803,
+   "gated": false,
+   "license_tags": [
+    "license:odc-by"
+   ],
+   "bytes_parquet": 673074320609,
+   "bytes_original": 673074320609,
+   "rows": 236980453,
+   "rows_estimated": null,
+   "size_partial": false
+  }
+ ]
+}

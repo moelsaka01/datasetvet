@@ -1,0 +1,926 @@
+{
+ "listing_cap": 100000,
+ "checked": 169,
+ "truncated": [
+  "3dcodeverse/3dcodeverse-2m",
+  "AiEDA/iDATA",
+  "AquaV/genshin-voices-separated",
+  "DAGroup-PKU/Open-HumanWAM-50K",
+  "EssentialAI/essential-web-v1.0",
+  "GSMA/3GPP",
+  "HPLT/HPLT2.0_cleaned",
+  "HRDexDB/HRDexDB",
+  "IPEC-COMMUNITY/FastUMI_100k_lerobot",
+  "IPEC-COMMUNITY/bridge_orig_lerobot",
+  "IPEC-COMMUNITY/droid_lerobot",
+  "IPEC-COMMUNITY/fractal20220817_data_lerobot",
+  "IPEC-COMMUNITY/kuka_lerobot",
+  "IPEC-COMMUNITY/language_table_lerobot",
+  "McGill-NLP/WebLINX-full",
+  "McGill-NLP/weblinx-browsergym",
+  "OPR-Project/OxfordRobotCar_OpenPlaceRecognition",
+  "OpenFinMind/stock_dataset",
+  "OpenMOSS-Team/OmniAction",
+  "PGCodeLLM/radin-cyber-backups",
+  "Ritabrata04/masscount-cf",
+  "TGMR/one_pass_ingestion",
+  "UMTRI/MatPredict",
+  "WanyueZhang/MulSeT",
+  "XDOF/ABC-130k",
+  "YiboZhang2001/TexVerse",
+  "ZTWHHH/envs_1",
+  "aisa-group/PostTrainBench-Trajectories",
+  "akshithio/arva",
+  "allenai/MADLAD-400",
+  "allenai/dolma3.5_pool",
+  "allenai/dolma3_mix-6T-1025-7B",
+  "assassinlike/everything132",
+  "augaazuun/copydetect-videos",
+  "behavior-1k/2025-challenge-demos",
+  "benchflow/skillsbench-leaderboard",
+  "benediktkol/DDOS",
+  "brownu/deform360",
+  "cadene/droid",
+  "cadene/droid_1.0.1",
+  "challenge-2026/challenge_data",
+  "coatfusion/coat-fusion-assets-anonymous",
+  "djain95/sae-jailbreaks-cache",
+  "espnet/yodas2",
+  "evaleval/EEE_datastore",
+  "frankielp/2dgaussian-lang-output",
+  "harborframework/parity-experiments",
+  "huylhn1810/aic_2025",
+  "i998979/TransitApp",
+  "inclusionAI/OpenAoE-2000h",
+  "lerobot/FineART",
+  "lyzenghq/banned-historical-archives",
+  "manhdungcr7/aic2026-keyframes",
+  "mickeykang/Event6DBlender",
+  "ml-resources/tsinghua_topic_dataset",
+  "neashton/windsorml",
+  "nvidia/PhysicalAI-Robotics-GR00T-X-Embodiment-Sim",
+  "nvidia/PhysicalAI-Robotics-Open-H-Embodiment",
+  "nvidia/PhysicalAI-WorldModel-Synthetic-Autonomous-Driving-Scenarios",
+  "nvidia/video-to-data-robot-dexterity-task-library-and-dataset",
+  "omegalabsinc/omega-voice",
+  "own2pwn-fr/ctfhoard-corpus",
+  "pjpjq/blofin-oi-data",
+  "pulmo/ncbi-genbank-complete",
+  "saarthiatu/jee-pdfs",
+  "stair-lab/nonmyopia_results",
+  "sunshk/2025-challenge-orchestrator-v3_2",
+  "superkaiba1/explore-persona-space-data",
+  "zdbfv/M3_VOS"
+ ],
+ "datasets": {
+  "3dcodeverse/3dcodeverse-2m": {
+   "tier_B_scan": "sampled",
+   "siblings": 100000,
+   "truncated": true
+  },
+  "57xj5SHr/Tui9DGhp": {
+   "tier_B_scan": "sampled",
+   "siblings": 428,
+   "truncated": false
+  },
+  "AiEDA/iDATA": {
+   "tier_B_scan": "sampled",
+   "siblings": 100000,
+   "truncated": true
+  },
+  "AquaV/genshin-voices-separated": {
+   "tier_B_scan": "full",
+   "siblings": 100000,
+   "truncated": true
+  },
+  "Atesting1/webarena-env": {
+   "tier_B_scan": "full",
+   "siblings": 25,
+   "truncated": false
+  },
+  "Collapsecdn/collapsecdn": {
+   "tier_B_scan": "full",
+   "siblings": 218,
+   "truncated": false
+  },
+  "DAGroup-PKU/Open-HumanWAM-50K": {
+   "tier_A_missing_file_results": 7,
+   "siblings": 100000,
+   "truncated": true
+  },
+  "DeepSeekOracle/lattice-marines-wins": {
+   "tier_B_scan": "full",
+   "siblings": 12,
+   "truncated": false
+  },
+  "Efficient-Large-Model/Sana-assets": {
+   "tier_B_scan": "full",
+   "siblings": 1540,
+   "truncated": false
+  },
+  "EssentialAI/essential-web-v1.0": {
+   "tier_B_scan": "sampled",
+   "siblings": 100000,
+   "truncated": true
+  },
+  "Falcon79epok/symbion-multi-ohlcv": {
+   "tier_B_scan": "full",
+   "siblings": 3259,
+   "truncated": false
+  },
+  "GSMA/3GPP": {
+   "tier_B_scan": "full",
+   "siblings": 100000,
+   "truncated": true
+  },
+  "GokuScraper/seedance-2-prompts-datasets": {
+   "tier_B_scan": "full",
+   "siblings": 20250,
+   "truncated": false
+  },
+  "HPLT/HPLT2.0_cleaned": {
+   "tier_A_missing_file_results": 3,
+   "tier_B_scan": "sampled",
+   "siblings": 100000,
+   "truncated": true
+  },
+  "HRDexDB/HRDexDB": {
+   "tier_A_missing_file_results": 5,
+   "siblings": 100000,
+   "truncated": true
+  },
+  "HuggingFaceFW/fineweb": {
+   "tier_B_scan": "sampled",
+   "siblings": 28147,
+   "truncated": false
+  },
+  "HuggingFaceFW/fineweb-2": {
+   "tier_A_missing_file_results": 550,
+   "siblings": 9597,
+   "truncated": false
+  },
+  "HuggingFaceM4/FineVision": {
+   "tier_B_scan": "sampled",
+   "siblings": 9501,
+   "truncated": false
+  },
+  "IPEC-COMMUNITY/FastUMI_100k_lerobot": {
+   "tier_B_scan": "sampled",
+   "siblings": 100000,
+   "truncated": true
+  },
+  "IPEC-COMMUNITY/bridge_orig_lerobot": {
+   "tier_B_scan": "sampled",
+   "siblings": 100000,
+   "truncated": true
+  },
+  "IPEC-COMMUNITY/droid_lerobot": {
+   "tier_B_scan": "sampled",
+   "siblings": 100000,
+   "truncated": true
+  },
+  "IPEC-COMMUNITY/fractal20220817_data_lerobot": {
+   "tier_B_scan": "sampled",
+   "siblings": 100000,
+   "truncated": true
+  },
+  "IPEC-COMMUNITY/kuka_lerobot": {
+   "tier_B_scan": "sampled",
+   "siblings": 100000,
+   "truncated": true
+  },
+  "IPEC-COMMUNITY/language_table_lerobot": {
+   "tier_B_scan": "sampled",
+   "siblings": 100000,
+   "truncated": true
+  },
+  "Jetbard/tmx-feed-g9nh5j": {
+   "tier_B_scan": "full",
+   "siblings": 24,
+   "truncated": false
+  },
+  "LanguageBind/Open-Sora-Plan-v1.1.0": {
+   "tier_B_scan": "sampled",
+   "siblings": 597,
+   "truncated": false
+  },
+  "LejuRobotics/LET-Base-Dataset": {
+   "tier_B_scan": "full",
+   "siblings": 26384,
+   "truncated": false
+  },
+  "MJPansa/qwen38-eagle4-native-features-24m-20261026-f2638314": {
+   "tier_B_scan": "sampled",
+   "siblings": 54544,
+   "truncated": false
+  },
+  "McAuley-Lab/Amazon-Reviews-2023": {
+   "tier_B_scan": "sampled",
+   "siblings": 912,
+   "truncated": false
+  },
+  "McGill-NLP/WebLINX-full": {
+   "tier_A_missing_file_results": 1,
+   "tier_B_scan": "sampled",
+   "siblings": 100000,
+   "truncated": true
+  },
+  "McGill-NLP/weblinx-browsergym": {
+   "tier_B_scan": "sampled",
+   "siblings": 100000,
+   "truncated": true
+  },
+  "Metanova/Submission-Archive": {
+   "tier_B_scan": "sampled",
+   "siblings": 30,
+   "truncated": false
+  },
+  "OPR-Project/OxfordRobotCar_OpenPlaceRecognition": {
+   "tier_B_scan": "full",
+   "siblings": 100000,
+   "truncated": true
+  },
+  "OpenDriveLab/OpenScene": {
+   "tier_B_scan": "full",
+   "siblings": 611,
+   "truncated": false
+  },
+  "OpenFinMind/stock_dataset": {
+   "tier_B_scan": "sampled",
+   "siblings": 100000,
+   "truncated": true
+  },
+  "OpenMOSS-Team/OmniAction": {
+   "tier_B_scan": "full",
+   "siblings": 100000,
+   "truncated": true
+  },
+  "PGCodeLLM/radin-cyber-backups": {
+   "tier_B_scan": "sampled",
+   "siblings": 100000,
+   "truncated": true
+  },
+  "ReadyAi/organic_query_results_dataset": {
+   "tier_B_scan": "full",
+   "siblings": 19751,
+   "truncated": false
+  },
+  "Ritabrata04/masscount-cf": {
+   "tier_B_scan": "sampled",
+   "siblings": 100000,
+   "truncated": true
+  },
+  "Robeedau/airlens-live": {
+   "tier_B_scan": "sampled",
+   "siblings": 13552,
+   "truncated": false
+  },
+  "RoboDojo-Benchmark/RoboDojo": {
+   "tier_B_scan": "sampled",
+   "siblings": 71565,
+   "truncated": false
+  },
+  "SII-Monument-Valley/CiQi-VQA": {
+   "tier_B_scan": "sampled",
+   "siblings": 51557,
+   "truncated": false
+  },
+  "SZLHOLDINGS/killinchu-osint-corpus": {
+   "tier_B_scan": "full",
+   "siblings": 162,
+   "truncated": false
+  },
+  "Salesforce/GiftEvalPretrain": {
+   "tier_B_scan": "full",
+   "siblings": 6682,
+   "truncated": false
+  },
+  "TGMR/one_pass_ingestion": {
+   "tier_B_scan": "full",
+   "siblings": 100000,
+   "truncated": true
+  },
+  "UMTRI/MatPredict": {
+   "tier_B_scan": "full",
+   "siblings": 100000,
+   "truncated": true
+  },
+  "Voxel51/LVIS": {
+   "tier_B_scan": "sampled",
+   "siblings": 35006,
+   "truncated": false
+  },
+  "Voxel51/Stanford-Dogs-Imbalanced": {
+   "tier_B_scan": "full",
+   "siblings": 19066,
+   "truncated": false
+  },
+  "Voxel51/mvtec-ad": {
+   "tier_B_scan": "full",
+   "siblings": 6620,
+   "truncated": false
+  },
+  "WanyueZhang/MulSeT": {
+   "tier_B_scan": "sampled",
+   "siblings": 100000,
+   "truncated": true
+  },
+  "XDOF/ABC-130k": {
+   "tier_A_missing_file_results": 2,
+   "siblings": 100000,
+   "truncated": true
+  },
+  "YiboZhang2001/TexVerse": {
+   "tier_B_scan": "sampled",
+   "siblings": 100000,
+   "truncated": true
+  },
+  "ZTWHHH/envs_1": {
+   "tier_B_scan": "full",
+   "siblings": 100000,
+   "truncated": true
+  },
+  "a1557811266/Per-400k": {
+   "tier_B_scan": "sampled",
+   "siblings": 295,
+   "truncated": false
+  },
+  "adscli/copycheck-videos": {
+   "tier_B_scan": "sampled",
+   "siblings": 15,
+   "truncated": false
+  },
+  "agents-last-exam/agents-last-exam-data": {
+   "tier_B_scan": "sampled",
+   "siblings": 68130,
+   "truncated": false
+  },
+  "ahashanahmed/csv": {
+   "tier_B_scan": "sampled",
+   "siblings": 8855,
+   "truncated": false
+  },
+  "ahnaftaz/locus-commit-pool-v1": {
+   "tier_B_scan": "sampled",
+   "siblings": 5324,
+   "truncated": false
+  },
+  "aisa-group/PostTrainBench-Trajectories": {
+   "tier_B_scan": "sampled",
+   "siblings": 100000,
+   "truncated": true
+  },
+  "akshithio/arva": {
+   "tier_B_scan": "full",
+   "siblings": 100000,
+   "truncated": true
+  },
+  "allenai/MADLAD-400": {
+   "tier_B_scan": "sampled",
+   "siblings": 100000,
+   "truncated": true
+  },
+  "allenai/c4": {
+   "tier_B_scan": "sampled",
+   "siblings": 69221,
+   "truncated": false
+  },
+  "allenai/dolma3.5_pool": {
+   "tier_A_missing_file_results": 14,
+   "tier_B_scan": "sampled",
+   "siblings": 100000,
+   "truncated": true
+  },
+  "allenai/dolma3_mix-6T-1025-7B": {
+   "tier_B_scan": "sampled",
+   "siblings": 100000,
+   "truncated": true
+  },
+  "amidarliintoirog/copyright-videos-2023": {
+   "tier_B_scan": "sampled",
+   "siblings": 31317,
+   "truncated": false
+  },
+  "anon8231489123/ShareGPT_Vicuna_unfiltered": {
+   "tier_B_scan": "sampled",
+   "siblings": 14,
+   "truncated": false
+  },
+  "applied-ai-018/pretraining_v1-omega": {
+   "tier_A_missing_file_results": 5,
+   "tier_B_scan": "sampled",
+   "siblings": 3857,
+   "truncated": false
+  },
+  "assassinlike/everything132": {
+   "tier_B_scan": "full",
+   "siblings": 100000,
+   "truncated": true
+  },
+  "augaazuun/copydetect-videos": {
+   "tier_B_scan": "sampled",
+   "siblings": 100000,
+   "truncated": true
+  },
+  "behavior-1k/2025-challenge-demos": {
+   "tier_B_scan": "sampled",
+   "siblings": 100000,
+   "truncated": true
+  },
+  "benchflow/skillsbench-leaderboard": {
+   "tier_B_scan": "sampled",
+   "siblings": 100000,
+   "truncated": true
+  },
+  "benediktkol/DDOS": {
+   "tier_B_scan": "full",
+   "siblings": 100000,
+   "truncated": true
+  },
+  "bop-benchmark/hot3d": {
+   "tier_B_scan": "full",
+   "siblings": 12997,
+   "truncated": false
+  },
+  "brownu/deform360": {
+   "tier_B_scan": "full",
+   "siblings": 100000,
+   "truncated": true
+  },
+  "cadene/droid": {
+   "tier_B_scan": "sampled",
+   "siblings": 100000,
+   "truncated": true
+  },
+  "cadene/droid_1.0.1": {
+   "tier_B_scan": "sampled",
+   "siblings": 100000,
+   "truncated": true
+  },
+  "camel-ai/SETA-Env": {
+   "tier_B_scan": "sampled",
+   "siblings": 49273,
+   "truncated": false
+  },
+  "carlotabronze/sm-stuff": {
+   "tier_B_scan": "full",
+   "siblings": 5818,
+   "truncated": false
+  },
+  "challenge-2026/challenge_data": {
+   "tier_B_scan": "sampled",
+   "siblings": 100000,
+   "truncated": true
+  },
+  "coatfusion/coat-fusion-assets-anonymous": {
+   "tier_B_scan": "full",
+   "siblings": 100000,
+   "truncated": true
+  },
+  "desmondlzy/bigs-data": {
+   "tier_B_scan": "full",
+   "siblings": 30458,
+   "truncated": false
+  },
+  "djain95/sae-jailbreaks-cache": {
+   "tier_B_scan": "sampled",
+   "siblings": 100000,
+   "truncated": true
+  },
+  "eddmpython/dartlab-data": {
+   "tier_B_scan": "sampled",
+   "siblings": 89019,
+   "truncated": false
+  },
+  "espnet/yodas2": {
+   "tier_B_scan": "sampled",
+   "siblings": 100000,
+   "truncated": true
+  },
+  "evaleval/EEE_datastore": {
+   "tier_A_missing_file_results": 124,
+   "siblings": 100000,
+   "truncated": true
+  },
+  "facebook/seamless-interaction": {
+   "tier_B_scan": "full",
+   "siblings": 21970,
+   "truncated": false
+  },
+  "frankielp/2dgaussian-lang-output": {
+   "tier_B_scan": "full",
+   "siblings": 100000,
+   "truncated": true
+  },
+  "gorilla-llm/Berkeley-Function-Calling-Leaderboard": {
+   "tier_B_scan": "full",
+   "siblings": 52,
+   "truncated": false
+  },
+  "gradio/frontend": {
+   "tier_B_scan": "full",
+   "siblings": 46388,
+   "truncated": false
+  },
+  "happyhackingspace/dit": {
+   "tier_B_scan": "full",
+   "siblings": 1719,
+   "truncated": false
+  },
+  "harborframework/parity-experiments": {
+   "tier_B_scan": "sampled",
+   "siblings": 100000,
+   "truncated": true
+  },
+  "harborframework/terminal-bench-2.0": {
+   "tier_B_scan": "full",
+   "siblings": 862,
+   "truncated": false
+  },
+  "harborframework/terminal-bench-3.0": {
+   "tier_B_scan": "full",
+   "siblings": 2736,
+   "truncated": false
+  },
+  "harborframework/terminal-bench-science-lfs": {
+   "tier_B_scan": "sampled",
+   "siblings": 3966,
+   "truncated": false
+  },
+  "hexuan21/MemoryTax-Res-GPT-5-6-luna": {
+   "tier_B_scan": "sampled",
+   "siblings": 6535,
+   "truncated": false
+  },
+  "hexuan21/MemoryTax-Res-Other": {
+   "tier_B_scan": "sampled",
+   "siblings": 24381,
+   "truncated": false
+  },
+  "hf-internal-testing/transformers_circleci_workflow_runs": {
+   "tier_B_scan": "full",
+   "siblings": 8286,
+   "truncated": false
+  },
+  "hotchpotch/s1mb-result": {
+   "tier_B_scan": "full",
+   "siblings": 32756,
+   "truncated": false
+  },
+  "huylhn1810/aic_2025": {
+   "tier_B_scan": "full",
+   "siblings": 100000,
+   "truncated": true
+  },
+  "i998979/TransitApp": {
+   "tier_B_scan": "sampled",
+   "siblings": 100000,
+   "truncated": true
+  },
+  "inclusionAI/OpenAoE-2000h": {
+   "tier_B_scan": "sampled",
+   "siblings": 100000,
+   "truncated": true
+  },
+  "jamie33/July": {
+   "tier_B_scan": "sampled",
+   "siblings": 86652,
+   "truncated": false
+  },
+  "jasperai/monet": {
+   "tier_B_scan": "sampled",
+   "siblings": 21775,
+   "truncated": false
+  },
+  "jat-project/jat-dataset": {
+   "tier_B_scan": "sampled",
+   "siblings": 3533,
+   "truncated": false
+  },
+  "jat-project/jat-dataset-tokenized": {
+   "tier_B_scan": "sampled",
+   "siblings": 11137,
+   "truncated": false
+  },
+  "jm-rt/arvo-cybergym-2000": {
+   "tier_B_scan": "full",
+   "siblings": 10004,
+   "truncated": false
+  },
+  "jordangong/the-stack-v2-smollm3": {
+   "tier_B_scan": "sampled",
+   "siblings": 73730,
+   "truncated": false
+  },
+  "jumuunhaan/copyright-videos-dataset": {
+   "tier_B_scan": "sampled",
+   "siblings": 52120,
+   "truncated": false
+  },
+  "ksolovev/fine-news": {
+   "tier_B_scan": "sampled",
+   "siblings": 18459,
+   "truncated": false
+  },
+  "leggedrobotics/grand_tour_dataset": {
+   "tier_B_scan": "sampled",
+   "siblings": 9755,
+   "truncated": false
+  },
+  "lerobot/FineART": {
+   "tier_B_scan": "sampled",
+   "siblings": 100000,
+   "truncated": true
+  },
+  "livecodebench/code_generation_lite": {
+   "tier_B_scan": "sampled",
+   "siblings": 10,
+   "truncated": false
+  },
+  "liwu/MNBVC": {
+   "tier_B_scan": "sampled",
+   "siblings": 24127,
+   "truncated": false
+  },
+  "lmms-lab/LLaVA-Video-178K": {
+   "tier_A_missing_file_results": 4,
+   "siblings": 302,
+   "truncated": false
+  },
+  "longisland3/ptb-xl": {
+   "tier_B_scan": "full",
+   "siblings": 87207,
+   "truncated": false
+  },
+  "lyzenghq/banned-historical-archives": {
+   "tier_B_scan": "sampled",
+   "siblings": 100000,
+   "truncated": true
+  },
+  "m-a-p/FineFineWeb": {
+   "tier_B_scan": "sampled",
+   "siblings": 66109,
+   "truncated": false
+  },
+  "m-a-p/Matrix": {
+   "tier_B_scan": "sampled",
+   "siblings": 496,
+   "truncated": false
+  },
+  "manhdungcr7/aic2026-keyframes": {
+   "tier_B_scan": "full",
+   "siblings": 100000,
+   "truncated": true
+  },
+  "markov-ai/cad-1000-hours": {
+   "tier_B_scan": "sampled",
+   "siblings": 5457,
+   "truncated": false
+  },
+  "mickeykang/Event6DBlender": {
+   "tier_B_scan": "sampled",
+   "siblings": 100000,
+   "truncated": true
+  },
+  "miniiohinkimsavol/copyright-detection-videos": {
+   "tier_B_scan": "sampled",
+   "siblings": 19819,
+   "truncated": false
+  },
+  "ml-resources/tsinghua_topic_dataset": {
+   "tier_B_scan": "sampled",
+   "siblings": 100000,
+   "truncated": true
+  },
+  "mlfoundations/MINT-1T-HTML": {
+   "tier_B_scan": "sampled",
+   "siblings": 9246,
+   "truncated": false
+  },
+  "mvp-lab/LLaVA-OneVision-1.5-Mid-Training-85M": {
+   "tier_B_scan": "sampled",
+   "siblings": 12126,
+   "truncated": false
+  },
+  "neashton/windsorml": {
+   "tier_B_scan": "full",
+   "siblings": 100000,
+   "truncated": true
+  },
+  "nebulaanish/quick-canvas-benchmark": {
+   "tier_B_scan": "full",
+   "siblings": 24874,
+   "truncated": false
+  },
+  "nkp37/OpenVid-1M": {
+   "tier_B_scan": "sampled",
+   "siblings": 391,
+   "truncated": false
+  },
+  "numix/balises-openwindmap-pyrenees": {
+   "tier_B_scan": "sampled",
+   "siblings": 2935,
+   "truncated": false
+  },
+  "nvidia/PhysicalAI-Robotics-GR00T-X-Embodiment-Sim": {
+   "tier_B_scan": "sampled",
+   "siblings": 100000,
+   "truncated": true
+  },
+  "nvidia/PhysicalAI-Robotics-Open-H-Embodiment": {
+   "tier_B_scan": "sampled",
+   "siblings": 100000,
+   "truncated": true
+  },
+  "nvidia/PhysicalAI-WorldModel-Synthetic-Autonomous-Driving-Scenarios": {
+   "tier_B_scan": "full",
+   "siblings": 100000,
+   "truncated": true
+  },
+  "nvidia/video-to-data-robot-dexterity-task-library-and-dataset": {
+   "tier_B_scan": "sampled",
+   "siblings": 100000,
+   "truncated": true
+  },
+  "omegalabsinc/omega-voice": {
+   "tier_B_scan": "sampled",
+   "siblings": 100000,
+   "truncated": true
+  },
+  "open-index/hacker-news": {
+   "tier_B_scan": "sampled",
+   "siblings": 628,
+   "truncated": false
+  },
+  "oshonzongiintsetseg/videocopy-dataset": {
+   "tier_B_scan": "sampled",
+   "siblings": 36403,
+   "truncated": false
+  },
+  "own2pwn-fr/ctfhoard-corpus": {
+   "tier_B_scan": "sampled",
+   "siblings": 100000,
+   "truncated": true
+  },
+  "permutans/arxiv-papers-by-subject": {
+   "tier_B_scan": "sampled",
+   "siblings": 42778,
+   "truncated": false
+  },
+  "pjpjq/blofin-oi-data": {
+   "tier_B_scan": "sampled",
+   "siblings": 100000,
+   "truncated": true
+  },
+  "predict-quant/poly-btc-orderbook": {
+   "tier_B_scan": "sampled",
+   "siblings": 31171,
+   "truncated": false
+  },
+  "programbench/ProgramBench-Tests": {
+   "tier_B_scan": "full",
+   "siblings": 2235,
+   "truncated": false
+  },
+  "pulmo/ncbi-genbank-complete": {
+   "tier_B_scan": "sampled",
+   "siblings": 100000,
+   "truncated": true
+  },
+  "ritwika96/qwen3.8-27b-arc1120-base-traces-20261025": {
+   "tier_B_scan": "sampled",
+   "siblings": 84520,
+   "truncated": false
+  },
+  "rl-llm-wiki/knowledge-base": {
+   "tier_B_scan": "full",
+   "siblings": 562,
+   "truncated": false
+  },
+  "rytfh/edtyhgv": {
+   "tier_B_scan": "full",
+   "siblings": 144,
+   "truncated": false
+  },
+  "saarthiatu/jee-pdfs": {
+   "tier_B_scan": "sampled",
+   "siblings": 100000,
+   "truncated": true
+  },
+  "sagels/new-dataset": {
+   "tier_B_scan": "sampled",
+   "siblings": 5219,
+   "truncated": false
+  },
+  "shash42/forecast-news": {
+   "tier_B_scan": "sampled",
+   "siblings": 10393,
+   "truncated": false
+  },
+  "shi-labs/oneformer_demo": {
+   "tier_B_scan": "full",
+   "siblings": 9,
+   "truncated": false
+  },
+  "spark-school/school-corpus": {
+   "tier_B_scan": "full",
+   "siblings": 5949,
+   "truncated": false
+  },
+  "stair-lab/nonmyopia_results": {
+   "tier_B_scan": "full",
+   "siblings": 100000,
+   "truncated": true
+  },
+  "stillbull1sh/solana": {
+   "tier_B_scan": "full",
+   "siblings": 9458,
+   "truncated": false
+  },
+  "sunshk/2025-challenge-orchestrator-v3_2": {
+   "tier_B_scan": "sampled",
+   "siblings": 100000,
+   "truncated": true
+  },
+  "superkaiba1/explore-persona-space-data": {
+   "tier_B_scan": "sampled",
+   "siblings": 100000,
+   "truncated": true
+  },
+  "wegrthj/e94fjt-v654-data": {
+   "tier_B_scan": "sampled",
+   "siblings": 40300,
+   "truncated": false
+  },
+  "wegrthj/kbcpjv-qi9l-raw": {
+   "tier_B_scan": "sampled",
+   "siblings": 53727,
+   "truncated": false
+  },
+  "wegrthj/kbcpjv-v654-data": {
+   "tier_B_scan": "sampled",
+   "siblings": 40283,
+   "truncated": false
+  },
+  "wegrthj/l36l5h-qi9l-data": {
+   "tier_B_scan": "sampled",
+   "siblings": 41112,
+   "truncated": false
+  },
+  "wegrthj/l36l5h-v654-raw": {
+   "tier_B_scan": "sampled",
+   "siblings": 51460,
+   "truncated": false
+  },
+  "wildflow/sweet-corals": {
+   "tier_B_scan": "full",
+   "siblings": 96952,
+   "truncated": false
+  },
+  "world-igr-plum/regions": {
+   "tier_B_scan": "sampled",
+   "siblings": 1087,
+   "truncated": false
+  },
+  "xlangai/recommendation": {
+   "tier_B_scan": "full",
+   "siblings": 36798,
+   "truncated": false
+  },
+  "xlangai/ubuntu_osworld_file_cache": {
+   "tier_B_scan": "full",
+   "siblings": 725,
+   "truncated": false
+  },
+  "yinhuankuang/rl-game-traces-rise-of-the-tomb-raider": {
+   "tier_B_scan": "sampled",
+   "siblings": 649,
+   "truncated": false
+  },
+  "yuanbosz/a-share-minute-bars": {
+   "tier_B_scan": "sampled",
+   "siblings": 47610,
+   "truncated": false
+  },
+  "yyd7/OneStreamer-Core-SourceVideo": {
+   "tier_B_scan": "sampled",
+   "siblings": 1080,
+   "truncated": false
+  },
+  "zdbfv/M3_VOS": {
+   "tier_A_missing_file_results": 1,
+   "siblings": 100000,
+   "truncated": true
+  },
+  "zhaocharile66/My_Hermes_Dataset": {
+   "tier_B_scan": "full",
+   "siblings": 2054,
+   "truncated": false
+  },
+  "zmodelerlover/amd-nr": {
+   "tier_B_scan": "full",
+   "siblings": 209,
+   "truncated": false
+  }
+ }
+}

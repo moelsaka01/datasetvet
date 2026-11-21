@@ -5,7 +5,8 @@ Usage:  python launch/summarize.py LIST
 Reads launch/state.sqlite and writes:
 - launch/results/datasets.csv: one row per listed dataset, facts only (statuses and counts);
 - launch/results/summary.json: counts of each status per check, with Wilson 95% intervals
-  for the shares quoted in RESULTS.md.
+  for the shares quoted in RESULTS.md, and the config hash(es) the rows were made with.
+  The state table keeps one row per (dataset, tier), so each tier should show one hash.
 No dataset is called good or bad: the table states what each check found.
 """
 
@@ -65,6 +66,8 @@ def tier_a(rep: dict[str, Any]) -> dict[str, Any]:
         **{f"provenance_{s}": pc.get(s, 0) for s in ("consistent", "inconsistent", "missing",
                                                      "unknown")},
         "links": sum(kc.values()),
+        "links_missing_file": sum(1 for r in links if r["status"] == "dead" and r["facts"]
+                                  and "(missing file)" in r["facts"][0]["text"]),
         **{f"links_{s}": kc.get(s, 0) for s in ("ok", "dead", "restricted", "unreachable",
                                                 "unknown")},
         "card_fields_missing": ";".join(sorted(r["check"].split(".", 1)[1] for r in res
@@ -80,7 +83,12 @@ def tier_b(rep: dict[str, Any]) -> dict[str, Any]:
            "rows_total": scan.get("rows_total"), "bytes_total": scan.get("bytes_total"),
            "bytes_read": scan.get("bytes_read"), "scan_seconds": scan.get("seconds"),
            "scan_reason": (scan.get("reason") or "")[:200],
-           "download_capped": "download cap reached" in (scan.get("reason") or "")}
+           "download_capped": "download cap reached" in (scan.get("reason") or ""),
+           "scan_source": scan.get("source") or ""}
+    fetch = (rep.get("settings") or {}).get("data_fetch") or {}
+    out["fetch_git"] = str(fetch.get("git", "")).split(":")[0]
+    out["fetch_git_files"] = fetch.get("git_files", 0)
+    out["fetch_http_files"] = fetch.get("http_files", 0)
     for k in ("duplicates", "leakage", "empty", "corrupt", "labels", "pii"):
         r = res.get(f"health.{k}")
         out[k] = r["status"] if r else ""
@@ -96,18 +104,30 @@ def main(list_path: Path) -> None:
                          "sha": (d.get("sha") or "")[:12],
                          "bytes_parquet": d.get("bytes_parquet")}
     errors: dict[str, Counter[str]] = {"A": Counter(), "B": Counter()}
+    hashes: dict[str, Counter[str]] = {"A": Counter(), "B": Counter()}
+    runs: dict[str, dict[str, float]] = {t: {"seconds": 0.0, "http_requests": 0.0} for t in "AB"}
     for tier, fn in (("A", tier_a), ("B", tier_b)):
         for r in state.rows(tier):
             if r["dataset_id"] not in rows:
                 continue
             row = rows[r["dataset_id"]]
             row[f"tier_{tier}"] = r["status"]
+            row[f"tier_{tier}_seconds"] = r["seconds"]
+            hashes[tier][r["config_hash"]] += 1
+            runs[tier]["seconds"] += r["seconds"] or 0
+            runs[tier]["http_requests"] += r["http_requests"] or 0
             if r["status"] == "done":
                 row.update(fn(json.loads(r["report"])))
             else:
                 errors[tier][(r["error"] or "").split(":")[0]] += 1
                 row[f"tier_{tier}_error"] = (r["error"] or "")[:160]
     state.close()
+    # Repos whose Hub listing was cut at 100,000 files (launch/check_listing_cap.py).
+    cap_file = OUT / "listing-truncated.json"
+    truncated = set(json.loads(cap_file.read_text("utf-8"))["truncated"])         if cap_file.exists() else set()
+    for i in truncated:
+        if i in rows:
+            rows[i]["listing_truncated"] = True
     table = sorted(rows.values(), key=lambda x: x["rank"])
     OUT.mkdir(parents=True, exist_ok=True)
     cols: list[str] = []
@@ -125,6 +145,7 @@ def main(list_path: Path) -> None:
     summary = {
         "listed": len(table),
         "tier_A": {
+            "config_hashes": dict(hashes["A"]), **runs["A"],
             "done": len(a), "failed": sum(r.get("tier_A") == "failed" for r in table),
             "errors": dict(errors["A"]),
             "gated": sum(bool(r["gated"]) for r in a),
@@ -147,11 +168,29 @@ def main(list_path: Path) -> None:
                               ("ok", "dead", "restricted", "unreachable", "unknown")},
             "datasets_with_dead_link": share(sum(r["links_dead"] > 0 for r in a),
                                              sum(r["links"] > 0 for r in a)),
+            "missing_file_results": sum(r["links_missing_file"] for r in a),
+            "missing_file_results_in_truncated_listings": sum(
+                r["links_missing_file"] for r in a if r.get("listing_truncated")),
+            # dead links without the missing-file results a cut-off listing can cause
+            "datasets_with_dead_link_excluding_truncated": share(
+                sum(r["links_dead"] - (r["links_missing_file"] if r.get("listing_truncated")
+                                       else 0) > 0 for r in a),
+                sum(r["links"] > 0 for r in a)),
         },
         "tier_B": {
+            "config_hashes": dict(hashes["B"]), **runs["B"],
             "done": len(b), "failed": sum(r.get("tier_B") == "failed" for r in table),
             "errors": dict(errors["B"]),
             "scan_kind": dict(Counter(r["scan"] for r in b)),
+            "scan_source": dict(Counter(r["scan_source"] for r in b)),
+            "fetch_git": dict(Counter(r["fetch_git"] for r in b)),
+            "original_files_listing_truncated": dict(Counter(
+                r["scan"] for r in b if r.get("listing_truncated")
+                and r["scan_source"] == "original files")),
+            "fetch_git_files": sum(r["fetch_git_files"] or 0 for r in b),
+            "fetch_http_files": sum(r["fetch_http_files"] or 0 for r in b),
+            "slowest": [(r["id"], r["tier_B_seconds"]) for r in sorted(
+                b, key=lambda r: -(r["tier_B_seconds"] or 0))[:6]],
             "download_capped": sum(bool(r["download_capped"]) for r in b),
             "bytes_read_total": sum(r["bytes_read"] or 0 for r in b),
             "rows_scanned_total": sum(r["rows_scanned"] or 0 for r in b),

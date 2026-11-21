@@ -1,0 +1,221 @@
+{
+ "run": "test",
+ "configurations": {
+  "builtin dice=0.90 contain=0.95": {
+   "rows": 253,
+   "scored": 245,
+   "excluded": {
+    "no audit-time revision": 8
+   },
+   "confusion": {
+    "consistent": {
+     "consistent": 99,
+     "inconsistent": 27,
+     "missing": 7,
+     "unknown": 29
+    },
+    "inconsistent": {
+     "consistent": 10,
+     "inconsistent": 16,
+     "missing": 0,
+     "unknown": 31
+    },
+    "missing": {
+     "consistent": 0,
+     "inconsistent": 0,
+     "missing": 24,
+     "unknown": 2
+    }
+   },
+   "decided": 183,
+   "agree": 139,
+   "agreement_decided": 0.7595628415300546,
+   "agreement_decided_wilson95": [
+    0.6927164558334457,
+    0.8157356233609093
+   ],
+   "agreement_all_rows": 0.5673469387755102,
+   "agreement_all_rows_wilson95": [
+    0.5047398486776214,
+    0.6278746337883329
+   ],
+   "abstention": 0.2530612244897959,
+   "abstained": 62,
+   "kappa_decided": 0.5299474605954464,
+   "inconsistent_precision": 0.37209302325581395,
+   "inconsistent_precision_n": [
+    16,
+    43
+   ],
+   "inconsistent_recall": 0.2807017543859649,
+   "inconsistent_recall_n": [
+    16,
+    57
+   ],
+   "q1_card_match": 0.9183673469387755,
+   "q1_n": [
+    225,
+    245
+   ],
+   "q2": {
+    "rows_with_github_source_and_dpi_licence": 45,
+    "agree": 45,
+    "no_detection": 0,
+    "agreement": 1.0
+   },
+   "drivers": {
+    "GitHub source": 33,
+    "README text": 14
+   }
+  },
+  "scancode min_score=50": {
+   "rows": 253,
+   "scored": 245,
+   "excluded": {
+    "no audit-time revision": 8
+   },
+   "confusion": {
+    "consistent": {
+     "consistent": 92,
+     "inconsistent": 29,
+     "missing": 7,
+     "unknown": 34
+    },
+    "inconsistent": {
+     "consistent": 8,
+     "inconsistent": 15,
+     "missing": 0,
+     "unknown": 34
+    },
+    "missing": {
+     "consistent": 0,
+     "inconsistent": 0,
+     "missing": 24,
+     "unknown": 2
+    }
+   },
+   "decided": 175,
+   "agree": 131,
+   "agreement_decided": 0.7485714285714286,
+   "agreement_decided_wilson95": [
+    0.6794245136946755,
+    0.8070394857327507
+   ],
+   "agreement_all_rows": 0.5346938775510204,
+   "agreement_all_rows_wilson95": [
+    0.4721809567978055,
+    0.5961355947755649
+   ],
+   "abstention": 0.2857142857142857,
+   "abstained": 70,
+   "kappa_decided": 0.5208164789345945,
+   "inconsistent_precision": 0.3409090909090909,
+   "inconsistent_precision_n": [
+    15,
+    44
+   ],
+   "inconsistent_recall": 0.2631578947368421,
+   "inconsistent_recall_n": [
+    15,
+    57
+   ],
+   "q1_card_match": 0.9183673469387755,
+   "q1_n": [
+    225,
+    245
+   ],
+   "q2": {
+    "rows_with_github_source_and_dpi_licence": 45,
+    "agree": 45,
+    "no_detection": 0,
+    "agreement": 1.0
+   },
+   "drivers": {
+    "GitHub source": 33,
+    "README text": 16
+   }
+  }
+ },
+ "posthoc_without_sources": {
+  "builtin dice=0.90 contain=0.95": {
+   "scored": 245,
+   "confusion": {
+    "consistent": {
+     "consistent": 104,
+     "inconsistent": 5,
+     "missing": 7,
+     "unknown": 46
+    },
+    "inconsistent": {
+     "consistent": 11,
+     "inconsistent": 9,
+     "missing": 0,
+     "unknown": 37
+    },
+    "missing": {
+     "consistent": 0,
+     "inconsistent": 0,
+     "missing": 24,
+     "unknown": 2
+    }
+   },
+   "decided": 160,
+   "agree": 137,
+   "agreement_decided": 0.85625,
+   "agreement_decided_wilson95": [
+    0.793529970004945,
+    0.9022640163819067
+   ],
+   "abstention": 0.3469387755102041,
+   "kappa_decided": 0.6724813100747596,
+   "inconsistent_precision_n": [
+    9,
+    14
+   ],
+   "inconsistent_recall_n": [
+    9,
+    57
+   ]
+  },
+  "scancode min_score=50": {
+   "scored": 245,
+   "confusion": {
+    "consistent": {
+     "consistent": 87,
+     "inconsistent": 8,
+     "missing": 7,
+     "unknown": 60
+    },
+    "inconsistent": {
+     "consistent": 7,
+     "inconsistent": 8,
+     "missing": 0,
+     "unknown": 42
+    },
+    "missing": {
+     "consistent": 0,
+     "inconsistent": 0,
+     "missing": 24,
+     "unknown": 2
+    }
+   },
+   "decided": 141,
+   "agree": 119,
+   "agreement_decided": 0.8439716312056738,
+   "agreement_decided_wilson95": [
+    0.7750502089511974,
+    0.89464689464335
+   ],
+   "abstention": 0.42448979591836733,
+   "kappa_decided": 0.6667740895907186,
+   "inconsistent_precision_n": [
+    8,
+    16
+   ],
+   "inconsistent_recall_n": [
+    8,
+    57
+   ]
+  }
+ }
+}

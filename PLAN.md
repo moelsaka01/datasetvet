@@ -3,7 +3,7 @@
 > **Before you train on it, check it.**
 > A CLI that checks a dataset and writes a report card of verifiable facts: what the card says, what the licence files and the source say, whether the links work, and what is in the data (duplicates, cross-split leakage, empty rows, label balance, PII-pattern matches). It never says a dataset is "safe to use", and it is not legal advice.
 
-Status: **Phase 3 (licence + provenance) complete, 2026-11-19.** Implemented: card check (with HF-id/SPDX validity), licence consistency (C1 vs C2/C3/C4), provenance, a built-in SPDX licence matcher, the optional ScanCode scanner, GitHub and web source resolvers, links, data health, the Hugging Face adapter, JSON and terminal reports. Not implemented: everything in Phases 4–5. Where Phase 2 or 3 changed or clarified this plan, the section says so ("Phase 2:", "Phase 3:"). Every "measured" figure in this file was measured on 2026-11-19 from this laptop (Windows 11, Python 3.12.10) and is listed with how it was measured in [Feasibility evidence](#9-feasibility-evidence-measured-2026-11-19).
+Status: **Phase 4 (accuracy evaluation + launch scan) complete, 2026-11-21**; results in [RESULTS.md](RESULTS.md). Implemented: card check (with HF-id/SPDX validity), licence consistency (C1 vs C2/C3/C4), provenance, a built-in SPDX licence matcher, the optional ScanCode scanner, GitHub and web source resolvers, links, data health, the Hugging Face adapter, JSON and terminal reports. Also built in Phase 4: the eval harness (`eval/`), the launch scan (`launch/`), the SPDX fingerprint index (no licence texts shipped) and faster data fetching (git pack, parallel downloads). Not implemented: Phase 5. Where Phase 2, 3 or 4 changed or clarified this plan, the section says so ("Phase 2:", "Phase 3:", "Phase 4:"). Every "measured" figure in this file was measured on 2026-11-19 from this laptop (Windows 11, Python 3.12.10) and is listed with how it was measured in [Feasibility evidence](#9-feasibility-evidence-measured-2026-11-19).
 
 Contents: [1 Name](#1-name) · [2 Competitors](#2-competitors) · [3 Architecture](#3-architecture) · [4 Licence scanner](#4-licence-scanner-choice) · [5 Checks](#5-checks-exact-rules-and-statuses) · [6 Hub adapters](#6-hub-adapter-interface) · [7 Reports and badge](#7-report-formats-and-badge) · [8 Accuracy evaluation](#8-accuracy-evaluation) · [9 Feasibility evidence](#9-feasibility-evidence-measured-2026-11-19) · [10 Launch scan](#10-launch-scan-top-500-hf-datasets) · [11 Task list](#11-phased-task-list) · [12 Risks and open questions](#12-risks-and-open-questions)
 
@@ -158,7 +158,7 @@ Tokens: an HF token or a GitHub token is read only from the user's own environme
 - **Not covered:** licences that are not on the SPDX list (Llama, OpenRAIL, custom terms), and free-text paraphrases ("for research use only"). Those give no detection, so the comparison is `missing` or `unknown`, never a guess.
 - Thresholds are fixed in code and may only be tuned on the Phase 4 dev split.
 
-**Scanner choice:** `--scanner builtin | scancode | auto` (default `auto`: ScanCode when it imports, else built-in). Every report names the scanner and version it used. ScanCode detections are kept at score >= 90 (`SCANCODE_MIN_SCORE`).
+**Scanner choice:** `--scanner builtin | scancode | auto` (default `auto`: ScanCode when it imports, else built-in). Every report names the scanner and version it used. ScanCode detections are kept at score >= 90 (`SCANCODE_MIN_SCORE`). Phase 4: the dev split chose 50 (76 of 116 dev rows agree at 50, 66 at 90); the frozen eval config uses 50, the code default is still 90 until the owner decides (BUILD_LOG Phase 4).
 
 The accuracy evaluation reports the two configurations separately (§8): `builtin` and `scancode`, on the same answer key, so the cost of skipping the 652 MB extra is measured, not assumed.
 
@@ -352,13 +352,13 @@ class SourceResolver(Protocol):                  # things that are sources, not 
 ## 8. Accuracy evaluation
 
 **Answer key:** the Data Provenance Initiative's `data_summaries/*.json` in `github.com/Data-Provenance-Initiative/Data-Provenance-Collection`. It is in an Apache-2.0 repo, so we can use and redistribute it with attribution; the eval pins a commit sha. Measured today (§9):
-- 109 summary files, **3,718 dataset entries**; 3,490 link to an HF dataset, but only **804 unique HF repos** (collections map many entries to one repo).
+- 109 summary files, **3,718 dataset entries**; 3,490 link to an HF dataset, but only **804 unique HF repos** (collections map many entries to one repo). Phase 4, as built: 3,492 entries and **792** unique repos; 81 dropped because their entries disagree, 3 with no recorded card licence, so **708 key rows**; Q3 keeps **371** (239 consistent, 80 inconsistent, 52 missing) after excluding 212 "none stated" and 125 non-SPDX expert licences.
 - Every entry has an expert `Licenses` list; 3,342 name a verifier (`License Verified By`).
 - Each entry also records what the HF card said at audit time (`Inferred Metadata.HF Yaml License`, present for 3,133 HF-linked entries) and GitHub's licence (`GitHub License`, 1,279 entries).
 - The DPI's own disclaimer says its licences are self-reported and categorised on a best-effort basis, so "agreement with DPI" is the metric, not "accuracy against truth".
 
 **Building the key** (`eval/build_key.py`):
-1. Map DPI licence names to SPDX with `data/dpi_licence_map.csv` (DPI's `license_paraphrases.json` plus hand mappings, each row reviewed). Terms that are not licences (`OpenAI` ToS, `Custom`, `Various`, `Non Commercial`, `Academic Research Purposes Only`) map to `non-SPDX`, and `Unspecified` / `No License` map to `none`.
+1. Map DPI licence names to SPDX with `eval/dpi_licence_map.csv` (Phase 4: it lives with the eval, not the package; 52 names) (DPI's `license_paraphrases.json` plus hand mappings, each row reviewed). Terms that are not licences (`OpenAI` ToS, `Custom`, `Various`, `Non Commercial`, `Academic Research Purposes Only`) map to `non-SPDX`, and `Unspecified` / `No License` map to `none`.
 2. Keep one key row per HF repo only when every DPI entry for that repo has the same expert licence set. Report how many repos this drops.
 3. Expected status: card at audit time (`HF Yaml License`) vs expert set: equal -> `consistent`; both present and different -> `inconsistent`; YAML empty -> `missing`; expert `non-SPDX`/`none` -> excluded from Q3, counted separately.
 4. Split by HF repo id hash: 30% dev (build tables, set the ScanCode threshold), 70% test. Freeze the config with a git tag before the test run.
@@ -378,7 +378,7 @@ Each configuration gets its own confusion matrix, agreement with Wilson interval
   - the abstention (`unknown`) rate, reported separately so abstaining cannot inflate agreement;
   - precision and recall for `inconsistent`.
 - **Disagreement audit:** the owner hand-labels 30 random disagreements as *ours wrong* / *key wrong* / *changed since audit* / *ambiguous*, and the counts are published with the matrix.
-- Results go to `eval/results/RESULTS.md` in the tierview style: headline with its range, what it does and does not show, per-row data in JSON.
+- Results go to `RESULTS.md` at the repo root (Phase 4; per-row data in `eval/results/`) in the tierview style: headline with its range, what it does and does not show, per-row data in JSON.
 
 **Card-history caveat:** cards change after an audit. Q1 and Q3 use the audit-time revision to remove that drift. A separate, clearly labelled table shows today's cards vs DPI as "drift since audit", not as an error rate.
 
@@ -435,7 +435,15 @@ The Dataset Viewer (`datasets-server`) sent **no** RateLimit headers, so its lim
    - GitHub: anonymous API is 60 requests/hour, so licence files are read from `raw.githubusercontent.com` (LICENSE, LICENSE.md, LICENSE.txt, COPYING at `HEAD`). GitHub's detected licence is fetched only when `GITHUB_TOKEN` is set, otherwise marked `not fetched`.
    - Batches of 25 datasets, with a checkpoint after each.
 4. **Resumable.** `launch/state.sqlite` (stdlib `sqlite3`) has a row per `(dataset_id, sha, check)` with status, result JSON, error and finish time, plus the run's config hash. `launch run --resume` skips finished rows whose sha and config hash match. Ctrl-C finishes the current dataset and exits cleanly. A crash loses at most one dataset.
-5. **Outputs:** per-dataset JSON + HTML, `launch/results/RESULTS.md` (counts of each status per check, with ranges where it is a rate), and a CSV. No dataset is called good or bad. The table is facts with links, and maintainers get a short note on how to re-check after fixing.
+5. **Outputs:** per-dataset JSON + HTML, `RESULTS.md` (repo root) (counts of each status per check, with ranges where it is a rate), and a CSV. No dataset is called good or bad. The table is facts with links, and maintainers get a short note on how to re-check after fixing.
+
+**Phase 4, as run** (details and numbers in RESULTS.md §2):
+- Tier B limits from the measured budget: full scan up to **100 MB**, else a seeded **10,000-row** sample with at most **100 MB** downloaded (seed 0). A first try at 200 MB measured about 4 MB/s on this laptop, over 4 hours for the list.
+- `--shard I/N` runs N processes on disjoint parts of the list; `--max N` makes rounds, with the owner's usage checked between rounds; `--retry-failed` re-runs failures once.
+- The config hash includes the git tree ids of `src/`, `launch/run.py`, `launch/state.py` and `pyproject.toml`; the runner refuses uncommitted changes there and prints the commit. Tier A ran before this (hash of settings and version only).
+- State is one row per (dataset, tier), not per check.
+- `launch/check_listing_cap.py` flags repos whose Hub listing stops at 100,000 files (§12); `launch/summarize.py` reports every share with and without them.
+- No HTML per dataset yet (Phase 5 renderer).
 
 ## 11. Phased task list
 
@@ -477,7 +485,7 @@ Owner decisions taken at the start of Phase 3 (from the Phase 2 open questions):
 | 3.10 | Sampling: many small chunks spread across each file (owner decision) | `checks/health/scan.py`, `tests/test_scan.py` | exact, deterministic, spread across a sorted file; label warning kept |
 | 3.11 | Footer reworded; banned-words test for the footer and terminal reports | `model.py`, `tests/test_wording.py` | test passes |
 
-### Phase 4: accuracy evaluation + launch scan (Opus 5.5, high)
+### Phase 4: accuracy evaluation + launch scan (Opus 5.5, high) — done 2026-11-21
 
 | # | task | files | done when |
 |---|---|---|---|
@@ -486,7 +494,7 @@ Owner decisions taken at the start of Phase 3 (from the Phase 2 open questions):
 | 4.3 | DPI key builder (pinned sha), licence-name map, dev/test split | `eval/build_key.py`, `data/dpi_licence_map.csv` | key stats match §8 counts; dropped-repo count reported |
 | 4.4 | Audit-time card revision lookup | `eval/revisions.py` | for 20 dev repos the chosen commit predates the DPI file date (test) |
 | 4.5 | Dev run of both configurations (`builtin`, `scancode`); tune only each scanner's thresholds, then freeze config (git tag `eval-config-v1`) | `eval/run.py`, `eval/config.yml` | tag exists before any test-split result is computed |
-| 4.6 | Test run of both configurations + metrics: confusion matrix, Wilson CI, kappa, abstention, inconsistent P/R, **one set per configuration** | `eval/metrics.py`, `eval/results/` | `RESULTS.md` has separate `builtin` and `scancode` sections, never pooled; owner labels 30 disagreements per configuration that has them |
+| 4.6 | Test run of both configurations + metrics: confusion matrix, Wilson CI, kappa, abstention, inconsistent P/R, **one set per configuration** | `eval/metrics.py`, `eval/results/` | `RESULTS.md` has separate `builtin` and `scancode` sections, never pooled; owner labels 30 disagreements per configuration that has them (**samples written, labels pending**) |
 | 4.7 | Launch scan Tier A then Tier B | `launch/results/` | RESULTS.md with per-status counts, not-checked list and run dates |
 
 ### Phase 5: polish, Action, README, launch (Sonnet 5.5, medium)
@@ -516,4 +524,8 @@ Owner decisions taken at the start of Phase 3 (from the Phase 2 open questions):
 - **SPDX licence list data's own licence is still not stated** (re-checked 2026-11-19: GitHub's `license` field for `spdx/license-list-data` is empty; README, CONTRIBUTING and accessingLicenses.md say nothing; the spdx.org footer says "All Rights Reserved"). ~~Owner to decide whether to keep vendoring the texts~~: **decided in Phase 4: texts are not shipped**, only metadata and a derived fingerprint index (§4). A question to SPDX is drafted in `docs/drafts/spdx-license-list-data-issue.md` for the owner to post. Still open: the metadata (ids, names, flags, URLs) is shipped and comes from the same unlicensed source.
 - **Anonymous GitHub sources** can only say "no file under these 7 names", so a repo without one is `unknown`, not `missing`, unless `GITHUB_TOKEN` is set.
 - **A source repo's LICENSE often covers code, not data** (hotpot_qa: card CC-BY-SA-4.0, repo Apache-2.0). The report states the two licences and that they differ, which is the fact; it does not say which one covers the data. Phase 4's disagreement audit should count how often this is the reason.
-- **Built-in matcher coverage**: no non-SPDX licences, no paraphrases; Phase 4 measures its abstention rate against ScanCode's.
+- **Built-in matcher coverage**: no non-SPDX licences, no paraphrases. Phase 4 measured it: 25.3% abstention against ScanCode's 28.6%, agreement 76.0% vs 74.9% (RESULTS §1).
+- **Hub file listings stop at 100,000 entries** (found in Phase 4). The HF adapter takes the file list from `siblings`, so for larger repos data health reads a partial list (a "Full scan" label can be wrong) and card `data_files` paths can be reported as missing files when they exist. 69 of 169 launch datasets checked were affected. Fix before launch: page through the tree API when `siblings` has 100,000 entries.
+- **"corrupt" overstates "could not read"** (Phase 4): most cases are `.json` files that are not row tables. Rename the check and skip non-data JSON before launch.
+- **Bugs found by the launch scan** (Phase 4, not fixed): nanosecond timestamps (`ValueError`), `ArrowIndexError` (2 datasets), JSON arrays of non-objects (`AttributeError`).
+- **Old licence texts in git history**: Phase 3's `data/spdx_licences.json.gz` (`3a6b650`) holds the 92 texts. Rewrite history before the first push if they must not be published.
