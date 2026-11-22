@@ -3,7 +3,7 @@
 > **Before you train on it, check it.**
 > A CLI that checks a dataset and writes a report card of verifiable facts: what the card says, what the licence files and the source say, whether the links work, and what is in the data (duplicates, cross-split leakage, empty rows, label balance, PII-pattern matches). It never says a dataset is "safe to use", and it is not legal advice.
 
-Status: **Phase 5 (polish and launch prep) built, 2026-11-22: see the Phase 5 table in §11 for what is and is not done; nothing pushed or published.** Phase 4.5 (fixes from the launch scan, rescan) was complete the same day; results in [RESULTS.md](RESULTS.md). Phase 3's full licence texts were removed from all git history before any push (§12; commit ids in BUILD_LOG). Implemented: card check (with HF-id/SPDX validity), licence consistency (C1 vs C2/C3/C4), provenance, a built-in SPDX licence matcher, the optional ScanCode scanner, GitHub and web source resolvers, links, data health, the Hugging Face adapter, JSON and terminal reports. Phase 4.5: paged file lists past 100,000 entries ("Partial scan" when incomplete), three reader bug fixes, the "files that could not be read as rows" check, non-data files skipped. Also built in Phase 4: the eval harness (`eval/`), the launch scan (`launch/`), the SPDX fingerprint index (no licence texts shipped) and faster data fetching (git pack, parallel downloads). Phase 5: large-repo warning (5.9), Markdown report and `--fail-on` (5.1 in part), a GitHub Action (5.4), the README (5.7), a PyPI build and `twine check` (5.8 in part), launch post drafts, the ScanCode default of 50. Not implemented: the HTML report and badge (5.1, 5.2), the static site (5.5), the optional AI summary (5.6), the competitor re-check (5.8). Where Phase 2, 3, 4 or 4.5 changed or clarified this plan, the section says so ("Phase 2:", "Phase 3:", "Phase 4:", "Phase 4.5:"). Every "measured" figure in this file was measured on 2026-11-19 from this laptop (Windows 11, Python 3.12.10) and is listed with how it was measured in [Feasibility evidence](#9-feasibility-evidence-measured-2026-11-19).
+Status: **Phase 5.5 (held-out evaluation) pre-registered 2026-11-22 in §8.1, before any rule work; the old test split is retired from tuning.** Phase 5 (polish and launch prep) built, 2026-11-22: see the Phase 5 table in §11 for what is and is not done; nothing pushed or published. Phase 4.5 (fixes from the launch scan, rescan) was complete the same day; results in [RESULTS.md](RESULTS.md). Phase 3's full licence texts were removed from all git history before any push (§12; commit ids in BUILD_LOG). Implemented: card check (with HF-id/SPDX validity), licence consistency (C1 vs C2/C3/C4), provenance, a built-in SPDX licence matcher, the optional ScanCode scanner, GitHub and web source resolvers, links, data health, the Hugging Face adapter, JSON and terminal reports. Phase 4.5: paged file lists past 100,000 entries ("Partial scan" when incomplete), three reader bug fixes, the "files that could not be read as rows" check, non-data files skipped. Also built in Phase 4: the eval harness (`eval/`), the launch scan (`launch/`), the SPDX fingerprint index (no licence texts shipped) and faster data fetching (git pack, parallel downloads). Phase 5: large-repo warning (5.9), Markdown report and `--fail-on` (5.1 in part), a GitHub Action (5.4), the README (5.7), a PyPI build and `twine check` (5.8 in part), launch post drafts, the ScanCode default of 50. Not implemented: the HTML report and badge (5.1, 5.2), the static site (5.5), the optional AI summary (5.6), the competitor re-check (5.8). Where Phase 2, 3, 4 or 4.5 changed or clarified this plan, the section says so ("Phase 2:", "Phase 3:", "Phase 4:", "Phase 4.5:"). Every "measured" figure in this file was measured on 2026-11-19 from this laptop (Windows 11, Python 3.12.10) and is listed with how it was measured in [Feasibility evidence](#9-feasibility-evidence-measured-2026-11-19).
 
 Contents: [1 Name](#1-name) · [2 Competitors](#2-competitors) · [3 Architecture](#3-architecture) · [4 Licence scanner](#4-licence-scanner-choice) · [5 Checks](#5-checks-exact-rules-and-statuses) · [6 Hub adapters](#6-hub-adapter-interface) · [7 Reports and badge](#7-report-formats-and-badge) · [8 Accuracy evaluation](#8-accuracy-evaluation) · [9 Feasibility evidence](#9-feasibility-evidence-measured-2026-11-19) · [10 Launch scan](#10-launch-scan-top-500-hf-datasets) · [11 Task list](#11-phased-task-list) · [12 Risks and open questions](#12-risks-and-open-questions)
 
@@ -391,6 +391,43 @@ Each configuration gets its own confusion matrix, agreement with Wilson interval
 
 **Card-history caveat:** cards change after an audit. Q1 and Q3 use the audit-time revision to remove that drift. A separate, clearly labelled table shows today's cards vs DPI as "drift since audit", not as an error rate.
 
+### 8.1 Phase 5.5: held-out evaluation, pre-registered (2026-11-22)
+
+Written and committed **before** any Phase 5.5 rule change, before the held-out rows are drawn and before any held-out label exists. Anything changed here after that commit is a deviation, and RESULTS.md must say so. Rules only: no AI in any rule, baseline or label step.
+
+**Why.** v1's headline (built-in, old test split) is kappa 0.53 on decided rows with 25.3% abstention. The old test split has been looked at twice (Phase 4 results, Phase 5 threshold check), and its disagreements are now material for rule work. **The old test split is retired from tuning and from any blind claim.**
+
+**Goal.** For configuration C below, on the held-out rows. "Met" needs all three; each part is reported either way, including a miss.
+1. Cohen's kappa **≥ 0.61** on decided rows (rows where C is not `unknown`), computed as in RESULTS §1.
+2. Abstention (`unknown`) **< 15%** of scored rows.
+3. C **beats baselines A and B** on the same scored rows: more rows agree with the label (abstaining counts as a miss), **and** an exact two-sided McNemar test on the discordant rows gives p < 0.05. Two tests (C vs A, C vs B), each at 0.05, no multiplicity correction.
+
+**Held-out set (`holdout-v1`).**
+- Population: the 500 datasets of `launch/lists/top500-2026-11-19.json`, each at its frozen sha.
+- Removed before drawing:
+  - every HF repo named in any DPI data summary at `ce6662d` (all 792 repos, not only the 708 key rows), compared case-insensitively;
+  - `KakologArchives/KakologArchives`, whose frozen sha returns 404 (RESULTS §2).
+- Draw: the remaining ids sorted by lower-cased id, then `random.Random(20261122).sample(ids, 120)`. No redraws: a drawn row whose card cannot be fetched when the sheet is built stays in the sheet, marked, and is not scored.
+- Sheet: `eval/holdout/sheet.csv` and `eval/holdout/LABELLING.md`, tagged `holdout-v1` before any label. It shows only the card's own YAML licence fields copied verbatim, pinned links (card, file tree), the URLs written in the card, and whether the Hub marks the repo gated. **No datasetvet output.**
+- Blind labelling: the owner does not run datasetvet on these rows and does not open `launch/results/` for them until labelling is finished.
+- During rule work the 120 ids are not used and their launch-scan reports are not opened.
+- Labels use the DPI definitions of §8 / `eval/build_key.py`, applied by the owner: the expert licence set for the data, then the expected status, in this order: expert licence not on the SPDX list → excluded; expert "none stated" → excluded; card states no licence (absent, empty, `unknown`) → `missing`; card value not one SPDX licence (`other`, HF family ids, non-SPDX ids) → excluded; card equals the expert set → `consistent`; otherwise `inconsistent`.
+- Scored rows: labelled `consistent`, `inconsistent` or `missing`, with the card readable at the frozen sha in the scoring run. A run error counts as `unknown`, as in v1.
+- Too few rows: if fewer than 60 rows are scorable after labelling, a second batch of 60 is drawn from the remaining pool with `random.Random(20261123)` (tag `holdout-v1b`) and labelled the same way **before anything is scored**; both batches are then scored together.
+
+**Configurations, scored on the same rows, never pooled.**
+- **A, the HF `license:` tag alone**: the Hub's `license:` tags at the frozen sha (recorded in the launch list). No tag, or only `unknown` → `missing`; any other tag → `consistent`. It never says `inconsistent` or `unknown`.
+- **B, ScanCode alone**: ScanCode toolkit 32.5.0, detections with score ≥ 50 (the v1 freeze), run on the dataset repo's own README with the YAML front matter removed (so the tag is not its own evidence) and on its licence files (`LICEN[CS]E*`, `COPYING*`, `*.license`), at the frozen sha; no stated sources. Tag missing → `missing`; no detection → `unknown`; the union of detected licence keys equals the tag's keys → `consistent`; otherwise `inconsistent`.
+- **C, datasetvet v2**: the built-in matcher (the plain install), rules and config frozen at `eval-config-v2`; links, data health and provenance off, sources on, anonymous (as v1); one status per dataset from v2's dataset-level rule.
+
+**Metrics, per configuration:** the 3×4 confusion matrix; agreement on decided rows (Wilson 95%); agreement over all scored rows with abstaining as a miss (Wilson 95%); abstention (Wilson 95%); Cohen's kappa on decided rows with a percentile bootstrap 95% interval (10,000 resamples of the scored rows, seed 0); kappa over all scored rows with `unknown` as a fourth category (reported, not a goal); `inconsistent` precision and recall. Paired: exact McNemar on per-row correctness (abstaining = miss), C vs A and C vs B.
+
+**Rule work** (step 3) uses only the dev split (118 rows) and the 48 datasets of the two 30-row disagreement samples (`eval/results/disagreements-*.csv`; test rows, allowed by the owner). Their owner-audit label columns were empty when this was written, so the DPI key's labels are used for them. No other old test row is opened during rule work. A candidate rule is kept when it raises the number of rule-work rows that agree with the key (abstaining = miss); its effect on kappa and abstention is logged in BUILD_LOG. Every rule gets a test.
+
+**Freeze.** The v2 config, the runner, the held-out scorer, baselines A and B and `src/` are committed and tagged `eval-config-v2` before any held-out label is read. The scorer refuses to run if any of them differ from the tag. No rule changes after labels are read; any later idea is reported as exploratory only.
+
+**Old test split.** v2 is also scored on the old test rows and reported beside v1's frozen numbers, labelled **"no longer blind"**.
+
 ## 9. Feasibility evidence (measured 2026-11-19)
 
 **Hugging Face Hub API** (anonymous, from this laptop):
@@ -535,6 +572,17 @@ Phase 5 status (2026-11-22, Sonnet 5.5, medium):
 | 5.8 | **Partly**: `python -m build` and `twine check` pass; a clean-venv install of the wheel runs a check; version 0.1.0. The competitor re-check was not run. Nothing uploaded; `docs/RELEASE.md` has the checklist. |
 | 5.9 | **Done**: `checks/health/large.py`, `pipeline.run_check(confirm=...)`, `cli.py --yes`. The warning comes after the file list and the data plan, before any data file is fetched; it names the file count, an estimate from the measured 34.7 ms a file, and the sampled-scan flags; a terminal is asked, `--yes`/CI/Action/non-interactive runs proceed; the scan line says "large repo: N files" (`ScanInfo.large_repo`). Declining skips only the data-health scan. 16 tests in `tests/test_large_repo.py`. |
 
+### Phase 5.5: close the gap to the human audit before v0.1 (Opus 5.5, high)
+
+Pre-registered in §8.1 before any rule work. Rules only.
+
+| # | task | files | done when |
+|---|---|---|---|
+| 5.5.1 | Pre-register goal, metrics, held-out design; retire the old test split from tuning | `PLAN.md` §8.1 | committed before any rule change |
+| 5.5.2 | Draw 120 held-out rows (seeded, not in DPI) and build the blind labelling sheet | `eval/holdout/` | tag `holdout-v1` before any label |
+| 5.5.3 | Rule work on dev + the 48 disagreement-sample datasets: fewer `unknown`; a source repo's code licence reported as "the source code licence differs", not a contradiction | `checks/licence.py`, tests | a test per rule; effect logged |
+| 5.5.4 | Freeze (`eval-config-v2`), score A / B / C on the held-out labels; v2 on the old test split marked "no longer blind" | `eval/`, `eval/results/` | needs the owner's labels |
+| 5.5.5 | RESULTS and BUILD_LOG | `RESULTS.md`, `BUILD_LOG.md` | every number reported, misses included |
 
 ## 12. Risks and open questions
 
