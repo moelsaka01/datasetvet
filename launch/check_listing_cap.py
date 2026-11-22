@@ -3,7 +3,7 @@
 Usage:  python launch/check_listing_cap.py LIST [--all]
 
 The Hub's dataset API (`/api/datasets/{id}/revision/{sha}`) returns at most 100,000 entries
-in `siblings`. datasetvet's HF adapter (at commit a3f5428 and before) takes the repo's file
+in `siblings`. datasetvet's HF adapter (at commit cdb210e and before) takes the repo's file
 list from there, so for a larger repo it sees only part of the files:
 - Tier A: a card's `configs[].data_files` path can match a file the list left out and is then
   reported as a "missing file";

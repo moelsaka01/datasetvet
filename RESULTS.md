@@ -40,9 +40,9 @@ Each dataset gets facts, not a grade. 107 rows were rescanned after the fixes (9
 - **Split and freeze**: by hash of the repo id, 30% dev (118 rows) and 70% test (253 rows). Only each scanner's thresholds were tuned, on dev only, by the pre-stated rule "most rows agreeing; abstaining counts as not agreeing; ties go to the Phase 3 default".
   - Built-in: all 8 grid points (Dice 0.80–0.95 × containment 0.90/0.95) gave the same 79 of 116 dev rows, so it stays at 0.90 / 0.95.
   - ScanCode: score ≥ 50 gave 76 (≥ 90 gave 66; ≥ 100 gave 60), so the threshold moved from 90 to **50**.
-  - The config was then committed and tagged `eval-config-v1` (`5254aab`). `eval/run.py` refuses the test split unless `eval/config.yml`, `eval/run.py` and `src/` match the tag.
+  - The config was then committed and tagged `eval-config-v1` (`1d8f4e4`). `eval/run.py` refuses the test split unless `eval/config.yml`, `eval/run.py` and `src/` match the tag.
 - **Same inputs for both scanners**: both configurations of a row run in one process and share one HTTP memo, so they read identical bytes, GitHub included. The run used the ScanCode venv.
-- **Code version.** The eval ran on the code tagged `eval-config-v1` (`5254aab`). The faster fetching added later (`a3f5428`, used by the launch scan) does not affect it: the eval turns data health off (`check_data: false`), and the new fetch routes are only reached through the data-health scan. The only change that does touch eval requests is the request spacing in `http.py`, which changes timing, not content. Re-running the test split must be done from the tag: `eval/run.py` refuses it when `src/` differs from `eval-config-v1`, as it now does on later commits.
+- **Code version.** The eval ran on the code tagged `eval-config-v1` (`1d8f4e4`). The faster fetching added later (`cdb210e`, used by the launch scan) does not affect it: the eval turns data health off (`check_data: false`), and the new fetch routes are only reached through the data-health scan. The only change that does touch eval requests is the request spacing in `http.py`, which changes timing, not content. Re-running the test split must be done from the tag: `eval/run.py` refuses it when `src/` differs from `eval-config-v1`, as it now does on later commits.
 
 ### Test split: confusion matrices (rows: expected; columns: ours)
 
@@ -100,11 +100,11 @@ Per-row data: `eval/results/runs/test.jsonl`. All metrics: `eval/results/metrics
 ## 2. Launch scan: top 500 Hugging Face datasets
 
 **Code.**
-- **First scan.** Tier A ran on `5254aab` (config hash `d0b085a50bef68aa`, settings and version only). Tier B ran on `a3f5428` (config hash `2472d09329f26eb6`).
-- **Rescan.** The 107 affected rows were rescanned on `0ba2ea4`: Tier A under config hash `7c024a7a384b9026`, Tier B under `fe7d94fb698d5f41`.
-- **What the config hash covers.** Since `5c9076c` it includes the git tree ids of `src/`, `launch/run.py`, `launch/state.py` and `pyproject.toml`. `launch/run.py` refuses to run with uncommitted changes there, so every finished row names the committed code that made it.
+- **First scan.** Tier A ran on `1d8f4e4` (config hash `d0b085a50bef68aa`, settings and version only). Tier B ran on `cdb210e` (config hash `2472d09329f26eb6`).
+- **Rescan.** The 107 affected rows were rescanned on `4085159`: Tier A under config hash `7c024a7a384b9026`, Tier B under `fe7d94fb698d5f41`.
+- **What the config hash covers.** Since `bc89e12` it includes the git tree ids of `src/`, `launch/run.py`, `launch/state.py` and `pyproject.toml`. `launch/run.py` refuses to run with uncommitted changes there, so every finished row names the committed code that made it.
 - **Rows not rescanned** keep their first-scan result and hash. Nothing they depend on changed: Parquet-conversion scans, cards, licence comparisons and link checks of repos with complete file lists.
-- **Faster fetching** (`a3f5428`) was checked against the one-file-at-a-time route on 40 Tier B datasets (`launch/fetch_equivalence.py`). 39 reports were identical field by field, excluding timings and request counts. The 40th differed only in its Parquet-conversion commit, which Hugging Face rebuilt on 2026-11-20; the old route showed the same change.
+- **Faster fetching** (`cdb210e`) was checked against the one-file-at-a-time route on 40 Tier B datasets (`launch/fetch_equivalence.py`). 39 reports were identical field by field, excluding timings and request counts. The 40th differed only in its Parquet-conversion commit, which Hugging Face rebuilt on 2026-11-20; the old route showed the same change.
 - Every request obeys the Hub's RateLimit headers and waits out 429s.
 
 ### Method
@@ -245,4 +245,4 @@ What this means for users: for a repo of this size the listing is about a minute
 - **128 Tier A datasets not rescanned** after the listing fix (section 2): a licence file beyond their first 100,000 files would have been missed.
 - **"Could not be read as rows" is about datasetvet's reader** as much as the data: 24 datasets have files with mixed types per column, which a valid file can have.
 - **Snapshot.** Each result is for the frozen sha. The Hub changes daily: 3 of the 500 were gone within two days, and one repo's storage no longer serves 59,957 of its listed files.
-- **Two code versions.** Rows not rescanned were made by the first scan's code (Tier A `5254aab`, with the earlier config-hash method; Tier B `a3f5428`); rescanned rows by `0ba2ea4`. Each row's config hash is in the state and in `summary.json`.
+- **Two code versions.** Rows not rescanned were made by the first scan's code (Tier A `1d8f4e4`, with the earlier config-hash method; Tier B `cdb210e`); rescanned rows by `4085159`. Each row's config hash is in the state and in `summary.json`.

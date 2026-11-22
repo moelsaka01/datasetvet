@@ -234,7 +234,7 @@ The set: 5 datasets with licence mismatches recorded in the DPI data (`Data-Prov
 
 ## Phase 4: accuracy evaluation and launch scan (2026-11-19 to 2026-11-21, Opus 5.5, high effort)
 
-Run in one Claude Code session (desktop app) on the owner's Windows 11 laptop, Python 3.12.10, Claude Pro plan. The owner said they were logged in with `huggingface-cli login`, but `huggingface_hub` found no token (no `HF_TOKEN`, no file at `~/.cache/huggingface/token`), so **every Hugging Face call was anonymous**. No `GITHUB_TOKEN`. Results, method and limits are in `RESULTS.md`. Commits: `5254aab` (part 1), `5c9076c` (part 2), `a3f5428` (faster fetching), and the final commit with the results. Nothing pushed.
+Run in one Claude Code session (desktop app) on the owner's Windows 11 laptop, Python 3.12.10, Claude Pro plan. The owner said they were logged in with `huggingface-cli login`, but `huggingface_hub` found no token (no `HF_TOKEN`, no file at `~/.cache/huggingface/token`), so **every Hugging Face call was anonymous**. No `GITHUB_TOKEN`. Results, method and limits are in `RESULTS.md`. Commits: `1d8f4e4` (part 1), `bc89e12` (part 2), `cdb210e` (faster fetching), and the final commit with the results. Nothing pushed.
 
 ### Owner decisions (given at the start of Phase 4)
 
@@ -243,7 +243,7 @@ Run in one Claude Code session (desktop app) on the owner's Windows 11 laptop, P
 | SPDX licence texts (their licence is not stated) | **Ship no licence text.** Only list metadata and a derived fingerprint index, with a script that regenerates both from the official SPDX release | `tools/vendor_spdx.py`, `data/spdx_fingerprints.json.gz`; PLAN §4, §12 |
 | A question to SPDX | Draft a short GitHub issue; the owner posts it | `docs/drafts/spdx-license-list-data-issue.md` |
 | Launch scan | Top ~500 by downloads, resumable, rate-limit friendly, huge datasets sampled and labelled, run in batches with a usage check between them | `launch/` |
-| Faster fetching (asked mid-scan) | Combine a git pack and parallel downloads, **with an equivalence test first**; then commit it so the scan's config hash names a commit | `a3f5428` |
+| Faster fetching (asked mid-scan) | Combine a git pack and parallel downloads, **with an equivalence test first**; then commit it so the scan's config hash names a commit | `cdb210e` |
 
 ### Built
 
@@ -254,7 +254,7 @@ Run in one Claude Code session (desktop app) on the owner's Windows 11 laptop, P
 | 4.2 runner | `launch/run.py`, `launch/state.py` | SQLite state per (dataset, tier) with config hash; `--max`, `--batch`, `--retry-failed`, `--shard I/N`; Ctrl-C finishes the dataset in flight. Part 2: the config hash includes the git tree ids of `src/`, `launch/run.py`, `launch/state.py`, `pyproject.toml`, and the scan refuses a dirty tree |
 | 4.3 key | `eval/build_key.py`, `eval/dpi_licence_map.csv` (52 names), `eval/key/` | DPI `ce6662d`: 109 files, 3,718 entries, 3,492 with an HF repo, **792** unique repos (PLAN §8 gave 804 from the Phase 1 probe); 81 dropped (entries disagree), 3 dropped (no card licence recorded); 708 key rows; 371 for Q3 (239 consistent, 80 inconsistent, 52 missing) |
 | 4.4 revisions | `eval/revisions.py`, `tests/test_eval_revisions.py` | latest `main` commit at or before the DPI file's last change |
-| 4.5 dev + freeze | `eval/run.py`, `eval/config.yml`, tag `eval-config-v1` (`5254aab`, local) | built-in: all 8 grid points gave 79/116, kept 0.90 / 0.95. ScanCode: ≥ 50 gave 76 (≥ 90: 66), so 50. `eval/run.py` refuses the test split unless config, runner and `src/` match the tag |
+| 4.5 dev + freeze | `eval/run.py`, `eval/config.yml`, tag `eval-config-v1` (`1d8f4e4`, local) | built-in: all 8 grid points gave 79/116, kept 0.90 / 0.95. ScanCode: ≥ 50 gave 76 (≥ 90: 66), so 50. `eval/run.py` refuses the test split unless config, runner and `src/` match the tag |
 | 4.6 test + metrics | `eval/metrics.py`, `eval/results/` | below; the post-hoc "own repo only" view is labelled exploratory in the code and in RESULTS |
 | 4.7 launch scan | `launch/results/`, `launch/summarize.py`, `launch/check_listing_cap.py` | below |
 | Faster fetching | `hubs/gitpack.py`, `checks/health/fetching.py`, `http.py`, `--no-git-fetch`, `--fetch-workers` | below |
@@ -278,9 +278,9 @@ Run in one Claude Code session (desktop app) on the owner's Windows 11 laptop, P
 
 ### Launch scan
 
-- **Tier A** (2026-11-19, `5254aab`, config hash `d0b085a50bef68aa`, before code trees were hashed): 499 of 500; 2,921 requests, 2,937 s. Card licence present in 299; of those 37 have an `inconsistent` comparison.
+- **Tier A** (2026-11-19, `1d8f4e4`, config hash `d0b085a50bef68aa`, before code trees were hashed): 499 of 500; 2,921 requests, 2,937 s. Card licence present in 299; of those 37 have an `inconsistent` comparison.
 - **Tier B, first attempt** (2026-11-19, config hash `d1d12f8a1d35321e`): 200 MB full-scan limit measured about 4 MB/s (over 4 hours for the list), so the limits were halved after 7 datasets: **100 MB full scan, 10,000-row sample, 100 MB download cap, seed 0**. Three shards in parallel. A timezone-aware timestamp failed without `tzdata` on Windows (fixed in `pyproject.toml`, test in `test_rowhash.py`). The run was stopped after the owner asked about speed: one repo of 5,410 small files had taken 55 minutes, one HTTP request per file, no 429s.
-- **Tier B, final** (2026-11-20 14:34 to 2026-11-21 06:35, `a3f5428`, config hash `2472d09329f26eb6`): 3 rounds of up to 60 per shard, usage checked before each round (5-hour window at 18% or less), then one retry. 494 done, 6 failed; 392 with data read (195 full, 197 sampled), 102 `not checked`; 602,535 requests, 75,801 s across 3 processes; no 429.
+- **Tier B, final** (2026-11-20 14:34 to 2026-11-21 06:35, `cdb210e`, config hash `2472d09329f26eb6`): 3 rounds of up to 60 per shard, usage checked before each round (5-hour window at 18% or less), then one retry. 494 done, 6 failed; 392 with data read (195 full, 197 sampled), 102 `not checked`; 602,535 requests, 75,801 s across 3 processes; no 429.
 - Findings, counts and intervals: RESULTS §2.
 
 ### Faster fetching: what was measured
@@ -313,13 +313,13 @@ Run in one Claude Code session (desktop app) on the owner's Windows 11 laptop, P
 
 - The owner's labels for the 60 disagreement rows (`eval/results/disagreements-*.csv`).
 - Post the SPDX issue (`docs/drafts/spdx-license-list-data-issue.md`). The list metadata still comes from the unlicensed source.
-- **The old licence texts are still in git history** (Phase 3 commit `3a6b650`, `data/spdx_licences.json.gz` at 249 KB). Rewrite history before the first push if they must not be published.
+- **The old licence texts were in git history** (Phase 3 commit `3a6b650`, now `8a92854`; `data/spdx_licences.json.gz` at 249 KB). Removed from all history in Phase 4.5; see the commit ids there.
 - No HF token was found: `hf auth login` (from the venv) would double the API allowance and read gated cards.
 - CI (both jobs) not run; nothing pushed. The tag `eval-config-v1` is local.
 
 ## Phase 4.5: fixes from the launch scan, and the rescan (2026-11-21 to 2026-11-22, Sonnet 5.5, high effort)
 
-Fixes, tests and rescan ran on Sonnet 5.5 (commit `0ba2ea4`). The closing steps (summary, RESULTS, this entry, the commit) ran on Opus 5.5 in the same Claude Code session after a context reset. The frozen accuracy eval (`eval-config-v1`) was not re-run or changed. Every Hugging Face call was anonymous. A token was found on the laptop during this phase and was hidden on purpose (`HF_TOKEN_PATH` set to a file that does not exist), so the rescan matches the first scan's conditions. The owner chose to keep it that way when asked whether a free login should double the API allowance. Nothing pushed.
+Fixes, tests and rescan ran on Sonnet 5.5 (commit `4085159`). The closing steps (summary, RESULTS, this entry, the commit) ran on Opus 5.5 in the same Claude Code session after a context reset. The frozen accuracy eval (`eval-config-v1`) was not re-run or changed. Every Hugging Face call was anonymous. A token was found on the laptop during this phase and was hidden on purpose (`HF_TOKEN_PATH` set to a file that does not exist), so the rescan matches the first scan's conditions. The owner chose to keep it that way when asked whether a free login should double the API allowance. Nothing pushed.
 
 ### Owner's brief
 
@@ -330,7 +330,7 @@ Fix what the launch scan found:
 
 Then rescan only the affected rows under the new config hash, update RESULTS from the fixed scan with a "what the first scan got wrong" section, and commit. Finally, remove the full-text SPDX file from git history before any push.
 
-### Built (`0ba2ea4`)
+### Built (`4085159`)
 
 | fix | where | behaviour |
 |---|---|---|
@@ -386,8 +386,33 @@ Then rescan only the affected rows under the new config hash, update RESULTS fro
 
 ### Not done / open
 
-- **History rewrite.** Decided by the owner and done as the last step (old to new commit ids below). Reason: SPDX's `license-list-data` repo, where Phase 3's 92 licence texts came from, declares no licence (GitHub shows `license: null`; an issue about it is drafted). Without a licence it is unclear whether that copy may be redistributed, so only a derived fingerprint index (no readable text, rebuilt from the official source) is shipped. The full texts in history (`src/datasetvet/data/spdx_licences.json.gz`, 249 KB, blob `deda55b`, commit `3a6b650`) would undo that decision on the first push, since anyone can check out old commits. Nothing was public yet, so changing commit ids cost nothing.
+- **History rewrite.** Decided by the owner and done as the last step (old to new commit ids in the table below). Reason: SPDX's `license-list-data` repo, where Phase 3's 92 licence texts came from, declares no licence (GitHub shows `license: null`; an issue about it is drafted). Without a licence it is unclear whether that copy may be redistributed, so only a derived fingerprint index (no readable text, rebuilt from the official source) is shipped. The full texts in history (`src/datasetvet/data/spdx_licences.json.gz`, 249 KB, blob `deda55b`, commit `3a6b650`) would undo that decision on the first push, since anyone can check out old commits. Nothing was public yet, so changing commit ids cost nothing.
 - The 128 Tier A datasets with a cut-off list but no missing-file result.
+
+### History rewrite (Phase 4.5, step 6)
+
+Run last, before any push, in place with `git filter-repo --strip-blobs-with-ids` (git-filter-repo 2.47.0 from a throwaway venv, `--force` because the repo is not a fresh clone). The one stripped blob is `deda55bacfd535f1475c2bc8a1e0fc708f3e3024`, the 249,387-byte full-text `src/datasetvet/data/spdx_licences.json.gz` added by `3a6b650`. The 8,467-byte metadata file of the same name from `5254aab` on is a different blob and stays. A backup bundle of the whole old history is outside the repo (`C:/Users/melsa/datasetvet-backups/datasetvet-before-filter-repo-2026-11-22.bundle`, with `old-commit-ids.txt`); keep it until the first push, then it can be deleted, since it still holds the texts.
+
+| commit | old | new |
+|---|---|---|
+| Rename project to datasetvet | `f1e9d06` | `f1e9d06` (unchanged) |
+| Phase 3: licence consistency and provenance | `3a6b650` | `8a92854` |
+| Phase 4 (part 1) = tag `eval-config-v1` | `5254aab` | `1d8f4e4` |
+| Phase 4 (part 2) | `5c9076c` | `bc89e12` |
+| Faster data fetching | `a3f5428` | `cdb210e` |
+| Phase 4 (part 3) | `9151cd8` | `ae18a67` |
+| Phase 4.5 (part 1) | `0ba2ea4` | `4085159` |
+| Phase 4.5 (part 2) | `35d5602` | `3556a4f` |
+| Phase 4.5 (part 3) | `acccaa2` | `205d4dd` |
+
+The first two commits of the repo (`cde4e6c`, `c522ec8`) come before the file and are unchanged. Doc mentions of the old ids (this file, RESULTS.md, one launch docstring) were changed to the new ids in the commit after the rewrite. The launch state and reports (`launch/state.sqlite`, ignored by git) still name the old `0ba2ea4` as the code of the rescan; its config hash names the code by git tree ids, which did not change.
+
+Checks after the rewrite:
+- The stripped blob is gone: `git cat-file -t deda55b` fails, `git rev-list --objects --all` lists no object with that id, `git fsck --full` is clean, and the repo's pack is 780 KiB.
+- No commit has a `spdx_licences.json.gz` larger than 8,467 bytes (`3a6b650`'s rewrite has none; every commit from `5254aab` on has the 8,467-byte file).
+- `eval-config-v1` (a lightweight tag) now points to `1d8f4e4`. The tree is `a36f321`, the same as before, and so is every later commit's tree (checked for all 7 commits from `5254aab` on). So the code is identical and only the commit id changed. `src/` was not touched, so the config hashes of the launch scan (which use tree ids) are still valid.
+- `pytest`: 360 passed, 3 skipped (ScanCode-only), 2 deselected.
+- Other full-text hits in history: the project's own `LICENSE` and a few short licence phrases in `tests/test_matcher.py`. Neither is the SPDX text collection.
 - `SCANCODE_MIN_SCORE` default 90 vs the eval's 50; the disagreement labels; posting the SPDX issue (all from Phase 4).
 - CI not run; nothing pushed.
 
