@@ -50,7 +50,8 @@ def share(k: int, n: int) -> dict[str, Any]:
 def tier_a(rep: dict[str, Any]) -> dict[str, Any]:
     res = rep["results"]
     card = next((r for r in res if r["check"] == "card.licence"), None)
-    lic = [r for r in res if r["family"] == "licence"]
+    lic = [r for r in res if r["family"] == "licence" and r["check"] != "licence.summary"]
+    overall = next((r for r in res if r["check"] == "licence.summary"), None)  # v2 (Phase 5.5)
     prov = [r for r in res if r["family"] == "provenance"]
     links = [r for r in res if r["family"] == "links"]
     lc = Counter(r["status"] for r in lic)
@@ -65,6 +66,8 @@ def tier_a(rep: dict[str, Any]) -> dict[str, Any]:
         "gated": rep["dataset"].get("gated") or False,
         "card_licence": card["status"] if card else "",
         "card_licence_fact": licence_values,
+        "licence_overall": overall["status"] if overall else "",
+        "licence_overall_sub": ((overall.get("data") or {}).get("sub") or "") if overall else "",
         "licence_comparisons": sum(lc.values()),
         **{f"licence_{s}": lc.get(s, 0) for s in ("consistent", "inconsistent", "missing",
                                                   "unknown")},
@@ -192,6 +195,9 @@ def main(list_path: Path) -> None:
             "licence_any_consistent_none_inconsistent": share(sum(
                 r["licence_consistent"] > 0 and r["licence_inconsistent"] == 0
                 for r in with_cmp), len(with_cmp)),
+            "licence_overall_card_present": dict(Counter(
+                f"{r['licence_overall']} ({r['licence_overall_sub']})" for r in a
+                if r["card_licence"] == "present" and r["licence_overall"])),
             "licence_comparison_statuses": {s: sum(r[f"licence_{s}"] for r in a) for s in
                                             ("consistent", "inconsistent", "missing",
                                              "unknown")},

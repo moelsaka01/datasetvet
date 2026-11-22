@@ -594,7 +594,12 @@ def summarise(c1: CardLicence, results: list[CheckResult]) -> CheckResult:
                             "comparisons": len(results)})
 
     def names(rs: list[CheckResult]) -> str:
-        return "; ".join(r.title.removeprefix("Card vs ") for r in rs)
+        """"the README text", "the README text and source x", "a, b and c"."""
+        items = [r.title.removeprefix("Card vs ") for r in rs]
+        items = [("the " + i) if i == "README text" else i for i in items]
+        if len(items) < 2:
+            return "".join(items)
+        return ", ".join(items[:-1]) + " and " + items[-1]
 
     if c1.state == "missing":
         return done(LicenceStatus.MISSING, "card missing", f"{c1.says()}.")
@@ -616,9 +621,9 @@ def summarise(c1: CardLicence, results: list[CheckResult]) -> CheckResult:
                     f"{c1.says()}; confirmed by {names(rs)}, and no comparison differs.", more)
     open_ = [r for r in by[LicenceStatus.UNKNOWN] if _blocks(r)]
     if open_ or not UNCONTRADICTED_RULE:
+        tail = (f", and these could not be compared: {names(open_)}" if open_ else "")
         return done(LicenceStatus.UNKNOWN, "unresolved",
-                    f"{c1.says()}; no comparison agrees or differs, and these could not be "
-                    f"compared: {names(open_)}.", more)
+                    f"{c1.says()}; no comparison agrees or differs{tail}.", more)
     return done(LicenceStatus.CONSISTENT, "uncontradicted",
                 f"{c1.says()}; uncontradicted, not confirmed: none of the {len(results)} "
                 "places compared states a licence that agrees or differs.", more)

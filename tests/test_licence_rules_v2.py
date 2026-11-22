@@ -261,3 +261,13 @@ def test_summary_is_a_licence_family_result():
     card = c1("mit")
     s = summary_of(card, ("licence.readme", own_side("MIT", label="README text")))
     assert s.family == Family.LICENCE and s.status == LicenceStatus.CONSISTENT
+
+
+def test_summary_names_are_joined_as_a_sentence():
+    card = c1("cc-by-nc-4.0")
+    s = summary_of(card, ("licence.readme", own_side("CC-BY-NC-4.0", label="README text")),
+                   ("licence.file:LICENSE", own_side("CC-BY-NC-4.0")),
+                   ("licence.file:DATA", own_side("CC-BY-NC-4.0", label="DATA")))
+    assert "confirmed by the README text, LICENSE and DATA, and no comparison differs" in \
+        s.facts[0].text
+    assert ";" not in s.facts[0].text.split("confirmed by")[1]
