@@ -10,6 +10,7 @@ One entry per phase: the model and effort used, what was decided and why, what w
 | 4 Accuracy eval + launch scan | Opus 5.5 | high | done 2026-11-21 |
 | 4.5 Fixes from the launch scan + rescan | Sonnet 5.5 (closing steps on Opus 5.5) | high | done 2026-11-22; history rewrite pending |
 | 5 Polish, Action, README, launch | Sonnet 5.5 | medium | built 2026-11-22; the Opus review fixes and the human audit table wait for the owner's inputs; nothing pushed or published |
+| 5.5 Close the gap to the human audit (v2 rules, held-out eval) | Opus 5.5 | high | rules built and frozen 2026-11-22; held-out score waits for the owner's blind labels; nothing pushed |
 
 ---
 
@@ -458,3 +459,74 @@ Run in one Claude Code session (desktop app), Windows 11, Python 3.12.10. Every 
 
 **Checks** (before the commit of this entry): `pytest` 397 passed, 4 skipped (the ScanCode-only tests; they pass in the scan venv: 4 passed there for `tests/test_scancode.py`), 2 deselected; `ruff check src tests tools eval launch` clean; `mypy src` clean, and the two launch scripts clean.
 
+
+## Phase 5.5: v2 licence rules and a pre-registered held-out evaluation (2026-11-22, Opus 5.5, high effort)
+
+Run in one Claude Code session (desktop app), Windows 11, Python 3.12.10. Every Hugging Face call was anonymous (`HF_TOKEN_PATH` pointed at a file that does not exist); no `GITHUB_TOKEN`. Rules only: no AI in any rule, baseline or label step. Nothing pushed.
+
+### Owner's brief
+
+Close the gap to the human audit before v0.1:
+1. pre-register the goal and metrics, and commit before any rule work;
+2. draw a fresh seeded held-out set of 120 launch-scan datasets not in the DPI key, build a blind labelling sheet, and tag `holdout-v1` before labelling;
+3. do rule work on dev and the 60 audited rows only: fewer `unknown`, and a source repo's code licence reported as "the source code licence differs";
+4. freeze (`eval-config-v2`) and score A (HF tag alone), B (ScanCode alone) and C (datasetvet) on the held-out labels, plus v2 on the old test split marked "no longer blind";
+5. report whatever the numbers are.
+
+### Commits and tags (in order)
+
+| step | commit / tag | what |
+|---|---|---|
+| 1 | `ed0ad4d` | PLAN.md §8.1: goal (kappa ≥ 0.61 on decided rows, abstention < 15%, beat A and B with exact McNemar p < 0.05), metrics, held-out design, rule-work rows, freeze rule; the old test split retired from tuning |
+| 2 | `eb8bfad`, tag `holdout-v1` | `eval/holdout/draw.py`, `sheet.csv` (120 rows, label columns empty), `LABELLING.md`, `draw-a.json` |
+| 3–4 | `45122c5`, tag `eval-config-v2` | the rules, their tests, `eval/config-v2.yml`, `eval/run_v2.py`, `eval/holdout/predict.py`, `eval/holdout/score.py`, the rule-work run |
+| 5 | the commit of this entry | v2 on the old test split, RESULTS §0, README, PLAN |
+
+### Inputs not as the brief assumed
+
+- **"The 60 audited rows" are not audited.** `eval/results/disagreements-builtin.csv` and `disagreements-scancode.csv` still have an empty owner-label column in all 60 rows. They hold 48 distinct datasets, because 12 appear in both samples. These 48 were used as rule-work rows with the DPI key's labels, as the pre-registration says. The human audit table in RESULTS §1 stays a placeholder.
+- **Order of looking.** Before writing the pre-registration I printed v1's statuses and comparisons for the dev rows and the 48 datasets, to see what drives `unknown` and the false `inconsistent`s. No rule was written before the pre-registration was committed. No other old test row was printed during rule work.
+
+### Held-out draw
+
+- Launch list 500; 7 are in the DPI collection (any of its 792 HF repos, not only the 708 key rows); `KakologArchives/KakologArchives` removed (sha gone); pool 492; `random.Random(20261122).sample(sorted_pool, 120)`.
+- From the sheet: 76 cards state a YAML licence; 24 repos have no README at the frozen sha; 3 gated, all with readable READMEs; 1 deleted since the freeze (`defeatbeta/yahoo-finance-data`, marked, not scored).
+- **Problem found and fixed:** the first version read each card through the adapter's `card()`. For a repo whose `siblings` list is cut at 100,000 entries, that pages the whole file tree to find `README.md`. On `assassinlike/everything132` this ran for more than an hour at 2.7 GB of memory. The sheet now fetches `README.md` directly at the sha, with YAML fields from the Hub API when there is no README. The draw itself (seed, pool, order) did not change, and the 81 rows already done were re-read from the HTTP cache.
+- The sheet holds only card fields copied verbatim, pinned links, raw URLs found in the card and the gated flag. Card copies are git-ignored in `eval/holdout/cards/`, with their SHA-256 in the sheet.
+
+### Rules (PLAN.md §5.2 "Phase 5.5")
+
+| rule | where | tests |
+|---|---|---|
+| A source repo's licence file (GitHub, not `DATA_LICENSE`) or GitHub's detection naming only OSI-approved licences, against a card naming a non-OSI licence → `unknown`, "the source code licence differs" | `compare()`, `sides_from_read()` | 11 in `tests/test_licence_rules_v2.py` |
+| Several licences in one text: set aside OSI-approved licences the card does not name; the rest equals the card's set → `consistent` | `compare()` | 5 |
+| `licence.summary` ("Licence, overall"): missing / unknown (card unclear) / inconsistent / consistent "confirmed" / unknown "unresolved" / consistent "uncontradicted". A source repo's code licence, an anonymous "no licence file found" (its own new sub) and an unreadable stated source are not evidence either way; an unreadable own README is | `summarise()`; renderers count it apart from the comparisons | 8 |
+
+- The OSI-approved flag now decides something. It is the only licence property that does (docstring in `licences/properties.py`, PLAN §5.2).
+- Rule switches are module constants that the eval sets per variant, the way v1 patched the matcher thresholds. They are not user options.
+- **Selection on the rule-work rows** (164 scored; rows agreeing, abstaining = miss): v1 84; uncontradicted 109; code licence 92 (data-licence card) / 91 (any card); all three 119 (data-licence card) / 118 (any card); all but the set-aside rule 117. Every rule raises the count, so all three are kept, with the data-licence-card condition. Abstention 29.3% → 7.3%; kappa on decided rows 0.497 → 0.499.
+- **Tried and not kept:** "uncontradicted" only for data-licence cards. It loses 16 agreeing rows to fix 9.
+- **Not fixable by these rules:** 11 rule-work rows where the card, the README and the files agree but the DPI expert chose another licence.
+
+### v2 on the old test split (no longer blind; RESULTS §0)
+
+245 rows scored, the same as v1. Rows agreeing: v1 139, v2 177 (McNemar p ≈ 7e-8), tag alone 179 (v2 vs tag p = 0.82). Abstention 25.3% → 6.5%. Kappa on decided rows 0.53 → 0.46; the tag alone 0.34. `inconsistent` precision 16/43 → 9/17, recall 16/57 → 9/57. 23 of v2's 53 "uncontradicted" rows are ones the key calls `inconsistent`.
+
+**Expectation before any held-out label:** the pre-registered goal is likely missed on kappa and on beating the tag alone. The goal was not changed.
+
+### Problems found and fixed
+
+1. Reading cards for the sheet paged a 100,000+ file listing (above).
+2. `eval/run.py` and `launch/run.py` are both module `run`. The new eval test made `tests/test_launch.py` fail to import. Eval scripts now load each other under unique names (`eval/evalmods.py`).
+3. The shell collapsed a backslash in a heredoc edit (as in Phase 5). The edit was caught before it was written, and redone with the edit tool.
+4. A sheet saved by Excel starts with a BOM; the sheet guard now ignores it (test).
+
+### Not done / open
+
+- **The held-out labels** (owner), then `predict.py` (ScanCode venv, PowerShell) and `score.py`, then RESULTS §0's held-out tables. If fewer than 60 rows are scorable, draw batch b first (`draw.py --batch b`, tag `holdout-v1b`).
+- The owner labels of the 60 disagreement rows (Phase 4), still empty.
+- Cosmetic, left frozen: the overall sentence joins the names of agreeing comparisons with ";" ("confirmed by README text; source …"). Changing it would move `src/` off the tag; do it after the held-out score.
+- The demo GIF and asciicast in `docs/demo/` still show v1 output (the README text excerpt is v2). The launch-scan results (RESULTS §2) were made by v1 code and were not re-run; with v2 the "inconsistent" share there would fall.
+- `LAUNCH.md` quotes v1's `inconsistent` precision (37%); revisit after the held-out score.
+
+**Checks** (before the commit of this entry): `pytest` 433 passed, 4 skipped (ScanCode-only; in the scan venv `tests/test_scancode.py` and the rule tests: 30 passed, 1 skipped), 2 deselected; `ruff check src tests tools eval launch` clean; `mypy src` clean.

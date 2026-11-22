@@ -1,0 +1,269 @@
+{
+ "note": "old test split, no longer blind: looked at in Phase 4 and Phase 5, and 48 of its datasets were used in Phase 5.5 rule work",
+ "only_in_v1": [],
+ "only_in_v2": [],
+ "all": {
+  "rows": 245,
+  "v1": {
+   "scored": 245,
+   "confusion": {
+    "consistent": {
+     "consistent": 99,
+     "inconsistent": 27,
+     "missing": 7,
+     "unknown": 29
+    },
+    "inconsistent": {
+     "consistent": 10,
+     "inconsistent": 16,
+     "missing": 0,
+     "unknown": 31
+    },
+    "missing": {
+     "consistent": 0,
+     "inconsistent": 0,
+     "missing": 24,
+     "unknown": 2
+    }
+   },
+   "decided": 183,
+   "agree": 139,
+   "agreement_decided": 0.7595628415300546,
+   "agreement_decided_wilson95": [
+    0.6927164558334457,
+    0.8157356233609093
+   ],
+   "agreement_all_rows": 0.5673469387755102,
+   "agreement_all_rows_wilson95": [
+    0.5047398486776214,
+    0.6278746337883329
+   ],
+   "abstained": 62,
+   "abstention": 0.2530612244897959,
+   "abstention_wilson95": [
+    0.20271968301616802,
+    0.31102721460866645
+   ],
+   "kappa_decided": 0.5299474605954464,
+   "kappa_decided_bootstrap": {
+    "ci95": [
+     0.4041538985359211,
+     0.6434197886647455
+    ],
+    "undefined_resamples": 0
+   },
+   "kappa_all_rows_unknown_as_category": 0.3359754538481208,
+   "inconsistent_precision_n": [
+    16,
+    43
+   ],
+   "inconsistent_recall_n": [
+    16,
+    57
+   ]
+  },
+  "v2": {
+   "scored": 245,
+   "confusion": {
+    "consistent": {
+     "consistent": 144,
+     "inconsistent": 8,
+     "missing": 7,
+     "unknown": 3
+    },
+    "inconsistent": {
+     "consistent": 37,
+     "inconsistent": 9,
+     "missing": 0,
+     "unknown": 11
+    },
+    "missing": {
+     "consistent": 0,
+     "inconsistent": 0,
+     "missing": 24,
+     "unknown": 2
+    }
+   },
+   "decided": 229,
+   "agree": 177,
+   "agreement_decided": 0.7729257641921398,
+   "agreement_decided_wilson95": [
+    0.7144228175657966,
+    0.8224228320088499
+   ],
+   "agreement_all_rows": 0.7224489795918367,
+   "agreement_all_rows_wilson95": [
+    0.6632711908005012,
+    0.7747584634052264
+   ],
+   "abstained": 16,
+   "abstention": 0.0653061224489796,
+   "abstention_wilson95": [
+    0.04059421497394869,
+    0.10343958001852849
+   ],
+   "kappa_decided": 0.46205276472714135,
+   "kappa_decided_bootstrap": {
+    "ci95": [
+     0.3362960100473386,
+     0.5788415688841103
+    ],
+    "undefined_resamples": 0
+   },
+   "kappa_all_rows_unknown_as_category": 0.424087389380531,
+   "inconsistent_precision_n": [
+    9,
+    17
+   ],
+   "inconsistent_recall_n": [
+    9,
+    57
+   ]
+  },
+  "v2_vs_v1": {
+   "x_only": 45,
+   "y_only": 7,
+   "p": 6.973810151578164e-08
+  },
+  "v2_consistent_by_sub": {
+   "confirmed": 128,
+   "uncontradicted": 53
+  },
+  "v2_uncontradicted_expected": {
+   "consistent": 30,
+   "inconsistent": 23
+  }
+ },
+ "not_used_in_rule_work": {
+  "rows": 197,
+  "v1": {
+   "scored": 197,
+   "confusion": {
+    "consistent": {
+     "consistent": 95,
+     "inconsistent": 12,
+     "missing": 5,
+     "unknown": 18
+    },
+    "inconsistent": {
+     "consistent": 6,
+     "inconsistent": 15,
+     "missing": 0,
+     "unknown": 21
+    },
+    "missing": {
+     "consistent": 0,
+     "inconsistent": 0,
+     "missing": 24,
+     "unknown": 1
+    }
+   },
+   "decided": 157,
+   "agree": 134,
+   "agreement_decided": 0.8535031847133758,
+   "agreement_decided_wilson95": [
+    0.7897636779608116,
+    0.9003562910024417
+   ],
+   "agreement_all_rows": 0.6802030456852792,
+   "agreement_all_rows_wilson95": [
+    0.6121603259208586,
+    0.7413520938168852
+   ],
+   "abstained": 40,
+   "abstention": 0.20304568527918782,
+   "abstention_wilson95": [
+    0.15280215782444584,
+    0.2646492068330753
+   ],
+   "kappa_decided": 0.7009276130528409,
+   "kappa_decided_bootstrap": {
+    "ci95": [
+     0.5768688293370945,
+     0.806339772164438
+    ],
+    "undefined_resamples": 0
+   },
+   "kappa_all_rows_unknown_as_category": 0.47896725440806054,
+   "inconsistent_precision_n": [
+    15,
+    27
+   ],
+   "inconsistent_recall_n": [
+    15,
+    42
+   ]
+  },
+  "v2": {
+   "scored": 197,
+   "confusion": {
+    "consistent": {
+     "consistent": 119,
+     "inconsistent": 5,
+     "missing": 5,
+     "unknown": 1
+    },
+    "inconsistent": {
+     "consistent": 27,
+     "inconsistent": 8,
+     "missing": 0,
+     "unknown": 7
+    },
+    "missing": {
+     "consistent": 0,
+     "inconsistent": 0,
+     "missing": 24,
+     "unknown": 1
+    }
+   },
+   "decided": 188,
+   "agree": 151,
+   "agreement_decided": 0.8031914893617021,
+   "agreement_decided_wilson95": [
+    0.7405313561345448,
+    0.8537088920702243
+   ],
+   "agreement_all_rows": 0.766497461928934,
+   "agreement_all_rows_wilson95": [
+    0.7026683620902194,
+    0.8201316952684155
+   ],
+   "abstained": 9,
+   "abstention": 0.04568527918781726,
+   "abstention_wilson95": [
+    0.024218293620032146,
+    0.08453208478762841
+   ],
+   "kappa_decided": 0.5471059313757407,
+   "kappa_decided_bootstrap": {
+    "ci95": [
+     0.41264655006726875,
+     0.6672727272727274
+    ],
+    "undefined_resamples": 0
+   },
+   "kappa_all_rows_unknown_as_category": 0.5116930703739626,
+   "inconsistent_precision_n": [
+    8,
+    13
+   ],
+   "inconsistent_recall_n": [
+    8,
+    42
+   ]
+  },
+  "v2_vs_v1": {
+   "x_only": 24,
+   "y_only": 7,
+   "p": 0.003326892852783203
+  },
+  "v2_consistent_by_sub": {
+   "confirmed": 110,
+   "uncontradicted": 36
+  },
+  "v2_uncontradicted_expected": {
+   "consistent": 19,
+   "inconsistent": 17
+  }
+ }
+}

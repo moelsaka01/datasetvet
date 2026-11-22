@@ -22,14 +22,20 @@ Add `--json report.json` or `--md report.md` to keep the report. It uses free en
 An excerpt of a real report (`datasetvet check hf:tatsu-lab/alpaca`, 2026-11-22, trimmed):
 
 ```text
-Licence consistency (2 consistent, 1 inconsistent)
+Licence consistency (overall consistent; comparisons: 2 consistent, 1 unknown)
+  consistent   Licence, overall
+               Card says cc-by-nc-4.0 (SPDX CC-BY-NC-4.0) (README.md@dce01c9, YAML line 2); confirmed by
+               README text; source github.com/tatsu-lab/stanford_alpaca DATA_LICENSE, and no comparison differs.
+               Not counted as a contradiction (the source code licence differs): source
+               github.com/tatsu-lab/stanford_alpaca LICENSE.
   consistent   Card vs README text
-               Card says cc-by-nc-4.0 (SPDX CC-BY-NC-4.0) (README.md@dce01c9, YAML line 2); README.md@dce01c9
-               (text below the YAML) says CC-BY-NC-4.0 (name, line 130); these are the same licence.
-  inconsistent Card vs source github.com/tatsu-lab/stanford_alpaca LICENSE
-               Card says cc-by-nc-4.0 (SPDX CC-BY-NC-4.0) (README.md@dce01c9, YAML line 2);
-               github.com/tatsu-lab/stanford_alpaca LICENSE@761dc5b says Apache-2.0 (full text, score 98,
-               lines 1-201); these differ.
+               ... README.md@dce01c9 (text below the YAML) says CC-BY-NC-4.0 (name, line 130); these are
+               the same licence.
+  unknown      Card vs source github.com/tatsu-lab/stanford_alpaca LICENSE
+               ... github.com/tatsu-lab/stanford_alpaca LICENSE@761dc5b says Apache-2.0 (full text, score 98,
+               lines 1-201); the source code licence differs: Apache-2.0 is an OSI-approved software licence
+               of the repo github.com/tatsu-lab/stanford_alpaca, and its licence file does not say whether it
+               covers the data.
   consistent   Card vs source github.com/tatsu-lab/stanford_alpaca DATA_LICENSE
                ... says CC-BY-NC-4.0 (full text, score 99, lines 1-407); these are the same licence.
 
@@ -44,7 +50,7 @@ Facts only, not legal advice. Licence statuses: consistent / inconsistent / miss
 No check here judges how this data can be used.
 ```
 
-Every fact has an evidence link pinned to a commit. The `inconsistent` line above is a fact, not a verdict: the source repo's `LICENSE` (for its code) differs from the card's licence, and its `DATA_LICENSE` matches. Which one covers the data is for you to decide.
+Every fact has an evidence link pinned to a commit. The source repo's `LICENSE` names a software licence (OSI-approved on the SPDX list) while the card names a data licence, so it is reported as "the source code licence differs", not as a contradiction; its `DATA_LICENSE` matches. The "overall" line gives one status per dataset. When only the card states a licence and nothing read agrees or differs, it says `consistent` with "uncontradicted, not confirmed".
 
 ## What it checks
 
@@ -80,7 +86,9 @@ Measured against the Data Provenance Initiative's hand-audited licences (a key o
 | Agreement counting `unknown` as a miss | 56.7% (50.5–62.8%) | 53.5% (47.2–59.6%) |
 | `inconsistent`: precision / recall | 37% / 28% | 34% / 26% |
 
-Read the `inconsistent` row carefully. A source repo's `LICENSE` often covers its code while the key records one licence for the dataset, so datasetvet flags a difference that the key does not count. Treat `inconsistent` as "look here", not as "wrong". Details, confusion matrices and the limits: [RESULTS.md section 1](https://github.com/moelsaka01/datasetvet/blob/main/RESULTS.md#1-accuracy-evaluation).
+Read the `inconsistent` row carefully. A source repo's `LICENSE` often covers its code while the key records one licence for the dataset, so datasetvet flags a difference that the key does not count. Treat `inconsistent` as "look here", not as "wrong".
+
+**These are the v1 rules' numbers.** The current rules (v2: the source code licence rule and the "overall" status) answer `unknown` far less often. On the same 245 rows, which are **no longer blind** because the rules were developed after seeing them, v2 agrees on 177 rows against v1's 139. Its kappa on decided rows is lower (0.46 against 0.53), and it agrees about as often as the HF licence tag alone (179). A blind held-out evaluation of v2 is pre-registered and waits for hand labels: [RESULTS.md section 0](https://github.com/moelsaka01/datasetvet/blob/main/RESULTS.md#0-phase-55-v2-rules-held-out-score-pending). Details, confusion matrices and the limits: [RESULTS.md section 1](https://github.com/moelsaka01/datasetvet/blob/main/RESULTS.md#1-accuracy-evaluation).
 
 ## Method and limits
 

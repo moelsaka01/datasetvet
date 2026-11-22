@@ -1,4 +1,70 @@
-# datasetvet: results (accuracy evaluation Phase 4, launch scan updated in Phase 4.5, ScanCode threshold check Phase 5)
+# datasetvet: results (accuracy evaluation Phase 4, launch scan updated in Phase 4.5, ScanCode threshold check Phase 5, v2 rules Phase 5.5)
+
+> **Phase 5.5 (2026-11-22): v2 licence rules are built and frozen (`eval-config-v2`), and the held-out evaluation waits for the owner's blind labels.** No held-out number exists yet, and none is given below. The headline table further down is **v1** (the Phase 4 rules). Section 0 has what v2 does on the rows it was tuned on and on the old test split, which is **no longer blind**.
+
+## 0. Phase 5.5: v2 rules (held-out score pending)
+
+**Pre-registered** before any rule work (PLAN.md §8.1, commit `ed0ad4d`). On a fresh held-out set, v2 (built-in matcher) must reach: Cohen's kappa ≥ 0.61 on decided rows; abstention < 15%; and more agreeing rows than baseline A (the HF `license:` tag alone) and baseline B (ScanCode alone), with an exact McNemar p < 0.05 for each.
+
+**Held-out set:** 120 datasets drawn with `random.Random(20261122)` from the 492 launch-list datasets that are neither in the DPI collection (7 were) nor gone (1). The labelling sheet shows no datasetvet output. It was committed and tagged `holdout-v1` (`eb8bfad`) before any label existed. The rules, the runners, both baselines and the scorer were then frozen as `eval-config-v2` (`45122c5`). **Labels: not yet given.** Next steps: the owner labels `eval/holdout/sheet.csv` blind (instructions in `eval/holdout/LABELLING.md`), then `eval/holdout/predict.py` and `eval/holdout/score.py` produce the tables. Both refuse to run off the tag or on an incomplete sheet.
+
+From the sheet alone (card fields, not datasetvet output): 76 of the 120 cards state a YAML licence, 24 repos have no README at the frozen sha, and 1 (`defeatbeta/yahoo-finance-data`) was deleted after the list was frozen, so it cannot be scored. Under the DPI rules, cards with no licence where nothing else states one, and non-SPDX cards, are excluded. So fewer than 120 rows will be scored. If fewer than 60 remain, a second batch of 60 is drawn (seed 20261123) before anything is scored.
+
+### What changed in v2 (rules only, no AI)
+
+Tuned only on the dev split (118 rows) and the 48 datasets of the two Phase 4 disagreement samples. Those samples still have no owner labels, so the DPI key's labels were used. Details in PLAN.md §5.2 "Phase 5.5".
+
+1. **"The source code licence differs."** A stated source repo's licence file naming only OSI-approved licences, against a card naming a data licence (not OSI-approved), is `unknown` with that fact, not `inconsistent`. Example: hotpot_qa's card says CC-BY-SA-4.0, and `github.com/hotpotqa/hotpot` has an Apache-2.0 LICENSE.
+2. **Software licences set aside in one text.** "Code MIT, data CC-BY-4.0" in a README is `consistent` with a CC-BY-4.0 card.
+3. **One status per dataset** (`licence.summary`). A card licence that no place read states or contradicts is `consistent` with the sub-fact **"uncontradicted, not confirmed"**. Before, it was `unknown`.
+
+The OSI-approved flag of the SPDX licence list is now the one licence property that decides something (rules 1 and 2).
+
+### On the rule-work rows (tuned on; not an accuracy claim)
+
+164 scored rows (116 dev, and 48 from the disagreement samples: rows where v1's built-in or ScanCode run disagreed with the key, so v1 scores badly on them by construction). Rows agreeing with the key, abstaining counted as a miss (`eval/results/metrics-rulework-v2.json`):
+
+| rules | agree | abstention | kappa, decided rows |
+|---|---|---|---|
+| v1 | 84 of 164 | 29.3% | 0.50 |
+| + uncontradicted | 109 | 7.3% | 0.42 |
+| + code licence (data-licence card) | 92 | 31.7% | 0.62 |
+| + code licence (any card) | 91 | 31.7% | 0.60 |
+| all three, data-licence card (**frozen**) | **119** | **7.3%** | **0.50** |
+| all three, any card | 118 | 7.3% | 0.48 |
+| all but the set-aside rule | 117 | 8.5% | 0.50 |
+
+Each rule passes the pre-stated test: it raises the number of agreeing rows. Kappa does not improve. The code-licence rule raises it, and the uncontradicted rule lowers it, because some cards the expert marked `inconsistent` state a licence that nothing else contradicts.
+
+### On the old test split (no longer blind)
+
+**Not blind.** These 245 rows were scored in Phase 4, looked at again in Phase 5, and 48 of their datasets were used in this rule work. Same rows and the same audit-time card revisions as v1; frozen v2 code (`eval/results/runs/test-v2.jsonl`, `eval/results/metrics-test-v2.json`). Baseline A here is the card's YAML licence at the audit revision (no licence → `missing`, any licence → `consistent`). It is for context and was not pre-registered for this split.
+
+| | v1 (Phase 4) | **v2** | A: tag alone |
+|---|---|---|---|
+| rows agreeing, abstaining = miss | 139 of 245 (56.7%; 50.5–62.8%) | **177 of 245 (72.2%; 66.3–77.5%)** | 179 of 245 |
+| abstention (`unknown`) | 25.3% | **6.5%** | 0% |
+| agreement, decided rows | 76.0% (69.3–81.6%) | 77.3% (71.4–82.2%) | 73.1% |
+| kappa, decided rows (bootstrap 95%) | 0.53 (0.40–0.64) | **0.46 (0.34–0.58)** | 0.34 (0.23–0.45) |
+| `inconsistent` precision / recall | 16/43 / 16/57 | 9/17 / 9/57 | never says it |
+
+- **v2 vs v1:** 45 rows right only with v2 and 7 only with v1 (exact McNemar p ≈ 7e-8). Fewer abstentions, at the cost of kappa.
+- **v2 vs the tag alone:** 9 rows right only with v2 and 11 only with A (p = 0.82). **On this split v2 does not beat the tag alone on agreement.** It has the higher kappa, because A can never say `inconsistent`.
+- **Where v2 is wrong.** 37 rows the key calls `inconsistent` get `consistent` from v2. 23 of them are "uncontradicted": nothing in the card's repo or its readable sources names another licence, and the DPI expert found one elsewhere (paper, homepage, upstream data). Rules that read only the card, the repo and GitHub cannot see that.
+- **Inputs.** The cards are the same audit-time revisions. GitHub sources are read at today's HEAD for both v2 (2026-11-22) and v1 (2026-11-19), so a repo that changed in between would differ; the Phase 5 threshold check found no drift over the same period.
+- **Rows not used in rule work (197).** v1 134 agree (kappa 0.70), v2 151 (kappa 0.55); abstention 20.3% → 4.6%.
+
+Confusion matrix, v2, old test split (rows: expected; columns: v2):
+
+| expected \ v2 | consistent | inconsistent | missing | unknown |
+|---|---|---|---|---|
+| consistent | **144** | 8 | 7 | 3 |
+| inconsistent | 37 | **9** | 0 | 11 |
+| missing | 0 | 0 | **24** | 2 |
+
+v2 says `consistent` for 181 rows: 128 "confirmed" (another place states the same licence) and 53 "uncontradicted". Of the 53, 30 match the key and 23 do not.
+
+**What this predicts for the held-out score, before any label exists.** If the held-out labels behave like the DPI key, the pre-registered goal is likely missed on two parts: kappa ≥ 0.61 (0.46 here) and beating the tag alone with p < 0.05 (a tie here). Abstention < 15% looks reachable. The goal stays as registered, and the held-out result will be reported as it comes out.
 
 Measured 2026-11-19 to 2026-11-21 on the owner's Windows 11 laptop (Python 3.12.10), datasetvet 0.0.0, SPDX licence list 3.29.0, ScanCode toolkit 32.5.0. Every Hugging Face call was **anonymous**. During the first runs no HF token was visible to `huggingface_hub`. For the rescan (2026-11-21) a token existed on the laptop and was hidden on purpose (`HF_TOKEN_PATH` set to a file that does not exist), so the rescan ran under the same conditions as the first scan. The one exception is the timing of a very large repo (section 2, last part), which the owner allowed to run logged in. No `GITHUB_TOKEN` was set. Facts only, not legal advice.
 
