@@ -31,3 +31,6 @@ launch/results/reports/
 launch/first-scan-state.sqlite
 launch/results/reports-first-scan/
 launch/results/tmp/
+
+# Phase 5.5: held-out card copies (third-party text; the sheet records their SHA-256)
+eval/holdout/cards/
