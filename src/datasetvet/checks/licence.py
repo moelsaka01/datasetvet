@@ -10,6 +10,18 @@ Never sampled. Statuses: consistent / inconsistent / missing / unknown, one per 
 
 C1 is compared with each other claim on its own; C2-C4 are never compared with each other.
 Every sentence shows both sides verbatim with where each was read.
+
+Phase 5.5 rules (PLAN.md 5.2, "Phase 5.5"):
+- A stated source's GitHub repo licence file (not a DATA_LICENSE file) that names only
+  OSI-approved software licences, while the card names a licence that is not one, is the source
+  code licence: that comparison is `unknown` with the fact "the source code licence differs",
+  not `inconsistent`.
+- A text naming several licences is `consistent` when, after setting aside OSI-approved
+  software licences the card does not name, the rest is exactly the card's set (again only when
+  the card names a licence that is not OSI-approved).
+- `licence.summary` gives one status for the dataset; a card licence that nothing read states
+  or contradicts is `consistent` with the sub-fact "uncontradicted", never "confirmed".
+The OSI-approved flag (SPDX licence list) is the only licence property that decides anything.
 """
 
 from __future__ import annotations
@@ -33,6 +45,28 @@ MAX_LICENCE_BYTES = 512 * 1024
 MAX_SOURCES = 10
 PLACEHOLDER_RE = re.compile(r"\[?more information needed\]?", re.IGNORECASE)
 _LICENSE_WORD_RE = re.compile(r"\blicen[cs](?:e|es|ed|ing)\b", re.IGNORECASE)
+_DATA_FILE_RE = re.compile(r"data", re.IGNORECASE)  # DATA_LICENSE, LICENSE-DATA
+
+# Phase 5.5 rules (module constants so the evaluation can measure each one; not user options).
+CODE_LICENCE_RULE = True  # a source repo's software licence: "the source code licence differs"
+SOFTWARE_ASIDE_RULE = True  # several licences in one text: set aside software licences
+UNCONTRADICTED_RULE = True  # nothing read agrees or differs -> summary consistent (uncontradicted)
+# the two code-licence rules apply only when the card names a licence that is not OSI-approved
+# (a data or content licence such as CC-BY-4.0). Chosen on the rule-work rows (BUILD_LOG 5.5).
+CODE_RULE_NEEDS_DATA_CARD = True
+
+
+CODE_NOTE = ("Not counted as a contradiction: the repo's licence file names a software "
+             "licence, and the card names a licence that is not one.")
+
+
+def software_only(keys: set[str]) -> bool:
+    """True when every key is OSI-approved on the SPDX licence list (a software licence)."""
+    return bool(keys) and all(properties(k).osi for k in keys)
+
+
+def card_names_data_licence(card_keys: set[str]) -> bool:
+    return bool(card_keys) and (not CODE_RULE_NEEDS_DATA_CARD or not software_only(card_keys))
 
 
 # -- the card's own claim (C1) ---------------------------------------------------------------
@@ -127,6 +161,8 @@ class OtherSide:
     note: str = ""
     card: CardLicence | None = None  # when the other side is another dataset's card field
     line_offset: int = 0  # added to detection lines (README body -> README lines)
+    code_file: bool = False  # a source repo's general licence file (GitHub), not a data one
+    no_file: bool = False  # a source repo where no licence file was found (not confirmed)
 
 
 def _lines(d: Detection, offset: int) -> tuple[int, int] | None:
@@ -227,7 +263,7 @@ def compare(card: CardLicence, o: OtherSide) -> Outcome:
                            "statement.", "no statement")
         what = o.note or "it mentions a licence, but no licence was identified in it"
         return Outcome(LicenceStatus.UNKNOWN, f"{card.says()}; {o.where}: {what}.",
-                       "not identified")
+                       "no licence file found" if o.no_file else "not identified")
     if card.state == "unclear":
         return Outcome(LicenceStatus.UNKNOWN, f"{card.says()}; {_side_says(o, dets)}; "
                        f"not compared: {card.reason}.", "card unclear")
@@ -244,6 +280,24 @@ def compare(card: CardLicence, o: OtherSide) -> Outcome:
         if all_keys == card.keys():
             return Outcome(LicenceStatus.CONSISTENT, f"{card.says()}; {_side_says(o, dets)}; "
                            "together these are the card's licences.", "same set")
+        if CODE_LICENCE_RULE and o.code_file and software_only(all_keys) and \
+                card_names_data_licence(card.keys()):
+            return Outcome(LicenceStatus.UNKNOWN, f"{card.says()}; {_side_says(o, dets)}; the "
+                           "source code licence differs: these are OSI-approved software "
+                           f"licences of the repo {o.label.split(' ')[0]}, and its licence "
+                           "file does not say whether they cover the data.", "code licence",
+                           [CODE_NOTE])
+        if SOFTWARE_ASIDE_RULE and card_names_data_licence(card.keys()):
+            aside = {k for k in all_keys - card.keys() if properties(k).osi}
+            if aside and all_keys - aside == card.keys():
+                return Outcome(
+                    LicenceStatus.CONSISTENT, f"{card.says()}; {_side_says(o, dets)}; apart "
+                    f"from {', '.join(sorted(aside))} (OSI-approved software licence"
+                    f"{'s' if len(aside) > 1 else ''}, set aside as a code licence), these are "
+                    "the card's licences.", "same set, plus software licences",
+                    [(f"Set aside, not compared: {', '.join(sorted(aside))}, an OSI-approved "
+                      "software licence the card does not name; the text may use it for "
+                      "code.")])
         extra = []
         if not (all_keys & card.keys()):
             extra.append("None of these is the card's licence.")
@@ -273,6 +327,13 @@ def compare(card: CardLicence, o: OtherSide) -> Outcome:
     if r.kind == "unparsed":
         return Outcome(LicenceStatus.UNKNOWN, f"{card.says()}; {_side_says(o, dets)}; not "
                        f"compared: {r.detail!r} is not an SPDX expression.", "unparsed")
+    if CODE_LICENCE_RULE and o.code_file and software_only(spdx.keys(d.expression)) and \
+            card_names_data_licence(card.keys()):
+        return Outcome(LicenceStatus.UNKNOWN, f"{card.says()}; {_side_says(o, dets)}; the "
+                       f"source code licence differs: {d.expression} is an OSI-approved "
+                       f"software licence of the repo {o.label.split(' ')[0]}, and its "
+                       "licence file does not say whether it covers the data.", "code licence",
+                       [CODE_NOTE])
     if r.kind == "subset":
         return Outcome(LicenceStatus.INCONSISTENT, f"{card.says()}; {_side_says(o, dets)}; "
                        f"one is part of the other ({r.detail}).", "subset")
@@ -466,18 +527,21 @@ def sides_from_read(read: SourceRead, scanner: Scanner) -> list[OtherSide]:
                          revision=read.revision), "no statement" if read.confirmed_none
                          else "read", note=read.note or "")
         side.mentions_licence = not read.confirmed_none  # unknown unless GitHub confirms none
+        side.no_file = not read.confirmed_none
         return [side]
     claim_dets = [d for d in (detection_from_claim(c) for c in read.claims) if d]
     noassert = [c for c in read.claims if c.raw == "NOASSERTION"]
     if not read.texts:  # a licence URL, or only GitHub's detection
         ev = read.claims[0].evidence if read.claims else Evidence(url=read.url)
         side = OtherSide(read.label, read.label, ev, "read", claim_dets,
-                         mentions_licence=True)
+                         mentions_licence=True, code_file=read.kind == "github")
         return [side]
     sides = []
     for i, blob in enumerate(read.texts):
         where = f"{read.label} {blob.path}{rev}"
         side = side_from_text(blob, scanner, f"{read.label} {blob.path}", where)
+        side.code_file = read.kind == "github" and not _DATA_FILE_RE.search(
+            blob.path.rsplit("/", 1)[-1])
         if i == 0 and (claim_dets or noassert):
             own = {spdx.normalise(d.expression) for d in side.detections}
             gh = {spdx.normalise(d.expression) for d in claim_dets}
@@ -496,6 +560,68 @@ def sides_from_read(read: SourceRead, scanner: Scanner) -> list[OtherSide]:
                 side.note = "GitHub's detection (licensee) agrees"
         sides.append(side)
     return sides
+
+
+# -- one status for the dataset (Phase 5.5) ---------------------------------------------------
+
+# unknown comparisons that are not evidence either way: a source repo's software licence, a
+# source repo where no licence file was found anonymously, a stated source that could not be read
+_NOT_EVIDENCE = {"code licence", "no licence file found"}
+
+
+def _blocks(r: CheckResult) -> bool:
+    sub = r.data.get("sub")
+    if sub in _NOT_EVIDENCE:
+        return False
+    return not (r.check.startswith("licence.source:") and sub == "unreadable")
+
+
+def summarise(c1: CardLicence, results: list[CheckResult]) -> CheckResult:
+    """One status for the dataset, from the card (C1) and every comparison:
+    card states no licence -> missing; card value not comparable -> unknown; any comparison
+    inconsistent -> inconsistent; any consistent -> consistent ("confirmed"); any other unknown
+    that is evidence (a text naming a licence we could not compare, the dataset's own README or
+    licence file unreadable) -> unknown; otherwise consistent ("uncontradicted": nothing read
+    states a licence that agrees or differs)."""
+    fam = Family.LICENCE
+    title = "Licence, overall"
+
+    def done(status: LicenceStatus, sub: str, sentence: str, more: list[str] | None = None
+             ) -> CheckResult:
+        facts = [Fact(sentence, [c1.evidence], {"sub": sub})] + [Fact(x) for x in more or []]
+        return CheckResult("licence.summary", fam, status, title, facts,
+                           {"sub": sub, "card": c1.expression, "card_values": c1.values,
+                            "comparisons": len(results)})
+
+    def names(rs: list[CheckResult]) -> str:
+        return "; ".join(r.title.removeprefix("Card vs ") for r in rs)
+
+    if c1.state == "missing":
+        return done(LicenceStatus.MISSING, "card missing", f"{c1.says()}.")
+    if c1.state == "unclear":
+        return done(LicenceStatus.UNKNOWN, "card unclear",
+                    f"{c1.says()}; not compared: {c1.reason}.")
+    by = {s: [r for r in results if r.status == s] for s in LicenceStatus}
+    aside = [r for r in by[LicenceStatus.UNKNOWN] if r.data.get("sub") == "code licence"]
+    more = ([(f"Not counted as a contradiction (the source code licence differs): "
+              f"{names(aside)}.")] if aside else [])
+    if by[LicenceStatus.INCONSISTENT]:
+        rs = by[LicenceStatus.INCONSISTENT]
+        return done(LicenceStatus.INCONSISTENT, "differs",
+                    f"{c1.says()}; {len(rs)} of {len(results)} comparisons differ from it: "
+                    f"{names(rs)}.", more)
+    if by[LicenceStatus.CONSISTENT]:
+        rs = by[LicenceStatus.CONSISTENT]
+        return done(LicenceStatus.CONSISTENT, "confirmed",
+                    f"{c1.says()}; confirmed by {names(rs)}, and no comparison differs.", more)
+    open_ = [r for r in by[LicenceStatus.UNKNOWN] if _blocks(r)]
+    if open_ or not UNCONTRADICTED_RULE:
+        return done(LicenceStatus.UNKNOWN, "unresolved",
+                    f"{c1.says()}; no comparison agrees or differs, and these could not be "
+                    f"compared: {names(open_)}.", more)
+    return done(LicenceStatus.CONSISTENT, "uncontradicted",
+                f"{c1.says()}; uncontradicted, not confirmed: none of the {len(results)} "
+                "places compared states a licence that agrees or differs.", more)
 
 
 def check_licence(ctx: LicenceContext, links: list[LinkRef]) -> tuple[list[CheckResult],
@@ -532,7 +658,7 @@ def check_licence(ctx: LicenceContext, links: list[LinkRef]) -> tuple[list[Check
     if not pairs:
         not_checked.append("source licence: no stated source that is a GitHub repo, HF "
                            "dataset, licence URL or licence page")
-    return results, not_checked
+    return [summarise(c1, results)] + results, not_checked
 
 
 def is_licence_url(url: str) -> bool:

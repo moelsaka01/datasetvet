@@ -70,8 +70,10 @@ def render(report: Report, console: Console | None = None, *, evidence: bool = T
         c.print()
         head = title
         if family in (Family.LINKS, Family.LICENCE, Family.PROVENANCE):
-            counts = Counter(r.status for r in results)
-            head += " (" + ", ".join(f"{n} {s}" for s, n in sorted(counts.items())) + ")"
+            counts = Counter(r.status for r in results if r.check != "licence.summary")
+            overall = next((r for r in results if r.check == "licence.summary"), None)
+            head += " (" + (f"overall {overall.status}; comparisons: " if overall else "") \
+                + ", ".join(f"{n} {s}" for s, n in sorted(counts.items())) + ")"
         if family == Family.HEALTH:
             head += f" ({scan.header()})"
         c.print(f"[bold underline]{escape(head)}[/]")

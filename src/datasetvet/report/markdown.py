@@ -31,7 +31,11 @@ def _link(url: str, label: str = "evidence") -> str:
 
 
 def _counts(results: list[CheckResult]) -> str:
-    return ", ".join(f"{n} {s}" for s, n in sorted(Counter(r.status for r in results).items()))
+    """Status counts of the comparisons; the licence summary is named apart, not counted."""
+    overall = next((r for r in results if r.check == "licence.summary"), None)
+    rest = Counter(r.status for r in results if r.check != "licence.summary")
+    text = ", ".join(f"{n} {s}" for s, n in sorted(rest.items()))
+    return f"overall {overall.status}; comparisons: {text}" if overall else text
 
 
 def _result(r: CheckResult, family: Family) -> list[str]:
@@ -67,7 +71,8 @@ def to_markdown(report: Report) -> str:
     for family, title in SECTIONS:
         results = report.by_family(family)
         if results:
-            summary.append(f"| {title} | {len(results)} | {_counts(results)} |")
+            n = sum(r.check != "licence.summary" for r in results)
+            summary.append(f"| {title} | {n} | {_counts(results)} |")
     if summary:
         out += ["| section | results | statuses |", "|---|---|---|", *summary, ""]
     for family, title in SECTIONS:

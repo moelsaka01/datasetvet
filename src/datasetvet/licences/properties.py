@@ -4,7 +4,9 @@
   deprecated id.
 - For Creative Commons licences only: the elements BY / SA / NC / ND, which are part of each
   licence's published name; `data/cc_elements.csv` has the deed URL per row.
-- Nothing else. Properties are shown next to a licence and never decide a status.
+- Nothing else. Properties are shown next to a licence. Since Phase 5.5 one of them decides
+  something: the OSI-approved flag tells a software licence from a data licence in the
+  code-licence rules of checks/licence.py (PLAN.md 5.2). No other property decides a status.
 """
 
 from __future__ import annotations

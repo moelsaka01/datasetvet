@@ -1,0 +1,55 @@
+# Phase 5.5 evaluation config (PLAN.md 8.1). Frozen with the git tag eval-config-v2 before any
+# held-out label is read; eval/run_v2.py (old test split) and eval/holdout/predict.py refuse to run
+# when this file, the runners, eval/holdout/ or src/ differ from the tag.
+
+# Same settings as v1 (eval/config.yml): licence consistency only.
+settings:
+  check_links: false
+  check_data: false
+  provenance_depth: 0
+  check_sources: true
+
+# Configuration C: the built-in matcher (the plain install), v1's thresholds (not re-tuned).
+scanner:
+  builtin:
+    dice_min: 0.90
+    contain_min: 0.95
+
+# One status per dataset: the report's licence.summary result (checks/licence.py summarise):
+#   card states no licence -> missing; card value not comparable -> unknown;
+#   any comparison inconsistent -> inconsistent; any consistent -> consistent (confirmed);
+#   any other unknown that is evidence -> unknown;
+#   otherwise -> consistent (uncontradicted).
+# Not evidence either way: "the source code licence differs", a source repo where no licence file
+# was found anonymously, a stated source that could not be read.
+aggregation: licence.summary
+
+# Rule work (dev split + the 48 disagreement-sample datasets only). Selection rule, fixed in
+# PLAN.md 8.1 before any rule work: a rule is kept when it raises the number of rule-work rows
+# agreeing with the key (abstaining counts as a miss).
+rulework_variants:
+  - label: v1-rules
+  - label: uncontradicted
+    rules: {UNCONTRADICTED_RULE: true}
+  - label: code-licence/data-card
+    rules: {CODE_LICENCE_RULE: true, SOFTWARE_ASIDE_RULE: true, CODE_RULE_NEEDS_DATA_CARD: true}
+  - label: code-licence/any-card
+    rules: {CODE_LICENCE_RULE: true, SOFTWARE_ASIDE_RULE: true, CODE_RULE_NEEDS_DATA_CARD: false}
+  - label: all/data-card
+    rules: {UNCONTRADICTED_RULE: true, CODE_LICENCE_RULE: true, SOFTWARE_ASIDE_RULE: true,
+            CODE_RULE_NEEDS_DATA_CARD: true}
+  - label: all/any-card
+    rules: {UNCONTRADICTED_RULE: true, CODE_LICENCE_RULE: true, SOFTWARE_ASIDE_RULE: true,
+            CODE_RULE_NEEDS_DATA_CARD: false}
+  - label: all-but-aside/data-card
+    rules: {UNCONTRADICTED_RULE: true, CODE_LICENCE_RULE: true, CODE_RULE_NEEDS_DATA_CARD: true}
+
+# Selected on the rule-work rows (eval/results/metrics-rulework-v2.json, 164 scored rows; rows
+# agreeing, abstaining = miss): v1-rules 84; uncontradicted 109; code-licence 92 (data-card) /
+# 91 (any-card); all 119 (data-card) / 118 (any-card); all without the set-aside rule 117.
+# Every rule raises the count, and data-card beats any-card, so: all rules, data-card.
+# Tried and not kept: "uncontradicted" only for data-licence cards (loses 16 agreeing rows to
+# fix 9). Kappa on decided rows is about v1's (0.499 against 0.497): see BUILD_LOG 5.5.
+frozen:
+  rules: {UNCONTRADICTED_RULE: true, CODE_LICENCE_RULE: true, SOFTWARE_ASIDE_RULE: true,
+          CODE_RULE_NEEDS_DATA_CARD: true}
