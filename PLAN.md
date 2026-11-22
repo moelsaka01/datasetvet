@@ -3,7 +3,7 @@
 > **Before you train on it, check it.**
 > A CLI that checks a dataset and writes a report card of verifiable facts: what the card says, what the licence files and the source say, whether the links work, and what is in the data (duplicates, cross-split leakage, empty rows, label balance, PII-pattern matches). It never says a dataset is "safe to use", and it is not legal advice.
 
-Status: **Phase 4.5 (fixes from the launch scan, rescan) complete, 2026-11-22**; results in [RESULTS.md](RESULTS.md). Phase 3's full licence texts were removed from all git history before any push (§12; commit ids in BUILD_LOG). Implemented: card check (with HF-id/SPDX validity), licence consistency (C1 vs C2/C3/C4), provenance, a built-in SPDX licence matcher, the optional ScanCode scanner, GitHub and web source resolvers, links, data health, the Hugging Face adapter, JSON and terminal reports. Phase 4.5: paged file lists past 100,000 entries ("Partial scan" when incomplete), three reader bug fixes, the "files that could not be read as rows" check, non-data files skipped. Also built in Phase 4: the eval harness (`eval/`), the launch scan (`launch/`), the SPDX fingerprint index (no licence texts shipped) and faster data fetching (git pack, parallel downloads). Not implemented: Phase 5. Where Phase 2, 3, 4 or 4.5 changed or clarified this plan, the section says so ("Phase 2:", "Phase 3:", "Phase 4:", "Phase 4.5:"). Every "measured" figure in this file was measured on 2026-11-19 from this laptop (Windows 11, Python 3.12.10) and is listed with how it was measured in [Feasibility evidence](#9-feasibility-evidence-measured-2026-11-19).
+Status: **Phase 5 (polish and launch prep) built, 2026-11-22: see the Phase 5 table in §11 for what is and is not done; nothing pushed or published.** Phase 4.5 (fixes from the launch scan, rescan) was complete the same day; results in [RESULTS.md](RESULTS.md). Phase 3's full licence texts were removed from all git history before any push (§12; commit ids in BUILD_LOG). Implemented: card check (with HF-id/SPDX validity), licence consistency (C1 vs C2/C3/C4), provenance, a built-in SPDX licence matcher, the optional ScanCode scanner, GitHub and web source resolvers, links, data health, the Hugging Face adapter, JSON and terminal reports. Phase 4.5: paged file lists past 100,000 entries ("Partial scan" when incomplete), three reader bug fixes, the "files that could not be read as rows" check, non-data files skipped. Also built in Phase 4: the eval harness (`eval/`), the launch scan (`launch/`), the SPDX fingerprint index (no licence texts shipped) and faster data fetching (git pack, parallel downloads). Phase 5: large-repo warning (5.9), Markdown report and `--fail-on` (5.1 in part), a GitHub Action (5.4), the README (5.7), a PyPI build and `twine check` (5.8 in part), launch post drafts, the ScanCode default of 50. Not implemented: the HTML report and badge (5.1, 5.2), the static site (5.5), the optional AI summary (5.6), the competitor re-check (5.8). Where Phase 2, 3, 4 or 4.5 changed or clarified this plan, the section says so ("Phase 2:", "Phase 3:", "Phase 4:", "Phase 4.5:"). Every "measured" figure in this file was measured on 2026-11-19 from this laptop (Windows 11, Python 3.12.10) and is listed with how it was measured in [Feasibility evidence](#9-feasibility-evidence-measured-2026-11-19).
 
 Contents: [1 Name](#1-name) · [2 Competitors](#2-competitors) · [3 Architecture](#3-architecture) · [4 Licence scanner](#4-licence-scanner-choice) · [5 Checks](#5-checks-exact-rules-and-statuses) · [6 Hub adapters](#6-hub-adapter-interface) · [7 Reports and badge](#7-report-formats-and-badge) · [8 Accuracy evaluation](#8-accuracy-evaluation) · [9 Feasibility evidence](#9-feasibility-evidence-measured-2026-11-19) · [10 Launch scan](#10-launch-scan-top-500-hf-datasets) · [11 Task list](#11-phased-task-list) · [12 Risks and open questions](#12-risks-and-open-questions)
 
@@ -158,7 +158,7 @@ Tokens: an HF token or a GitHub token is read only from the user's own environme
 - **Not covered:** licences that are not on the SPDX list (Llama, OpenRAIL, custom terms), and free-text paraphrases ("for research use only"). Those give no detection, so the comparison is `missing` or `unknown`, never a guess.
 - Thresholds are fixed in code and may only be tuned on the Phase 4 dev split.
 
-**Scanner choice:** `--scanner builtin | scancode | auto` (default `auto`: ScanCode when it imports, else built-in). Every report names the scanner and version it used. ScanCode detections are kept at score >= 90 (`SCANCODE_MIN_SCORE`). Phase 4: the dev split chose 50 (76 of 116 dev rows agree at 50, 66 at 90); the frozen eval config uses 50, the code default is still 90 until the owner decides (BUILD_LOG Phase 4).
+**Scanner choice:** `--scanner builtin | scancode | auto` (default `auto`: ScanCode when it imports, else built-in). Every report names the scanner and version it used. ScanCode detections are kept at score >= 50 (`SCANCODE_MIN_SCORE`). **Phase 5: 50 is the default, as measured.** The dev split chose 50 (76 of 116 dev rows agree at 50, 66 at 90); the test split confirmed it (131 of 245 rows agree at 50, 110 at 90; abstention 28.6% against 39.2%; RESULTS.md section 1). The Phase 3 plan of 90 was an untuned guess.
 
 The accuracy evaluation reports the two configurations separately (§8): `builtin` and `scancode`, on the same answer key, so the cost of skipping the 652 MB extra is measured, not assumed.
 
@@ -209,7 +209,7 @@ Phase 3, as built (task 3.1): `data/hf_licence_ids.csv` maps all 83 ids on HF's 
 | claim | from | how |
 |---|---|---|
 | C1 card field | YAML `license` | `hf_ids` table |
-| C2 card text | README body (YAML stripped) | ScanCode; keep detections with score >= 90 (threshold frozen in Phase 3 on the dev split) |
+| C2 card text | README body (YAML stripped) | ScanCode; keep detections with score >= 50 (chosen on the dev split, confirmed on the test split; Phase 3 had planned 90) |
 | C3 repo licence files | files named `LICEN[CS]E*`, `COPYING*`, `*.license` anywhere in the repo | ScanCode |
 | C4 source licence | each stated source: GitHub repo -> its licence file(s) via raw URL + GitHub's detected licence; web page -> ScanCode on the page text only if the page is a licence/terms page by URL path; HF dataset -> its C1 | adapter / resolver |
 
@@ -521,6 +521,20 @@ Owner decisions taken at the start of Phase 3 (from the Phase 2 open questions):
 | 5.7 | README in tierview style: headline numbers from 4.6 with ranges, what it does not show, not-legal-advice notice | `README.md` | every number links to RESULTS.md |
 | 5.8 | Re-run the competitor check; PyPI release dry run (`twine check`) | `BUILD_LOG.md` | logged; nothing published without the owner's OK |
 | 5.9 | **Large-repo warning** (owner's decision, Phase 4.5): before scanning a repo with 100,000 or more files, say so before any data is read: the file count, the estimated time (from the measured rates in RESULTS.md section 4: listing time grows with the file count, the read depends on the files) and a suggestion to run a sampled scan (`--max-scan-bytes`, `--sample-rows`). Ask for confirmation in a terminal; do not wait in the GitHub Action or with `--yes`; always say it in the report's scan line | `cli.py`, `pipeline.py`, `hubs/huggingface.py` | a test with a simulated 100,000+ file list shows the warning with the count before any data file is fetched; `--yes` and a non-interactive run proceed and still print it; the README states the measured time for very large repos |
+
+Phase 5 status (2026-11-22, Sonnet 5.5, medium):
+
+| # | state |
+|---|---|
+| 5.1 | **Markdown done** (`report/markdown.py`, `--md`, escaping tested; the same text feeds the Action's job summary). HTML not done. |
+| 5.2 | not done (`report/badge.py` is still a stub). |
+| 5.3 | the banned-phrase test now also covers the Markdown report and the large-repo warning; the HTML and badge renderers do not exist yet. |
+| 5.4 | **Done, not run on GitHub.** `action.yml` (composite; installs from the Action's own checkout; Markdown to the job summary, JSON and Markdown as an artifact; `fail-on` statuses), `examples/workflow.yml`, and `.github/workflows/action-test.yml`. The Action's check step was run locally with the same environment variables against a live dataset. SARIF is not produced: GitHub code scanning needs a file location in the repo, and a Hub dataset check has none. |
+| 5.5, 5.6 | not done. |
+| 5.7 | **Done**: `README.md` (pitch, 30-second quick start, demo GIF and asciicast from a real run, sample report, launch numbers and accuracy with intervals, method and limits, "Facts only, not legal advice"). Every number links to RESULTS.md. |
+| 5.8 | **Partly**: `python -m build` and `twine check` pass; a clean-venv install of the wheel runs a check; version 0.1.0. The competitor re-check was not run. Nothing uploaded; `docs/RELEASE.md` has the checklist. |
+| 5.9 | **Done**: `checks/health/large.py`, `pipeline.run_check(confirm=...)`, `cli.py --yes`. The warning comes after the file list and the data plan, before any data file is fetched; it names the file count, an estimate from the measured 34.7 ms a file, and the sampled-scan flags; a terminal is asked, `--yes`/CI/Action/non-interactive runs proceed; the scan line says "large repo: N files" (`ScanInfo.large_repo`). Declining skips only the data-health scan. 16 tests in `tests/test_large_repo.py`. |
+
 
 ## 12. Risks and open questions
 

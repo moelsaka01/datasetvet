@@ -18,7 +18,12 @@ from typing import Any, Protocol
 from datasetvet.licences import matcher, spdx
 from datasetvet.licences.matcher import Detection
 
-SCANCODE_MIN_SCORE = 90.0  # PLAN.md 5.2; may only be tuned on the Phase 4 dev split
+# 50, not the 90 first planned. Chosen on the dev split (76 of 116 rows agree at 50, 66 at 90),
+# then confirmed on the test split (131 of 245 against 110, RESULTS.md section 1): the
+# detections ScanCode scores between 50 and 90 are mostly right (21 of the 26 rows it decides
+# that 90 would leave as `unknown`), and they are what a sentence such as "released under the
+# CC BY-NC 4.0 license" scores (50).
+SCANCODE_MIN_SCORE = 50.0
 
 
 class Scanner(Protocol):

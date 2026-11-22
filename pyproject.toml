@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "datasetvet"
-version = "0.0.0"
+version = "0.1.0"
 description = "Before you train on it, check it: a report card of verifiable facts about a dataset."
 readme = "README.md"
 license = "MIT"
@@ -13,7 +13,11 @@ requires-python = ">=3.11"
 authors = [{ name = "Mohamed Elsaka" }]
 keywords = ["dataset", "license", "provenance", "data-quality", "huggingface"]
 classifiers = [
-  "Development Status :: 2 - Pre-Alpha",
+  "Development Status :: 3 - Alpha",
+  "Environment :: Console",
+  "Intended Audience :: Developers",
+  "Intended Audience :: Science/Research",
+  "Topic :: Scientific/Engineering :: Artificial Intelligence",
   "Programming Language :: Python :: 3",
   "Operating System :: OS Independent",
 ]
@@ -40,8 +44,18 @@ scan = [
 ]
 dev = ["pytest>=8", "ruff>=0.6", "mypy>=1.11", "types-PyYAML"]
 
+[project.urls]
+Homepage = "https://github.com/moelsaka01/datasetvet"
+Source = "https://github.com/moelsaka01/datasetvet"
+Results = "https://github.com/moelsaka01/datasetvet/blob/main/RESULTS.md"
+Issues = "https://github.com/moelsaka01/datasetvet/issues"
+
 [project.scripts]
 datasetvet = "datasetvet.cli:main"
+
+[tool.hatch.build.targets.sdist]
+include = ["src", "tests", "docs", "examples", "action.yml", "README.md", "LICENSE", "PLAN.md",
+           "RESULTS.md", "BUILD_LOG.md", "pyproject.toml", "tools"]
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/datasetvet"]

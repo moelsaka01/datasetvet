@@ -165,8 +165,14 @@ class ScanInfo:
     seconds: float | None = None
     partial: bool = False  # some files could not be read as rows
     listing_complete: bool = True  # False: the hub's file list was cut off (never "Full scan")
+    large_repo: str | None = None  # "large repo: 389,052 files" (PLAN.md task 5.9)
+    large_repo_warning: str | None = None  # the full warning shown before the data was read
 
     def header(self) -> str:
+        text = self._header()
+        return f"{text} ({self.large_repo})" if self.large_repo else text
+
+    def _header(self) -> str:
         failed = " (partial: some files could not be read)" if self.partial else ""
         if self.kind == "full":
             if not self.listing_complete:

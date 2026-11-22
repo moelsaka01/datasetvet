@@ -61,6 +61,10 @@ class SplitState:
     bytes_read: int = 0
 
 
+def _n_match(n: int) -> str:
+    return f"{n:,} value matches" if n == 1 else f"{n:,} values match"
+
+
 def not_checked_results(reason: str) -> list[CheckResult]:
     return [CheckResult(check=k, family=Family.HEALTH, status=HealthStatus.NOT_CHECKED,
                         title=t, facts=[Fact(f"Not checked: {reason}.")])
@@ -395,10 +399,10 @@ def _pii_result(states: list[SplitState], plan: ScanPlan) -> CheckResult:
         for col, m in st.pii.columns.items():
             parts = []
             if m.values_with_email:
-                parts.append(f"{m.values_with_email:,} values match the email pattern "
+                parts.append(f"{_n_match(m.values_with_email)} the email pattern "
                              f"(e.g. {', '.join(m.email_examples)})")
             if m.values_with_phone:
-                parts.append(f"{m.values_with_phone:,} values match the phone pattern "
+                parts.append(f"{_n_match(m.values_with_phone)} the phone pattern "
                              f"(e.g. {', '.join(m.phone_examples)})")
             if parts:
                 found = True

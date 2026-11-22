@@ -39,6 +39,8 @@ def render(report: Report, console: Console | None = None, *, evidence: bool = T
     c.print(f"[bold]{escape(scan.header())}[/bold]"
             + (f"  [bright_black]({escape(scan.reason)})[/]" if scan.reason and
                scan.kind == "sampled" else ""))
+    if scan.large_repo_warning:
+        c.print(f"[bright_black]{escape(scan.large_repo_warning)}[/]")
     if report.not_checked:
         c.print("[bright_black]Not checked:[/]")
         for item in report.not_checked:

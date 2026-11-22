@@ -1,0 +1,86 @@
+name: datasetvet check
+description: >-
+  Check a Hugging Face dataset (card, licence consistency, provenance, links, data health) and
+  write a report of verifiable facts to the job summary. Facts only, not legal advice.
+author: datasetvet
+branding:
+  icon: check-circle
+  color: gray-dark
+
+inputs:
+  dataset:
+    description: 'Dataset reference, e.g. hf:stanfordnlp/imdb or hf:org/name@revision.'
+    required: true
+  fail-on:
+    description: >-
+      Space-separated result statuses that fail the job when any result has one
+      (inconsistent missing invalid dead unreachable restricted found). Empty: never fail on
+      findings; the report is only written.
+    required: false
+    default: ''
+  args:
+    description: >-
+      Extra arguments for `datasetvet check`, e.g. "--no-data" or
+      "--max-scan-bytes 100MB --sample-rows 10000". Split on spaces.
+    required: false
+    default: ''
+  python-version:
+    description: Python to install datasetvet with (3.11 or newer).
+    required: false
+    default: '3.12'
+
+outputs:
+  report-markdown:
+    description: Path of the Markdown report.
+    value: ${{ steps.check.outputs.markdown }}
+  report-json:
+    description: Path of the JSON report.
+    value: ${{ steps.check.outputs.json }}
+
+runs:
+  using: composite
+  steps:
+    - uses: actions/setup-python@v5
+      with:
+        python-version: ${{ inputs.python-version }}
+
+    - name: Install datasetvet from this action's own checkout
+      shell: bash
+      run: python -m pip install --disable-pip-version-check --quiet "$ACTION_PATH"
+      env:
+        ACTION_PATH: ${{ github.action_path }}
+
+    - name: datasetvet check
+      id: check
+      shell: bash
+      env:
+        INPUT_DATASET: ${{ inputs.dataset }}
+        INPUT_FAIL_ON: ${{ inputs.fail-on }}
+        INPUT_ARGS: ${{ inputs.args }}
+        OUT_DIR: ${{ runner.temp }}
+      run: |
+        # Inputs arrive through the environment, never spliced into this script. A Hugging Face
+        # token, if the workflow sets HF_TOKEN, is read by datasetvet itself and never printed.
+        md="$OUT_DIR/datasetvet-report.md"
+        js="$OUT_DIR/datasetvet-report.json"
+        echo "markdown=$md" >> "$GITHUB_OUTPUT"
+        echo "json=$js" >> "$GITHUB_OUTPUT"
+        args=(check "$INPUT_DATASET" --yes -q --json "$js" --md "$md")
+        for status in $INPUT_FAIL_ON; do args+=(--fail-on "$status"); done
+        read -r -a extra <<< "$INPUT_ARGS"
+        set +e
+        datasetvet "${args[@]}" "${extra[@]}"
+        code=$?
+        set -e
+        if [ -f "$md" ]; then cat "$md" >> "$GITHUB_STEP_SUMMARY"; fi
+        exit $code
+
+    - name: Keep the reports
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: datasetvet-report
+        path: |
+          ${{ runner.temp }}/datasetvet-report.md
+          ${{ runner.temp }}/datasetvet-report.json
+        if-no-files-found: ignore

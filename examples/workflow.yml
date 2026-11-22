@@ -1,0 +1,27 @@
+# Copy to .github/workflows/datasetvet.yml in the repo that holds your dataset's card,
+# changing `dataset:`. It checks the dataset on every push to the card, once a week (links go
+# dead), and on demand. The report is the job summary and a downloadable artifact.
+name: datasetvet
+
+on:
+  push:
+    paths: ["README.md"]
+  schedule:
+    - cron: "17 6 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      # Replace OWNER with the account that publishes datasetvet; pin a release tag or a commit.
+      - uses: OWNER/datasetvet@v0
+        with:
+          dataset: hf:cornell-movie-review-data/rotten_tomatoes
+          # Fail the job on these statuses. Leave empty to only write the report.
+          fail-on: "inconsistent dead"
+        # env:
+        #   HF_TOKEN: ${{ secrets.HF_TOKEN }}   # optional: raises the Hub's rate limits

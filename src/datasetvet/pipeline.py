@@ -8,6 +8,7 @@ from typing import Any
 
 from datasetvet import __version__
 from datasetvet.checks.card import check_card
+from datasetvet.checks.health.large import large_repo
 from datasetvet.checks.health.runner import run_health
 from datasetvet.checks.licence import (
     CardLicence,
@@ -25,7 +26,7 @@ from datasetvet.checks.provenance import (
 )
 from datasetvet.config import Settings
 from datasetvet.http import FetchError, Http
-from datasetvet.hubs.base import Card, HubAdapter, LinkRef, Registry
+from datasetvet.hubs.base import Card, DataPlan, HubAdapter, LinkRef, Registry
 from datasetvet.hubs.github import GitHubResolver
 from datasetvet.hubs.huggingface import (
     DatasetNotFound,
@@ -44,7 +45,12 @@ def build_registry(http: Http) -> Registry:
 
 
 def run_check(ref: str, settings: Settings, *, http: Http | None = None,
-              progress: Callable[[str], None] | None = None) -> Report:
+              progress: Callable[[str], None] | None = None,
+              confirm: Callable[[str], bool] | None = None) -> Report:
+    """`confirm`, if given, is asked once before the data of a repo with 100,000 or more files
+    is read (PLAN.md task 5.9); False skips the data-health scan, nothing else. Without it the
+    scan goes ahead. The warning is printed through `progress` and recorded in the report either
+    way."""
     say = progress or (lambda _m: None)
     own_http = http is None
     if http is None:
@@ -101,8 +107,20 @@ def run_check(ref: str, settings: Settings, *, http: Http | None = None,
         if settings.check_data:
             say("finding the data files")
             data = adapter.splits(ds, card)
+            big = large_repo(adapter.listing(ds), data, settings)
+            declined = False
+            if big:
+                say(big.text())
+                declined = confirm is not None and not confirm(big.text())
             fetch_stats: dict[str, Any] = {}
+            if declined:
+                reason = ("stopped at the large-repo warning (not confirmed); run again with "
+                          "--yes, or as a sampled scan, to read the data")
+                data = DataPlan([], not_checked=reason)
             scan, health = run_health(adapter.fetch, data, settings, say, fetch_stats)
+            if big:
+                scan.large_repo = big.short()
+                scan.large_repo_warning = big.text()
             report.settings["data_fetch"] = fetch_stats
             report.scan = scan
             report.results += health

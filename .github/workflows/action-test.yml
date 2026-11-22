@@ -1,0 +1,27 @@
+# Runs the Action from this repo's own checkout on a small dataset (the working example).
+name: action-test
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  action:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - id: vet
+        uses: ./
+        with:
+          dataset: hf:cornell-movie-review-data/rotten_tomatoes
+          args: --no-links
+      - name: The report exists and has the footer
+        shell: bash
+        run: |
+          test -s "${{ steps.vet.outputs.report-markdown }}"
+          grep -q "Facts only, not legal advice." "${{ steps.vet.outputs.report-markdown }}"
+          grep -q '"schema_version"' "${{ steps.vet.outputs.report-json }}"

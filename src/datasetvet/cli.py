@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import logging
+import os
 import sys
 import time
 
@@ -13,6 +14,8 @@ from datasetvet.config import Settings, from_env, parse_bytes
 EXIT_OK = 0
 EXIT_ERROR = 1
 EXIT_USAGE = 2
+EXIT_FINDINGS = 3  # --fail-on matched a result
+FAIL_ON = ("inconsistent", "missing", "invalid", "dead", "unreachable", "restricted", "found")
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -28,6 +31,11 @@ def build_parser() -> argparse.ArgumentParser:
     c.add_argument("ref", help="dataset reference, e.g. hf:stanfordnlp/imdb, "
                               "hf:org/name@revision or https://huggingface.co/datasets/org/name")
     c.add_argument("--json", metavar="PATH", help="also write the JSON report to PATH")
+    c.add_argument("--md", metavar="PATH", help="also write a Markdown report to PATH")
+    c.add_argument("--fail-on", action="append", dest="fail_on", metavar="STATUS",
+                   choices=FAIL_ON, default=[],
+                   help="exit with status 3 when any result has this status (repeatable; for CI). "
+                        f"One of: {', '.join(FAIL_ON)}. Default: never")
     c.add_argument("--max-scan-bytes", default=None,
                    help="full-scan limit (default 5GB); above it the data is sampled")
     c.add_argument("--sample-rows", type=int, default=None,
@@ -57,6 +65,9 @@ def build_parser() -> argparse.ArgumentParser:
     c.add_argument("--no-sources", action="store_true",
                    help="do not read stated sources (GitHub repos, licence pages) for a licence")
     c.add_argument("--no-cache", action="store_true", help="do not use the on-disk HTTP cache")
+    c.add_argument("--yes", "-y", action="store_true",
+                   help="do not ask before reading the data of a repo with 100,000 or more files "
+                        "(the warning is still printed and recorded in the report)")
     c.add_argument("--no-evidence", action="store_true",
                    help="terminal output without evidence URLs")
     c.add_argument("-q", "--quiet", action="store_true", help="no progress messages")
@@ -96,6 +107,33 @@ def settings_from_args(args: argparse.Namespace) -> Settings:
     return s
 
 
+def findings(report, statuses: list[str]) -> list:
+    """Results whose status is one the user asked to fail on (a plain match, no judgement)."""
+    return [r for r in report.results if r.status in set(statuses)]
+
+
+def can_ask(args: argparse.Namespace) -> bool:
+    """Ask before a large scan only in a terminal; never with --yes, in CI or in an Action."""
+    if args.yes or os.environ.get("CI") or os.environ.get("GITHUB_ACTIONS"):
+        return False
+    try:
+        return sys.stdin.isatty() and sys.stderr.isatty()
+    except (AttributeError, ValueError):
+        return False
+
+
+def _warn_progress(progress, quiet: bool):
+    """The large-repo warning is printed even with --quiet: it asks for a decision."""
+    if not quiet:
+        return progress
+
+    def only_warning(msg: str) -> None:
+        if msg.startswith("Large repo:"):
+            print(f"datasetvet: {msg}", file=sys.stderr)
+
+    return only_warning
+
+
 def cmd_check(args: argparse.Namespace) -> int:
     from rich.console import Console
 
@@ -105,6 +143,7 @@ def cmd_check(args: argparse.Namespace) -> int:
     from datasetvet.licences.scanner import ScanCodeUnavailable
     from datasetvet.pipeline import run_check
     from datasetvet.report.json_out import write_json
+    from datasetvet.report.markdown import write_markdown
     from datasetvet.report.terminal import render
 
     try:
@@ -120,8 +159,17 @@ def cmd_check(args: argparse.Namespace) -> int:
             err.print(f"[bright_black]  {time.monotonic() - started:6.1f}s  {msg}[/]",
                       markup=True, highlight=False)
 
+    def confirm(_warning: str) -> bool:
+        """The warning itself was printed as progress; only ask when someone can answer."""
+        try:
+            answer = input("Read the data anyway? [y/N] ")
+        except EOFError:
+            return True
+        return answer.strip().lower() in ("y", "yes")
+
     try:
-        report = run_check(args.ref, settings, progress=progress)
+        report = run_check(args.ref, settings, progress=_warn_progress(progress, args.quiet),
+                           confirm=None if not can_ask(args) else confirm)
     except ScanCodeUnavailable as exc:
         print(f"datasetvet: {exc}", file=sys.stderr)
         return EXIT_USAGE
@@ -136,6 +184,16 @@ def cmd_check(args: argparse.Namespace) -> int:
         write_json(report, args.json)
         if not args.quiet:
             err.print(f"JSON report written to {args.json}")
+    if args.md:
+        write_markdown(report, args.md)
+        if not args.quiet:
+            err.print(f"Markdown report written to {args.md}")
+    hits = findings(report, args.fail_on)
+    if hits:
+        print(f"datasetvet: --fail-on matched {len(hits)} result(s): "
+              + "; ".join(f"{r.status} {r.title}" for r in hits[:10])
+              + (" ..." if len(hits) > 10 else ""), file=sys.stderr)
+        return EXIT_FINDINGS
     return EXIT_OK
 
 

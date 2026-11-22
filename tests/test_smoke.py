@@ -54,7 +54,7 @@ def offline_http(router):
 
 
 def test_version_string():
-    assert __version__ == "0.0.0"
+    assert __version__ == "0.1.0"
 
 
 def test_cli_without_command_prints_help(capsys):

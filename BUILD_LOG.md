@@ -9,7 +9,7 @@ One entry per phase: the model and effort used, what was decided and why, what w
 | 3 Licence + provenance | Opus 5.5 | high | done 2026-11-19 |
 | 4 Accuracy eval + launch scan | Opus 5.5 | high | done 2026-11-21 |
 | 4.5 Fixes from the launch scan + rescan | Sonnet 5.5 (closing steps on Opus 5.5) | high | done 2026-11-22; history rewrite pending |
-| 5 Polish, Action, README, launch | Sonnet 5.5 | medium | not started |
+| 5 Polish, Action, README, launch | Sonnet 5.5 | medium | built 2026-11-22; the Opus review fixes and the human audit table wait for the owner's inputs; nothing pushed or published |
 
 ---
 
@@ -417,3 +417,44 @@ Checks after the rewrite:
 - CI not run; nothing pushed.
 
 **Checks** (commit of this entry): `pytest` 360 passed, 3 skipped (ScanCode-only); `ruff check src tests tools eval launch` clean; `mypy src` clean, and the four launch scripts clean.
+
+## Phase 5: polish and launch prep (2026-11-22, Sonnet 5.5, medium effort)
+
+Run in one Claude Code session (desktop app), Windows 11, Python 3.12.10. Every Hugging Face call was anonymous (`HF_TOKEN_PATH` pointed at a file that does not exist, as in Phase 4.5); no `GITHUB_TOKEN`. No token of the owner's was read, typed or stored. Nothing was pushed, no repo was created, nothing was uploaded to PyPI. Not committed until the last step (below).
+
+### Inputs the brief named that were not available
+
+| item | what was found | state |
+|---|---|---|
+| 1. Fixes for the Opus review | The brief had the placeholder "[paste them here]" unfilled. No findings file or notes exist in the repo, `BUILD_LOG.md`, `PLAN.md` or the home folder (searched by name) | **not done**: no findings to fix |
+| 4. Human audit table | `eval/results/disagreements-builtin.csv` and `disagreements-scancode.csv` (last written 2026-11-19) have an empty label column in all 60 rows, in the repo and on disk | **table not made up.** `eval/audit.py` turns the labels into the RESULTS table once they are filled in (15 tests); RESULTS has a placeholder that says so |
+
+### Decisions and measurements
+
+| task | what was done | measured / result |
+|---|---|---|
+| 3. ScanCode threshold | `SCANCODE_MIN_SCORE` 90 → **50**, documented in `scanner.py`, PLAN §4, §5.2 and RESULTS | The frozen test run scored 50 only, so `eval/threshold_check.py` scored 50 and 90 together on the 245 test rows (one process, identical inputs; a second look at the test split, labelled so in RESULTS). 50: 131 agree (53.5%; 47.2–59.6%), abstention 28.6%. 90: 110 agree (44.9%; 38.8–51.2%), abstention 39.2%. The 50 run reproduces the frozen result exactly. Row by row: 22 rows agree only at 50, 1 only at 90 (sign test p ≈ 6e-6). Agreement on decided rows is the same (74.9% / 73.8%): the gain is fewer abstentions, and 21 of the 26 rows newly decided are right. So 50 beats 90 and is the default |
+| 2 / 5.9. Large-repo warning | `checks/health/large.py`; `pipeline.run_check(confirm=...)`; `--yes`; `ScanInfo.large_repo` | After the file list and the data plan, before any data file is fetched: the file count ("at least" when the list is cut off), data files, an estimate from the measured 34.7 ms a file (a sampled run estimates only the files its quota needs), and the sampled-scan flags (the launch ones, measured 321 s). A terminal is asked "Read the data anyway? [y/N]"; `--yes`, `CI`, `GITHUB_ACTIONS` and non-terminal runs go ahead and still print it; the scan line says "large repo: N files". Declining skips only the data-health scan. 16 tests (the 100,000+ file list is simulated) |
+| 5. Action | `action.yml` (composite), `examples/workflow.yml`, `.github/workflows/action-test.yml`; `datasetvet check --md PATH --fail-on STATUS` (exit 3), `report/markdown.py` | The Action's check step was extracted from `action.yml` and run in bash with the same environment variables against `hf:cornell-movie-review-data/rotten_tomatoes`: exit 0, report, job summary and outputs written. **Not run on a GitHub runner** (nothing is pushed). SARIF was not built: code scanning needs a file location in the repo and a Hub dataset check has none. Markdown text from datasets is escaped (tested) |
+| 6. README | `README.md`, `docs/demo/demo.gif`, `docs/demo/demo.cast`, `tools/record_demo.py` | The recording is a real, uncached run of `check hf:tatsu-lab/alpaca` (17 s), captured as an asciicast v2 file and drawn to a GIF with pyte and Pillow. asciinema itself does not run on Windows. The numbers come from RESULTS.md and link to it |
+| 7. Package | version 0.1.0, `[project.urls]`, sdist file list, classifiers | `python -m build` then `twine check`: both files PASSED. A wheel installed in a clean venv ran `datasetvet check`. `docs/RELEASE.md` has the repo description, topics, the `gh` and `twine` commands and what to check before the first push; none was run. The repo URL in `pyproject.toml` and the README assumes the owner `moelsaka01` (the local git user) |
+| 8. Launch posts | `LAUNCH.md` | r/MachineLearning, r/datasets, X (post and two replies), LinkedIn, HF community post; each leads with "40.1% of the top 500 state no licence" and carries the caveats (`inconsistent` precision 37%, agreement is with a best-effort audit, lower bounds) |
+
+### Problems found and fixed
+
+1. The shell tool collapsed backslashes in heredocs (a regular expression and two test strings came out wrong). Caught by the tests and the first live Markdown report; those files were fixed through the edit tool instead.
+2. Two new tests built a simulated 100,000-file repo whose card pointed past the cut-off list, so the scan fell back to reading all 100,000 files and hung. The tests now point at files inside the list.
+3. PII facts said "1 values match"; singular now.
+4. Markdown escaping first escaped every underscore ("rotten\_tomatoes"); it now leaves an underscore inside a word alone.
+
+### Not done / open
+
+- **The Opus review fixes and the human audit table**, above. Both need the owner's input.
+- HTML report and badge (5.1, 5.2), the static site (5.5), the optional AI summary (5.6), and the competitor re-check (5.8) were not in the brief and were not done.
+- The Action and `action-test.yml` have not run on GitHub; CI has never run (both Phase 2/3 jobs and the new one).
+- The demo GIF shows the report appearing at once (stdout is written at the end); it is not an animation of the scan.
+- The owner still has to create the repo, push, and upload to PyPI (`docs/RELEASE.md`), and post the SPDX issue and the launch posts.
+- 128 Tier A datasets with a cut-off listing remain unrescanned (Phase 4.5).
+
+**Checks** (before the commit of this entry): `pytest` 397 passed, 4 skipped (the ScanCode-only tests; they pass in the scan venv: 4 passed there for `tests/test_scancode.py`), 2 deselected; `ruff check src tests tools eval launch` clean; `mypy src` clean, and the two launch scripts clean.
+

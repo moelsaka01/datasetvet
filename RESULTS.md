@@ -1,4 +1,4 @@
-# datasetvet: Phase 4 results (launch scan updated in Phase 4.5)
+# datasetvet: results (accuracy evaluation Phase 4, launch scan updated in Phase 4.5, ScanCode threshold check Phase 5)
 
 Measured 2026-11-19 to 2026-11-21 on the owner's Windows 11 laptop (Python 3.12.10), datasetvet 0.0.0, SPDX licence list 3.29.0, ScanCode toolkit 32.5.0. Every Hugging Face call was **anonymous**. During the first runs no HF token was visible to `huggingface_hub`. For the rescan (2026-11-21) a token existed on the laptop and was hidden on purpose (`HF_TOKEN_PATH` set to a file that does not exist), so the rescan ran under the same conditions as the first scan. The one exception is the timing of a very large repo (section 2, last part), which the owner allowed to run logged in. No `GITHUB_TOKEN` was set. Facts only, not legal advice.
 
@@ -85,9 +85,28 @@ Per-row data: `eval/results/runs/test.jsonl`. All metrics: `eval/results/metrics
   - So the choice is a trade-off, not a free gain.
 - **Dev split** (for reference, tuned on): built-in 79/116 rows agreeing (87.8% of 90 decided); ScanCode ≥ 50 76/116 (86.4% of 88 decided).
 
-### Disagreement audit (pending the owner)
+### ScanCode threshold: 50 against 90, on the test split (Phase 5)
 
-`eval/results/disagreements-builtin.csv` and `disagreements-scancode.csv` hold 30 randomly chosen disagreements each (seed 4), with an empty column for the owner's label (*ours wrong / key wrong / changed since audit / ambiguous*). They are not labelled yet, so no breakdown is published.
+The frozen test run scored ScanCode at 50 only. Before making 50 the code default, 90 (the Phase 3 plan) was scored on the same test rows (`eval/threshold_check.py`, 2026-11-22). **This is a second look at the test split**, made to confirm a choice that the dev split had already made, not a new tuning step; nothing else was changed after it. Both thresholds ran in one process, so they read identical bytes. The 50 row reproduces the frozen result exactly (131 of 245, the same matrix), which also shows the GitHub sources had not drifted since the first run.
+
+| ScanCode threshold | rows agreeing, abstaining counted as a miss | abstention | agreement, decided rows | kappa | `inconsistent` precision / recall |
+|---|---|---|---|---|---|
+| ≥ 50 (new default) | **131 of 245** (53.5%; 47.2–59.6%) | 28.6% (70) | 74.9% (131/175; 67.9–80.7%) | 0.52 | 15/44 / 15/57 |
+| ≥ 90 | 110 of 245 (44.9%; 38.8–51.2%) | 39.2% (96) | 73.8% (110/149; 66.2–80.2%) | 0.51 | 10/36 / 10/57 |
+
+- **50 beats 90 on the pre-stated rule** (most rows agreeing; abstaining counts as a miss): +21 rows. Row by row, 22 rows agree only at 50 and 1 only at 90 (exact sign test, p ≈ 6e-6).
+- **Why:** the gain is from fewer abstentions, not from a looser reading. Agreement on decided rows is about the same (74.9% against 73.8%). Of the 26 rows that 50 decides and 90 leaves `unknown`, 21 (81%) match the key.
+- **Cost:** the extra decisions include wrong ones. `inconsistent` precision is 34% at 50 against 28% at 90 (counts above), so neither threshold matches the key well on that status; the main reason is a different target, not misreading (see "What drives our `inconsistent`" above).
+- **Decision:** `SCANCODE_MIN_SCORE` is now 50. A report names the threshold ("detections with score >= 50"). The built-in matcher is unchanged: its 8 grid points were equal on the dev split.
+
+### Human audit (pending the owner's labels)
+
+`eval/results/disagreements-builtin.csv` and `disagreements-scancode.csv` hold 30 randomly chosen disagreements each (seed 4), with a column for the owner's label (*ours wrong / key wrong / changed since audit / ambiguous*). **The copies in this repository were still unlabelled when Phase 5 was prepared (2026-11-22), so no breakdown is published and none is invented.** Once the label column is filled in, `python eval/audit.py` prints this table (it refuses while any row is empty; `eval/results/audit.json` records the counts) and it replaces the placeholder below. The two scanners are counted separately.
+
+| scanner | rows labelled | datasetvet's fault | the key's fault | changed since the audit | ambiguous |
+|---|---|---|---|---|---|
+| built-in matcher | 0 of 30 | not labelled | not labelled | not labelled | not labelled |
+| ScanCode (≥ 50) | 0 of 30 | not labelled | not labelled | not labelled | not labelled |
 
 ### What this shows and does not show
 

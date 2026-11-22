@@ -24,9 +24,10 @@ def test_absent_scancode_is_reported_and_auto_falls_back():
 
 @needs_scancode
 @pytest.mark.parametrize("text,expected", [
-    # measured: ScanCode 32.5.0 scores this phrasing 99, but "released under the CC BY-NC 4.0
-    # license" only 50 (below SCANCODE_MIN_SCORE); Phase 4 tunes the threshold on the dev split
+    # measured: ScanCode 32.5.0 scores the first phrasing 99 and the second only 50, which is
+    # why the default threshold is 50 (RESULTS.md section 1)
     ("# Data\n\nLicensed under CC BY-NC 4.0.\n", "CC-BY-NC-4.0"),
+    ("# Data\n\nThis data is released under the CC BY-NC 4.0 license.\n", "CC-BY-NC-4.0"),
     ("## License\nMIT\n", "MIT"),
 ])
 def test_scancode_notices(text, expected):
