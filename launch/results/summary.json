@@ -1,11 +1,18 @@
 {
  "listed": 500,
+ "first_scan_config_hashes": {
+  "A": "d0b085a50bef68aa",
+  "B": "2472d09329f26eb6"
+ },
  "tier_A": {
   "config_hashes": {
-   "d0b085a50bef68aa": 500
+   "d0b085a50bef68aa": 492,
+   "7c024a7a384b9026": 8
   },
-  "seconds": 2937.1700000000005,
-  "http_requests": 2921.0,
+  "seconds": 10066.519999999997,
+  "http_requests": 6602.0,
+  "rescanned": 8,
+  "rescan_planned": 8,
   "done": 499,
   "failed": 1,
   "errors": {
@@ -49,176 +56,177 @@
    "missing": 4,
    "unknown": 8
   },
-  "links_checked": 1156,
+  "links_checked": 1000,
   "link_statuses": {
-   "ok": 402,
-   "dead": 731,
+   "ok": 403,
+   "dead": 575,
    "restricted": 11,
-   "unreachable": 7,
+   "unreachable": 6,
    "unknown": 5
   },
   "datasets_with_dead_link": {
-   "k": 23,
-   "n": 168,
-   "share": 0.1369,
+   "k": 16,
+   "n": 166,
+   "share": 0.0964,
    "wilson95": [
-    0.093,
-    0.1971
+    0.0602,
+    0.1508
    ]
   },
-  "missing_file_results": 716,
-  "missing_file_results_in_truncated_listings": 157,
-  "datasets_with_dead_link_excluding_truncated": {
-   "k": 15,
-   "n": 168,
-   "share": 0.0893,
-   "wilson95": [
-    0.0549,
-    0.1421
-   ]
-  }
+  "missing_file_results": 560,
+  "missing_file_results_by_dataset": {
+   "McGill-NLP/WebLINX-full": 1,
+   "HuggingFaceFW/fineweb-2": 550,
+   "lmms-lab/LLaVA-Video-178K": 4,
+   "applied-ai-018/pretraining_v1-omega": 5
+  },
+  "file_list_incomplete": 0
  },
  "tier_B": {
   "config_hashes": {
-   "2472d09329f26eb6": 500
+   "2472d09329f26eb6": 401,
+   "fe7d94fb698d5f41": 99
   },
-  "seconds": 75800.64999999992,
-  "http_requests": 602535.0,
-  "done": 494,
-  "failed": 6,
+  "seconds": 88793.95999999995,
+  "http_requests": 334125.0,
+  "rescanned": 99,
+  "rescan_planned": 99,
+  "done": 497,
+  "failed": 3,
   "errors": {
-   "DatasetNotFound": 3,
-   "ArrowIndexError": 2,
-   "ValueError": 1
+   "DatasetNotFound": 3
   },
   "scan_kind": {
-   "full": 195,
-   "not checked": 102,
-   "sampled": 197
+   "full": 190,
+   "not checked": 103,
+   "sampled": 204
   },
   "scan_source": {
-   "parquet conversion": 230,
-   "original files": 162,
-   "": 102
+   "parquet conversion": 232,
+   "": 103,
+   "original files": 162
   },
+  "partial_listing": {},
   "fetch_git": {
-   "not used": 370,
-   "": 102,
-   "used": 22
+   "not used": 367,
+   "": 103,
+   "used": 27
   },
-  "original_files_listing_truncated": {
-   "full": 18,
-   "sampled": 46
-  },
-  "fetch_git_files": 49975,
-  "fetch_http_files": 301441,
+  "fetch_git_files": 179037,
+  "fetch_http_files": 154030,
   "slowest": [
    [
-    "nvidia/PhysicalAI-WorldModel-Synthetic-Autonomous-Driving-Scenarios",
-    15074.08
-   ],
-   [
     "lyzenghq/banned-historical-archives",
-    12782.61
-   ],
-   [
-    "AquaV/genshin-voices-separated",
-    9968.31
+    14061.5
    ],
    [
     "TGMR/one_pass_ingestion",
-    6893.36
+    8142.62
    ],
    [
     "pjpjq/blofin-oi-data",
-    2970.72
+    3978.39
    ],
    [
-    "espnet/yodas2",
-    2440.91
+    "i998979/TransitApp",
+    3457.28
+   ],
+   [
+    "AquaV/genshin-voices-separated",
+    3246.84
+   ],
+   [
+    "Yshh525/rho-internalize-v1-20261021",
+    3087.31
    ]
   ],
   "download_capped": 135,
-  "bytes_read_total": 12278924781,
-  "rows_scanned_total": 13181583,
+  "bytes_read_total": 12469769471,
+  "rows_scanned_total": 14021885,
+  "unreadable_kinds": {
+   "reader_limit": 4145,
+   "invalid": 8617,
+   "empty": 2213,
+   "download": 59957
+  },
   "duplicates": {
    "found": {
-    "k": 74,
-    "n": 392,
-    "share": 0.1888,
+    "k": 73,
+    "n": 394,
+    "share": 0.1853,
     "wilson95": [
-     0.1531,
-     0.2305
+     0.15,
+     0.2266
     ]
    },
    "statuses": {
-    "none found": 318,
-    "found": 74,
-    "not checked": 102
+    "none found": 321,
+    "not checked": 103,
+    "found": 73
    }
   },
   "leakage": {
    "found": {
     "k": 24,
-    "n": 392,
-    "share": 0.0612,
+    "n": 394,
+    "share": 0.0609,
     "wilson95": [
-     0.0415,
-     0.0895
+     0.0413,
+     0.089
     ]
    },
    "statuses": {
-    "none found": 368,
-    "not checked": 102,
+    "none found": 370,
+    "not checked": 103,
     "found": 24
    }
   },
   "empty": {
    "found": {
-    "k": 13,
-    "n": 392,
-    "share": 0.0332,
+    "k": 11,
+    "n": 394,
+    "share": 0.0279,
     "wilson95": [
-     0.0195,
-     0.0559
+     0.0157,
+     0.0493
     ]
    },
    "statuses": {
-    "none found": 379,
-    "not checked": 102,
-    "found": 13
+    "none found": 383,
+    "not checked": 103,
+    "found": 11
    }
   },
-  "corrupt": {
+  "unreadable": {
    "found": {
-    "k": 47,
-    "n": 392,
-    "share": 0.1199,
+    "k": 40,
+    "n": 394,
+    "share": 0.1015,
     "wilson95": [
-     0.0914,
-     0.1558
+     0.0754,
+     0.1353
     ]
    },
    "statuses": {
-    "none found": 345,
-    "not checked": 102,
-    "found": 47
+    "none found": 354,
+    "not checked": 103,
+    "found": 40
    }
   },
   "pii": {
    "found": {
-    "k": 61,
-    "n": 253,
-    "share": 0.2411,
+    "k": 66,
+    "n": 258,
+    "share": 0.2558,
     "wilson95": [
-     0.1925,
-     0.2974
+     0.2064,
+     0.3124
     ]
    },
    "statuses": {
-    "not checked": 241,
+    "not checked": 239,
     "none found": 192,
-    "found": 61
+    "found": 66
    }
   }
  }

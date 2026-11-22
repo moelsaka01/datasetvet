@@ -1,0 +1,609 @@
+{
+ "list": "top500-2026-11-19.json",
+ "A": [
+  "DAGroup-PKU/Open-HumanWAM-50K",
+  "HPLT/HPLT2.0_cleaned",
+  "HRDexDB/HRDexDB",
+  "McGill-NLP/WebLINX-full",
+  "XDOF/ABC-130k",
+  "allenai/dolma3.5_pool",
+  "evaleval/EEE_datastore",
+  "zdbfv/M3_VOS"
+ ],
+ "B": [
+  "3dcodeverse/3dcodeverse-2m",
+  "57xj5SHr/Tui9DGhp",
+  "AiEDA/iDATA",
+  "AquaV/genshin-voices-separated",
+  "Collapsecdn/collapsecdn",
+  "EssentialAI/essential-web-v1.0",
+  "GSMA/3GPP",
+  "HPLT/HPLT2.0_cleaned",
+  "IPEC-COMMUNITY/FastUMI_100k_lerobot",
+  "IPEC-COMMUNITY/bridge_orig_lerobot",
+  "IPEC-COMMUNITY/droid_lerobot",
+  "IPEC-COMMUNITY/fractal20220817_data_lerobot",
+  "IPEC-COMMUNITY/kuka_lerobot",
+  "IPEC-COMMUNITY/language_table_lerobot",
+  "MJPansa/qwen38-eagle4-native-features-24m-20261026-f2638314",
+  "McGill-NLP/WebLINX-full",
+  "McGill-NLP/weblinx-browsergym",
+  "OPR-Project/OxfordRobotCar_OpenPlaceRecognition",
+  "OpenFinMind/stock_dataset",
+  "OpenMOSS-Team/OmniAction",
+  "PGCodeLLM/radin-cyber-backups",
+  "Ritabrata04/masscount-cf",
+  "RoboDojo-Benchmark/RoboDojo",
+  "Salesforce/GiftEvalPretrain",
+  "TGMR/one_pass_ingestion",
+  "UMTRI/MatPredict",
+  "WanyueZhang/MulSeT",
+  "YiboZhang2001/TexVerse",
+  "Yshh525/rho-internalize-v1-20261021",
+  "ZTWHHH/envs_1",
+  "adscli/copycheck-videos",
+  "agents-last-exam/agents-last-exam-data",
+  "ahashanahmed/csv",
+  "aisa-group/PostTrainBench-Trajectories",
+  "akshithio/arva",
+  "allenai/MADLAD-400",
+  "allenai/dolma3.5_pool",
+  "allenai/dolma3_mix-6T-1025-7B",
+  "amidarliintoirog/copyright-videos-2023",
+  "assassinlike/everything132",
+  "augaazuun/copydetect-videos",
+  "behavior-1k/2025-challenge-demos",
+  "benchflow/skillsbench-leaderboard",
+  "benediktkol/DDOS",
+  "bop-benchmark/hot3d",
+  "brownu/deform360",
+  "cadene/droid",
+  "cadene/droid_1.0.1",
+  "camel-ai/SETA-Env",
+  "carlotabronze/sm-stuff",
+  "challenge-2026/challenge_data",
+  "coatfusion/coat-fusion-assets-anonymous",
+  "djain95/sae-jailbreaks-cache",
+  "eddmpython/dartlab-data",
+  "espnet/yodas2",
+  "frankielp/2dgaussian-lang-output",
+  "gorilla-llm/Berkeley-Function-Calling-Leaderboard",
+  "gradio/frontend",
+  "happyhackingspace/dit",
+  "harborframework/parity-experiments",
+  "harborframework/terminal-bench-3.0",
+  "harborframework/terminal-bench-science-lfs",
+  "hexuan21/MemoryTax-Res-GPT-5-6-luna",
+  "hexuan21/MemoryTax-Res-Other",
+  "hotchpotch/s1mb-result",
+  "huylhn1810/aic_2025",
+  "i998979/TransitApp",
+  "inclusionAI/OpenAoE-2000h",
+  "jamie33/July",
+  "jumuunhaan/copyright-videos-dataset",
+  "lerobot/FineART",
+  "lyzenghq/banned-historical-archives",
+  "manhdungcr7/aic2026-keyframes",
+  "mickeykang/Event6DBlender",
+  "miniiohinkimsavol/copyright-detection-videos",
+  "ml-resources/tsinghua_topic_dataset",
+  "neashton/windsorml",
+  "neurodeskorg/webapps",
+  "nvidia/PhysicalAI-Robotics-GR00T-X-Embodiment-Sim",
+  "nvidia/PhysicalAI-Robotics-Open-H-Embodiment",
+  "nvidia/PhysicalAI-WorldModel-Synthetic-Autonomous-Driving-Scenarios",
+  "nvidia/video-to-data-robot-dexterity-task-library-and-dataset",
+  "omegalabsinc/omega-voice",
+  "oshonzongiintsetseg/videocopy-dataset",
+  "own2pwn-fr/ctfhoard-corpus",
+  "pjpjq/blofin-oi-data",
+  "pulmo/ncbi-genbank-complete",
+  "ritwika96/qwen3.8-27b-arc1120-base-traces-20261025",
+  "saarthiatu/jee-pdfs",
+  "sagels/new-dataset",
+  "spark-school/school-corpus",
+  "stair-lab/nonmyopia_results",
+  "sunshk/2025-challenge-orchestrator-v3_2",
+  "superkaiba1/explore-persona-space-data",
+  "trentmkelly/polymarket_historical_data",
+  "world-igr-plum/regions",
+  "xlangai/recommendation",
+  "zhaocharile66/My_Hermes_Dataset",
+  "zmodelerlover/amd-nr"
+ ],
+ "reasons": {
+  "A": {
+   "DAGroup-PKU/Open-HumanWAM-50K": [
+    "listing-cut-off"
+   ],
+   "HPLT/HPLT2.0_cleaned": [
+    "listing-cut-off"
+   ],
+   "HRDexDB/HRDexDB": [
+    "listing-cut-off"
+   ],
+   "McGill-NLP/WebLINX-full": [
+    "listing-cut-off"
+   ],
+   "XDOF/ABC-130k": [
+    "listing-cut-off"
+   ],
+   "allenai/dolma3.5_pool": [
+    "listing-cut-off"
+   ],
+   "evaleval/EEE_datastore": [
+    "listing-cut-off"
+   ],
+   "zdbfv/M3_VOS": [
+    "listing-cut-off"
+   ]
+  },
+  "B": {
+   "3dcodeverse/3dcodeverse-2m": [
+    "listing-cut-off"
+   ],
+   "57xj5SHr/Tui9DGhp": [
+    "unreadable-files"
+   ],
+   "AiEDA/iDATA": [
+    "listing-cut-off",
+    "unreadable-files",
+    "json-array-of-non-objects"
+   ],
+   "AquaV/genshin-voices-separated": [
+    "listing-cut-off"
+   ],
+   "Collapsecdn/collapsecdn": [
+    "unreadable-files"
+   ],
+   "EssentialAI/essential-web-v1.0": [
+    "listing-cut-off"
+   ],
+   "GSMA/3GPP": [
+    "listing-cut-off"
+   ],
+   "HPLT/HPLT2.0_cleaned": [
+    "listing-cut-off"
+   ],
+   "IPEC-COMMUNITY/FastUMI_100k_lerobot": [
+    "listing-cut-off"
+   ],
+   "IPEC-COMMUNITY/bridge_orig_lerobot": [
+    "listing-cut-off"
+   ],
+   "IPEC-COMMUNITY/droid_lerobot": [
+    "listing-cut-off"
+   ],
+   "IPEC-COMMUNITY/fractal20220817_data_lerobot": [
+    "listing-cut-off"
+   ],
+   "IPEC-COMMUNITY/kuka_lerobot": [
+    "listing-cut-off"
+   ],
+   "IPEC-COMMUNITY/language_table_lerobot": [
+    "listing-cut-off"
+   ],
+   "MJPansa/qwen38-eagle4-native-features-24m-20261026-f2638314": [
+    "unreadable-files"
+   ],
+   "McGill-NLP/WebLINX-full": [
+    "listing-cut-off",
+    "unreadable-files"
+   ],
+   "McGill-NLP/weblinx-browsergym": [
+    "listing-cut-off",
+    "unreadable-files"
+   ],
+   "OPR-Project/OxfordRobotCar_OpenPlaceRecognition": [
+    "listing-cut-off"
+   ],
+   "OpenFinMind/stock_dataset": [
+    "listing-cut-off"
+   ],
+   "OpenMOSS-Team/OmniAction": [
+    "listing-cut-off"
+   ],
+   "PGCodeLLM/radin-cyber-backups": [
+    "listing-cut-off",
+    "unreadable-files"
+   ],
+   "Ritabrata04/masscount-cf": [
+    "listing-cut-off"
+   ],
+   "RoboDojo-Benchmark/RoboDojo": [
+    "non-data-files-skipped",
+    "unreadable-files"
+   ],
+   "Salesforce/GiftEvalPretrain": [
+    "non-data-files-skipped"
+   ],
+   "TGMR/one_pass_ingestion": [
+    "listing-cut-off"
+   ],
+   "UMTRI/MatPredict": [
+    "listing-cut-off"
+   ],
+   "WanyueZhang/MulSeT": [
+    "listing-cut-off",
+    "unreadable-files"
+   ],
+   "YiboZhang2001/TexVerse": [
+    "listing-cut-off"
+   ],
+   "Yshh525/rho-internalize-v1-20261021": [
+    "arrow-index-error"
+   ],
+   "ZTWHHH/envs_1": [
+    "listing-cut-off",
+    "unreadable-files",
+    "json-array-of-non-objects"
+   ],
+   "adscli/copycheck-videos": [
+    "unreadable-files"
+   ],
+   "agents-last-exam/agents-last-exam-data": [
+    "non-data-files-skipped",
+    "unreadable-files"
+   ],
+   "ahashanahmed/csv": [
+    "non-data-files-skipped",
+    "unreadable-files",
+    "json-array-of-non-objects"
+   ],
+   "aisa-group/PostTrainBench-Trajectories": [
+    "listing-cut-off",
+    "unreadable-files",
+    "json-array-of-non-objects"
+   ],
+   "akshithio/arva": [
+    "listing-cut-off"
+   ],
+   "allenai/MADLAD-400": [
+    "listing-cut-off"
+   ],
+   "allenai/dolma3.5_pool": [
+    "listing-cut-off"
+   ],
+   "allenai/dolma3_mix-6T-1025-7B": [
+    "listing-cut-off",
+    "unreadable-files"
+   ],
+   "amidarliintoirog/copyright-videos-2023": [
+    "unreadable-files"
+   ],
+   "assassinlike/everything132": [
+    "listing-cut-off",
+    "unreadable-files",
+    "json-array-of-non-objects"
+   ],
+   "augaazuun/copydetect-videos": [
+    "listing-cut-off",
+    "unreadable-files"
+   ],
+   "behavior-1k/2025-challenge-demos": [
+    "listing-cut-off"
+   ],
+   "benchflow/skillsbench-leaderboard": [
+    "listing-cut-off",
+    "unreadable-files",
+    "json-array-of-non-objects"
+   ],
+   "benediktkol/DDOS": [
+    "listing-cut-off"
+   ],
+   "bop-benchmark/hot3d": [
+    "unreadable-files"
+   ],
+   "brownu/deform360": [
+    "listing-cut-off"
+   ],
+   "cadene/droid": [
+    "listing-cut-off"
+   ],
+   "cadene/droid_1.0.1": [
+    "listing-cut-off"
+   ],
+   "camel-ai/SETA-Env": [
+    "non-data-files-skipped",
+    "unreadable-files"
+   ],
+   "carlotabronze/sm-stuff": [
+    "unreadable-files",
+    "json-array-of-non-objects"
+   ],
+   "challenge-2026/challenge_data": [
+    "listing-cut-off"
+   ],
+   "coatfusion/coat-fusion-assets-anonymous": [
+    "listing-cut-off"
+   ],
+   "djain95/sae-jailbreaks-cache": [
+    "listing-cut-off"
+   ],
+   "eddmpython/dartlab-data": [
+    "unreadable-files"
+   ],
+   "espnet/yodas2": [
+    "listing-cut-off"
+   ],
+   "frankielp/2dgaussian-lang-output": [
+    "listing-cut-off"
+   ],
+   "gorilla-llm/Berkeley-Function-Calling-Leaderboard": [
+    "unreadable-files"
+   ],
+   "gradio/frontend": [
+    "non-data-files-skipped",
+    "unreadable-files"
+   ],
+   "happyhackingspace/dit": [
+    "non-data-files-skipped",
+    "unreadable-files"
+   ],
+   "harborframework/parity-experiments": [
+    "listing-cut-off",
+    "unreadable-files"
+   ],
+   "harborframework/terminal-bench-3.0": [
+    "non-data-files-skipped",
+    "unreadable-files"
+   ],
+   "harborframework/terminal-bench-science-lfs": [
+    "non-data-files-skipped",
+    "unreadable-files",
+    "json-array-of-non-objects"
+   ],
+   "hexuan21/MemoryTax-Res-GPT-5-6-luna": [
+    "unreadable-files"
+   ],
+   "hexuan21/MemoryTax-Res-Other": [
+    "unreadable-files",
+    "json-array-of-non-objects"
+   ],
+   "hotchpotch/s1mb-result": [
+    "unreadable-files"
+   ],
+   "huylhn1810/aic_2025": [
+    "listing-cut-off"
+   ],
+   "i998979/TransitApp": [
+    "listing-cut-off"
+   ],
+   "inclusionAI/OpenAoE-2000h": [
+    "listing-cut-off"
+   ],
+   "jamie33/July": [
+    "non-data-files-skipped",
+    "unreadable-files",
+    "json-array-of-non-objects"
+   ],
+   "jumuunhaan/copyright-videos-dataset": [
+    "unreadable-files"
+   ],
+   "lerobot/FineART": [
+    "listing-cut-off"
+   ],
+   "lyzenghq/banned-historical-archives": [
+    "listing-cut-off",
+    "unreadable-files"
+   ],
+   "manhdungcr7/aic2026-keyframes": [
+    "listing-cut-off"
+   ],
+   "mickeykang/Event6DBlender": [
+    "listing-cut-off"
+   ],
+   "miniiohinkimsavol/copyright-detection-videos": [
+    "unreadable-files"
+   ],
+   "ml-resources/tsinghua_topic_dataset": [
+    "listing-cut-off"
+   ],
+   "neashton/windsorml": [
+    "listing-cut-off"
+   ],
+   "neurodeskorg/webapps": [
+    "arrow-index-error"
+   ],
+   "nvidia/PhysicalAI-Robotics-GR00T-X-Embodiment-Sim": [
+    "listing-cut-off"
+   ],
+   "nvidia/PhysicalAI-Robotics-Open-H-Embodiment": [
+    "listing-cut-off"
+   ],
+   "nvidia/PhysicalAI-WorldModel-Synthetic-Autonomous-Driving-Scenarios": [
+    "listing-cut-off"
+   ],
+   "nvidia/video-to-data-robot-dexterity-task-library-and-dataset": [
+    "listing-cut-off"
+   ],
+   "omegalabsinc/omega-voice": [
+    "listing-cut-off"
+   ],
+   "oshonzongiintsetseg/videocopy-dataset": [
+    "unreadable-files"
+   ],
+   "own2pwn-fr/ctfhoard-corpus": [
+    "listing-cut-off",
+    "unreadable-files"
+   ],
+   "pjpjq/blofin-oi-data": [
+    "listing-cut-off"
+   ],
+   "pulmo/ncbi-genbank-complete": [
+    "listing-cut-off"
+   ],
+   "ritwika96/qwen3.8-27b-arc1120-base-traces-20261025": [
+    "non-data-files-skipped"
+   ],
+   "saarthiatu/jee-pdfs": [
+    "listing-cut-off",
+    "unreadable-files",
+    "json-array-of-non-objects"
+   ],
+   "sagels/new-dataset": [
+    "non-data-files-skipped",
+    "unreadable-files"
+   ],
+   "spark-school/school-corpus": [
+    "unreadable-files"
+   ],
+   "stair-lab/nonmyopia_results": [
+    "listing-cut-off",
+    "unreadable-files"
+   ],
+   "sunshk/2025-challenge-orchestrator-v3_2": [
+    "listing-cut-off"
+   ],
+   "superkaiba1/explore-persona-space-data": [
+    "listing-cut-off",
+    "unreadable-files"
+   ],
+   "trentmkelly/polymarket_historical_data": [
+    "nanosecond-timestamp"
+   ],
+   "world-igr-plum/regions": [
+    "unreadable-files"
+   ],
+   "xlangai/recommendation": [
+    "unreadable-files"
+   ],
+   "zhaocharile66/My_Hermes_Dataset": [
+    "unreadable-files"
+   ],
+   "zmodelerlover/amd-nr": [
+    "unreadable-files"
+   ]
+  }
+ },
+ "tier_A_cut_off_not_rescanned": [
+  "3dcodeverse/3dcodeverse-2m",
+  "ACERobotics/ACE-Data-0",
+  "AiEDA/iDATA",
+  "AquaV/genshin-voices-separated",
+  "Believe0029/scannetv2",
+  "ChaoHuangCS/Muddy_Mix",
+  "Chelsea707/arxiv-cs-2020-2025-pdfs",
+  "DL3DV/DL3DV-Benchmark",
+  "EssentialAI/essential-web-v1.0",
+  "GSMA/3GPP",
+  "HenryYHW/ADAS-TO",
+  "HuggingFaceVLA/community_dataset_v3",
+  "IPEC-COMMUNITY/FastUMI_100k_lerobot",
+  "IPEC-COMMUNITY/bridge_orig_lerobot",
+  "IPEC-COMMUNITY/droid_lerobot",
+  "IPEC-COMMUNITY/fractal20220817_data_lerobot",
+  "IPEC-COMMUNITY/kuka_lerobot",
+  "IPEC-COMMUNITY/language_table_lerobot",
+  "MIC-DKFZ/OpenMind",
+  "MINT-SJTU/RW-RL-Dataset",
+  "MRSAudio/MRSAudio",
+  "McGill-NLP/weblinx-browsergym",
+  "NMontanaBrown/saramis_abdomen",
+  "NMontanaBrown/saramis_amos",
+  "OPR-Project/OxfordRobotCar_OpenPlaceRecognition",
+  "OpenFinMind/stock_dataset",
+  "OpenMOSS-Team/OmniAction",
+  "PGCodeLLM/radin-cyber-backups",
+  "RealmanRobot/RealSource-World",
+  "RichardErkhov/DASP",
+  "Ritabrata04/masscount-cf",
+  "ServiceNow/AgentHorizon",
+  "Sharpa-Robotics/SharpaDex-v1.0",
+  "Symato/cc",
+  "TGMR/one_pass_ingestion",
+  "Tuxifan/UbuntuIRC",
+  "UMTRI/MatPredict",
+  "WanyueZhang/MulSeT",
+  "WorldEngineAI/WEB-Dataset",
+  "Yanis236/fsc-180k",
+  "YiboZhang2001/TexVerse",
+  "YiboZhang2001/TexVerse-1K",
+  "YipengGao/3DCodeBench",
+  "Yshh525/rho-internalize-v1-20261021",
+  "ZTWHHH/envs_1",
+  "actiquest-dev/tarakanov-notes",
+  "agibot-world/AgiBotWorld2026",
+  "aisa-group/PostTrainBench-Trajectories",
+  "akshithio/arva",
+  "allenai/MADLAD-400",
+  "allenai/dolma3_mix-6T-1025-7B",
+  "allenai/objaverse",
+  "andaba/RT-Pose",
+  "aoiandroid/android-times-articles",
+  "assassinlike/everything132",
+  "augaazuun/copydetect-videos",
+  "banned-historical-archives/banned-historical-archives",
+  "banned-historical-archives/zhongyangribao",
+  "behavior-1k/2025-challenge-demos",
+  "benchflow/skillsbench-leaderboard",
+  "benediktkol/DDOS",
+  "brownu/deform360",
+  "cadene/droid",
+  "cadene/droid_1.0.1",
+  "challenge-2026/challenge_data",
+  "coatfusion/coat-fusion-assets-anonymous",
+  "daimonrobotics/Daimon-Infinity",
+  "djain95/sae-jailbreaks-cache",
+  "erickfm/slippi-public-dataset-v3.7",
+  "espnet/yodas",
+  "espnet/yodas2",
+  "filapro/cad-recode-v1.5",
+  "frankielp/2dgaussian-lang-output",
+  "genrobot2025/10Kh-RealOmin-OpenData",
+  "hanchong/synthetic-infrared-maritime-vessel-dataset-flux2klein",
+  "hanchong/synthetic-infrared-maritime-vessel-dataset-flux2klein-degraded",
+  "happy8825/co3d-annotations",
+  "harborframework/parity-experiments",
+  "helenqu/GenPairs",
+  "huylhn1810/aic_2025",
+  "i998979/TransitApp",
+  "ibrahimhamamci/CT-RATE",
+  "ieasybooks-org/prophet-mosque-library",
+  "inclusionAI/OpenAoE-2000h",
+  "jeongyh98/DSERT-RoLL",
+  "jzr99/mesh4d_dataset",
+  "k9cli/video-vec2wav2-tokenizer",
+  "k9cli/video-vec2wav2-tokenizer-2",
+  "k9cli/video-vec2wav2-tokenizer-3",
+  "khtao/OpenMind",
+  "lerobot/FineART",
+  "lyzenghq/banned-historical-archives",
+  "lyzenghq/zhongyangribao",
+  "manhdungcr7/aic2026-keyframes",
+  "manus4oHER/cia-declassified-reading-room",
+  "mickeykang/Event6DBlender",
+  "mippia/HAIM",
+  "ml-resources/tsinghua_topic_dataset",
+  "mlfoundations/dcvlm_pool_large",
+  "neashton/drivaerml",
+  "neashton/windsorml",
+  "nicoboou/IDRCell100k",
+  "nmasi/era5",
+  "nvidia/PhysicalAI-Robotics-GR00T-X-Embodiment-Sim",
+  "nvidia/PhysicalAI-Robotics-Open-H-Embodiment",
+  "nvidia/PhysicalAI-WorldModel-Synthetic-Autonomous-Driving-Scenarios",
+  "nvidia/simready-assets",
+  "nvidia/video-to-data-robot-dexterity-task-library-and-dataset",
+  "omegalabsinc/omega-voice",
+  "own2pwn-fr/ctfhoard-corpus",
+  "pjpjq/blofin-oi-data",
+  "pmchard/3D-ADAM",
+  "pulmo/ncbi-genbank-complete",
+  "robbyant/robotwin-clean-and-aug-lerobot",
+  "s17660101713/hagrid-subset",
+  "saarthiatu/jee-pdfs",
+  "society-ethics/stable-bias-generations",
+  "stair-lab/nonmyopia_results",
+  "subhan1501/fake-face-detection-dataset",
+  "sunshk/2025-challenge-orchestrator-v3_2",
+  "superkaiba1/explore-persona-space-data",
+  "tasl-lab/uniocc",
+  "tropos-labs/eigen-face-dataset-256",
+  "worldbenchmark/IntuitivePhysics",
+  "yuanm1135/DSERT-RoLL",
+  "zai-org/RPC-Bench",
+  "zeyuanyin/Dome-Objaverse",
+  "zh19990906/hagrid-subset"
+ ]
+}

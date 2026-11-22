@@ -1,0 +1,2144 @@
+{
+ "listing_cap": 100000,
+ "checked": 500,
+ "truncated": [
+  "3dcodeverse/3dcodeverse-2m",
+  "ACERobotics/ACE-Data-0",
+  "AiEDA/iDATA",
+  "AquaV/genshin-voices-separated",
+  "Believe0029/scannetv2",
+  "ChaoHuangCS/Muddy_Mix",
+  "Chelsea707/arxiv-cs-2020-2025-pdfs",
+  "DAGroup-PKU/Open-HumanWAM-50K",
+  "DL3DV/DL3DV-Benchmark",
+  "EssentialAI/essential-web-v1.0",
+  "GSMA/3GPP",
+  "HPLT/HPLT2.0_cleaned",
+  "HRDexDB/HRDexDB",
+  "HenryYHW/ADAS-TO",
+  "HuggingFaceVLA/community_dataset_v3",
+  "IPEC-COMMUNITY/FastUMI_100k_lerobot",
+  "IPEC-COMMUNITY/bridge_orig_lerobot",
+  "IPEC-COMMUNITY/droid_lerobot",
+  "IPEC-COMMUNITY/fractal20220817_data_lerobot",
+  "IPEC-COMMUNITY/kuka_lerobot",
+  "IPEC-COMMUNITY/language_table_lerobot",
+  "MIC-DKFZ/OpenMind",
+  "MINT-SJTU/RW-RL-Dataset",
+  "MRSAudio/MRSAudio",
+  "McGill-NLP/WebLINX-full",
+  "McGill-NLP/weblinx-browsergym",
+  "NMontanaBrown/saramis_abdomen",
+  "NMontanaBrown/saramis_amos",
+  "OPR-Project/OxfordRobotCar_OpenPlaceRecognition",
+  "OpenFinMind/stock_dataset",
+  "OpenMOSS-Team/OmniAction",
+  "PGCodeLLM/radin-cyber-backups",
+  "RealmanRobot/RealSource-World",
+  "RichardErkhov/DASP",
+  "Ritabrata04/masscount-cf",
+  "ServiceNow/AgentHorizon",
+  "Sharpa-Robotics/SharpaDex-v1.0",
+  "Symato/cc",
+  "TGMR/one_pass_ingestion",
+  "Tuxifan/UbuntuIRC",
+  "UMTRI/MatPredict",
+  "WanyueZhang/MulSeT",
+  "WorldEngineAI/WEB-Dataset",
+  "XDOF/ABC-130k",
+  "Yanis236/fsc-180k",
+  "YiboZhang2001/TexVerse",
+  "YiboZhang2001/TexVerse-1K",
+  "YipengGao/3DCodeBench",
+  "Yshh525/rho-internalize-v1-20261021",
+  "ZTWHHH/envs_1",
+  "actiquest-dev/tarakanov-notes",
+  "agibot-world/AgiBotWorld2026",
+  "aisa-group/PostTrainBench-Trajectories",
+  "akshithio/arva",
+  "allenai/MADLAD-400",
+  "allenai/dolma3.5_pool",
+  "allenai/dolma3_mix-6T-1025-7B",
+  "allenai/objaverse",
+  "andaba/RT-Pose",
+  "aoiandroid/android-times-articles",
+  "assassinlike/everything132",
+  "augaazuun/copydetect-videos",
+  "banned-historical-archives/banned-historical-archives",
+  "banned-historical-archives/zhongyangribao",
+  "behavior-1k/2025-challenge-demos",
+  "benchflow/skillsbench-leaderboard",
+  "benediktkol/DDOS",
+  "brownu/deform360",
+  "cadene/droid",
+  "cadene/droid_1.0.1",
+  "challenge-2026/challenge_data",
+  "coatfusion/coat-fusion-assets-anonymous",
+  "daimonrobotics/Daimon-Infinity",
+  "djain95/sae-jailbreaks-cache",
+  "erickfm/slippi-public-dataset-v3.7",
+  "espnet/yodas",
+  "espnet/yodas2",
+  "evaleval/EEE_datastore",
+  "filapro/cad-recode-v1.5",
+  "frankielp/2dgaussian-lang-output",
+  "genrobot2025/10Kh-RealOmin-OpenData",
+  "hanchong/synthetic-infrared-maritime-vessel-dataset-flux2klein",
+  "hanchong/synthetic-infrared-maritime-vessel-dataset-flux2klein-degraded",
+  "happy8825/co3d-annotations",
+  "harborframework/parity-experiments",
+  "helenqu/GenPairs",
+  "huylhn1810/aic_2025",
+  "i998979/TransitApp",
+  "ibrahimhamamci/CT-RATE",
+  "ieasybooks-org/prophet-mosque-library",
+  "inclusionAI/OpenAoE-2000h",
+  "jeongyh98/DSERT-RoLL",
+  "jzr99/mesh4d_dataset",
+  "k9cli/video-vec2wav2-tokenizer",
+  "k9cli/video-vec2wav2-tokenizer-2",
+  "k9cli/video-vec2wav2-tokenizer-3",
+  "khtao/OpenMind",
+  "lerobot/FineART",
+  "lyzenghq/banned-historical-archives",
+  "lyzenghq/zhongyangribao",
+  "manhdungcr7/aic2026-keyframes",
+  "manus4oHER/cia-declassified-reading-room",
+  "mickeykang/Event6DBlender",
+  "mippia/HAIM",
+  "ml-resources/tsinghua_topic_dataset",
+  "mlfoundations/dcvlm_pool_large",
+  "neashton/drivaerml",
+  "neashton/windsorml",
+  "nicoboou/IDRCell100k",
+  "nmasi/era5",
+  "nvidia/PhysicalAI-Robotics-GR00T-X-Embodiment-Sim",
+  "nvidia/PhysicalAI-Robotics-Open-H-Embodiment",
+  "nvidia/PhysicalAI-WorldModel-Synthetic-Autonomous-Driving-Scenarios",
+  "nvidia/simready-assets",
+  "nvidia/video-to-data-robot-dexterity-task-library-and-dataset",
+  "omegalabsinc/omega-voice",
+  "own2pwn-fr/ctfhoard-corpus",
+  "pjpjq/blofin-oi-data",
+  "pmchard/3D-ADAM",
+  "pulmo/ncbi-genbank-complete",
+  "robbyant/robotwin-clean-and-aug-lerobot",
+  "s17660101713/hagrid-subset",
+  "saarthiatu/jee-pdfs",
+  "society-ethics/stable-bias-generations",
+  "stair-lab/nonmyopia_results",
+  "subhan1501/fake-face-detection-dataset",
+  "sunshk/2025-challenge-orchestrator-v3_2",
+  "superkaiba1/explore-persona-space-data",
+  "tasl-lab/uniocc",
+  "tropos-labs/eigen-face-dataset-256",
+  "worldbenchmark/IntuitivePhysics",
+  "yuanm1135/DSERT-RoLL",
+  "zai-org/RPC-Bench",
+  "zdbfv/M3_VOS",
+  "zeyuanyin/Dome-Objaverse",
+  "zh19990906/hagrid-subset"
+ ],
+ "datasets": {
+  "1aurent/unsplash-lite": {
+   "siblings": 6,
+   "truncated": false
+  },
+  "3dcodeverse/3dcodeverse-2m": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "57xj5SHr/Tui9DGhp": {
+   "siblings": 428,
+   "truncated": false
+  },
+  "ACERobotics/ACE-Data-0": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "AiEDA/iDATA": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "AquaV/genshin-voices-separated": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "Atesting1/webarena-env": {
+   "siblings": 25,
+   "truncated": false
+  },
+  "BVRA/animal-clef-2026": {
+   "siblings": 15496,
+   "truncated": false
+  },
+  "Believe0029/scannetv2": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "BenchCAD/BenchCAD": {
+   "siblings": 23,
+   "truncated": false
+  },
+  "BitRobot/HIW-500-LeRobot": {
+   "siblings": 12045,
+   "truncated": false
+  },
+  "BuLei/imgbed": {
+   "siblings": 570,
+   "truncated": false
+  },
+  "CQILAB/GenSC-6G": {
+   "siblings": 6350,
+   "truncated": false
+  },
+  "ChaoHuangCS/Muddy_Mix": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "Chelsea707/arxiv-cs-2020-2025-pdfs": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "ChongyanChen/VQAonline": {
+   "siblings": 64701,
+   "truncated": false
+  },
+  "Collapsecdn/collapsecdn": {
+   "siblings": 218,
+   "truncated": false
+  },
+  "DAGroup-PKU/Open-HumanWAM-50K": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "DBDin/suupp": {
+   "siblings": 13,
+   "truncated": false
+  },
+  "DL3DV/DL3DV-ALL-960P": {
+   "siblings": 10583,
+   "truncated": false
+  },
+  "DL3DV/DL3DV-Benchmark": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "Dagonulca/figofigofigofigo": {
+   "siblings": 294,
+   "truncated": false
+  },
+  "DeepSeekOracle/lattice-marines-wins": {
+   "siblings": 12,
+   "truncated": false
+  },
+  "Drakesuper/rodridre": {
+   "siblings": 133,
+   "truncated": false
+  },
+  "Efficient-Large-Model/Sana-assets": {
+   "siblings": 1540,
+   "truncated": false
+  },
+  "EleutherAI/hendrycks_math": {
+   "siblings": 16,
+   "truncated": false
+  },
+  "EleutherAI/lambada_openai": {
+   "siblings": 16,
+   "truncated": false
+  },
+  "EleutherAI/wikitext_document_level": {
+   "siblings": 15,
+   "truncated": false
+  },
+  "Emmyc2/psp": {
+   "siblings": 986,
+   "truncated": false
+  },
+  "EssentialAI/essential-web-v1.0": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "Falcon79epok/symbion-multi-ohlcv": {
+   "siblings": 3259,
+   "truncated": false
+  },
+  "FineEnvs/SmolDataEnvs": {
+   "siblings": 8,
+   "truncated": false
+  },
+  "Forceless/Zenodo10K": {
+   "siblings": 10451,
+   "truncated": false
+  },
+  "Forithmus/MR-RATE": {
+   "siblings": 98397,
+   "truncated": false
+  },
+  "GSMA/3GPP": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "Genesis-Intelligence/assets": {
+   "siblings": 851,
+   "truncated": false
+  },
+  "GokuScraper/seedance-2-prompts-datasets": {
+   "siblings": 20250,
+   "truncated": false
+  },
+  "Gourieff/ReActor": {
+   "siblings": 111,
+   "truncated": false
+  },
+  "HPLT/HPLT2.0_cleaned": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "HRDexDB/HRDexDB": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "Haitao999/things-eeg": {
+   "siblings": 33519,
+   "truncated": false
+  },
+  "Harleyda/app-bin": {
+   "siblings": 4,
+   "truncated": false
+  },
+  "Helsinki-NLP/fineweb-edu-translated": {
+   "siblings": 2794,
+   "truncated": false
+  },
+  "Helsinki-NLP/nemotron-cc-translated": {
+   "siblings": 8702,
+   "truncated": false
+  },
+  "HennyPr/ps2_hf2": {
+   "siblings": 1134,
+   "truncated": false
+  },
+  "HenryYHW/ADAS-TO": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "HorizonRobotics/robo_orchard_sim_assets": {
+   "siblings": 763,
+   "truncated": false
+  },
+  "HubLabs/HubEgo-100K": {
+   "siblings": null,
+   "truncated": false
+  },
+  "HuggingFaceCode/stack-v3-train": {
+   "siblings": 8207,
+   "truncated": false
+  },
+  "HuggingFaceFW/finepdfs": {
+   "siblings": 3575,
+   "truncated": false
+  },
+  "HuggingFaceFW/finephrase": {
+   "siblings": 27106,
+   "truncated": false
+  },
+  "HuggingFaceFW/fineweb": {
+   "siblings": 28147,
+   "truncated": false
+  },
+  "HuggingFaceFW/fineweb-2": {
+   "siblings": 9597,
+   "truncated": false
+  },
+  "HuggingFaceFW/fineweb-edu": {
+   "siblings": 3038,
+   "truncated": false
+  },
+  "HuggingFaceH4/MATH-500": {
+   "siblings": 4,
+   "truncated": false
+  },
+  "HuggingFaceH4/ultrachat_200k": {
+   "siblings": 10,
+   "truncated": false
+  },
+  "HuggingFaceM4/FineVision": {
+   "siblings": 9501,
+   "truncated": false
+  },
+  "HuggingFaceM4/FineVisionMax": {
+   "siblings": 10002,
+   "truncated": false
+  },
+  "HuggingFaceM4/the_cauldron": {
+   "siblings": 940,
+   "truncated": false
+  },
+  "HuggingFaceTB/smollm-corpus": {
+   "siblings": 342,
+   "truncated": false
+  },
+  "HuggingFaceVLA/community_dataset_v3": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "IFM/Math-Reasoning": {
+   "siblings": 2228,
+   "truncated": false
+  },
+  "ILSVRC/imagenet-1k": {
+   "siblings": 339,
+   "truncated": false
+  },
+  "IPEC-COMMUNITY/FastUMI_100k_lerobot": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "IPEC-COMMUNITY/bridge_orig_lerobot": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "IPEC-COMMUNITY/droid_lerobot": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "IPEC-COMMUNITY/fractal20220817_data_lerobot": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "IPEC-COMMUNITY/kuka_lerobot": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "IPEC-COMMUNITY/language_table_lerobot": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "IaLoverSpaghetti/LocaIAinHTML": {
+   "siblings": 4,
+   "truncated": false
+  },
+  "Idavidrein/gpqa": {
+   "siblings": 8,
+   "truncated": false
+  },
+  "InnovatorLab/Innovator-VL-Instruct-46M": {
+   "siblings": 15571,
+   "truncated": false
+  },
+  "Jetbard/tmx-feed-g9nh5j": {
+   "siblings": 24,
+   "truncated": false
+  },
+  "JobBench/job-bench": {
+   "siblings": 985,
+   "truncated": false
+  },
+  "KAKA22/SpreadsheetBench": {
+   "siblings": 4,
+   "truncated": false
+  },
+  "KAKA22/SpreadsheetBench-v2": {
+   "siblings": 6,
+   "truncated": false
+  },
+  "KakologArchives/KakologArchives": {
+   "siblings": null,
+   "truncated": false
+  },
+  "Kthera/pesoz": {
+   "siblings": 46,
+   "truncated": false
+  },
+  "LanguageBind/Open-Sora-Plan-v1.1.0": {
+   "siblings": 597,
+   "truncated": false
+  },
+  "LejuRobotics/LET-Base-Dataset": {
+   "siblings": 26384,
+   "truncated": false
+  },
+  "Lichess/standard-chess-games": {
+   "siblings": 26140,
+   "truncated": false
+  },
+  "LingYu-Robotics/lingyu-realworld-robotics-dataset": {
+   "siblings": 53142,
+   "truncated": false
+  },
+  "MIC-DKFZ/OpenMind": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "MINT-SJTU/RW-RL-Dataset": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "MJPansa/qwen38-eagle4-native-features-24m-20261026-f2638314": {
+   "siblings": 54544,
+   "truncated": false
+  },
+  "MJPansa/qwen38-eagle4-native-features-37m-20261024-5277c167": {
+   "siblings": 43604,
+   "truncated": false
+  },
+  "MMMU/MMMU": {
+   "siblings": 94,
+   "truncated": false
+  },
+  "MRSAudio/MRSAudio": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "Maximilians/ps2_hf1": {
+   "siblings": 1141,
+   "truncated": false
+  },
+  "Maxwell-Jia/AIME_2024": {
+   "siblings": 3,
+   "truncated": false
+  },
+  "McAuley-Lab/Amazon-Reviews-2023": {
+   "siblings": 912,
+   "truncated": false
+  },
+  "McGill-NLP/WebLINX-full": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "McGill-NLP/weblinx-browsergym": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "Metanova/Submission-Archive": {
+   "siblings": 30,
+   "truncated": false
+  },
+  "NMontanaBrown/saramis_abdomen": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "NMontanaBrown/saramis_amos": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "Narsil/image_dummy": {
+   "siblings": 7,
+   "truncated": false
+  },
+  "OPR-Project/OxfordRobotCar_OpenPlaceRecognition": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "OmniAICreator/RoyalRoad-1.61M": {
+   "siblings": 49,
+   "truncated": false
+  },
+  "OpenDriveLab/OpenScene": {
+   "siblings": 611,
+   "truncated": false
+  },
+  "OpenFinMind/stock_dataset": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "OpenMOSS-Team/OmniAction": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "Osamap3/PSP_ph": {
+   "siblings": 6114,
+   "truncated": false
+  },
+  "PGCodeLLM/radin-cyber-backups": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "PleIAs/common_corpus": {
+   "siblings": 10020,
+   "truncated": false
+  },
+  "ReadyAi/organic_query_results_dataset": {
+   "siblings": 19751,
+   "truncated": false
+  },
+  "RealmanRobot/RealSource-World": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "RekaAI/RekaDaily-10k-raw": {
+   "siblings": 11602,
+   "truncated": false
+  },
+  "Rentoddb/dbsuera": {
+   "siblings": 155,
+   "truncated": false
+  },
+  "RichardErkhov/DASP": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "Ritabrata04/masscount-cf": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "Robeedau/airlens-live": {
+   "siblings": 13552,
+   "truncated": false
+  },
+  "RoboDojo-Benchmark/RoboDojo": {
+   "siblings": 71565,
+   "truncated": false
+  },
+  "Rowan/hellaswag": {
+   "siblings": 5,
+   "truncated": false
+  },
+  "SII-Monument-Valley/CiQi-VQA": {
+   "siblings": 51557,
+   "truncated": false
+  },
+  "SWE-bench/SWE-bench_Verified": {
+   "siblings": 4,
+   "truncated": false
+  },
+  "SWE-bench/SWE-smith": {
+   "siblings": 13,
+   "truncated": false
+  },
+  "SZLHOLDINGS/killinchu-osint-corpus": {
+   "siblings": 162,
+   "truncated": false
+  },
+  "Salesforce/GiftEvalPretrain": {
+   "siblings": 6682,
+   "truncated": false
+  },
+  "Salesforce/wikitext": {
+   "siblings": 16,
+   "truncated": false
+  },
+  "Sandflow/sand3d-cad": {
+   "siblings": 24504,
+   "truncated": false
+  },
+  "Sandflow/sand3d-objaverse": {
+   "siblings": 66904,
+   "truncated": false
+  },
+  "Sbaiiiiii/looked-up": {
+   "siblings": 808,
+   "truncated": false
+  },
+  "ServiceNow/AgentHorizon": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "Sharpa-Robotics/SharpaDex-v1.0": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "Spreadsheet-RL/Spreadsheet-RL": {
+   "siblings": 16,
+   "truncated": false
+  },
+  "StringFellow/fusion-dw": {
+   "siblings": 41,
+   "truncated": false
+  },
+  "SwayStar123/preprocessed_commoncatalog-cc-by": {
+   "siblings": 5576,
+   "truncated": false
+  },
+  "Symato/cc": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "TGMR/one_pass_ingestion": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "TIGER-Lab/MMLU-Pro": {
+   "siblings": 7,
+   "truncated": false
+  },
+  "Thingi10K/Thingi10K": {
+   "siblings": 20013,
+   "truncated": false
+  },
+  "ThomasTheMaker/ptb-xl-ecg": {
+   "siblings": 87252,
+   "truncated": false
+  },
+  "TianxingChen/RoboTwin2.0": {
+   "siblings": 529,
+   "truncated": false
+  },
+  "Tuxifan/UbuntuIRC": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "UMTRI/MatPredict": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "VLM2Vec/MVBench": {
+   "siblings": 41,
+   "truncated": false
+  },
+  "VoiceOfML/VOMEBOOK": {
+   "siblings": 57414,
+   "truncated": false
+  },
+  "Voxel51/Food101": {
+   "siblings": 35006,
+   "truncated": false
+  },
+  "Voxel51/LVIS": {
+   "siblings": 35006,
+   "truncated": false
+  },
+  "Voxel51/OxfordFlowers102": {
+   "siblings": 16384,
+   "truncated": false
+  },
+  "Voxel51/PIDray": {
+   "siblings": 9488,
+   "truncated": false
+  },
+  "Voxel51/Stanford-Dogs-Imbalanced": {
+   "siblings": 19066,
+   "truncated": false
+  },
+  "Voxel51/dacl10k": {
+   "siblings": 8928,
+   "truncated": false
+  },
+  "Voxel51/mvtec-ad": {
+   "siblings": 6620,
+   "truncated": false
+  },
+  "WanyueZhang/MulSeT": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "Winterllling/HF": {
+   "siblings": 181,
+   "truncated": false
+  },
+  "WorldEngineAI/WEB-Dataset": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "XDOF/ABC-130k": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "XiaomiMiMo/MiMo-V2.6-RL-oss": {
+   "siblings": 41292,
+   "truncated": false
+  },
+  "Yanis236/fsc-180k": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "YiboZhang2001/TexVerse": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "YiboZhang2001/TexVerse-1K": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "YipengGao/3DCodeBench": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "Yshh525/rho-internalize-v1-20261021": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "ZTWHHH/envs_1": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "a1557811266/Per-400k": {
+   "siblings": 295,
+   "truncated": false
+  },
+  "abisee/cnn_dailymail": {
+   "siblings": 17,
+   "truncated": false
+  },
+  "actiquest-dev/tarakanov-notes": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "adscli/copycheck-videos": {
+   "siblings": 15,
+   "truncated": false
+  },
+  "adyen/DABstep": {
+   "siblings": 4637,
+   "truncated": false
+  },
+  "agents-course/course-images": {
+   "siblings": 134,
+   "truncated": false
+  },
+  "agents-last-exam/agents-last-exam-data": {
+   "siblings": 68130,
+   "truncated": false
+  },
+  "agents-last-exam/agents-last-exam-reference": {
+   "siblings": 11347,
+   "truncated": false
+  },
+  "agibot-world/AgiBotWorld-Beta": {
+   "siblings": 1400,
+   "truncated": false
+  },
+  "agibot-world/AgiBotWorld2026": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "agibot-world/AgiBotWorldChallenge-2026": {
+   "siblings": 257,
+   "truncated": false
+  },
+  "ahashanahmed/csv": {
+   "siblings": 8855,
+   "truncated": false
+  },
+  "ahnaftaz/locus-commit-pool-v1": {
+   "siblings": 5324,
+   "truncated": false
+  },
+  "aisa-group/PostTrainBench-Trajectories": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "akshithio/arva": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "allenai/MADLAD-400": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "allenai/MolmoAct2-BimanualYAM-Dataset": {
+   "siblings": 9443,
+   "truncated": false
+  },
+  "allenai/ai2_arc": {
+   "siblings": 8,
+   "truncated": false
+  },
+  "allenai/c4": {
+   "siblings": 69221,
+   "truncated": false
+  },
+  "allenai/dolma3.5_pool": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "allenai/dolma3_mix-6T-1025-7B": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "allenai/objaverse": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "allenai/openbookqa": {
+   "siblings": 8,
+   "truncated": false
+  },
+  "allenai/sciq": {
+   "siblings": 5,
+   "truncated": false
+  },
+  "allenai/winogrande": {
+   "siblings": 20,
+   "truncated": false
+  },
+  "alonsoapp/TABLET-Large": {
+   "siblings": 3636,
+   "truncated": false
+  },
+  "amidarliintoirog/copyright-videos-2023": {
+   "siblings": 31317,
+   "truncated": false
+  },
+  "amphion/Emilia-Dataset": {
+   "siblings": 4345,
+   "truncated": false
+  },
+  "andaba/RT-Pose": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "anfera236/HHDC": {
+   "siblings": 89561,
+   "truncated": false
+  },
+  "anisoleai/fineweb-tokenized": {
+   "siblings": 2499,
+   "truncated": false
+  },
+  "anon8231489123/ShareGPT_Vicuna_unfiltered": {
+   "siblings": 14,
+   "truncated": false
+  },
+  "aoiandroid/android-times-articles": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "ap-mt/flip2-multi-sequence-prompt-ablation-generated-variants-amylase": {
+   "siblings": 2162,
+   "truncated": false
+  },
+  "applied-ai-018/pretraining_v1-omega": {
+   "siblings": 3857,
+   "truncated": false
+  },
+  "applied-ai-018/pretraining_v1-omega_books": {
+   "siblings": 5588,
+   "truncated": false
+  },
+  "aps/super_glue": {
+   "siblings": 31,
+   "truncated": false
+  },
+  "assassinlike/everything132": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "atokforps/latent_v1_fullrun_alpha3_06": {
+   "siblings": 38679,
+   "truncated": false
+  },
+  "augaazuun/copydetect-videos": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "autogluon/fev_datasets": {
+   "siblings": 102,
+   "truncated": false
+  },
+  "ayuo/hd_tmp": {
+   "siblings": 19,
+   "truncated": false
+  },
+  "baber/piqa": {
+   "siblings": 4,
+   "truncated": false
+  },
+  "banned-historical-archives/banned-historical-archives": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "banned-historical-archives/zhongyangribao": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "behavior-1k/2025-challenge-demos": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "benchflow/skillsbench-leaderboard": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "benediktkol/DDOS": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "bigcode/bigcodebench": {
+   "siblings": 9,
+   "truncated": false
+  },
+  "bigcode/the-stack": {
+   "siblings": 6828,
+   "truncated": false
+  },
+  "bigscience/P3": {
+   "siblings": 2020,
+   "truncated": false
+  },
+  "boltzgen/inference-data": {
+   "siblings": 3,
+   "truncated": false
+  },
+  "bop-benchmark/hot3d": {
+   "siblings": 12997,
+   "truncated": false
+  },
+  "brownu/deform360": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "builddotai/Egocentric-100K": {
+   "siblings": 44197,
+   "truncated": false
+  },
+  "builddotai/Egocentric-10K": {
+   "siblings": 21645,
+   "truncated": false
+  },
+  "cadene/agibot_alpha_v30": {
+   "siblings": 4546,
+   "truncated": false
+  },
+  "cadene/droid": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "cadene/droid_1.0.1": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "cais/hle": {
+   "siblings": 4,
+   "truncated": false
+  },
+  "cais/mmlu": {
+   "siblings": 181,
+   "truncated": false
+  },
+  "camel-ai/SETA-Env": {
+   "siblings": 49273,
+   "truncated": false
+  },
+  "carlotabronze/sm-stuff": {
+   "siblings": 5818,
+   "truncated": false
+  },
+  "ccoffee20/flatpak": {
+   "siblings": 4677,
+   "truncated": false
+  },
+  "ceval/ceval-exam": {
+   "siblings": 158,
+   "truncated": false
+  },
+  "cfilt/IITB-IndicMonoDoc": {
+   "siblings": 512,
+   "truncated": false
+  },
+  "challenge-2026/challenge_data": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "chuqiaoLyu/Xspark-HumanTouch": {
+   "siblings": 88085,
+   "truncated": false
+  },
+  "clip-benchmark/wds_objectnet": {
+   "siblings": 77,
+   "truncated": false
+  },
+  "coatfusion/coat-fusion-assets-anonymous": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "configinc/HABIT": {
+   "siblings": 63880,
+   "truncated": false
+  },
+  "cot-leaderboard/cot-eval-traces-2.0": {
+   "siblings": 5846,
+   "truncated": false
+  },
+  "csoai/councilof-ai-evidence": {
+   "siblings": 33260,
+   "truncated": false
+  },
+  "daimonrobotics/Daimon-Infinity": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "defeatbeta/yahoo-finance-data": {
+   "siblings": null,
+   "truncated": false
+  },
+  "desmondlzy/bigs-data": {
+   "siblings": 30458,
+   "truncated": false
+  },
+  "diffusers/community-pipelines-mirror": {
+   "siblings": 5265,
+   "truncated": false
+  },
+  "disco-eth/EuroSpeech": {
+   "siblings": 10934,
+   "truncated": false
+  },
+  "djain95/sae-jailbreaks-cache": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "djghosh/wds_objectnet_test": {
+   "siblings": 11,
+   "truncated": false
+  },
+  "eddmpython/dartlab-data": {
+   "siblings": 89019,
+   "truncated": false
+  },
+  "ehabnegm/100-hour-Egyptian-dataset-single-speaker": {
+   "siblings": 31566,
+   "truncated": false
+  },
+  "eidon-ai/tracker-pov": {
+   "siblings": 13455,
+   "truncated": false
+  },
+  "ekal1337/KIPAS_CLIENTS": {
+   "siblings": 6,
+   "truncated": false
+  },
+  "ekal1337/helloworld123": {
+   "siblings": 3,
+   "truncated": false
+  },
+  "epfml/FineWeb-HQ": {
+   "siblings": 9248,
+   "truncated": false
+  },
+  "erickfm/slippi-public-dataset-v3.7": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "espnet/yodas": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "espnet/yodas2": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "espnet/yodas3.1": {
+   "siblings": 13374,
+   "truncated": false
+  },
+  "evaleval/EEE_datastore": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "facebook/seamless-interaction": {
+   "siblings": 21970,
+   "truncated": false
+  },
+  "facebook/show3d-dataset": {
+   "siblings": 86250,
+   "truncated": false
+  },
+  "fancyzhx/ag_news": {
+   "siblings": 4,
+   "truncated": false
+  },
+  "filapro/cad-recode-v1.5": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "frankielp/2dgaussian-lang-output": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "fujinchu/imgbed": {
+   "siblings": 1561,
+   "truncated": false
+  },
+  "genrobot2025/10Kh-RealOmin-OpenData": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "genrobot2025/Gen-HumanEgo": {
+   "siblings": 44636,
+   "truncated": false
+  },
+  "gnucleus-ai/cad-gen-freecad-bench-v3": {
+   "siblings": 16869,
+   "truncated": false
+  },
+  "google-research-datasets/mbpp": {
+   "siblings": 10,
+   "truncated": false
+  },
+  "google/IFEval": {
+   "siblings": 3,
+   "truncated": false
+  },
+  "google/fleurs": {
+   "siblings": 1004,
+   "truncated": false
+  },
+  "google/physical-engineerings-last-exam": {
+   "siblings": 33416,
+   "truncated": false
+  },
+  "gorilla-llm/Berkeley-Function-Calling-Leaderboard": {
+   "siblings": 52,
+   "truncated": false
+  },
+  "gradio/frontend": {
+   "siblings": 46388,
+   "truncated": false
+  },
+  "hanchong/synthetic-infrared-maritime-vessel-dataset-flux2klein": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "hanchong/synthetic-infrared-maritime-vessel-dataset-flux2klein-degraded": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "happy8825/co3d-annotations": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "happyhackingspace/dit": {
+   "siblings": 1719,
+   "truncated": false
+  },
+  "harborframework/parity-experiments": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "harborframework/terminal-bench": {
+   "siblings": 2906,
+   "truncated": false
+  },
+  "harborframework/terminal-bench-2.0": {
+   "siblings": 862,
+   "truncated": false
+  },
+  "harborframework/terminal-bench-2.1": {
+   "siblings": 1040,
+   "truncated": false
+  },
+  "harborframework/terminal-bench-3.0": {
+   "siblings": 2736,
+   "truncated": false
+  },
+  "harborframework/terminal-bench-science": {
+   "siblings": 4418,
+   "truncated": false
+  },
+  "harborframework/terminal-bench-science-lfs": {
+   "siblings": 3966,
+   "truncated": false
+  },
+  "helenqu/GenPairs": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "helenqu/ImageNet-Paste": {
+   "siblings": 50009,
+   "truncated": false
+  },
+  "hexuan21/MemoryTax-Res-GPT-5-6-luna": {
+   "siblings": 6535,
+   "truncated": false
+  },
+  "hexuan21/MemoryTax-Res-Other": {
+   "siblings": 24381,
+   "truncated": false
+  },
+  "hf-doc-build/doc-build": {
+   "siblings": 1566,
+   "truncated": false
+  },
+  "hf-doc-build/doc-build-dev": {
+   "siblings": 19702,
+   "truncated": false
+  },
+  "hf-internal-testing/librispeech_asr_dummy": {
+   "siblings": 3,
+   "truncated": false
+  },
+  "hf-internal-testing/transformers_circleci_workflow_runs": {
+   "siblings": 8286,
+   "truncated": false
+  },
+  "hf-vision/course-assets": {
+   "siblings": 299,
+   "truncated": false
+  },
+  "hjq766/imabed": {
+   "siblings": 2679,
+   "truncated": false
+  },
+  "hotchpotch/s1mb-result": {
+   "siblings": 32756,
+   "truncated": false
+  },
+  "hotpotqa/hotpot_qa": {
+   "siblings": 9,
+   "truncated": false
+  },
+  "hrdq/Dota2PornFx": {
+   "siblings": 4297,
+   "truncated": false
+  },
+  "huggingface-course/documentation-images": {
+   "siblings": 135,
+   "truncated": false
+  },
+  "huggingface-deep-rl-course/course-images": {
+   "siblings": 370,
+   "truncated": false
+  },
+  "huggingface/DEH-image-scan-data": {
+   "siblings": 285,
+   "truncated": false
+  },
+  "huggingface/badges": {
+   "siblings": 149,
+   "truncated": false
+  },
+  "huggingface/brand-assets": {
+   "siblings": 13,
+   "truncated": false
+  },
+  "huggingface/documentation-images": {
+   "siblings": 5233,
+   "truncated": false
+  },
+  "huylhn1810/aic_2025": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "i998979/TransitApp": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "ibrahimhamamci/CT-RATE": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "icdn10/content-202610220785": {
+   "siblings": 50008,
+   "truncated": false
+  },
+  "icdn11/content-20261102a1e1": {
+   "siblings": 42566,
+   "truncated": false
+  },
+  "icdn12/content-20261022147b": {
+   "siblings": 50005,
+   "truncated": false
+  },
+  "icdn13/content-20261022ca11": {
+   "siblings": 50072,
+   "truncated": false
+  },
+  "icdn14/content-20261027be6e": {
+   "siblings": 50066,
+   "truncated": false
+  },
+  "icdn21/content-20261102f0b3": {
+   "siblings": 41859,
+   "truncated": false
+  },
+  "icdn22/content-2026102648a7": {
+   "siblings": 41894,
+   "truncated": false
+  },
+  "ieasybooks-org/prophet-mosque-library": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "ieasybooks-org/shamela-waqfeya-library": {
+   "siblings": 43278,
+   "truncated": false
+  },
+  "ieasybooks-org/waqfeya-library": {
+   "siblings": 87604,
+   "truncated": false
+  },
+  "inclusionAI/OpenAoE-2000h": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "inria-soda/tabular-benchmark": {
+   "siblings": 62,
+   "truncated": false
+  },
+  "j-shen3/MAVOS-DD": {
+   "siblings": 87046,
+   "truncated": false
+  },
+  "james-ra-henry/Rosetta-Activations": {
+   "siblings": 15714,
+   "truncated": false
+  },
+  "jamesqijingsong/chengyu": {
+   "siblings": 20609,
+   "truncated": false
+  },
+  "jamesqijingsong/zidian": {
+   "siblings": 14629,
+   "truncated": false
+  },
+  "jamie33/July": {
+   "siblings": 86652,
+   "truncated": false
+  },
+  "japanese-asr/whisper_transcriptions.reazon_speech_all": {
+   "siblings": 5220,
+   "truncated": false
+  },
+  "jasperai/monet": {
+   "siblings": 21775,
+   "truncated": false
+  },
+  "jat-project/jat-dataset": {
+   "siblings": 3533,
+   "truncated": false
+  },
+  "jat-project/jat-dataset-tokenized": {
+   "siblings": 11137,
+   "truncated": false
+  },
+  "jeongyh98/DSERT-RoLL": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "jm-rt/arvo-cybergym-2000": {
+   "siblings": 10004,
+   "truncated": false
+  },
+  "jordangong/the-stack-v2-smollm3": {
+   "siblings": 73730,
+   "truncated": false
+  },
+  "jumuunhaan/copyright-videos-dataset": {
+   "siblings": 52120,
+   "truncated": false
+  },
+  "jzr99/mesh4d_dataset": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "k9cli/video-vec2wav2-tokenizer": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "k9cli/video-vec2wav2-tokenizer-2": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "k9cli/video-vec2wav2-tokenizer-3": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "khtao/OpenMind": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "ksolovev/fine-news": {
+   "siblings": 18459,
+   "truncated": false
+  },
+  "l1997i/DurLAR_S": {
+   "siblings": 15041,
+   "truncated": false
+  },
+  "laion/small-overlapping-speech-bench": {
+   "siblings": 120,
+   "truncated": false
+  },
+  "laion/voice-acting-cutscene-prompts": {
+   "siblings": 4059,
+   "truncated": false
+  },
+  "leggedrobotics/grand_tour_dataset": {
+   "siblings": 9755,
+   "truncated": false
+  },
+  "lerobot/FineART": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "lioooox/T2I-CoReBench-Images": {
+   "siblings": 42,
+   "truncated": false
+  },
+  "livecodebench/code_generation_lite": {
+   "siblings": 10,
+   "truncated": false
+  },
+  "liwu/MNBVC": {
+   "siblings": 24127,
+   "truncated": false
+  },
+  "lizb6626/Arb-Objaverse": {
+   "siblings": 486,
+   "truncated": false
+  },
+  "lmarena-ai/leaderboard-dataset": {
+   "siblings": 48,
+   "truncated": false
+  },
+  "lmms-eval/Video-MME": {
+   "siblings": 24,
+   "truncated": false
+  },
+  "lmms-lab/EgoLife": {
+   "siblings": 32817,
+   "truncated": false
+  },
+  "lmms-lab/LLaVA-Video-178K": {
+   "siblings": 302,
+   "truncated": false
+  },
+  "locuslab/TOFU": {
+   "siblings": 20,
+   "truncated": false
+  },
+  "longisland3/ptb-xl": {
+   "siblings": 87207,
+   "truncated": false
+  },
+  "lyzenghq/banned-historical-archives": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "lyzenghq/zhongyangribao": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "m-a-p/FineFineWeb": {
+   "siblings": 66109,
+   "truncated": false
+  },
+  "m-a-p/Matrix": {
+   "siblings": 496,
+   "truncated": false
+  },
+  "malcolmrey/samples": {
+   "siblings": 11390,
+   "truncated": false
+  },
+  "mandarjoshi/trivia_qa": {
+   "siblings": 142,
+   "truncated": false
+  },
+  "manhdungcr7/aic2026-keyframes": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "manu/project_gutenberg": {
+   "siblings": 71,
+   "truncated": false
+  },
+  "manus4oHER/cia-declassified-reading-room": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "markov-ai/cad-1000-hours": {
+   "siblings": 5457,
+   "truncated": false
+  },
+  "meloqiao/us-stock-data": {
+   "siblings": 191,
+   "truncated": false
+  },
+  "mercor/apex-agents": {
+   "siblings": 319,
+   "truncated": false
+  },
+  "meta-math/MetaMathQA": {
+   "siblings": 3,
+   "truncated": false
+  },
+  "mickeykang/Event6DBlender": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "miniiohinkimsavol/copyright-detection-videos": {
+   "siblings": 19819,
+   "truncated": false
+  },
+  "mippia/HAIM": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "ml-resources/tsinghua_topic_dataset": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "mlfoundations/MINT-1T-HTML": {
+   "siblings": 9246,
+   "truncated": false
+  },
+  "mlfoundations/dclm-baseline-1.0": {
+   "siblings": 27840,
+   "truncated": false
+  },
+  "mlfoundations/dcvlm-baseline-200b": {
+   "siblings": 10756,
+   "truncated": false
+  },
+  "mlfoundations/dcvlm_pool_large": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "mm-eval/ZeroBench": {
+   "siblings": 5,
+   "truncated": false
+  },
+  "mteb/results": {
+   "siblings": 6,
+   "truncated": false
+  },
+  "mvp-lab/LLaVA-OneVision-1.5-Mid-Training-85M": {
+   "siblings": 12126,
+   "truncated": false
+  },
+  "neashton/drivaerml": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "neashton/windsorml": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "nebius/SWE-rebench-V2": {
+   "siblings": 4,
+   "truncated": false
+  },
+  "nebulaanish/quick-canvas-benchmark": {
+   "siblings": 24874,
+   "truncated": false
+  },
+  "neigezhu/china-a-share-1min-ohlcv": {
+   "siblings": 5812,
+   "truncated": false
+  },
+  "neurodeskorg/webapps": {
+   "siblings": 16918,
+   "truncated": false
+  },
+  "nicknock12/a2a-knowledges": {
+   "siblings": 2435,
+   "truncated": false
+  },
+  "nicoboou/IDRCell100k": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "nkp37/OpenVid-1M": {
+   "siblings": 391,
+   "truncated": false
+  },
+  "nmasi/era5": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "numix/balises-openwindmap-pyrenees": {
+   "siblings": 2935,
+   "truncated": false
+  },
+  "nureasoning/nuReasoning": {
+   "siblings": 11898,
+   "truncated": false
+  },
+  "nvidia/Nemotron-CC-v2": {
+   "siblings": 8974,
+   "truncated": false
+  },
+  "nvidia/Open-H-RF": {
+   "siblings": 19672,
+   "truncated": false
+  },
+  "nvidia/OpenMathInstruct-2": {
+   "siblings": 59,
+   "truncated": false
+  },
+  "nvidia/OpenMathReasoning": {
+   "siblings": 234,
+   "truncated": false
+  },
+  "nvidia/PhysicalAI-Autonomous-Vehicles": {
+   "siblings": 70779,
+   "truncated": false
+  },
+  "nvidia/PhysicalAI-Robotics-GR00T-X-Embodiment-Sim": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "nvidia/PhysicalAI-Robotics-Open-H-Embodiment": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "nvidia/PhysicalAI-WorldModel-Synthetic-Autonomous-Driving-Scenarios": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "nvidia/RFD4-Proteina": {
+   "siblings": 34434,
+   "truncated": false
+  },
+  "nvidia/SAGE-10k": {
+   "siblings": 10018,
+   "truncated": false
+  },
+  "nvidia/simready-assets": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "nvidia/simready-central-status": {
+   "siblings": 3,
+   "truncated": false
+  },
+  "nvidia/video-to-data-robot-dexterity-task-library-and-dataset": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "nyarlathotep12/MXStuff": {
+   "siblings": 72,
+   "truncated": false
+  },
+  "nyu-mll/glue": {
+   "siblings": 36,
+   "truncated": false
+  },
+  "omegalabsinc/omega-voice": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "open-index/hacker-news": {
+   "siblings": 628,
+   "truncated": false
+  },
+  "open-r1/OpenR1-Math-220k": {
+   "siblings": 63,
+   "truncated": false
+  },
+  "open-thoughts/OpenThoughts-114k": {
+   "siblings": 23,
+   "truncated": false
+  },
+  "openai/gdpval": {
+   "siblings": 552,
+   "truncated": false
+  },
+  "openai/gsm8k": {
+   "siblings": 7,
+   "truncated": false
+  },
+  "openai/openai_humaneval": {
+   "siblings": 3,
+   "truncated": false
+  },
+  "openclimatefix/dwd-icon-global": {
+   "siblings": 2795,
+   "truncated": false
+  },
+  "openslr/librispeech_asr": {
+   "siblings": 262,
+   "truncated": false
+  },
+  "oshonzongiintsetseg/videocopy-dataset": {
+   "siblings": 36403,
+   "truncated": false
+  },
+  "own2pwn-fr/ctfhoard-corpus": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "patrickvonplaten/images": {
+   "siblings": 1324,
+   "truncated": false
+  },
+  "penfever/cvebench-harbor": {
+   "siblings": 709,
+   "truncated": false
+  },
+  "permutans/arxiv-papers-by-subject": {
+   "siblings": 42778,
+   "truncated": false
+  },
+  "picbreeder-vlm/picbreeder-vlm-archive": {
+   "siblings": 17440,
+   "truncated": false
+  },
+  "pjpjq/blofin-oi-data": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "pmchard/3D-ADAM": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "polydata5/polymarket-updown-5m-ws": {
+   "siblings": 1142,
+   "truncated": false
+  },
+  "predict-quant/poly-btc-orderbook": {
+   "siblings": 31171,
+   "truncated": false
+  },
+  "princeton-nlp/SWE-bench_Verified": {
+   "siblings": 3,
+   "truncated": false
+  },
+  "programbench/ProgramBench-Tests": {
+   "siblings": 2235,
+   "truncated": false
+  },
+  "project-numina/NuminaMath-CoT": {
+   "siblings": 8,
+   "truncated": false
+  },
+  "project-numina/olympiads": {
+   "siblings": 38051,
+   "truncated": false
+  },
+  "pulmo/ncbi-genbank-complete": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "rajpurkar/squad": {
+   "siblings": 4,
+   "truncated": false
+  },
+  "raushan-testing-hf/videos-test": {
+   "siblings": 11,
+   "truncated": false
+  },
+  "ritwika96/qwen3.8-27b-arc1120-base-traces-20261025": {
+   "siblings": 84520,
+   "truncated": false
+  },
+  "rl-llm-wiki/knowledge-base": {
+   "siblings": 562,
+   "truncated": false
+  },
+  "robbyant/robotwin-clean-and-aug-lerobot": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "roisincrtai/ptb-xl-1.0.3": {
+   "siblings": 87205,
+   "truncated": false
+  },
+  "roneneldan/TinyStories": {
+   "siblings": 14,
+   "truncated": false
+  },
+  "ryanmarten/OpenThoughts-1k-sample": {
+   "siblings": 7,
+   "truncated": false
+  },
+  "rytfh/edtyhgv": {
+   "siblings": 144,
+   "truncated": false
+  },
+  "s17660101713/hagrid-subset": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "saarthiatu/jee-pdfs": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "sagels/new-dataset": {
+   "siblings": 5219,
+   "truncated": false
+  },
+  "sanjay810/mv2-dataset": {
+   "siblings": 80448,
+   "truncated": false
+  },
+  "sanket3dx/medicine_db": {
+   "siblings": 32822,
+   "truncated": false
+  },
+  "scorpionjacketguy/physics-course-vids": {
+   "siblings": 97530,
+   "truncated": false
+  },
+  "secemp9/arxiv-complete": {
+   "siblings": 3749,
+   "truncated": false
+  },
+  "semianalysisai/cc-traces-weka-062126": {
+   "siblings": 8,
+   "truncated": false
+  },
+  "shash42/forecast-news": {
+   "siblings": 10393,
+   "truncated": false
+  },
+  "shi-labs/oneformer_demo": {
+   "siblings": 9,
+   "truncated": false
+  },
+  "simple-world-lab/HiFi-UMI-2K": {
+   "siblings": 5176,
+   "truncated": false
+  },
+  "siril-spcc/gaia": {
+   "siblings": 52,
+   "truncated": false
+  },
+  "sjkhfuk1/foffo": {
+   "siblings": 3,
+   "truncated": false
+  },
+  "skylenage-ai/HLE-Verified": {
+   "siblings": 26,
+   "truncated": false
+  },
+  "smol-course/images": {
+   "siblings": 11,
+   "truncated": false
+  },
+  "society-ethics/stable-bias-generations": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "songweig/imagenet_sketch": {
+   "siblings": 5,
+   "truncated": false
+  },
+  "sourlreapwr/RobotArena-Benchmark": {
+   "siblings": 14929,
+   "truncated": false
+  },
+  "spark-school/school-corpus": {
+   "siblings": 5949,
+   "truncated": false
+  },
+  "stair-lab/nonmyopia_results": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "stanfordnlp/imdb": {
+   "siblings": 5,
+   "truncated": false
+  },
+  "stillbull1sh/solana": {
+   "siblings": 9458,
+   "truncated": false
+  },
+  "subhan1501/fake-face-detection-dataset": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "sunblaze-ucb/cybergym": {
+   "siblings": 7538,
+   "truncated": false
+  },
+  "sunshk/2025-challenge-orchestrator-v3_2": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "superkaiba1/explore-persona-space-data": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "tahoebio/Tahoe-100M": {
+   "siblings": 4427,
+   "truncated": false
+  },
+  "tasl-lab/uniocc": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "tatsu-lab/alpaca": {
+   "siblings": 3,
+   "truncated": false
+  },
+  "tau/commonsense_qa": {
+   "siblings": 5,
+   "truncated": false
+  },
+  "theairlabcmu/tartanair2": {
+   "siblings": 7697,
+   "truncated": false
+  },
+  "tienmanh93/MDC": {
+   "siblings": 191,
+   "truncated": false
+  },
+  "trentmkelly/polymarket_historical_data": {
+   "siblings": 86349,
+   "truncated": false
+  },
+  "trl-internal-testing/zen": {
+   "siblings": 30,
+   "truncated": false
+  },
+  "tropos-labs/eigen-face-dataset-256": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "truthfulqa/truthful_qa": {
+   "siblings": 4,
+   "truncated": false
+  },
+  "unitxt/data": {
+   "siblings": 69,
+   "truncated": false
+  },
+  "uoft-cs/cifar10": {
+   "siblings": 4,
+   "truncated": false
+  },
+  "updatebao/country": {
+   "siblings": 7495,
+   "truncated": false
+  },
+  "updatebao/geonamebase_1": {
+   "siblings": 99929,
+   "truncated": false
+  },
+  "vaishaal/ImageNetV2": {
+   "siblings": 5,
+   "truncated": false
+  },
+  "venvoo/china-a-share-l2-level2-limit-order-book-tick-data": {
+   "siblings": 7210,
+   "truncated": false
+  },
+  "vincewin/CREST_data": {
+   "siblings": 35710,
+   "truncated": false
+  },
+  "visionhdstream/data-vision-01": {
+   "siblings": 226,
+   "truncated": false
+  },
+  "visionhdstream/data-vision-02": {
+   "siblings": 97,
+   "truncated": false
+  },
+  "vsevolodpl/REPID": {
+   "siblings": 90750,
+   "truncated": false
+  },
+  "wegrthj/e94fjt-v654-data": {
+   "siblings": 40300,
+   "truncated": false
+  },
+  "wegrthj/kbcpjv-qi9l-raw": {
+   "siblings": 53727,
+   "truncated": false
+  },
+  "wegrthj/kbcpjv-v654-data": {
+   "siblings": 40283,
+   "truncated": false
+  },
+  "wegrthj/l36l5h-qi9l-data": {
+   "siblings": 41112,
+   "truncated": false
+  },
+  "wegrthj/l36l5h-v654-raw": {
+   "siblings": 51460,
+   "truncated": false
+  },
+  "wei82/precancer-omics-data": {
+   "siblings": 15951,
+   "truncated": false
+  },
+  "wikimedia/wikipedia": {
+   "siblings": 557,
+   "truncated": false
+  },
+  "wildflow/sweet-corals": {
+   "siblings": 96952,
+   "truncated": false
+  },
+  "world-igr-plum/regions": {
+   "siblings": 1087,
+   "truncated": false
+  },
+  "worldbenchmark/IntuitivePhysics": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "xlangai/osworld_v2_assets": {
+   "siblings": 362,
+   "truncated": false
+  },
+  "xlangai/recommendation": {
+   "siblings": 36798,
+   "truncated": false
+  },
+  "xlangai/ubuntu_osworld_file_cache": {
+   "siblings": 725,
+   "truncated": false
+  },
+  "yaak-ai/L2D": {
+   "siblings": 9652,
+   "truncated": false
+  },
+  "ybisk/piqa": {
+   "siblings": 3,
+   "truncated": false
+  },
+  "yhx91zdl/music": {
+   "siblings": 2313,
+   "truncated": false
+  },
+  "yifengzhu-hf/LIBERO-datasets": {
+   "siblings": 132,
+   "truncated": false
+  },
+  "yinhuankuang/rl-game-traces-rise-of-the-tomb-raider": {
+   "siblings": 649,
+   "truncated": false
+  },
+  "yuanbosz/a-share-minute-bars": {
+   "siblings": 47610,
+   "truncated": false
+  },
+  "yuanm1135/DSERT-RoLL": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "yyd7/OneStreamer-Core-SourceVideo": {
+   "siblings": 1080,
+   "truncated": false
+  },
+  "zai-org/RPC-Bench": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "zdbfv/M3_VOS": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "zekaiwang/trex_dataset": {
+   "siblings": 7903,
+   "truncated": false
+  },
+  "zeyuanyin/Dome-Objaverse": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "zh19990906/hagrid-subset": {
+   "siblings": 100000,
+   "truncated": true
+  },
+  "zhangtao-whu/sam_tfrecords": {
+   "siblings": 10000,
+   "truncated": false
+  },
+  "zhaocharile66/My_Hermes_Dataset": {
+   "siblings": 2054,
+   "truncated": false
+  },
+  "zmodelerlover/amd-nr": {
+   "siblings": 209,
+   "truncated": false
+  }
+ }
+}

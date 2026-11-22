@@ -1,6 +1,6 @@
-# datasetvet: Phase 4 results
+# datasetvet: Phase 4 results (launch scan updated in Phase 4.5)
 
-Measured 2026-11-19 on the owner's Windows 11 laptop (Python 3.12.10), datasetvet 0.0.0, SPDX licence list 3.29.0, ScanCode toolkit 32.5.0. Every Hugging Face call was **anonymous**: no HF token was visible to `huggingface_hub` during these runs, and no `GITHUB_TOKEN` was set. Facts only, not legal advice.
+Measured 2026-11-19 to 2026-11-21 on the owner's Windows 11 laptop (Python 3.12.10), datasetvet 0.0.0, SPDX licence list 3.29.0, ScanCode toolkit 32.5.0. Every Hugging Face call was **anonymous**. During the first runs no HF token was visible to `huggingface_hub`. For the rescan (2026-11-21) a token existed on the laptop and was hidden on purpose (`HF_TOKEN_PATH` set to a file that does not exist), so the rescan ran under the same conditions as the first scan. No `GITHUB_TOKEN` was set. Facts only, not legal advice.
 
 ## Headline
 
@@ -12,18 +12,18 @@ Measured 2026-11-19 on the owner's Windows 11 laptop (Python 3.12.10), datasetve
 | Cohen's kappa, decided rows | 0.53 | 0.52 |
 | `inconsistent`: precision / recall | 37% (16/43) / 28% (16/57) | 34% (15/44) / 26% (15/57) |
 
-**Launch scan, top 500 HF datasets by 30-day downloads** (list frozen 2026-11-19; built-in matcher; anonymous):
+**Launch scan, top 500 HF datasets by 30-day downloads** (list frozen 2026-11-19; built-in matcher; anonymous; after the Phase 4.5 fixes and rescan, section 2):
 
 | | result |
 |---|---|
 | Tier A (card, licence, provenance, links): checked | 499 of 500 (1 pinned revision no longer exists) |
 | Card states a licence | **59.9%** (299 of 499; 95% CI 55.6–64.1%) |
 | Of those, at least one comparison `inconsistent` | **12.4%** (37 of 299; 9.1–16.6%) |
-| Tier B (data health): data read | 392 of 500 (195 full scans, 197 samples); 102 `not checked`, 6 failed |
-| Exact duplicate rows within a split found | **18.9%** of the 392 (74; 15.3–23.0%); a lower bound for samples |
-| Same input in two splits (leakage) found | **6.1%** (24 of 392; 4.1–8.9%) |
+| Tier B (data health): at least one row read | 356 of 500 (189 full scans, 167 samples); 38 more stopped at the launch download cap or had only unreadable files; 103 `not checked`; 3 failed (no longer on the Hub) |
+| Exact duplicate rows within a split found | **20.5%** of the 356 (73; 16.6–25.0%); a lower bound for samples |
+| Same input in two splits (leakage) found | **6.7%** (24 of 356; 4.6–9.8%) |
 
-Each dataset gets facts, not a grade. The Tier B shares include 64 datasets whose file list the Hub cut at 100,000 entries (section 2, "Cut-off file lists"); without them the duplicate share is 14.9% and the leakage share 5.8%.
+Each dataset gets facts, not a grade. 107 rows were rescanned after the fixes (99 Tier B, 8 Tier A) and are marked in `launch/results/datasets.csv` (`rescanned_A`, `rescanned_B`). Section 2 ends with what the first scan got wrong.
 
 "Agreement" is agreement with the Data Provenance Initiative's hand-audited labels, not accuracy against a ground truth: the DPI calls its own labels self-reported and best-effort. The two scanners are reported separately and never pooled.
 
@@ -99,21 +99,32 @@ Per-row data: `eval/results/runs/test.jsonl`. All metrics: `eval/results/metrics
 
 ## 2. Launch scan: top 500 Hugging Face datasets
 
-**Code.** Tier B (data health) ran on commit `a3f5428` ("Faster data fetching"), config hash `2472d09329f26eb6`. The hash includes the git tree ids of `src/`, `launch/run.py`, `launch/state.py` and `pyproject.toml`, and `launch/run.py` refuses to run with uncommitted changes there, so every finished row names the committed code that made it. Before that commit, the fetch routes were checked against the one-file-at-a-time route on 40 Tier B datasets (`launch/fetch_equivalence.py`). 39 reports were identical field by field, excluding timings and request counts. The 40th differed only in the Parquet-conversion commit, which Hugging Face rebuilt on 2026-11-20; the old route showed the same change. Every request still obeys the Hub's RateLimit headers and waits out 429s.
-
-**Tier A** ran on 2026-11-19 at `5254aab`, before the config hash named the code (config hash `d0b085a50bef68aa`, settings and version only). Its checks (card, licence, provenance, links) are unchanged in `a3f5428`: that commit changed data fetching, the CDN spacing in `http.py` (timing only) and a git-fetch plan in the HF adapter that only data health reads.
+**Code.**
+- **First scan.** Tier A ran on `5254aab` (config hash `d0b085a50bef68aa`, settings and version only). Tier B ran on `a3f5428` (config hash `2472d09329f26eb6`).
+- **Rescan.** The 107 affected rows were rescanned on `0ba2ea4`: Tier A under config hash `7c024a7a384b9026`, Tier B under `fe7d94fb698d5f41`.
+- **What the config hash covers.** Since `5c9076c` it includes the git tree ids of `src/`, `launch/run.py`, `launch/state.py` and `pyproject.toml`. `launch/run.py` refuses to run with uncommitted changes there, so every finished row names the committed code that made it.
+- **Rows not rescanned** keep their first-scan result and hash. Nothing they depend on changed: Parquet-conversion scans, cards, licence comparisons and link checks of repos with complete file lists.
+- **Faster fetching** (`a3f5428`) was checked against the one-file-at-a-time route on 40 Tier B datasets (`launch/fetch_equivalence.py`). 39 reports were identical field by field, excluding timings and request counts. The 40th differed only in its Parquet-conversion commit, which Hugging Face rebuilt on 2026-11-20; the old route showed the same change.
+- Every request obeys the Hub's RateLimit headers and waits out 429s.
 
 ### Method
 
 - **List** (`launch/freeze_list.py`, `launch/lists/top500-2026-11-19.json`): the 500 most-downloaded datasets by the Hub's 30-day count on 2026-11-19 at 21:11 (+04:00), each pinned to its commit sha. No private or disabled repo was met. Sizes came from the Dataset Viewer `/size` for 251 of them (291 TB of Parquet together); the rest gave an error or no conversion. 829 requests, 23 minutes.
 - **Every check reads `hf:<id>@<frozen sha>`**, anonymously, through one rate-limited HTTP client per process. It obeys the Hub's `RateLimit` headers (pauses below 20% of the window) and waits out every 429.
-- **Tier A** (all 500): card fields, licence consistency (built-in matcher), provenance to depth 2, links. No data is downloaded. 2,921 HTTP requests, 2,937 s of checking (one process).
+- **Tier A** (all 500): card fields, licence consistency (built-in matcher), provenance to depth 2, links. No data is downloaded.
 - **Tier B** (all 500): data health only, with launch limits chosen from the measured budget, not the tool's defaults:
   - full scan when a dataset's data is ≤ 100 MB;
-  - otherwise a seeded sample of 10,000 rows (seed 0) in small chunks across each file read, with at most 100 MB downloaded;
-  - 3 parallel processes (`--shard I/3`), in 3 rounds of up to 60 datasets each, then one retry of the failures. Usage was checked between rounds.
-  - Wall clock 2026-11-20 14:34 to 2026-11-21 06:35 (+04:00), about 16 hours; 75,801 s of checking across the 3 processes; 602,535 HTTP requests. No 429 was received.
-- **State** (`launch/state.sqlite`): one row per dataset and tier, holding the report, the config hash and the time. `launch/summarize.py` writes `launch/results/datasets.csv` (one row per dataset, facts only) and `launch/results/summary.json`. Each tier's rows all carry one config hash (checked in `summary.json`).
+  - otherwise a seeded sample of 10,000 rows (seed 0) in small chunks across each file read, with at most 100 MB downloaded.
+- **First scan.**
+  - Tier A: 2026-11-19, one process, 2,921 requests, 2,937 s.
+  - Tier B: 2026-11-20 14:34 to 2026-11-21 06:35 (+04:00). 3 parallel processes (`--shard I/3`) in 3 rounds of up to 60 datasets each, with the owner's plan usage checked between rounds, then one retry of the failures. 75,801 s of checking, 602,535 requests, no 429 received.
+- **Rescan** (2026-11-21 12:58 to 22:50, +04:00):
+  - Datasets chosen by `launch/rescan_set.py` (`launch/results/rescan-set.json`, with the reason for each).
+  - Run with `launch/run.py --only`: Tier B in 3 shards, one batch each; Tier A in one process. Plan usage was checked before starting.
+  - Tier B: 81,537 s of checking, 317,975 requests. Tier A: 7,259 s, 3,760 requests. No dataset failed and the logs show no rate-limit errors.
+- **State** (`launch/state.sqlite`): one row per dataset and tier, holding the report, the config hash and the time.
+  - `launch/summarize.py` writes `launch/results/datasets.csv` (one row per dataset, facts only, with `rescanned_A` / `rescanned_B`) and `launch/results/summary.json` (the config hashes behind each tier's rows).
+  - The first scan's table and summary are kept in `launch/results/first-scan/`.
 
 ### Tier A: cards, licences, provenance, links
 
@@ -132,67 +143,76 @@ Per-row data: `eval/results/runs/test.jsonl`. All metrics: `eval/results/metrics
 | at least one `consistent`, none `inconsistent` | 109 | 36.5% (31.2–42.1%) |
 | only `missing` or `unknown` (nothing else stated a licence we could identify) | 153 | 51.2% (45.5–56.8%) |
 
-All comparisons together: 214 `consistent`, 62 `inconsistent`, 289 `missing`, 289 `unknown`. The accuracy evaluation (section 1) applies: an `inconsistent` often means a source repo's LICENSE (for its code) differs from the card's data licence, and datasetvet states that difference, not which licence covers the data.
+All comparisons together: 214 `consistent`, 62 `inconsistent`, 289 `missing`, 289 `unknown`. The 8 rescanned datasets' licence results did not change. The accuracy evaluation (section 1) applies: an `inconsistent` often means a source repo's LICENSE (for its code) differs from the card's data licence, and datasetvet states that difference, not which licence covers the data.
 
 **Provenance:** 11 datasets declare parents (`source_datasets`), giving 14 comparisons: 2 `inconsistent`, 4 `missing`, 8 `unknown`.
 - `EleutherAI/lambada_openai`: card MIT, parent `cimec/lambada` CC-BY-4.0.
 - `jat-project/jat-dataset`: card Apache-2.0, parent `oscar-corpus/oscar` CC0-1.0.
 
-**Links:** 1,156 checked in 168 datasets: 402 `ok`, 731 `dead`, 11 `restricted`, 7 `unreachable`, 5 `unknown`.
-- 716 of the 731 `dead` are card `configs[].data_files` paths that match no file in the repo's listing ("missing file").
-  - 550 of them are in `HuggingFaceFW/fineweb-2`. Its card declares a test split for 550 languages that have only a train file (checked: `data/abi_Latn/` holds only `train/000_00000.parquet`).
-  - **157 are false:** they come from 8 repos whose file listing the Hub cut at 100,000 entries. In the 3 repos checked by hand, the paths exist.
+**Links:** 1,000 checked in 166 datasets: 403 `ok`, 575 `dead`, 11 `restricted`, 6 `unreachable`, 5 `unknown`.
+- 560 of the 575 `dead` are card `configs[].data_files` paths that match no file in the repo ("missing file"). 550 of them are in `HuggingFaceFW/fineweb-2`: its card declares a test split for 550 languages that have only a train file (checked: `data/abi_Latn/` holds only `train/000_00000.parquet`). The others are in `applied-ai-018/pretraining_v1-omega` (5), `lmms-lab/LLaVA-Video-178K` (4) and `McGill-NLP/WebLINX-full` (1: `chat/test_iid.csv`, checked against the tree API: the folder has `test.csv` and four `test_*.csv`, but no `test_iid.csv`).
 - 15 are dead URLs in 12 datasets.
-- Datasets with at least one dead link: 23 of 168 (13.7%). **Without the 157 false results: 15 of 168 (8.9%; 5.5–14.2%).**
+- Datasets with at least one dead link: **16 of 166 (9.6%; 6.0–15.1%)**.
 
 ### Tier B: data health
 
 | | datasets |
 |---|---|
-| Data read | 392: 195 full scans, 197 samples (135 of them stopped at the 100 MB download cap) |
-| Read from | 230 HF's Parquet conversion, 162 the original files |
-| `not checked` | 102: 58 no Parquet conversion and no Parquet/CSV/JSON Lines files; 30 gated (26 automatic, 4 manual); 14 Dataset Viewer turned off by the owner and no `configs` in the card |
-| Failed | 6, listed below |
-| Read in total | 12.3 GB, 13,181,583 rows |
+| Data health run | 394: 190 full scans, 204 samples (135 samples stopped at the 100 MB download cap) |
+| At least one row read | **356** (189 full, 167 samples). The other 38: 37 samples that stopped at the 100 MB download cap before reading a row, and 1 full scan (`stair-lab/nonmyopia_results`) whose 7,527 files could not be read as rows |
+| Read from | 232 HF's Parquet conversion, 162 the original files |
+| `not checked` | 103: 58 no Parquet conversion and no Parquet/CSV/JSON Lines files; 30 gated (26 automatic, 4 manual); 14 Dataset Viewer turned off by the owner and no `configs` in the card; 1 (`gradio/frontend`) whose only JSON files are front-end and package files, not data |
+| Failed | 3, all `DatasetNotFound` (below) |
+| Read in total | 12.5 GB, 14,021,885 rows |
 
-**Findings** (a dataset counts once per check; "found" is a fact about the rows read):
+**Findings** (a dataset counts once per check; "found" is a fact about the rows read; shares are over the 356 datasets with at least one row read):
 
-| check | found in | share (95% CI) | without the 64 cut-off listings |
-|---|---|---|---|
-| exact duplicate rows within a split | 74 of 392 | 18.9% (15.3–23.0%) | 49 of 328, 14.9% (11.5–19.2%) |
-| same input in two splits (leakage) | 24 of 392 | 6.1% (4.1–8.9%) | 19 of 328, 5.8% (3.7–8.9%) |
-| empty rows | 13 of 392 | 3.3% (1.9–5.6%) | 10 of 328, 3.0% (1.7–5.5%) |
-| PII pattern matches (email, phone) | 61 of 253 with string columns | 24.1% (19.3–29.7%) | 52 of 213, 24.4% (19.1–30.6%) |
-| a file could not be read | 47 of 392 | 12.0% (9.1–15.6%) | 30 of 328, 9.1% (6.5–12.8%) |
+| check | found in | share (95% CI) |
+|---|---|---|
+| exact duplicate rows within a split | 73 | 20.5% (16.6–25.0%) |
+| same input in two splits (leakage) | 24 | 6.7% (4.6–9.8%) |
+| empty rows | 11 | 3.1% (1.7–5.4%) |
+| PII pattern matches (email, phone) | 66 of 258 with string columns | 25.6% (20.6–31.2%) |
+| files that could not be read as rows | 32 | 9.0% (6.4–12.4%) |
 
-- **Samples count less.** In a sample, duplicate and leakage counts are lower bounds ("at least"). Full scans: duplicates in 39 of 195 (20.0%); samples: 35 of 197 (17.8%).
+- **Samples count less.** In a sample, duplicate and leakage counts are lower bounds ("at least"). Full scans: duplicates in 36 of 189 (19.0%), leakage in 16 (8.5%). Samples: duplicates in 37 of 167 (22.2%), leakage in 8 (4.8%).
 - **PII** means pattern matches, not personal data.
-- **"Could not be read" is mostly our reader, not broken data.** All 47 are original-file scans; 0 of the 230 Parquet-conversion scans had one.
-  - 38: a `.json` file that is not a table of rows (for example a tokenizer or config file in the data folder), which Arrow cannot parse as rows.
-  - 8: a datasetvet bug: a JSON array whose items are not objects raises `AttributeError`.
-  - 1: HTTP 404 for a file the Hub lists at that revision.
-  - The report calls this check "corrupt"; that wording overstates it (section 3).
+- **Files that could not be read as rows** (`health.unreadable`, called `corrupt` in the first scan). It now skips files that are not data: tokenizer and config JSON, package metadata, dependency folders. Each file gets a kind. All 40 datasets with such files (32 with rows read, 8 without) read original files; none of the 232 Parquet-conversion scans had one.
+  - **`reader_limit`** (24 datasets): the file is valid but has more than one type in a column, which datasetvet's reader cannot put in one table.
+  - **`invalid`** (19): the content does not parse as its file type. Examples: CSV rows with extra columns, JSON with a syntax error, `.json` files that are binary (6 video-copy datasets).
+  - **`empty`** (12): the file has no rows.
+  - **`download`** (1): `lyzenghq/banned-historical-archives`. 59,957 of the files the Hub lists return HTTP 404 from its storage. Checked by hand for 3: the Hub's `resolve` URL redirects to `cdn.hf.co`, which returns 404.
+- None of these means the data is damaged; the report says so for each file.
 
-**Failed (6):**
-- 3 `DatasetNotFound`: `defeatbeta/yahoo-finance-data` and `HubLabs/HubEgo-100K` were deleted or made private after the list was frozen; `KakologArchives/KakologArchives`'s frozen sha is gone.
-- 2 `ArrowIndexError`: `Yshh525/rho-internalize-v1-20261021` and `neurodeskorg/webapps`. A datasetvet bug, not yet diagnosed.
-- 1 `ValueError`: `trentmkelly/polymarket_historical_data`. A datasetvet bug: a nanosecond timestamp that does not fit a Python `datetime` stops the scan.
-- `i998979/TransitApp` failed once with a Windows file error (`WinError 1392`) on a temp file. It passed on the retry and is counted as done.
+**Failed (3):** `defeatbeta/yahoo-finance-data` and `HubLabs/HubEgo-100K` were deleted or made private after the list was frozen; `KakologArchives/KakologArchives`'s frozen sha is gone.
 
-**Fetch routes** (`a3f5428`):
-- The git pack served 49,975 files for 22 datasets. 301,441 files came over HTTP, up to 8 at a time.
-- Four repos took 44,718 s, 59% of all checking time: `nvidia/PhysicalAI-WorldModel-Synthetic-Autonomous-Driving-Scenarios` 4.2 h, `lyzenghq/banned-historical-archives` 3.6 h, `AquaV/genshin-voices-separated` 2.8 h, `TGMR/one_pass_ingestion` 1.9 h. Each has over 100,000 files, mostly a few hundred bytes each.
-  - Their listings are cut off (below), so the git route was not used, by design.
-  - Their samples were spread over thousands of files of a few hundred bytes each, one HTTP request per file.
+**The three bug datasets now complete:**
+- `trentmkelly/polymarket_historical_data`: sampled, 10,000 rows.
+- `Yshh525/rho-internalize-v1-20261021`: sampled, 10,000 rows; 501 files `reader_limit`.
+- `neurodeskorg/webapps`: full, 7,800 rows; 34 files `reader_limit`.
 
-### Cut-off file lists (found during this scan)
+**Fetch routes:**
+- Over all 497 done rows, the git pack served 179,037 files for 27 datasets, and 154,030 files came over HTTP.
+- `nvidia/PhysicalAI-WorldModel-Synthetic-Autonomous-Driving-Scenarios` took 4.2 h in the first scan from a cut-off list. With the full list it read 121,076 files from one git pack in 34 minutes.
+- Repos of many tiny files that are not plain git blobs still take hours: `lyzenghq/banned-historical-archives` 3.9 h, `TGMR/one_pass_ingestion` 2.3 h. These are rescan times; three other rescan processes shared the anonymous API allowance with them.
 
-The Hub's dataset API returns at most 100,000 entries in `siblings`, and datasetvet (at `a3f5428` and before) takes a repo's file list from there. `launch/check_listing_cap.py` re-read the listing at each frozen sha for every Tier A dataset with a missing-file result and every Tier B dataset read from original files (169 datasets). 69 have exactly 100,000 entries (`launch/results/listing-truncated.json`):
-- **Tier A:** 8 of them gave the 157 false missing-file results above.
-- **Tier B:** 64 of the 162 original-file scans read from a partial file list. 18 of them are labelled "Full scan" but read only the files in that list. The 46 samples drew from part of the repo.
-- Parquet-conversion scans and card and licence reading are not affected; licence files beyond the cut-off would be missed, but no case was checked.
+### What the first scan got wrong
 
-The fix is to page through the Hub's tree API when `siblings` has 100,000 entries. It is not in this run: changing the code would change the config hash and re-run all 500.
+The rescan (107 rows) replaced the first scan's results for these. First scan → now:
+
+| | first scan | after the fixes |
+|---|---|---|
+| Tier B failed | 6 (3 datasetvet bugs: nanosecond timestamps, `ArrowIndexError` ×2) | 3 (all no longer on the Hub) |
+| Tier B original-file scans from a file list cut at 100,000 entries | 64 (18 labelled "Full scan") | 0. The Hub's tree API is paged when `siblings` has 100,000 entries; a list that still cannot be read whole gives "Partial scan" (none in this run) |
+| Full scans / samples / `not checked` | 195 / 197 / 102 | 190 / 204 / 103. With the whole file list, 6 "full" became samples and 1 sample became full; `gradio/frontend` has no data files |
+| "corrupt" found | 47; 38 were tokenizer or config `.json` files read as data | "could not be read as rows": 40, each file with its kind, non-data files skipped. 11 of the 47 now find none |
+| Tier A false "missing file" results | 157 in 8 repos (the paths existed beyond the cut-off) | 0 |
+| Datasets with a dead link | 23 of 168 (13.7%) | 16 of 166 (9.6%) |
+| Duplicates / leakage, over datasets with a row read | 74 of 353 (21.0%) / 24 of 353 (6.8%) | 73 of 356 (20.5%) / 24 of 356 (6.7%) |
+
+Among the 99 rescanned Tier B datasets, the duplicates result changed for 11 (4 from `found` to `none found`, 3 the other way, 4 that had failed or now have no data files), and leakage for 6.
+
+**Not rescanned.** Another 128 Tier A datasets had a cut-off file list but no missing-file result (`tier_A_cut_off_not_rescanned` in `rescan-set.json`). Only a licence file beyond the first 100,000 entries could change their results. The owner kept the rescan to the 8 with false results, so for these 128 a licence file past the cut-off would have been missed.
 
 ---
 
@@ -205,9 +225,8 @@ The fix is to page through the Hub's tree API when `siblings` has 100,000 entrie
 - **Disagreement audit not done.** The 30-row samples await the owner's labels.
 
 - **Launch scan, anonymous.** The README text of 31 gated datasets and the data of 30 were not read; with a token and accepted terms they could be.
-- **Launch limits, not defaults.** Tier B's 100 MB / 10,000 rows / 100 MB cap were chosen to fit one laptop in about a day. A default `datasetvet check` scans up to 5 GB in full, so its counts would be higher for the 197 sampled datasets.
-- **Cut-off listings.** 64 Tier B scans and 8 Tier A link checks used a file list cut at 100,000 entries (section 2). Shares are given with and without them.
-- **"Corrupt" means "could not read".** 46 of the 47 are JSON files that are not row tables or a datasetvet bug. The check's name and wording need to change before launch.
-- **Three datasetvet bugs found by the scan** (6 datasets): nanosecond timestamps (1), `ArrowIndexError` (2), JSON arrays of non-objects (8 datasets with a file counted as "could not be read"). They are not fixed in this run.
-- **Snapshot.** Each result is for the frozen sha. The Hub changes daily: 3 of the 500 were gone within two days.
-- **Tier A code.** Tier A ran on `5254aab` with the earlier config-hash method (settings and version, not code trees).
+- **Launch limits, not defaults.** Tier B's 100 MB / 10,000 rows / 100 MB cap were chosen to fit one laptop in about a day. A default `datasetvet check` scans up to 5 GB in full. Its counts would be higher for the 204 sampled datasets, and the 37 samples that stopped at the cap before reading a row would be read.
+- **128 Tier A datasets not rescanned** after the listing fix (section 2): a licence file beyond their first 100,000 files would have been missed.
+- **"Could not be read as rows" is about datasetvet's reader** as much as the data: 24 datasets have files with mixed types per column, which a valid file can have.
+- **Snapshot.** Each result is for the frozen sha. The Hub changes daily: 3 of the 500 were gone within two days, and one repo's storage no longer serves 59,957 of its listed files.
+- **Two code versions.** Rows not rescanned were made by the first scan's code (Tier A `5254aab`, with the earlier config-hash method; Tier B `a3f5428`); rescanned rows by `0ba2ea4`. Each row's config hash is in the state and in `summary.json`.

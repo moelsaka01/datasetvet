@@ -8,6 +8,7 @@ One entry per phase: the model and effort used, what was decided and why, what w
 | 2 Core checks (no licences) | Sonnet 5.5 planned; run on Opus 5.5 | medium planned | done 2026-11-19 |
 | 3 Licence + provenance | Opus 5.5 | high | done 2026-11-19 |
 | 4 Accuracy eval + launch scan | Opus 5.5 | high | done 2026-11-21 |
+| 4.5 Fixes from the launch scan + rescan | Sonnet 5.5 (closing steps on Opus 5.5) | high | done 2026-11-22; history rewrite pending |
 | 5 Polish, Action, README, launch | Sonnet 5.5 | medium | not started |
 
 ---
@@ -315,3 +316,75 @@ Run in one Claude Code session (desktop app) on the owner's Windows 11 laptop, P
 - **The old licence texts are still in git history** (Phase 3 commit `3a6b650`, `data/spdx_licences.json.gz` at 249 KB). Rewrite history before the first push if they must not be published.
 - No HF token was found: `hf auth login` (from the venv) would double the API allowance and read gated cards.
 - CI (both jobs) not run; nothing pushed. The tag `eval-config-v1` is local.
+
+## Phase 4.5: fixes from the launch scan, and the rescan (2026-11-21 to 2026-11-22, Sonnet 5.5, high effort)
+
+Fixes, tests and rescan ran on Sonnet 5.5 (commit `0ba2ea4`). The closing steps (summary, RESULTS, this entry, the commit) ran on Opus 5.5 in the same Claude Code session after a context reset. The frozen accuracy eval (`eval-config-v1`) was not re-run or changed. Every Hugging Face call was anonymous. A token was found on the laptop during this phase and was hidden on purpose (`HF_TOKEN_PATH` set to a file that does not exist), so the rescan matches the first scan's conditions. The owner chose to keep it that way when asked whether a free login should double the API allowance. Nothing pushed.
+
+### Owner's brief
+
+Fix what the launch scan found:
+- the 100,000-entry file list;
+- three reader bugs, each with a failing test first;
+- the "corrupt" check counting non-data files.
+
+Then rescan only the affected rows under the new config hash, update RESULTS from the fixed scan with a "what the first scan got wrong" section, and commit. Finally, remove the full-text SPDX file from git history before any push.
+
+### Built (`0ba2ea4`)
+
+| fix | where | behaviour |
+|---|---|---|
+| File list past 100,000 | `hubs/huggingface.py` (`listing`), `hubs/base.py` | when `siblings` has 100,000 entries, the tree API is paged (1,000 a page, `Link: rel="next"`, host must stay huggingface.co, a repeated page or more than 5,000 pages stops). A list that cannot be read whole is `complete=False`: the scan says **"Partial scan"**, no missing-file result is made, the licence-file search says it may have missed a file, the git route is off. Never cached as complete |
+| Nanosecond timestamps | `checks/health/values.py`, `rowhash.py` | `timestamp[ns]` values that are not whole microseconds are hashed as integer nanoseconds (also inside structs and lists); values 1 ns apart still differ |
+| `ArrowIndexError` | `checks/health/scan.py` | pyarrow's JSON reader builds an invalid array for some nested null lists; its result is checked with `validate(full=True)` and Python's parser reads the file instead when it fails |
+| JSON arrays of non-objects | `checks/health/scan.py` | one row per item in a column `value`; an array mixing objects and non-objects is a file that could not be read as rows |
+| One bad batch | `checks/health/runner.py` | stops that file, not the dataset |
+| "corrupt" → `health.unreadable` | `model.py`, `checks/health/empty.py`, `runner.py` | "Files that could not be read as rows", each file with a kind: `invalid`, `reader_limit`, `empty`, `download`; the wording never says "corrupt" (test) |
+| Non-data files | `hubs/huggingface.py` | tokenizer/model/package config JSON and `site-packages`, `dist-packages`, `node_modules`, `__pycache__` are skipped unless the card's `configs` names them; a repo with nothing left is `not checked` |
+| Launch tools | `launch/run.py --only`, `rescan_set.py`, `check_non_data.py`, `check_listing_cap.py --all`, `summarize.py` | the rescan set with a reason per dataset; rescanned rows marked; the first scan's summary kept in `launch/results/first-scan/` |
+
+**Tests written first:**
+- 38 new tests, in `tests/test_listing.py` (14), `tests/test_read_bugs.py` (13) and `tests/test_unreadable.py` (11).
+- The listing tests simulate a repo of more than 100,000 files: 99,999 `siblings` entries plus tree pages beyond them. They check that a card path past the old cut-off is no longer "missing" and that a full listing past the cap gives "Full scan".
+- Each bug test failed before its fix.
+
+### The rescan
+
+- **Rescan set** (`launch/rescan_set.py` → `launch/results/rescan-set.json`):
+  - Tier B, 99 datasets: 64 with a cut-off list, 47 with the old "corrupt" result, 12 that read files now skipped as non-data (found by `check_non_data.py`; the "corrupt" criterion alone would have missed them), and the 3 bug datasets. A dataset can have several reasons.
+  - Tier A, 8 datasets: the ones with false missing-file results.
+- **Listing check over all 500** (`check_listing_cap.py --all`, API only): 136 have a cut-off `siblings` list.
+- **128 Tier A not rescanned.** They had a cut-off list but no missing-file result. I started them as an extra process; the owner stopped it to keep to the brief and to speed up the rest. The one row it had finished (`neashton/windsorml`) was put back to its first-scan result. They are listed in `rescan-set.json` and as a limit in RESULTS.
+- **Runs** (`run.py --only`, plan usage 18% before starting):
+  - Tier B in 3 shards, one batch each: 2026-11-21 12:58 to 22:50 (+04:00), 81,537 s of checking, 317,975 requests, 99 of 99 done.
+  - Tier A, one process: 7,259 s, 3,760 requests, 8 of 8 done.
+  - Config hashes: `fe7d94fb698d5f41` (B) and `7c024a7a384b9026` (A).
+- **Speed.**
+  - The slow part was the anonymous API allowance (500 calls per 5 minutes), shared by 4 processes, while each 100,000+ file repo was paged at 1,000 entries per call. A check during the run showed 20 of 500 left.
+  - Repos with more than 100,000 files took 20–50 minutes each under that contention. One user checking one dataset has the allowance alone; this was not timed separately.
+  - `nvidia/PhysicalAI-WorldModel-Synthetic-Autonomous-Driving-Scenarios` went from 4.2 h (cut-off list, HTTP) to 34 min (121,076 files from one git pack).
+
+### Results (RESULTS.md §2)
+
+- Tier B: 497 done, 3 failed (all no longer on the Hub); 394 with data health run, 356 with at least one row read.
+  - Over those 356: duplicates in 73 (20.5%; 16.6–25.0%), leakage in 24 (6.7%; 4.6–9.8%), files that could not be read as rows in 32 (9.0%).
+- Tier A: 157 false missing-file results → 0. Datasets with a dead link: 23 of 168 → 16 of 166.
+- **Found while checking the rescan:**
+  - `lyzenghq/banned-historical-archives`: 59,957 listed files return HTTP 404 from the Hub's storage (the `resolve` URL redirects to `cdn.hf.co`, which 404s; checked for 3). This is the repo, not datasetvet.
+  - 38 "scanned" datasets read no row: 37 samples stopped at the launch download cap of 100 MB, and 1 had only unreadable files. The first scan had the same problem (39), and its RESULTS counted them as "data read". Shares are now over datasets with at least one row read, in both the new numbers and the first-scan comparison.
+  - `McGill-NLP/WebLINX-full` keeps one missing-file result. It is real: the card names `chat/test_iid.csv`, which the tree API does not list.
+
+### Problems found and fixed in this phase
+
+1. The extra Tier A process went beyond the brief. It was stopped and its one row reverted (above).
+2. A heredoc expanded escape sequences in a source line during part 1; fixed before the commit.
+
+### Not done / open
+
+- **History rewrite.** The brief says to remove Phase 3's full-text `src/datasetvet/data/spdx_licences.json.gz` from all history with `git filter-repo` as the last step. The owner asked why, and the reason given in the repo (the texts' licence is not stated) was put back to the owner as a question. Not done until they answer. When done, the old → new commit ids go here.
+- The 128 Tier A datasets with a cut-off list but no missing-file result.
+- Timing one 100,000-file repo alone (offered, not run).
+- `SCANCODE_MIN_SCORE` default 90 vs the eval's 50; the disagreement labels; posting the SPDX issue (all from Phase 4).
+- CI not run; nothing pushed.
+
+**Checks** (commit of this entry): `pytest` 360 passed, 3 skipped (ScanCode-only); `ruff check src tests tools eval launch` clean; `mypy src` clean, and the four launch scripts clean.

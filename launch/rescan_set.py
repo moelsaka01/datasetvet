@@ -16,8 +16,8 @@ is in the set only if one of the fixes applies to what the first scan recorded f
   B  non-data-files-skipped  the scan read a tokenizer/config/dependency file that is now
                           skipped, even if it read without error (launch/check_non_data.py)
   A  listing-cut-off      the card has missing-file link results and the file list was cut off
-                          (with listing-truncated-all.json: any Tier A dataset whose file list
-                          was cut off, because licence files are searched in that list too)
+                          (a Tier A dataset whose list was cut off but has no missing-file
+                          result is only listed, under tier_A_cut_off_not_rescanned)
 
 Every other row is left as it is: a Parquet-conversion scan, a card, a licence comparison or a
 link check does not depend on anything that changed. It changes no state row and no report.
@@ -54,10 +54,14 @@ def main(list_path: Path) -> None:
             add(reasons, "B", ds, "listing-cut-off")
         if row.get("truncated") and row.get("tier_A_missing_file_results"):
             add(reasons, "A", ds, "listing-cut-off")
+    # Tier A datasets whose file list was cut off but that have no missing-file result: only a
+    # licence file beyond the cut-off could differ. Not rescanned (owner's scope: the 8 with
+    # false missing-file results); listed so the limit can be stated.
+    not_rescanned: list[str] = []
     extra = RESULTS / "listing-truncated-all.json"
     if extra.exists():
-        for ds in json.loads(extra.read_text("utf-8"))["truncated"]:
-            add(reasons, "A", ds, "listing-cut-off")
+        not_rescanned = sorted(ds for ds in json.loads(extra.read_text("utf-8"))["truncated"]
+                               if ds not in reasons["A"])
 
     nd = RESULTS / "non-data-check.json"
     if nd.exists():
@@ -87,7 +91,8 @@ def main(list_path: Path) -> None:
 
     out = {"list": list_path.name,
            "A": sorted(reasons["A"]), "B": sorted(reasons["B"]),
-           "reasons": {t: dict(sorted(v.items())) for t, v in reasons.items()}}
+           "reasons": {t: dict(sorted(v.items())) for t, v in reasons.items()},
+           "tier_A_cut_off_not_rescanned": not_rescanned}
     unknown = (set(out["A"]) | set(out["B"])) - frozen
     assert not unknown, unknown
     OUT.write_text(json.dumps(out, indent=1) + "\n", "utf-8")
@@ -97,6 +102,8 @@ def main(list_path: Path) -> None:
             for why in rs:
                 by_reason[why] = by_reason.get(why, 0) + 1
         print(f"tier {tier}: {len(reasons[tier])} datasets  {by_reason}")
+    print(f"tier A: {len(not_rescanned)} more datasets had a cut-off file list but no "
+          "missing-file result; not rescanned")
     print(f"-> {OUT}")
 
 
