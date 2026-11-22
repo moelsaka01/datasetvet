@@ -1,6 +1,6 @@
 # datasetvet: Phase 4 results (launch scan updated in Phase 4.5)
 
-Measured 2026-11-19 to 2026-11-21 on the owner's Windows 11 laptop (Python 3.12.10), datasetvet 0.0.0, SPDX licence list 3.29.0, ScanCode toolkit 32.5.0. Every Hugging Face call was **anonymous**. During the first runs no HF token was visible to `huggingface_hub`. For the rescan (2026-11-21) a token existed on the laptop and was hidden on purpose (`HF_TOKEN_PATH` set to a file that does not exist), so the rescan ran under the same conditions as the first scan. No `GITHUB_TOKEN` was set. Facts only, not legal advice.
+Measured 2026-11-19 to 2026-11-21 on the owner's Windows 11 laptop (Python 3.12.10), datasetvet 0.0.0, SPDX licence list 3.29.0, ScanCode toolkit 32.5.0. Every Hugging Face call was **anonymous**. During the first runs no HF token was visible to `huggingface_hub`. For the rescan (2026-11-21) a token existed on the laptop and was hidden on purpose (`HF_TOKEN_PATH` set to a file that does not exist), so the rescan ran under the same conditions as the first scan. The one exception is the timing of a very large repo (section 2, last part), which the owner allowed to run logged in. No `GITHUB_TOKEN` was set. Facts only, not legal advice.
 
 ## Headline
 
@@ -213,6 +213,22 @@ The rescan (107 rows) replaced the first scan's results for these. First scan â†
 Among the 99 rescanned Tier B datasets, the duplicates result changed for 11 (4 from `found` to `none found`, 3 the other way, 4 that had failed or now have no data files), and leakage for 6.
 
 **Not rescanned.** Another 128 Tier A datasets had a cut-off file list but no missing-file result (`tier_A_cut_off_not_rescanned` in `rescan-set.json`). Only a licence file beyond the first 100,000 entries could change their results. The owner kept the rescan to the 8 with false results, so for these 128 a licence file past the cut-off would have been missed.
+
+### Time for a very large repo (measured 2026-11-22)
+
+The rescan ran four processes at once, so its per-repo times (20 to 50 minutes for a 100,000+ file repo) say little about one user. This is one repo, run alone: `PGCodeLLM/radin-cyber-backups` at `bc10089`, **389,052 files** (146,744 of them data files: `default/test` 6,307, `default/train` 136,099 and `default/validation` 4,338 files, plus the files not read as data). It is larger than 100,000 files, so the figures below are also given per file and per page for scaling. Each step ran in its own process with its own cache (`launch/time_large.py`; raw numbers in `launch/results/timing-PGCodeLLM__radin-cyber-backups.json`).
+
+**This was the only measurement made logged in** (the owner allowed it for this one run; the token raises the API allowance). Everything else in this file was anonymous. Anonymous listing was not timed alone: the limit is 500 calls per 5 minutes, which covers the 100 pages of a 100,000 file repo, but a 389,052 file repo (616 calls) would make an anonymous run wait for the window.
+
+| Step | Measured | Per unit | At 100,000 files |
+|---|---|---|---|
+| Listing, paged tree API, cold cache | **223.8 s** (615 pages of 1,000 files, 616 calls) | 0.36 s a page | about 36 s |
+| Launch-style sample read (100 MB download cap, 10,000 rows), listing already cached | **321 s**: 9,999 rows, 75.9 MB read, 1,059 calls (527 files over HTTP; the one-fetch git route was not used because it would have been 33.7 GB) | | the sample stops at its row quota, so it does not grow with the file count; about 5 minutes |
+| Default read (no download cap, 1,000,000-row sample quota), listing already cached | **stopped at the 20-minute cap** without finishing. `default/test` (6,307 files) took 218.6 s; `default/train` (136,099 files) had been running for 963 s when stopped | 34.7 ms a file (28.9 files a second) on `default/test` | about 58 minutes, extrapolated |
+
+**Projected total for the default read of this repo: about 85 minutes** (146,744 files at 34.7 ms), plus the 4 minutes to list it. How far `default/train` had got when it was stopped is not known: the reader prints one line per split, not per file. The projection comes from one split's rate, and a split with bigger files would be slower, so it is an estimate, not a measurement. For a repo with 100,000 data files the same rate gives about **1 hour**.
+
+What this means for users: for a repo of this size the listing is about a minute, a sampled read is about 5 minutes, and a full read is about an hour or more. The owner's decision (Phase 4.5): the README says so, and Phase 5 task 5.9 adds a warning before scanning a repo with 100,000 or more files (file count, estimated time, a sampled scan as the suggestion).
 
 ---
 

@@ -21,6 +21,8 @@ datasetvet will be a free, local CLI that checks a dataset (Hugging Face first) 
 
 Each fact comes with an evidence link pinned to a commit.
 
+**Very large repos take time.** Measured on one repo with 389,052 files (146,744 of them data files, [RESULTS.md section 2](RESULTS.md)): listing the files took about 4 minutes (under a minute per 100,000 files, with a Hugging Face token), a sampled read about 5 minutes, and a full read an estimated 85 minutes. Expect about an hour for a full read of a repo with 100,000 data files; use a sampled scan (`--max-scan-bytes`, `--sample-rows`) to keep it to minutes.
+
 ## What it will not do
 
 - **No legal judgements.** Licence statuses are only *consistent*, *inconsistent*, *missing* or *unknown*. It never says a dataset is "safe to use". **This is not legal advice.**

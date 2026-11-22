@@ -1,0 +1,50 @@
+{
+ "dataset": "PGCodeLLM/radin-cyber-backups",
+ "sha": "bc10089d0cae26909da7ab16856e5f322daf2de2",
+ "cap_minutes": 20.0,
+ "phases": [
+  {
+   "phase": "listing",
+   "seconds": 223.8,
+   "files": 389052,
+   "data_files": 146744,
+   "complete": true,
+   "note": "read through the paged tree API (615 pages) because the dataset API lists at most 100,000 files",
+   "http_requests": 616,
+   "authenticated": true
+  },
+  {
+   "phase": "read-launch",
+   "seconds": 321.2,
+   "finished": true,
+   "scan_kind": "sampled",
+   "source": "original files",
+   "rows_scanned": 9999,
+   "bytes_read": 75950924,
+   "partial": true,
+   "listing_complete": true,
+   "http_requests": 1059,
+   "authenticated": true,
+   "data_fetch": {
+    "workers": 8,
+    "git": "not used: the fetch would be up to 33,681,630,889 bytes, over 100,000,000",
+    "git_files": 0,
+    "http_files": 527,
+    "fetched_ahead": 62
+   }
+  },
+  {
+   "phase": "read-default",
+   "finished": false,
+   "stopped_at_seconds": 1200,
+   "cap_minutes": 20.0,
+   "last_progress_lines": [
+    "[     0.0s] resolving hf:PGCodeLLM/radin-cyber-backups@bc10089d0cae26909da7ab16856e5f322daf2de2",
+    "[     2.5s] reading the card",
+    "[     3.9s] finding the data files",
+    "[    18.0s] reading default/test (6307 file(s), sample quota 91,947 rows)",
+    "[   236.6s] reading default/train (136099 file(s), sample quota 873,239 rows)"
+   ]
+  }
+ ]
+}

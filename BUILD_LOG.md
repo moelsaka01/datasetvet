@@ -361,7 +361,12 @@ Then rescan only the affected rows under the new config hash, update RESULTS fro
   - Config hashes: `fe7d94fb698d5f41` (B) and `7c024a7a384b9026` (A).
 - **Speed.**
   - The slow part was the anonymous API allowance (500 calls per 5 minutes), shared by 4 processes, while each 100,000+ file repo was paged at 1,000 entries per call. A check during the run showed 20 of 500 left.
-  - Repos with more than 100,000 files took 20–50 minutes each under that contention. One user checking one dataset has the allowance alone; this was not timed separately.
+  - Repos with more than 100,000 files took 20–50 minutes each under that contention. One user checking one dataset has the allowance alone; that was timed afterwards (next bullet).
+- **Timing one very large repo alone** (`launch/time_large.py`, owner's decision, logged in for this run only; RESULTS section 2): `PGCodeLLM/radin-cyber-backups`, 389,052 files (146,744 data files; the other probed repos had 376k, 773k and 1M files).
+  - Listing, cold cache: 223.8 s for 615 pages (0.36 s a page, about 36 s per 100,000 files).
+  - Launch-style sample read (listing cached): 321 s, 9,999 rows, 75.9 MB.
+  - Default read: stopped at the 20-minute cap as agreed, not finished. `default/test` took 218.6 s for 6,307 files (34.7 ms a file); `default/train` (136,099 files) was still running. Projected about 85 minutes for this repo and about 1 hour for 100,000 data files, from one split's rate, so an estimate.
+  - Used: the README now says "expect about an hour for a full read of a repo with 100,000 data files"; PLAN Phase 5 task 5.9 adds the large-repo warning before scanning (file count, estimated time, sampled scan suggested).
   - `nvidia/PhysicalAI-WorldModel-Synthetic-Autonomous-Driving-Scenarios` went from 4.2 h (cut-off list, HTTP) to 34 min (121,076 files from one git pack).
 
 ### Results (RESULTS.md §2)
@@ -381,9 +386,8 @@ Then rescan only the affected rows under the new config hash, update RESULTS fro
 
 ### Not done / open
 
-- **History rewrite.** The brief says to remove Phase 3's full-text `src/datasetvet/data/spdx_licences.json.gz` from all history with `git filter-repo` as the last step. The owner asked why, and the reason given in the repo (the texts' licence is not stated) was put back to the owner as a question. Not done until they answer. When done, the old → new commit ids go here.
+- **History rewrite.** Decided by the owner and done as the last step (old to new commit ids below). Reason: SPDX's `license-list-data` repo, where Phase 3's 92 licence texts came from, declares no licence (GitHub shows `license: null`; an issue about it is drafted). Without a licence it is unclear whether that copy may be redistributed, so only a derived fingerprint index (no readable text, rebuilt from the official source) is shipped. The full texts in history (`src/datasetvet/data/spdx_licences.json.gz`, 249 KB, blob `deda55b`, commit `3a6b650`) would undo that decision on the first push, since anyone can check out old commits. Nothing was public yet, so changing commit ids cost nothing.
 - The 128 Tier A datasets with a cut-off list but no missing-file result.
-- Timing one 100,000-file repo alone (offered, not run).
 - `SCANCODE_MIN_SCORE` default 90 vs the eval's 50; the disagreement labels; posting the SPDX issue (all from Phase 4).
 - CI not run; nothing pushed.
 
