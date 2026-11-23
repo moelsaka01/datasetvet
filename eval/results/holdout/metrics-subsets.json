@@ -1,0 +1,818 @@
+{
+ "note": "exploratory, not pre-registered",
+ "confidence_sure": {
+  "rows": 37,
+  "scored": 26,
+  "excluded": {
+   "excluded: expert none": 4,
+   "excluded: expert non-SPDX": 7
+  },
+  "configurations": {
+   "A": {
+    "scored": 26,
+    "confusion": {
+     "consistent": {
+      "consistent": 22,
+      "inconsistent": 0,
+      "missing": 0,
+      "unknown": 0
+     },
+     "inconsistent": {
+      "consistent": 2,
+      "inconsistent": 0,
+      "missing": 0,
+      "unknown": 0
+     },
+     "missing": {
+      "consistent": 0,
+      "inconsistent": 0,
+      "missing": 2,
+      "unknown": 0
+     }
+    },
+    "decided": 26,
+    "agree": 24,
+    "agreement_decided": 0.9230769230769231,
+    "agreement_decided_wilson95": [
+     0.7585805251948495,
+     0.9786453608166245
+    ],
+    "agreement_all_rows": 0.9230769230769231,
+    "agreement_all_rows_wilson95": [
+     0.7585805251948495,
+     0.9786453608166245
+    ],
+    "abstained": 0,
+    "abstention": 0.0,
+    "abstention_wilson95": [
+     0.0,
+     0.12873304380462175
+    ],
+    "kappa_decided": 0.6388888888888891,
+    "kappa_decided_bootstrap": {
+     "ci95": [
+      0.0,
+      1.0
+     ],
+     "undefined_resamples": 147
+    },
+    "kappa_all_rows_unknown_as_category": 0.6388888888888891,
+    "inconsistent_precision_n": [
+     0,
+     0
+    ],
+    "inconsistent_recall_n": [
+     0,
+     2
+    ]
+   },
+   "B": {
+    "scored": 26,
+    "confusion": {
+     "consistent": {
+      "consistent": 14,
+      "inconsistent": 7,
+      "missing": 0,
+      "unknown": 1
+     },
+     "inconsistent": {
+      "consistent": 0,
+      "inconsistent": 2,
+      "missing": 0,
+      "unknown": 0
+     },
+     "missing": {
+      "consistent": 0,
+      "inconsistent": 0,
+      "missing": 2,
+      "unknown": 0
+     }
+    },
+    "decided": 25,
+    "agree": 18,
+    "agreement_decided": 0.72,
+    "agreement_decided_wilson95": [
+     0.5242302810344169,
+     0.8571632616261843
+    ],
+    "agreement_all_rows": 0.6923076923076923,
+    "agreement_all_rows_wilson95": [
+     0.5001138848576876,
+     0.8349887906020732
+    ],
+    "abstained": 1,
+    "abstention": 0.038461538461538464,
+    "abstention_wilson95": [
+     0.0068218089769898765,
+     0.18893176991958405
+    ],
+    "kappa_decided": 0.4336569579288025,
+    "kappa_decided_bootstrap": {
+     "ci95": [
+      0.11475409836065584,
+      0.7340425531914894
+     ],
+     "undefined_resamples": 0
+    },
+    "kappa_all_rows_unknown_as_category": 0.39884393063583806,
+    "inconsistent_precision_n": [
+     2,
+     9
+    ],
+    "inconsistent_recall_n": [
+     2,
+     2
+    ]
+   },
+   "C": {
+    "scored": 26,
+    "confusion": {
+     "consistent": {
+      "consistent": 20,
+      "inconsistent": 1,
+      "missing": 0,
+      "unknown": 1
+     },
+     "inconsistent": {
+      "consistent": 0,
+      "inconsistent": 1,
+      "missing": 0,
+      "unknown": 1
+     },
+     "missing": {
+      "consistent": 0,
+      "inconsistent": 0,
+      "missing": 2,
+      "unknown": 0
+     }
+    },
+    "decided": 24,
+    "agree": 23,
+    "agreement_decided": 0.9583333333333334,
+    "agreement_decided_wilson95": [
+     0.7975777375115778,
+     0.992606734645195
+    ],
+    "agreement_all_rows": 0.8846153846153846,
+    "agreement_all_rows_wilson95": [
+     0.7102370691310166,
+     0.959968281788505
+    ],
+    "abstained": 2,
+    "abstention": 0.07692307692307693,
+    "abstention_wilson95": [
+     0.02135463918337556,
+     0.24141947480515052
+    ],
+    "kappa_decided": 0.8400000000000001,
+    "kappa_decided_bootstrap": {
+     "ci95": [
+      0.0,
+      1.0
+     ],
+     "undefined_resamples": 135
+    },
+    "kappa_all_rows_unknown_as_category": 0.6578947368421051,
+    "inconsistent_precision_n": [
+     1,
+     2
+    ],
+    "inconsistent_recall_n": [
+     1,
+     2
+    ]
+   }
+  },
+  "paired": {
+   "C vs A": {
+    "x_only": 1,
+    "y_only": 2,
+    "p": 1.0
+   },
+   "C vs B": {
+    "x_only": 8,
+    "y_only": 3,
+    "p": 0.2265625
+   }
+  },
+  "goal": {
+   "kappa_decided_at_least_0.61": true,
+   "abstention_below_15pct": true,
+   "beats_A": false,
+   "beats_B": false,
+   "met": false
+  }
+ },
+ "confidence_unsure": {
+  "rows": 83,
+  "scored": 38,
+  "excluded": {
+   "excluded: card unreadable": 25,
+   "excluded: expert none": 10,
+   "excluded: expert non-SPDX": 10
+  },
+  "configurations": {
+   "A": {
+    "scored": 38,
+    "confusion": {
+     "consistent": {
+      "consistent": 32,
+      "inconsistent": 0,
+      "missing": 0,
+      "unknown": 0
+     },
+     "inconsistent": {
+      "consistent": 4,
+      "inconsistent": 0,
+      "missing": 0,
+      "unknown": 0
+     },
+     "missing": {
+      "consistent": 0,
+      "inconsistent": 0,
+      "missing": 2,
+      "unknown": 0
+     }
+    },
+    "decided": 38,
+    "agree": 34,
+    "agreement_decided": 0.8947368421052632,
+    "agreement_decided_wilson95": [
+     0.7586916879980553,
+     0.9582981020673341
+    ],
+    "agreement_all_rows": 0.8947368421052632,
+    "agreement_all_rows_wilson95": [
+     0.7586916879980553,
+     0.9582981020673341
+    ],
+    "abstained": 0,
+    "abstention": 0.0,
+    "abstention_wilson95": [
+     0.0,
+     0.09181293258383999
+    ],
+    "kappa_decided": 0.4722222222222222,
+    "kappa_decided_bootstrap": {
+     "ci95": [
+      0.0,
+      0.8758169934640524
+     ],
+     "undefined_resamples": 16
+    },
+    "kappa_all_rows_unknown_as_category": 0.4722222222222222,
+    "inconsistent_precision_n": [
+     0,
+     0
+    ],
+    "inconsistent_recall_n": [
+     0,
+     4
+    ]
+   },
+   "B": {
+    "scored": 38,
+    "confusion": {
+     "consistent": {
+      "consistent": 1,
+      "inconsistent": 4,
+      "missing": 0,
+      "unknown": 27
+     },
+     "inconsistent": {
+      "consistent": 1,
+      "inconsistent": 2,
+      "missing": 0,
+      "unknown": 1
+     },
+     "missing": {
+      "consistent": 0,
+      "inconsistent": 0,
+      "missing": 2,
+      "unknown": 0
+     }
+    },
+    "decided": 10,
+    "agree": 5,
+    "agreement_decided": 0.5,
+    "agreement_decided_wilson95": [
+     0.23658959361548731,
+     0.7634104063845126
+    ],
+    "agreement_all_rows": 0.13157894736842105,
+    "agreement_all_rows_wilson95": [
+     0.05753782875731436,
+     0.2732717005149887
+    ],
+    "abstained": 28,
+    "abstention": 0.7368421052631579,
+    "abstention_wilson95": [
+     0.5799084979362465,
+     0.8502853761029869
+    ],
+    "kappa_decided": 0.2647058823529412,
+    "kappa_decided_bootstrap": {
+     "ci95": [
+      -0.33333333333333337,
+      0.7058823529411766
+     ],
+     "undefined_resamples": 2
+    },
+    "kappa_all_rows_unknown_as_category": 0.07248520710059171,
+    "inconsistent_precision_n": [
+     2,
+     6
+    ],
+    "inconsistent_recall_n": [
+     2,
+     4
+    ]
+   },
+   "C": {
+    "scored": 38,
+    "confusion": {
+     "consistent": {
+      "consistent": 26,
+      "inconsistent": 4,
+      "missing": 0,
+      "unknown": 2
+     },
+     "inconsistent": {
+      "consistent": 1,
+      "inconsistent": 1,
+      "missing": 0,
+      "unknown": 2
+     },
+     "missing": {
+      "consistent": 0,
+      "inconsistent": 0,
+      "missing": 2,
+      "unknown": 0
+     }
+    },
+    "decided": 34,
+    "agree": 29,
+    "agreement_decided": 0.8529411764705882,
+    "agreement_decided_wilson95": [
+     0.6987161182594804,
+     0.9355065361737359
+    ],
+    "agreement_all_rows": 0.7631578947368421,
+    "agreement_all_rows_wilson95": [
+     0.6079288083466214,
+     0.8700643850303049
+    ],
+    "abstained": 4,
+    "abstention": 0.10526315789473684,
+    "abstention_wilson95": [
+     0.041701897932665793,
+     0.24130831200194466
+    ],
+    "kappa_decided": 0.48795180722891546,
+    "kappa_decided_bootstrap": {
+     "ci95": [
+      -0.03960396039604008,
+      0.8316831683168316
+     ],
+     "undefined_resamples": 2
+    },
+    "kappa_all_rows_unknown_as_category": 0.38489208633093536,
+    "inconsistent_precision_n": [
+     1,
+     5
+    ],
+    "inconsistent_recall_n": [
+     1,
+     4
+    ]
+   }
+  },
+  "paired": {
+   "C vs A": {
+    "x_only": 1,
+    "y_only": 6,
+    "p": 0.125
+   },
+   "C vs B": {
+    "x_only": 26,
+    "y_only": 2,
+    "p": 3.032386302947998e-06
+   }
+  },
+  "goal": {
+   "kappa_decided_at_least_0.61": false,
+   "abstention_below_15pct": true,
+   "beats_A": false,
+   "beats_B": true,
+   "met": false
+  }
+ },
+ "unchanged_from_first_pass": {
+  "rows": 108,
+  "scored": 60,
+  "excluded": {
+   "excluded: card unreadable": 24,
+   "excluded: expert non-SPDX": 15,
+   "excluded: expert none": 9
+  },
+  "configurations": {
+   "A": {
+    "scored": 60,
+    "confusion": {
+     "consistent": {
+      "consistent": 51,
+      "inconsistent": 0,
+      "missing": 0,
+      "unknown": 0
+     },
+     "inconsistent": {
+      "consistent": 5,
+      "inconsistent": 0,
+      "missing": 0,
+      "unknown": 0
+     },
+     "missing": {
+      "consistent": 0,
+      "inconsistent": 0,
+      "missing": 4,
+      "unknown": 0
+     }
+    },
+    "decided": 60,
+    "agree": 55,
+    "agreement_decided": 0.9166666666666666,
+    "agreement_decided_wilson95": [
+     0.8193083153188752,
+     0.9638800759495141
+    ],
+    "agreement_all_rows": 0.9166666666666666,
+    "agreement_all_rows_wilson95": [
+     0.8193083153188752,
+     0.9638800759495141
+    ],
+    "abstained": 0,
+    "abstention": 0.0,
+    "abstention_wilson95": [
+     0.0,
+     0.06017393047793289
+    ],
+    "kappa_decided": 0.5879120879120877,
+    "kappa_decided_bootstrap": {
+     "ci95": [
+      0.18644067796610175,
+      0.8809523809523806
+     ],
+     "undefined_resamples": 1
+    },
+    "kappa_all_rows_unknown_as_category": 0.5879120879120877,
+    "inconsistent_precision_n": [
+     0,
+     0
+    ],
+    "inconsistent_recall_n": [
+     0,
+     5
+    ]
+   },
+   "B": {
+    "scored": 60,
+    "confusion": {
+     "consistent": {
+      "consistent": 15,
+      "inconsistent": 10,
+      "missing": 0,
+      "unknown": 26
+     },
+     "inconsistent": {
+      "consistent": 1,
+      "inconsistent": 3,
+      "missing": 0,
+      "unknown": 1
+     },
+     "missing": {
+      "consistent": 0,
+      "inconsistent": 0,
+      "missing": 4,
+      "unknown": 0
+     }
+    },
+    "decided": 33,
+    "agree": 22,
+    "agreement_decided": 0.6666666666666666,
+    "agreement_decided_wilson95": [
+     0.4960758179994997,
+     0.8024997053219629
+    ],
+    "agreement_all_rows": 0.36666666666666664,
+    "agreement_all_rows_wilson95": [
+     0.2562073884620827,
+     0.4931723263320327
+    ],
+    "abstained": 27,
+    "abstention": 0.45,
+    "abstention_wilson95": [
+     0.33093453853760824,
+     0.575082854510185
+    ],
+    "kappa_decided": 0.41545893719806753,
+    "kappa_decided_bootstrap": {
+     "ci95": [
+      0.12844036697247704,
+      0.6686746987951807
+     ],
+     "undefined_resamples": 0
+    },
+    "kappa_all_rows_unknown_as_category": 0.15649278579356266,
+    "inconsistent_precision_n": [
+     3,
+     13
+    ],
+    "inconsistent_recall_n": [
+     3,
+     5
+    ]
+   },
+   "C": {
+    "scored": 60,
+    "confusion": {
+     "consistent": {
+      "consistent": 43,
+      "inconsistent": 5,
+      "missing": 0,
+      "unknown": 3
+     },
+     "inconsistent": {
+      "consistent": 1,
+      "inconsistent": 1,
+      "missing": 0,
+      "unknown": 3
+     },
+     "missing": {
+      "consistent": 0,
+      "inconsistent": 0,
+      "missing": 4,
+      "unknown": 0
+     }
+    },
+    "decided": 54,
+    "agree": 48,
+    "agreement_decided": 0.8888888888888888,
+    "agreement_decided_wilson95": [
+     0.7780505106792327,
+     0.9480704818244324
+    ],
+    "agreement_all_rows": 0.8,
+    "agreement_all_rows_wilson95": [
+     0.6821795390818299,
+     0.8817161026314104
+    ],
+    "abstained": 6,
+    "abstention": 0.1,
+    "abstention_wilson95": [
+     0.04664219945723587,
+     0.20149694492511044
+    ],
+    "kappa_decided": 0.5824742268041236,
+    "kappa_decided_bootstrap": {
+     "ci95": [
+      0.2083333333333331,
+      0.8485714285714286
+     ],
+     "undefined_resamples": 0
+    },
+    "kappa_all_rows_unknown_as_category": 0.45038167938931317,
+    "inconsistent_precision_n": [
+     1,
+     6
+    ],
+    "inconsistent_recall_n": [
+     1,
+     5
+    ]
+   }
+  },
+  "paired": {
+   "C vs A": {
+    "x_only": 1,
+    "y_only": 8,
+    "p": 0.0390625
+   },
+   "C vs B": {
+    "x_only": 31,
+    "y_only": 5,
+    "p": 1.2913485988974571e-05
+   }
+  },
+  "goal": {
+   "kappa_decided_at_least_0.61": false,
+   "abstention_below_15pct": true,
+   "beats_A": false,
+   "beats_B": true,
+   "met": false
+  }
+ },
+ "changed_by_owner": {
+  "rows": 12,
+  "scored": 4,
+  "excluded": {
+   "excluded: expert none": 5,
+   "excluded: expert non-SPDX": 2,
+   "excluded: card unreadable": 1
+  },
+  "configurations": {
+   "A": {
+    "scored": 4,
+    "confusion": {
+     "consistent": {
+      "consistent": 3,
+      "inconsistent": 0,
+      "missing": 0,
+      "unknown": 0
+     },
+     "inconsistent": {
+      "consistent": 1,
+      "inconsistent": 0,
+      "missing": 0,
+      "unknown": 0
+     },
+     "missing": {
+      "consistent": 0,
+      "inconsistent": 0,
+      "missing": 0,
+      "unknown": 0
+     }
+    },
+    "decided": 4,
+    "agree": 3,
+    "agreement_decided": 0.75,
+    "agreement_decided_wilson95": [
+     0.3006360524426366,
+     0.9544139373553637
+    ],
+    "agreement_all_rows": 0.75,
+    "agreement_all_rows_wilson95": [
+     0.3006360524426366,
+     0.9544139373553637
+    ],
+    "abstained": 0,
+    "abstention": 0.0,
+    "abstention_wilson95": [
+     0.0,
+     0.48990002040399916
+    ],
+    "kappa_decided": 0.0,
+    "kappa_decided_bootstrap": {
+     "ci95": [
+      0.0,
+      0.0
+     ],
+     "undefined_resamples": 3131
+    },
+    "kappa_all_rows_unknown_as_category": 0.0,
+    "inconsistent_precision_n": [
+     0,
+     0
+    ],
+    "inconsistent_recall_n": [
+     0,
+     1
+    ]
+   },
+   "B": {
+    "scored": 4,
+    "confusion": {
+     "consistent": {
+      "consistent": 0,
+      "inconsistent": 1,
+      "missing": 0,
+      "unknown": 2
+     },
+     "inconsistent": {
+      "consistent": 0,
+      "inconsistent": 1,
+      "missing": 0,
+      "unknown": 0
+     },
+     "missing": {
+      "consistent": 0,
+      "inconsistent": 0,
+      "missing": 0,
+      "unknown": 0
+     }
+    },
+    "decided": 2,
+    "agree": 1,
+    "agreement_decided": 0.5,
+    "agreement_decided_wilson95": [
+     0.09452865480086614,
+     0.9054713451991339
+    ],
+    "agreement_all_rows": 0.25,
+    "agreement_all_rows_wilson95": [
+     0.045586062644636216,
+     0.6993639475573634
+    ],
+    "abstained": 2,
+    "abstention": 0.5,
+    "abstention_wilson95": [
+     0.15003570882017148,
+     0.8499642911798285
+    ],
+    "kappa_decided": 0.0,
+    "kappa_decided_bootstrap": {
+     "ci95": [
+      0.0,
+      0.0
+     ],
+     "undefined_resamples": 3213
+    },
+    "kappa_all_rows_unknown_as_category": 0.14285714285714285,
+    "inconsistent_precision_n": [
+     1,
+     2
+    ],
+    "inconsistent_recall_n": [
+     1,
+     1
+    ]
+   },
+   "C": {
+    "scored": 4,
+    "confusion": {
+     "consistent": {
+      "consistent": 3,
+      "inconsistent": 0,
+      "missing": 0,
+      "unknown": 0
+     },
+     "inconsistent": {
+      "consistent": 0,
+      "inconsistent": 1,
+      "missing": 0,
+      "unknown": 0
+     },
+     "missing": {
+      "consistent": 0,
+      "inconsistent": 0,
+      "missing": 0,
+      "unknown": 0
+     }
+    },
+    "decided": 4,
+    "agree": 4,
+    "agreement_decided": 1.0,
+    "agreement_decided_wilson95": [
+     0.5100999795960008,
+     1.0
+    ],
+    "agreement_all_rows": 1.0,
+    "agreement_all_rows_wilson95": [
+     0.5100999795960008,
+     1.0
+    ],
+    "abstained": 0,
+    "abstention": 0.0,
+    "abstention_wilson95": [
+     0.0,
+     0.48990002040399916
+    ],
+    "kappa_decided": 1.0,
+    "kappa_decided_bootstrap": {
+     "ci95": [
+      1.0,
+      1.0
+     ],
+     "undefined_resamples": 3172
+    },
+    "kappa_all_rows_unknown_as_category": 1.0,
+    "inconsistent_precision_n": [
+     1,
+     1
+    ],
+    "inconsistent_recall_n": [
+     1,
+     1
+    ]
+   }
+  },
+  "paired": {
+   "C vs A": {
+    "x_only": 1,
+    "y_only": 0,
+    "p": 1.0
+   },
+   "C vs B": {
+    "x_only": 3,
+    "y_only": 0,
+    "p": 0.25
+   }
+  },
+  "goal": {
+   "kappa_decided_at_least_0.61": true,
+   "abstention_below_15pct": true,
+   "beats_A": false,
+   "beats_B": false,
+   "met": false
+  }
+ }
+}

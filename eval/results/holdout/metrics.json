@@ -1,0 +1,213 @@
+{
+ "rows": 120,
+ "scored": 64,
+ "excluded": {
+  "excluded: card unreadable": 25,
+  "excluded: expert none": 14,
+  "excluded: expert non-SPDX": 17
+ },
+ "batches": [
+  "holdout-v1"
+ ],
+ "configurations": {
+  "A": {
+   "scored": 64,
+   "confusion": {
+    "consistent": {
+     "consistent": 54,
+     "inconsistent": 0,
+     "missing": 0,
+     "unknown": 0
+    },
+    "inconsistent": {
+     "consistent": 6,
+     "inconsistent": 0,
+     "missing": 0,
+     "unknown": 0
+    },
+    "missing": {
+     "consistent": 0,
+     "inconsistent": 0,
+     "missing": 4,
+     "unknown": 0
+    }
+   },
+   "decided": 64,
+   "agree": 58,
+   "agreement_decided": 0.90625,
+   "agreement_decided_wilson95": [
+    0.8101690141672233,
+    0.9563223421687121
+   ],
+   "agreement_all_rows": 0.90625,
+   "agreement_all_rows_wilson95": [
+    0.8101690141672233,
+    0.9563223421687121
+   ],
+   "abstained": 0,
+   "abstention": 0.0,
+   "abstention_wilson95": [
+    0.0,
+    0.056626022971156334
+   ],
+   "kappa_decided": 0.5428571428571428,
+   "kappa_decided_bootstrap": {
+    "ci95": [
+     0.16883116883116883,
+     0.8337662337662337
+    ],
+    "undefined_resamples": 0
+   },
+   "kappa_all_rows_unknown_as_category": 0.5428571428571428,
+   "inconsistent_precision_n": [
+    0,
+    0
+   ],
+   "inconsistent_recall_n": [
+    0,
+    6
+   ]
+  },
+  "B": {
+   "scored": 64,
+   "confusion": {
+    "consistent": {
+     "consistent": 15,
+     "inconsistent": 11,
+     "missing": 0,
+     "unknown": 28
+    },
+    "inconsistent": {
+     "consistent": 1,
+     "inconsistent": 4,
+     "missing": 0,
+     "unknown": 1
+    },
+    "missing": {
+     "consistent": 0,
+     "inconsistent": 0,
+     "missing": 4,
+     "unknown": 0
+    }
+   },
+   "decided": 35,
+   "agree": 23,
+   "agreement_decided": 0.6571428571428571,
+   "agreement_decided_wilson95": [
+    0.4915164687273671,
+    0.7916850471731106
+   ],
+   "agreement_all_rows": 0.359375,
+   "agreement_all_rows_wilson95": [
+    0.2528823053221461,
+    0.48179376363849163
+   ],
+   "abstained": 29,
+   "abstention": 0.453125,
+   "abstention_wilson95": [
+    0.3372925148603437,
+    0.5742661747932022
+   ],
+   "kappa_decided": 0.415041782729805,
+   "kappa_decided_bootstrap": {
+    "ci95": [
+     0.1545893719806763,
+     0.6597938144329897
+    ],
+    "undefined_resamples": 0
+   },
+   "kappa_all_rows_unknown_as_category": 0.16058861164427382,
+   "inconsistent_precision_n": [
+    4,
+    15
+   ],
+   "inconsistent_recall_n": [
+    4,
+    6
+   ]
+  },
+  "C": {
+   "scored": 64,
+   "confusion": {
+    "consistent": {
+     "consistent": 46,
+     "inconsistent": 5,
+     "missing": 0,
+     "unknown": 3
+    },
+    "inconsistent": {
+     "consistent": 1,
+     "inconsistent": 2,
+     "missing": 0,
+     "unknown": 3
+    },
+    "missing": {
+     "consistent": 0,
+     "inconsistent": 0,
+     "missing": 4,
+     "unknown": 0
+    }
+   },
+   "decided": 58,
+   "agree": 52,
+   "agreement_decided": 0.896551724137931,
+   "agreement_decided_wilson95": [
+    0.7921166146899103,
+    0.9517192498414084
+   ],
+   "agreement_all_rows": 0.8125,
+   "agreement_all_rows_wilson95": [
+    0.7002540844522482,
+    0.889354651190779
+   ],
+   "abstained": 6,
+   "abstention": 0.09375,
+   "abstention_wilson95": [
+    0.04367765783128784,
+    0.1898309858327767
+   ],
+   "kappa_decided": 0.6258064516129033,
+   "kappa_decided_bootstrap": {
+    "ci95": [
+     0.2771084337349397,
+     0.870991253644315
+    ],
+    "undefined_resamples": 0
+   },
+   "kappa_all_rows_unknown_as_category": 0.488,
+   "inconsistent_precision_n": [
+    2,
+    7
+   ],
+   "inconsistent_recall_n": [
+    2,
+    6
+   ]
+  }
+ },
+ "paired": {
+  "C vs A": {
+   "x_only": 2,
+   "y_only": 8,
+   "p": 0.109375
+  },
+  "C vs B": {
+   "x_only": 34,
+   "y_only": 5,
+   "p": 2.4299079086631536e-06
+  }
+ },
+ "goal": {
+  "kappa_decided_at_least_0.61": true,
+  "abstention_below_15pct": true,
+  "beats_A": false,
+  "beats_B": true,
+  "met": false
+ },
+ "C_consistent_by_sub": {
+  "confirmed": 25,
+  "uncontradicted": 22
+ },
+ "C_uncontradicted_agree": 22,
+ "too_few_rows": false
+}

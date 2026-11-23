@@ -6,47 +6,53 @@
  },
  "tier_A": {
   "config_hashes": {
-   "d0b085a50bef68aa": 492,
-   "7c024a7a384b9026": 8
+   "14b429ea97a2357a": 500
   },
-  "seconds": 10066.519999999997,
-  "http_requests": 6602.0,
-  "rescanned": 8,
+  "seconds": 48898.30999999997,
+  "http_requests": 25493.0,
+  "rescanned": 500,
   "rescan_planned": 8,
-  "done": 499,
-  "failed": 1,
+  "done": 497,
+  "failed": 3,
   "errors": {
-   "DatasetNotFound": 1
+   "DatasetNotFound": 3
   },
-  "gated": 31,
+  "gated": 30,
   "card_licence": {
-   "present": 299,
-   "missing": 200
+   "present": 315,
+   "missing": 182
   },
-  "with_any_licence_comparison": 499,
+  "with_any_licence_comparison": 497,
   "licence_any_inconsistent": {
-   "k": 37,
-   "n": 499,
-   "share": 0.0741,
+   "k": 20,
+   "n": 497,
+   "share": 0.0402,
    "wilson95": [
-    0.0543,
-    0.1005
+    0.0262,
+    0.0613
    ]
   },
   "licence_any_consistent_none_inconsistent": {
-   "k": 109,
-   "n": 499,
-   "share": 0.2184,
+   "k": 132,
+   "n": 497,
+   "share": 0.2656,
    "wilson95": [
-    0.1844,
-    0.2568
+    0.2287,
+    0.3061
    ]
   },
+  "licence_overall_card_present": {
+   "consistent (uncontradicted)": 82,
+   "consistent (confirmed)": 132,
+   "unknown (card unclear)": 64,
+   "inconsistent (differs)": 20,
+   "unknown (unresolved)": 17
+  },
   "licence_comparison_statuses": {
-   "consistent": 214,
-   "inconsistent": 62,
-   "missing": 289,
-   "unknown": 289
+   "consistent": 225,
+   "inconsistent": 53,
+   "missing": 301,
+   "unknown": 290
   },
   "with_declared_parents": 11,
   "provenance_any_inconsistent": 2,
@@ -56,29 +62,32 @@
    "missing": 4,
    "unknown": 8
   },
-  "links_checked": 1000,
+  "links_checked": 1008,
   "link_statuses": {
-   "ok": 403,
+   "ok": 413,
    "dead": 575,
-   "restricted": 11,
-   "unreachable": 6,
-   "unknown": 5
+   "restricted": 10,
+   "unreachable": 7,
+   "unknown": 3
   },
   "datasets_with_dead_link": {
-   "k": 16,
-   "n": 166,
-   "share": 0.0964,
+   "k": 18,
+   "n": 172,
+   "share": 0.1047,
    "wilson95": [
-    0.0602,
-    0.1508
+    0.0672,
+    0.1593
    ]
   },
-  "missing_file_results": 560,
+  "missing_file_results": 564,
   "missing_file_results_by_dataset": {
+   "3dcodeverse/3dcodeverse-2m": 2,
    "McGill-NLP/WebLINX-full": 1,
+   "zdbfv/M3_VOS": 1,
    "HuggingFaceFW/fineweb-2": 550,
    "lmms-lab/LLaVA-Video-178K": 4,
-   "applied-ai-018/pretraining_v1-omega": 5
+   "applied-ai-018/pretraining_v1-omega": 5,
+   "HenryYHW/ADAS-TO": 1
   },
   "file_list_incomplete": 0
  },

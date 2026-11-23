@@ -10,7 +10,7 @@ One entry per phase: the model and effort used, what was decided and why, what w
 | 4 Accuracy eval + launch scan | Opus 5.5 | high | done 2026-11-21 |
 | 4.5 Fixes from the launch scan + rescan | Sonnet 5.5 (closing steps on Opus 5.5) | high | done 2026-11-22; history rewrite pending |
 | 5 Polish, Action, README, launch | Sonnet 5.5 | medium | built 2026-11-22; the Opus review fixes and the human audit table wait for the owner's inputs; nothing pushed or published |
-| 5.5 Close the gap to the human audit (v2 rules, held-out eval) | Opus 5.5 | high | rules built and frozen 2026-11-22; held-out score waits for the owner's blind labels; nothing pushed |
+| 5.5 Close the gap to the human audit (v2 rules, held-out eval) | Opus 5.5 | high | done 2026-11-23: goal missed (beats ScanCode, not the HF tag alone); v2 launch re-run; nothing pushed |
 
 ---
 
@@ -530,3 +530,117 @@ Close the gap to the human audit before v0.1:
 - `LAUNCH.md` quotes v1's `inconsistent` precision (37%); revisit after the held-out score.
 
 **Checks** (before the commit of this entry): `pytest` 433 passed, 4 skipped (ScanCode-only; in the scan venv `tests/test_scancode.py` and the rule tests: 30 passed, 1 skipped), 2 deselected; `ruff check src tests tools eval launch` clean; `mypy src` clean.
+
+## Phase 5.5, part 2: held-out score, v2 launch re-run, docs (2026-11-22 to 2026-11-23, Opus 5.5, high effort)
+
+Same session as part 1 (desktop app, Windows 11, Python 3.12.10). Every Hugging Face call anonymous; no `GITHUB_TOKEN`. Nothing pushed.
+
+### Owner's brief
+
+The owner's labels are in. Commit them and compare them with the AI first pass. Run `predict.py` and `score.py`, and report against the pre-registered goal, misses included, with the `confidence = sure` subset apart. Update RESULTS, README and LAUNCH.md:
+- the labels described exactly as "AI-assisted labels, every row reviewed and corrected by the author against the pinned cards", never as an independent human audit;
+- the DPI comparison kept as the independent human key;
+- the Limits line "the author labelled the held-out set, starting from AI drafts", with the number of labels changed;
+- lead with what the HF tag can't do;
+- report how the licence status compares with the tag alone, even if it ties or loses;
+- no v1 numbers in LAUNCH.md, the README accuracy section or the demo.
+
+Then make the deferred wording fix, run the checks and commit. After the v2 launch numbers: use 36.6% as the headline, put contradiction recall under Limits and on a v0.2 list.
+
+### Commits
+
+| commit | what |
+|---|---|
+| `89d2985` | the owner's labels: `eval/holdout/sheet.csv` replaced by the owner's file; a diff showed only `expert_licences`, `expected_status`, `confidence` and `notes` changed |
+| `2a63683` | the overall sentence reads as a list ("confirmed by the README text and source …"); `launch/summarize.py` keeps the overall status apart from the comparisons (`licence_overall`, `licence_overall_sub`); `eval/holdout_subsets.py` (exploratory subsets) |
+| the commit of this entry | held-out results, v2 launch results, RESULTS / README / LAUNCH / PLAN, demo GIF and cast |
+
+### Labels: AI first pass against the final labels
+
+ChatGPT made a first pass (`classified_review.csv`, keyed by `hf_id`); the owner then checked every row against the frozen cards and corrected it.
+- **`expected_status` changed in 12 of 120 rows, and `expert_licences` in the same 12.** `confidence` changed in 33 (the first pass marked 8 rows `sure`, the final labels 37).
+- 108 of the first pass's notes mention a current or latest card; the final labels use only the frozen copies.
+- Of the 64 scored rows, 60 equal the first pass and 4 were changed.
+- Status changes (first pass → final):
+
+  | change | rows |
+  |---|---|
+  | card unreadable → expert none | 4 |
+  | card unreadable → consistent | 2 |
+  | card unreadable → inconsistent | 1 |
+  | card unreadable → non-SPDX | 1 |
+  | non-SPDX → consistent | 1 |
+  | consistent → non-SPDX | 1 |
+  | missing → expert none | 1 |
+  | missing → card unreadable | 1 |
+
+### Held-out score (`eval/results/holdout/`)
+
+- **Prediction run:** `predict.py` from the ScanCode venv in PowerShell, 2026-11-22 18:10 to 22:58 (+04:00). The first attempt refused: an untracked `eval/holdout/cards.zip` (the owner's archive of the card copies) sat under the frozen paths. It is now git-ignored, like `cards/`.
+- **Rows:** 64 scored (54 consistent, 6 inconsistent, 4 missing); no batch b needed.
+
+| part of the goal | result |
+|---|---|
+| kappa ≥ 0.61 | met, 0.626 (bootstrap 0.28–0.87) |
+| abstention < 15% | met, 9.4% (Wilson upper bound 19.0%) |
+| beats B | met: 34 against 5, p = 2.4e-6 |
+| beats A | **missed**: 2 against 8, p = 0.11 |
+
+**The goal was missed.** The tag alone agrees on 58 of 64 rows, datasetvet on 52, ScanCode alone on 23.
+- **Sure subset (exploratory):** 26 rows; A 24, B 18, C 23; C kappa 0.84 against A 0.64; C vs A p = 1.0.
+- **The 8 rows only the tag gets right:**
+  - 2 from licence files of Python packages vendored in a committed `.venv`;
+  - 2 from a source repo's `LICENSE` where the code-licence rule does not apply;
+  - 1 from an asset folder's `LICENSE`;
+  - 1 from `.py` files whose names contain "license";
+  - 2 from README text the matcher did not identify, or named without a version.
+  - These are on the new v0.2 list (PLAN §11).
+
+**Deviations from the pre-registration**, written into RESULTS §1:
+1. AI in the label step.
+2. 24 no-README repos labelled `card unreadable` instead of by `LABELLING.md`. All three configurations say `missing` on all 24. A sensitivity check counting them as `missing` leaves the outcome unchanged: A 82, C 76, B 47 of 88, and C vs A still 2 against 8.
+3. The subsets were added after labelling.
+
+### v2 launch re-run (Tier A)
+
+- **Run:** all 500 with `2a63683` (config hash `14b429ea97a2357a`), 3 shards, 2026-11-22 18:26 to 23:43 (+04:00). 48,898 s of checking and 25,493 requests, against 6,602 requests for v1, because every cut-off file list is now paged.
+- **Speed:** shard 0 drew most of the very large repos (single datasets took up to 42 minutes). It sped up once the held-out predictions stopped sharing the anonymous rate limit.
+- **Results:** 497 done, 3 gone.
+  - Card licence missing: 182 (36.6%; 32.5–40.9%).
+  - Overall status for the 315 cards with a licence: confirmed 132, uncontradicted 82, differs 20, card unclear 64, unresolved 17.
+  - Datasets with a dead link: 18 of 172.
+- **Problem found: the v1 headline was wrong.** Comparing the v1 and v2 tables, 18 datasets moved from "no README.md at this revision" to a stated licence at the same sha.
+  - All 18 are among the 128 repos with a file list cut at 100,000 entries that Phase 4.5 did not rescan. The first scan looked for `README.md` in the cut list.
+  - Phase 4.5's note said only a licence file past the cut-off could change those rows. That was wrong: the README could too.
+  - So "40.1% state no licence" was too high; the corrected figure is 36.6%. The owner approved it as the headline.
+  - The held-out sheet was not affected: it fetched each README directly. Three of the 18 are in it, and their cards were read.
+- Tier B (data health) does not depend on the licence rules and was not re-run.
+
+### Docs
+
+- **RESULTS.md**, restructured:
+  - headline: what the tag can't show, then accuracy on both keys side by side;
+  - §1 held-out (goal, labels with the exact wording, the label-change counts, deviations, tables, subsets);
+  - §2 DPI key (v2, no longer blind);
+  - §3 launch scan (v2 Tier A, and the 40.1% → 36.6% correction under "What earlier scans got wrong");
+  - §4 limits, including the label line and contradiction recall;
+  - §5 the v1 results, marked superseded and kept as the record.
+- **README:** opens with the checks the tag can't do. The launch table and the accuracy section are v2 only, and the accuracy section says plainly that the status is no better than the tag alone as a yes/no. Two new limits; the sample excerpt shows the new sentence.
+- **LAUNCH.md:** rewritten with v2 numbers, leading with 36.6%. Every post says the licence status did not beat the tag, and describes the labels with the exact wording.
+- **Demo:** re-recorded with `tools/record_demo.py`, a real uncached run of `check hf:tatsu-lab/alpaca` (12 s), v2 output. pyte and Pillow were installed in a throwaway venv in the session scratchpad, not in the project venvs.
+- **PLAN.md:** status line, the Phase 5.5 status, and a v0.2 list (contradiction recall first; vendored-package licence files; source files named like licences; asset-folder licences; a new held-out set labelled by someone else).
+
+### Problems found and fixed
+
+1. `cards.zip` under the frozen paths blocked `predict.py` (above); git-ignored.
+2. The first `predict.py` log was written as UTF-16 by PowerShell's `>` and was unreadable to the tools; re-run with `Out-File -Encoding utf8`.
+3. With the uncontradicted rule switched off, the new sentence join failed on an empty list (`IndexError`) in a rule-variant test; it now handles empty and one-item lists.
+4. The v1 launch headline (above).
+
+### Not done / open
+
+- The two Phase 4 disagreement samples (v1) are still unlabelled.
+- The three new missing-file results (`3dcodeverse/3dcodeverse-2m`, `zdbfv/M3_VOS`, `HenryYHW/ADAS-TO`) were not checked by hand.
+- The v0.2 list (PLAN §11).
+
+**Checks** (before the commit of this entry): `pytest` 434 passed, 4 skipped (ScanCode-only), 2 deselected; in the ScanCode venv `tests/test_scancode.py` and `tests/test_licence_rules_v2.py`: 31 passed, 1 skipped; `ruff check src tests tools eval launch` clean; `mypy src` clean.
