@@ -1,5 +1,7 @@
 # datasetvet
 
+[![ci](https://github.com/moelsaka01/datasetvet/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/moelsaka01/datasetvet/actions/workflows/ci.yml?query=branch%3Amain)
+
 **Before you train on it, check it.**
 
 A free, local command-line tool that checks a Hugging Face dataset for what its `license:` tag can't tell you:
@@ -149,4 +151,4 @@ The repo ships a GitHub Action that checks a dataset on every push, on a schedul
 
 ## Licence
 
-MIT. See [LICENSE](LICENSE). Built with Claude Code; the build history, including every model and decision, is in [BUILD_LOG.md](https://github.com/moelsaka01/datasetvet/blob/main/BUILD_LOG.md).
+MIT. See [LICENSE](https://github.com/moelsaka01/datasetvet/blob/main/LICENSE). Built with Claude Code; the build history, including every model and decision, is in [BUILD_LOG.md](https://github.com/moelsaka01/datasetvet/blob/main/BUILD_LOG.md).

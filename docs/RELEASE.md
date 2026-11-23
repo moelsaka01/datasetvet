@@ -1,59 +1,53 @@
-# Release checklist (nothing here has been run)
+# Release checklist
 
-Creating the GitHub repo, pushing and publishing to PyPI are the owner's calls. Log in yourself (`gh auth login`, a PyPI token or trusted publishing); nothing in this project asks for or stores a token.
+Publishing to PyPI and creating releases are the owner's calls. Nothing in this project asks for or stores a token: PyPI publishing uses **trusted publishing** (GitHub's OIDC), so no PyPI token exists at all.
 
-## What is ready
+## Done (2026-11-23)
 
-- Package: `datasetvet` 0.1.0. `python -m build` and `twine check` pass on both the sdist and the wheel (BUILD_LOG, Phase 5). A clean-venv install of the wheel runs `datasetvet check`.
-- Action: `action.yml`, `examples/workflow.yml`, and `.github/workflows/action-test.yml` (runs the Action on this repo's own checkout once it is on GitHub).
-- README, RESULTS.md, LAUNCH.md (post drafts).
+- GitHub repo `moelsaka01/datasetvet`, public, with the description and topics below. `main` and the tags `eval-config-v1`, `eval-config-v2` and `holdout-v1` are pushed.
+- CI is green on `main` (6 test legs, `scan-windows`, `action-test`). The runs on the three frozen tags are red: they predate the fix to the SPDX index check, and the tags are not moved.
+- `python -m build` and `twine check --strict` pass on the sdist and the wheel. The name `datasetvet` was free on PyPI on 2026-11-23 (`https://pypi.org/pypi/datasetvet/json` returned 404).
 
-## GitHub repo (description and topics, for `gh repo create` / `gh repo edit`)
+## GitHub repo (description and topics)
 
-Repo name: `datasetvet` (assumed owner `moelsaka01`, from the local git user; the README and `pyproject.toml` URLs use it, so change them if the owner differs).
-
-Description (under 350 characters):
+Description:
 
 > Before you train on it, check it. A CLI that checks a Hugging Face dataset and writes a report of verifiable facts: licence consistency, provenance, dead links, duplicates, leakage. Facts only, not legal advice.
 
 Topics: `dataset`, `huggingface`, `licenses`, `data-quality`, `data-validation`, `provenance`, `machine-learning`, `mlops`, `cli`, `github-action`
 
-## Commands, in order (run them yourself after you have read the checklist)
+## Publishing 0.1.0 to PyPI (trusted publishing)
 
-```powershell
-gh auth status
-gh repo create datasetvet --public --description "Before you train on it, check it. A CLI that checks a Hugging Face dataset and writes a report of verifiable facts: licence consistency, provenance, dead links, duplicates, leakage. Facts only, not legal advice." --source . --remote origin
-gh repo edit --add-topic dataset --add-topic huggingface --add-topic licenses --add-topic data-quality --add-topic data-validation --add-topic provenance --add-topic machine-learning --add-topic mlops --add-topic cli --add-topic github-action
-git push -u origin main
-git push origin eval-config-v1
-```
+`.github/workflows/release.yml` runs when a GitHub release is **published**. It:
+- builds the sdist and wheel;
+- runs `twine check --strict`;
+- checks that the tag equals `v` + the version in `pyproject.toml`;
+- installs the wheel in a clean venv and runs `datasetvet --help`;
+- uploads to PyPI from the `pypi` environment, with `id-token: write` as its only permission.
 
-Then, once CI is green on the first push:
+1. **Owner, on pypi.org** (logged in, with 2FA): Account settings → Publishing → *Add a new pending publisher* → GitHub, with:
+   - PyPI project name: `datasetvet`
+   - Owner: `moelsaka01`
+   - Repository name: `datasetvet`
+   - Workflow name: `release.yml`
+   - Environment name: `pypi`
 
-```powershell
-git tag v0.1.0
-git push origin v0.1.0
-git tag -f v0
-git push -f origin v0
-```
+   A pending publisher does not reserve the name. Create the release soon after.
+2. **Optional, on GitHub:** Settings → Environments → `pypi` → *Required reviewers*: add yourself, so every publish waits for your click. The workflow creates the environment on its first run if it does not exist.
+3. **Create the release** (tag `v0.1.0` on `main`):
 
-(`v0` is the moving tag the README's `uses: ...@v0` points at.)
+   ```powershell
+   gh release create v0.1.0 --target main --title "datasetvet 0.1.0" --notes-file docs/release-notes-0.1.0.md
+   ```
 
-## Before the first push
+   Publishing the release starts `release.yml`, and that uploads to PyPI. Attach nothing: `launch-state-v0.1.zip` stays private.
+4. **Check:** the `release` run is green, `https://pypi.org/project/datasetvet/0.1.0/` exists, and a clean venv can run `pip install datasetvet` and `datasetvet check hf:stanfordnlp/imdb --no-data`.
+5. **The Action tag:** `git tag -f v0 v0.1.0`, then `git push -f origin v0`. `v0` is the moving tag the README's `uses: moelsaka01/datasetvet@v0` points at.
 
-- **The backup bundle still holds the SPDX licence texts** (`~/datasetvet-backups/`, BUILD_LOG Phase 4.5). Keep it outside the repo and do not upload it; delete it after the first push if you no longer need it.
-- **CI has never run** (both jobs, plus `action-test`). Expect to fix small things on the first push; the Python 3.11 and 3.13 legs have not been run locally.
+If the upload fails (for example, the pending publisher is missing), fix it on PyPI and re-run the failed `publish` job from the Actions tab. A failed upload does not consume the version number. Never re-use a version that was actually uploaded.
+
+## Still open
+
+- **The backup bundle holds the SPDX licence texts** (`~/datasetvet-backups/`, now also inside `~/datasetvet-archive/private-keep.zip`). Never upload it.
 - **The SPDX issue** (`docs/drafts/spdx-license-list-data-issue.md`) is still unposted.
-- The tag `eval-config-v1` is local; `eval/run.py` refuses the test split unless it exists.
-- Check that `launch/state.sqlite` and `launch/results/reports*/` are still untracked (`git ls-files launch`).
-
-## PyPI (build and check only; you upload)
-
-```powershell
-python -m pip install build twine
-python -m build
-python -m twine check dist/*
-python -m twine upload dist/*     # you log in; the name datasetvet was free on 2026-11-19, re-check first
-```
-
-Check the name again just before uploading (`https://pypi.org/project/datasetvet/` should be a 404): names are first come, first served.
+- `launch/state.sqlite` and `launch/results/reports*/` stay untracked (`git ls-files launch`); `launch-state-v0.1.zip` is private and is not attached to any release.

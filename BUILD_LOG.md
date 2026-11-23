@@ -10,7 +10,7 @@ One entry per phase: the model and effort used, what was decided and why, what w
 | 4 Accuracy eval + launch scan | Opus 5.5 | high | done 2026-11-21 |
 | 4.5 Fixes from the launch scan + rescan | Sonnet 5.5 (closing steps on Opus 5.5) | high | done 2026-11-22; history rewrite pending |
 | 5 Polish, Action, README, launch | Sonnet 5.5 | medium | built 2026-11-22; the Opus review fixes and the human audit table wait for the owner's inputs; nothing pushed or published |
-| 5.5 Close the gap to the human audit (v2 rules, held-out eval) | Opus 5.5 | high | done 2026-11-23: goal missed (beats ScanCode, not the HF tag alone); v2 launch re-run; nothing pushed |
+| 5.5 Close the gap to the human audit (v2 rules, held-out eval) | Opus 5.5 | high | done 2026-11-23: goal missed (beats ScanCode, not the HF tag alone); v2 launch re-run; pushed to GitHub, CI green |
 
 ---
 
@@ -644,3 +644,49 @@ ChatGPT made a first pass (`classified_review.csv`, keyed by `hf_id`); the owner
 - The v0.2 list (PLAN §11).
 
 **Checks** (before the commit of this entry): `pytest` 434 passed, 4 skipped (ScanCode-only), 2 deselected; in the ScanCode venv `tests/test_scancode.py` and `tests/test_licence_rules_v2.py`: 31 passed, 1 skipped; `ruff check src tests tools eval launch` clean; `mypy src` clean.
+
+## First push, CI and release prep (2026-11-23, Opus 5.5, high effort)
+
+Same session. The owner approved each outward step in chat.
+
+### Archives (nothing deleted)
+
+- VACUUM on the three launch state databases (integrity check `ok` first). It saved almost nothing: the files are full of repetitive JSON reports, not free pages.
+- **`~/datasetvet-archive/launch-state-v0.1.zip`** (199.6 MB → 6.0 MB): `launch/state.sqlite`, `launch/first-scan-state.sqlite` and the launch logs.
+  - PII scan:
+    - no unmasked email address or token;
+    - 358 masked email and 16 masked phone examples in the current state (66 datasets with PII pattern matches), 345 and 14 in the first-scan state;
+    - two logs name a local Windows path.
+  - The owner keeps it private; it is not attached to any release.
+- **`~/datasetvet-archive/private-keep.zip`** (114.0 MB → 5.6 MB): the held-out card copies, the v1 Tier A backup, and the filter-repo bundle with its id list. Never to be published.
+
+### Push
+
+- Repo `moelsaka01/datasetvet` created public with the description and topics from `docs/RELEASE.md`.
+- `main` and the tags `eval-config-v1`, `eval-config-v2` and `holdout-v1` pushed.
+- The owner chose to keep the Gmail address in the commits.
+- Local Windows paths in tracked docs now read `~` (`96e096c`). That commit came after the first push, so the earlier commits on GitHub still contain them.
+
+### CI on the first push
+
+- `action-test` and `scan-windows` passed.
+- 4 of the 6 test legs (Ubuntu 3.11, 3.12, 3.13 and Windows 3.13) failed at `tools/vendor_spdx.py --check`, so mypy and the tests did not run on them.
+  - **Cause:** the check compared the gzip-compressed bytes of the shipped index with a rebuild.
+  - The files were built on this laptop (Windows, Python 3.12). Different Python builds link different zlib versions, which compress the same input to different bytes. Windows 3.11 and 3.12 matched; the others did not.
+  - Not a code bug, and not specific to the data.
+- **Fix (`05cd4a1`):** the check and its test decompress both files and compare the JSON byte for byte. Any change in content still fails, and the check now names the file that differs.
+- **Result:** all 6 legs green, each with 434 tests passed and 4 skipped (the ScanCode-only tests, which pass in `scan-windows`: 132 passed, 1 skipped). `action-test` green. No test was skipped or loosened.
+- The runs on the three frozen tags stay red; the tags are not moved.
+
+### Release prep
+
+- **PyPI name:** `datasetvet` is free (`/pypi/datasetvet/json` and `/simple/datasetvet/` return 404).
+- **`.github/workflows/release.yml`:** trusted publishing (OIDC). It runs when a GitHub release is published:
+  - builds, runs `twine check --strict`, checks that the tag equals the `pyproject.toml` version, and smoke-tests the wheel in a clean venv;
+  - publishes from the `pypi` environment with `id-token: write` as its only permission.
+  - No token is stored anywhere.
+- **Local build:** `python -m build` and `twine check --strict` pass (wheel 404 KB, sdist 630 KB). Neither contains card copies, state databases or caches.
+- **`docs/RELEASE.md`:** the steps for the owner (pending publisher on PyPI, then the release), and `docs/release-notes-0.1.0.md`.
+- **README:** a CI badge for `main`, and the LICENSE link made absolute so it works on the PyPI page.
+
+**Checks:** local `pytest` 434 passed, 4 skipped; `ruff` and `mypy` clean; CI green on `05cd4a1`.
