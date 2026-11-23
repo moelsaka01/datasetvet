@@ -206,7 +206,7 @@ The set: 5 datasets with licence mismatches recorded in the DPI data (`Data-Prov
 
 ### ScanCode extra, installed and run (task 3.4)
 
-- Venv at a short path (`C:\Users\melsa\.dvscan`), `pip install -e ".[scan]"`: **157 s**, **774 MB**, scancode-toolkit-mini 32.5.0, pluggy 1.5.0, run from PowerShell.
+- Venv at a short path (`~\.dvscan`), `pip install -e ".[scan]"`: **157 s**, **774 MB**, scancode-toolkit-mini 32.5.0, pluggy 1.5.0, run from PowerShell.
 - **New conflict found:** pytest 9.2 requires `pluggy>=1.6`. Installing it upgraded pluggy to 1.7.0, which broke ScanCode again (`did not find any 'plugincode.location_provider' hooks`). With `pytest<9` (8.4.2) and `pluggy<1.6`, both work. The CI scan job pins `pytest<9`.
 - **ScanCode score finding:** "released under the CC BY-NC 4.0 license" scores **50**; "Licensed under CC BY-NC 4.0." scores 99; "License: cc-by-nc-4.0" scores 100. At the planned threshold of 90 the first is dropped. The threshold is tuned on the Phase 4 dev split only.
 - The scan venv was deleted after the runs; `docs/INSTALL.md` re-creates it in about 3 minutes.
@@ -392,7 +392,7 @@ Then rescan only the affected rows under the new config hash, update RESULTS fro
 
 ### History rewrite (Phase 4.5, step 6)
 
-Run last, before any push, in place with `git filter-repo --strip-blobs-with-ids` (git-filter-repo 2.47.0 from a throwaway venv, `--force` because the repo is not a fresh clone). The one stripped blob is `deda55bacfd535f1475c2bc8a1e0fc708f3e3024`, the 249,387-byte full-text `src/datasetvet/data/spdx_licences.json.gz` added by `3a6b650`. The 8,467-byte metadata file of the same name from `5254aab` on is a different blob and stays. A backup bundle of the whole old history is outside the repo (`C:/Users/melsa/datasetvet-backups/datasetvet-before-filter-repo-2026-11-22.bundle`, with `old-commit-ids.txt`); keep it until the first push, then it can be deleted, since it still holds the texts.
+Run last, before any push, in place with `git filter-repo --strip-blobs-with-ids` (git-filter-repo 2.47.0 from a throwaway venv, `--force` because the repo is not a fresh clone). The one stripped blob is `deda55bacfd535f1475c2bc8a1e0fc708f3e3024`, the 249,387-byte full-text `src/datasetvet/data/spdx_licences.json.gz` added by `3a6b650`. The 8,467-byte metadata file of the same name from `5254aab` on is a different blob and stays. A backup bundle of the whole old history is outside the repo (`~/datasetvet-backups/datasetvet-before-filter-repo-2026-11-22.bundle`, with `old-commit-ids.txt`); keep it until the first push, then it can be deleted, since it still holds the texts.
 
 | commit | old | new |
 |---|---|---|

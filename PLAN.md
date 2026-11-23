@@ -463,7 +463,7 @@ The Dataset Viewer (`datasets-server`) sent **no** RateLimit headers, so its lim
 
 **ScanCode on Windows:**
 - In a venv under the long temp path, `pip install scancode-toolkit-mini` **failed** with `OSError: No such file or directory ... licensedcode\data\rules\epl-2.0_or_apache-2.0_or_gpl-2.0_with_classpath-exception-...RULE` and pip's hint that Windows Long Path support is not enabled.
-- Retried at a short path (`C:\Users\melsa\.ddsc`): install succeeded in 116 s, and the venv was **637 MB** (652 MB with the plugin below; 79 packages). It then needed two fixes before it ran:
+- Retried at a short path (`~\.ddsc`): install succeeded in 116 s, and the venv was **637 MB** (652 MB with the plugin below; 79 packages). It then needed two fixes before it ran:
   1. `pluggy` 1.7.0 (pulled in by default) breaks `plugincode` 32.0.0 on import (`ValueError: did not find any 'plugincode.location_provider' hooks`). **Pin `pluggy<1.6`.**
   2. `-mini` ships no libmagic. In PowerShell it fails with `NoMagicLibError`; in Git Bash it finds Git's MSYS libmagic and **segfaults**. **Install `typecode-libmagic`** (has a `win_amd64` wheel).
 - After both fixes, in PowerShell: `get_licenses()` detected `CC-BY-NC-4.0` from a prose README notice, `MIT` from `## License\nMIT`, and `CC-BY-SA-4.0` from a card's YAML `license: cc-by-sa-4.0` line. Index load took 3.6–5.7 s; each later file took under 0.1 s.

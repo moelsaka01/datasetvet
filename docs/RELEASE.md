@@ -41,7 +41,7 @@ git push -f origin v0
 
 ## Before the first push
 
-- **The backup bundle still holds the SPDX licence texts** (`C:/Users/melsa/datasetvet-backups/`, BUILD_LOG Phase 4.5). Keep it outside the repo and do not upload it; delete it after the first push if you no longer need it.
+- **The backup bundle still holds the SPDX licence texts** (`~/datasetvet-backups/`, BUILD_LOG Phase 4.5). Keep it outside the repo and do not upload it; delete it after the first push if you no longer need it.
 - **CI has never run** (both jobs, plus `action-test`). Expect to fix small things on the first push; the Python 3.11 and 3.13 legs have not been run locally.
 - **The SPDX issue** (`docs/drafts/spdx-license-list-data-issue.md`) is still unposted.
 - The tag `eval-config-v1` is local; `eval/run.py` refuses the test split unless it exists.
