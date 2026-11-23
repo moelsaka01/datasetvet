@@ -1,5 +1,6 @@
 """Tasks 3.1-3.3: HF id table, SPDX wrapper, published properties."""
 
+import gzip
 import re
 import urllib.request
 
@@ -153,5 +154,6 @@ def test_shipped_index_is_rebuilt_exactly_from_the_official_texts():
     mod = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(mod)
     meta_bytes, fp_bytes, _ = mod.build(SPDX_DIR)
-    assert meta_bytes == mod.META_OUT.read_bytes()
-    assert fp_bytes == mod.FP_OUT.read_bytes()
+    # the JSON inside must match byte for byte; the gzip stream depends on the zlib build
+    assert gzip.decompress(meta_bytes) == gzip.decompress(mod.META_OUT.read_bytes())
+    assert gzip.decompress(fp_bytes) == gzip.decompress(mod.FP_OUT.read_bytes())

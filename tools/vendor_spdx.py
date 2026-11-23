@@ -128,6 +128,12 @@ def build(dl: Path) -> tuple[bytes, bytes, str]:
     return meta_bytes, fingerprint_bytes(fp), summary
 
 
+def same_content(shipped: bytes, rebuilt: bytes) -> bool:
+    """Equal after decompression. The JSON inside is compared byte for byte; the gzip stream
+    is not, because zlib builds (system zlib, zlib-ng) compress the same input differently."""
+    return gzip.decompress(shipped) == gzip.decompress(rebuilt)
+
+
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     ap.add_argument("--dir", type=Path, default=DEFAULT_DIR, help="SPDX download directory")
@@ -136,9 +142,10 @@ def main(argv: list[str] | None = None) -> int:
     args = ap.parse_args(argv)
     meta_bytes, fp_bytes, summary = build(args.dir)
     if args.check:
-        same = META_OUT.read_bytes() == meta_bytes and FP_OUT.read_bytes() == fp_bytes
-        print(("identical: " if same else "DIFFERENT: ") + summary)
-        return 0 if same else 1
+        differ = [p.name for p, new in ((META_OUT, meta_bytes), (FP_OUT, fp_bytes))
+                  if not same_content(p.read_bytes(), new)]
+        print(("DIFFERENT (" + ", ".join(differ) + "): " if differ else "identical: ") + summary)
+        return 1 if differ else 0
     META_OUT.write_bytes(meta_bytes)
     FP_OUT.write_bytes(fp_bytes)
     print(f"{summary}\n{META_OUT.name}: {len(meta_bytes):,} bytes\n"
