@@ -1,6 +1,6 @@
 # Launch posts (drafts)
 
-Drafts only. **Nothing here has been posted**; the owner posts them. Before posting: replace `<REPO>` with the GitHub URL, `<PYPI>` with the PyPI URL, and check each number against [RESULTS.md](RESULTS.md) (every figure below is copied from it, with its section).
+Drafts only. **Nothing here has been posted**; the owner posts them. The URLs are filled in (https://github.com/moelsaka01/datasetvet, https://pypi.org/project/datasetvet/). Before posting, check each number against [RESULTS.md](RESULTS.md) (every figure below is copied from it, with its section).
 
 ## The finding to lead with
 
@@ -28,7 +28,7 @@ Say these every time, because the numbers are easy to over-read:
 
 ## r/MachineLearning (flair: Project)
 
-**Title:** 37% of the 500 most-downloaded Hugging Face datasets state no licence in their card, and 1 in 5 of those I could read have duplicate rows. I wrote a CLI that checks any dataset [P]
+**Title:** 37% of the 500 most-downloaded Hugging Face datasets state no licence in their card, and 1 in 5 whose rows I could read have duplicate rows. I wrote a CLI that checks any dataset [P]
 
 **Body:**
 
@@ -36,16 +36,16 @@ I ran a checker over the 500 most-downloaded datasets on the Hub (list frozen 20
 
 - 182 of 497 (36.6%; 95% CI 32.5–40.9%) state no licence in the card.
 - Of the 315 that do, 132 have the same licence confirmed somewhere else (README text, a licence file, the linked source repo). 20 (6.3%) have a README, licence file or source that names a different licence. That is a difference to look at, not a verdict.
-- Of the 356 datasets whose rows I could read, 73 (20.5%; 16.6–25.0%) have exact duplicate rows inside a split, and 24 (6.7%) share inputs between splits.
+- Of the 356 datasets whose rows I could read, 73 (20.5%; 16.6–25.0%) have exact duplicate rows inside a split, and 24 (6.7%) share inputs between splits. Some duplicates are legitimate (short texts repeat); the report shows the count and examples so you can judge.
 - 18 of the 172 with links have a dead one.
 
 How it works: `datasetvet check hf:org/name` reads the card, the licence files and the sources it points to, then streams the data. It produces facts with an evidence link pinned to a commit: four licence statuses (consistent / inconsistent / missing / unknown), dead links, duplicates, cross-split leakage, empty rows, PII-pattern matches. No AI in any decision; it never says a dataset is "safe", and it is not legal advice.
 
-How accurate the licence status is, honestly: I pre-registered a goal and scored it on 64 held-out datasets. It met the kappa and abstention targets and beat ScanCode alone, but **it did not beat simply reading the HF licence tag**. The tag alone agreed with the labels on 58 of 64 rows, datasetvet on 52. Against the Data Provenance Initiative's hand audit it is a tie (177 against 179 of 245 rows). It finds only some contradictions (2 of 6 on the held-out set). So the licence check is useful for showing *where* the licence is confirmed or contradicted, not as a better yes/no. The held-out labels are mine: AI-assisted, with every row reviewed and corrected by me against the pinned cards. Everything, including the misses and the deviations from the pre-registration, is in RESULTS.md.
+How accurate the licence status is, honestly: on a pre-registered held-out set of 64 datasets it did not beat simply reading the HF licence tag, which agreed with the labels on 58 rows against datasetvet's 52 (p = 0.11). It did beat ScanCode alone, 52 rows against 23 (p = 2e-6). The labels (AI-assisted, every row reviewed and corrected by me against the pinned cards), the misses, the deviations from the pre-registration and the comparison with the Data Provenance Initiative's human audit are in RESULTS.md: https://github.com/moelsaka01/datasetvet/blob/main/RESULTS.md
 
 Limits you should know: the data-health numbers come from a laptop-sized scan (full scan up to 100 MB, otherwise a 10,000-row sample), so they are lower bounds; 103 of the 500 could not be checked for data (gated, no Parquet conversion, or the viewer is off); licences that are not on the SPDX list give `unknown`.
 
-Code (MIT), results and per-dataset CSV: <REPO>. `pip install datasetvet` (<PYPI>). There is also a GitHub Action that writes the report to the job summary.
+Code (MIT), results and per-dataset CSV: https://github.com/moelsaka01/datasetvet. `pip install datasetvet` (https://pypi.org/project/datasetvet/). There is also a GitHub Action that writes the report to the job summary.
 
 Happy to hear what other checks would be useful, and where the licence comparison is wrong.
 
@@ -59,9 +59,9 @@ Happy to hear what other checks would be useful, and where the licence compariso
 
 Per-dataset results for the top 500 Hugging Face datasets (frozen 2026-11-19) are in a CSV: card licence, whether the README/licence files/sources confirm or contradict it, dead links, duplicate rows, train/test leakage, empty rows, PII-pattern matches. Facts only; no dataset is graded.
 
-Headlines: 36.6% (182 of 497) state no licence in the card; 20.5% of the 356 datasets whose rows I read have exact duplicate rows within a split, and 6.7% share inputs between splits; 10.5% of those with links have a dead one.
+Headlines: 36.6% (182 of 497) state no licence in the card; 20.5% of the 356 datasets whose rows I read have exact duplicate rows within a split, and 6.7% share inputs between splits; 10.5% of those with links have a dead one. Some duplicates are legitimate (short texts repeat); the report shows the count and examples so you can judge.
 
-The CSV, the method and the limits (it is a laptop-sized scan, so the data numbers are lower bounds; the licence status is not more accurate than the HF tag as a yes/no) are in the repo: <REPO>. The same checks run on any dataset with `pip install datasetvet` and `datasetvet check hf:org/name`. Not legal advice.
+The CSV, the method and the limits (it is a laptop-sized scan, so the data numbers are lower bounds; the licence status is not more accurate than the HF tag as a yes/no) are in the repo: https://github.com/moelsaka01/datasetvet. The same checks run on any dataset with `pip install datasetvet` and `datasetvet check hf:org/name`. Not legal advice.
 
 ---
 
@@ -69,7 +69,7 @@ The CSV, the method and the limits (it is a laptop-sized scan, so the data numbe
 
 Post 1 (leads with the finding; X counts a link as 23 characters, so this fits in 280 with the real URL):
 
-> 37% of the 500 most-downloaded Hugging Face datasets state no licence in their card. 1 in 5 of those I could read have duplicate rows inside a split. I built a free CLI that checks licence sources, dead links, duplicates and leakage. Not legal advice. <REPO>
+> 37% of the 500 most-downloaded Hugging Face datasets state no licence in their card. 1 in 5 whose rows I could read have duplicate rows inside a split. I built a free CLI that checks licence sources, dead links, duplicates and leakage. Not legal advice. https://github.com/moelsaka01/datasetvet
 
 Reply 2:
 
@@ -77,7 +77,7 @@ Reply 2:
 
 Reply 3:
 
-> Honest accuracy: on a pre-registered held-out set its licence status did NOT beat just reading the HF licence tag (52 vs 58 of 64 agree). Its value is showing where a licence is confirmed or contradicted, plus the data checks. Misses and method: <REPO>/blob/main/RESULTS.md
+> Honest accuracy: on a pre-registered held-out set its licence status did NOT beat just reading the HF licence tag (52 vs 58 of 64 agree). Its value is showing where a licence is confirmed or contradicted, plus the data checks. Misses and method: https://github.com/moelsaka01/datasetvet/blob/main/RESULTS.md
 
 Attach `docs/demo/demo.gif` to post 1.
 
@@ -92,12 +92,12 @@ Before you train on a dataset you want to know what its card says, whether its s
 What it found (frozen 2026-11-19):
 - 182 of 497 cards state no licence.
 - Of the 315 that do, 132 have the licence confirmed by another place, and 20 have a README, licence file or linked source naming a different one. The report shows both and says they differ, nothing more.
-- Of 356 datasets whose rows I could read, 73 (20.5%) have exact duplicate rows inside a split and 24 (6.7%) share inputs between train and test.
+- Of 356 datasets whose rows I could read, 73 (20.5%) have exact duplicate rows inside a split and 24 (6.7%) share inputs between train and test. Some duplicates are legitimate (short texts repeat); the report shows the count and examples so you can judge.
 - 18 of the 172 with links have a dead one.
 
 How far to trust the licence part: I pre-registered a goal and tested it on a held-out set. It met two targets and beat ScanCode, but as a single yes/no it was not more accurate than reading the Hugging Face licence tag (52 against 58 of 64 rows agree). It finds only some contradictions. The labels are mine (AI-assisted, every row reviewed and corrected by me), so they are not an independent audit; against the Data Provenance Initiative's human audit it ties with the tag. I'm publishing the miss along with everything else.
 
-No AI in any decision, no "safe to use" verdicts, and it is not legal advice: facts with evidence links, that is all. MIT licensed, with a GitHub Action for CI. Method, limits and per-dataset results: <REPO>
+No AI in any decision, no "safe to use" verdicts, and it is not legal advice: facts with evidence links, that is all. MIT licensed, with a GitHub Action for CI. Method, limits and per-dataset results: https://github.com/moelsaka01/datasetvet
 
 ---
 
@@ -121,7 +121,7 @@ pip install datasetvet
 datasetvet check hf:your-org/your-dataset
 ```
 
-It reads the card, licence files and sources, then streams the data, and prints facts with evidence links. There is a GitHub Action too, if you want it in CI. It uses no AI, gives no "safe to use" verdicts and is not legal advice. The numbers are from a laptop-sized scan, so data-health counts are lower bounds. As a yes/no, the licence status is not more accurate than your `license:` tag; it shows where the tag is confirmed or contradicted. Method, limits and the accuracy evaluation are in RESULTS.md: <REPO>
+It reads the card, licence files and sources, then streams the data, and prints facts with evidence links. There is a GitHub Action too, if you want it in CI. It uses no AI, gives no "safe to use" verdicts and is not legal advice. The numbers are from a laptop-sized scan, so data-health counts are lower bounds. As a yes/no, the licence status is not more accurate than your `license:` tag; it shows where the tag is confirmed or contradicted. Method, limits and the accuracy evaluation are in RESULTS.md: https://github.com/moelsaka01/datasetvet
 
 Feedback welcome, especially where a licence comparison is wrong.
 
